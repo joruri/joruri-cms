@@ -1,0 +1,41 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:in_group_id) %></th>
+    <td><%= f.select_with_tree :in_group_id, Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no), :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:account) %></th>
+    <td><%= f.text_field :account, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= f.text_field :name_en, :class => 'nameEn' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'email' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:auth_no) %></th>
+    <td><%= f.radio_buttons :auth_no, @item.authes, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:role_name) %></th>
+    <td><%= render :partial => 'sys/admin/_partial/role_names/form', :locals => {:f => f, :item => @item} %></td>
+  </tr>
+</table>
+
+<br />
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:ldap) %></th>
+    <td><%= f.radio_buttons :ldap, @item.ldap_states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:password) %><br />※非同期時に使用</th>
+    <td><%= f.text_field :password, :class => 'id' %></td>
+  </tr>
+</table>

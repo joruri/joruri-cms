@@ -1,0 +1,10 @@
+<div class="contentArticleUnit">
+
+<div class="departments">
+  <div class="h2">■部局一覧</div>
+  <% @items.each do |item| %>
+  <div>・<%= link_to h(item.title), "#{item.name}/" %></div>
+  <% end %>
+</div>
+
+</div>

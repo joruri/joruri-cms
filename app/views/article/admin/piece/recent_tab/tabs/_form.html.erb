@@ -1,0 +1,57 @@
+<%
+
+blank      = '　' * 16
+units      = [Article::Unit.root_item]
+categories = Article::Category.root_items(:content_id => @content.id)
+attributes = Article::Attribute.root_items(:content_id => @content.id).collect{|i| [i.title, i.id]}
+areas      = Article::Area.root_items(:content_id => @content.id)
+
+%><table class="show">
+  <tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale :title %></th>
+    <td><%= f.text_field :title %></td>
+  </tr><tr>
+    <th><%= @item.locale :more %></th>
+    <td><%= f.text_field :more %></td>
+  </tr><tr>
+    <th>条件</th>
+    <td>
+      <table class="noDesign">
+        <tr>
+          <td>結合</td>
+          <td><%= f.select :condition, @item.condition_states, :include_blank => "　" %></td>
+        </tr><tr>
+          <td>組織</td>
+          <td>
+            <%= f.select_with_tree "unit[0]", units, :label => :title, :order => :code,   :include_blank => blank %><br />
+            <%= f.select_with_tree "unit[1]", units, :label => :title, :order => :code,   :include_blank => blank %><br />
+            <%= f.select_with_tree "unit[2]", units, :label => :title, :order => :code,   :include_blank => blank %></td>
+        </tr><tr>
+          <td>分野</td>
+          <td>
+            <%= f.select_with_tree "category[0]", categories, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.select_with_tree "category[1]", categories, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.select_with_tree "category[2]", categories, :label => :title, :include_blank => blank %></td>
+        </tr><tr>
+          <td>属性</td>
+          <td>
+            <%= f.array_select "attribute[0]", attributes, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.array_select "attribute[1]", attributes, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.array_select "attribute[2]", attributes, :label => :title, :include_blank => blank %></td>
+        </tr><tr>
+          <td>地域</td>
+          <td>
+            <%= f.select_with_tree "area[0]", areas, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.select_with_tree "area[1]", areas, :label => :title, :include_blank => blank %> &nbsp;
+            <%= f.select_with_tree "area[2]", areas, :label => :title, :include_blank => blank %></td>
+        </tr>
+      </table>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale :sort_no %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>

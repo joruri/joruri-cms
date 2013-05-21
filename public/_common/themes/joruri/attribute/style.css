@@ -1,0 +1,154 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   category
+========================================================= */
+
+/* side-link
+----------------------------------------------- */
+#attributeList .pieceHeader {
+  height: 25px;
+  background-image: url(./images/tl-kakuzokusei.gif);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.contentArticleAttribute .latest {
+  margin-bottom: 30px;
+  padding: 0px;
+  background-image: url(./images/tl-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+.contentArticleAttribute .latest h2 {
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-image: url(./images/tl-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+.contentArticleAttribute ul {
+  padding: 0 5px;
+}
+.contentArticleAttribute li {
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 5px;
+}
+.contentArticleAttribute h3 {
+  margin-bottom: 10px;
+  padding: 5px 5px 4px 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+  font-weight: bold;
+  font-size: 120%;
+}
+.more {
+  padding: 0 5px 10px 0;
+  text-align: right;
+}
+
+/* RSS Atom
+----------------------------------------------- */
+.feed {
+  position: relative;
+  top: -32px;
+  right:10px;
+  float: right;
+  height: 13px;
+  background-color: transparent;
+}
+.feed a.feedRss {
+  display: inline-block;
+  width: 40px;
+  height: 13px;
+  overflow: hidden;
+  background-image: url(./images/bt-rss.gif);
+  background-repeat: no-repeat;
+  text-indent: 50px;
+}
+.feed a.feedAtom {
+  display: inline-block;
+  width: 40px;
+  height: 13px;
+  overflow: hidden;
+  background-image:url(./images/bt-atom.gif);
+  background-repeat:no-repeat;
+  text-indent: 50px;
+}
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.attribute {
+  float: left;
+  width: 49%;
+  margin-bottom: 10px;
+  padding: 15px 0 20px;
+  background-color: #e3f5ff;
+}
+.attributeNyusatsu {
+  background-image: url(./images/ic-nyusatsu.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attributeSaiyo {
+  background-image: url(./images/ic-saiyo.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attributeShikakushiken {
+  background-image: url(./images/ic-kakusyushikakushiken.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attributeBosyu {
+  background-image: url(./images/ic-bosyu.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attributeEvent {
+  background-image: url(./images/ic-event.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attributeKyoka {
+  background-image: url(./images/ic-kakusyushikakushiken.gif);
+  background-repeat: no-repeat;
+  background-position: 10px 15px;
+}
+.attribute h2 {
+  padding: 0 0 5px 70px;
+}
+.attribute .explain {
+  margin-left: 70px;
+}
+.attributeSaiyo,
+.attributeBosyu,
+.attributeKyoka {
+  margin-left: 15px;
+}
+
+/* pagination
+----------------------------------------------- */
+.pagination {
+  text-align: center;
+}
+.pagination a {
+  padding: 0 6px;
+}
+.pagination span.current {
+  padding: 0 3px;
+  font-weight: bold;
+  font-size: 150%;
+}

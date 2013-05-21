@@ -1,0 +1,15 @@
+<div class="contentTourism contentTourismPhoto">
+
+<div class="h1"><%= @item.title %></div>
+
+<div class="image">
+  <% if file = @item.embedded_thumbnail(:image_file_id) %>
+  <img src="<%= public_embedded_thumbnail_path(file) %>" alt="" />
+  <% end %>
+</div>
+
+<div class="body">
+  <%= @item.body %>
+</div>
+
+</div>

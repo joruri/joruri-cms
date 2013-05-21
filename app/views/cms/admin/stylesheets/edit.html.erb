@@ -1,0 +1,27 @@
+<%= form_for :item, :url => "?do=update", :html => {:method => :put} do |f| %>
+  
+<%= error_messages_for :item %>
+
+<p class="form">基本情報</p>
+
+<% begin %>
+  <% f.text_area(:body) %>
+  <table class="show">
+    <tr>
+      <th><%= @item.locale :body %></th>
+    </tr><tr>
+      <td><%= f.text_area :body, :class => 'body', :style => "height: 400px;" %></td>
+    </tr>
+  </table>
+  <%= submit :edit %>
+<% rescue %>
+  <table class="show">
+    <tr>
+      <th><%= @item.locale :body %></th>
+    </tr><tr>
+      <td>#読み込みに失敗しました。</td>
+    </tr>
+  </table>
+<% end %>
+
+<% end %>

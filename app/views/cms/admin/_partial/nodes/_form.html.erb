@@ -1,0 +1,33 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <%= concept_and_layout_form f %>
+  <tr>
+    <th><%= item.locale(:content_id) %></th>
+    <td><%= item.content_name %></td>
+  </tr><tr>
+    <th><%= item.locale(:model) %></th>
+    <td><%= item.model_name(:short) %></td>
+  </tr>
+  <% if @item.parent_id != 0 %>
+  <tr>
+    <th><%= item.locale(:parent_id) %></th>
+    <td><%= f.select(:parent_id, item.candidate_parents, :include_blank => "　") %></td>
+  </tr><tr>
+    <th><%= item.locale(:route_id) %></th>
+    <td><%= f.select(:route_id, item.candidate_routes, :include_blank => "　") %></td>
+  </tr>
+  <% else %>
+  <%= f.hidden_field(:parent_id, :value => 0) %>
+  <%= f.hidden_field(:route_id, :value => 0) %>
+  <% end %>
+  <tr>
+    <th><%= item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'nameEn' %></td>
+  </tr><tr>
+    <th><%= item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title' %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

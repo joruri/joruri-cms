@@ -1,0 +1,40 @@
+<div class="snsShareLinks">
+  
+<% if @tweet %>
+  <!-- twitter -->
+  <a href="https://twitter.com/share" class="tweet twitter-share-button" data-url="<%= @uri %>"></a>
+  <script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id))
+  {js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<% end %>
+  
+<% if @fb_like %>
+  <!-- facebook/like -->
+  <iframe class="fbLike" src="//www.facebook.com/plugins/like.php?href=<%= ::CGI.escape(@uri) %>&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21"
+   scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
+<% end %>
+  
+<% if @fb_share %>
+  <!-- facebook/share -->
+  <div class="fbShare" style="display: inline;">
+    <a name="fb_share" type="button_count" share_url="<%= @uri %>"></a>
+  </div>
+  <script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"></script>
+<% end %>
+  
+<% if @gp_share %>
+  <!-- google+ -->
+  <div class="gpShare" style="display: inline;">
+    <span class="g-plus" data-action="share" data-annotation="bubble" data-href="<%= @uri %>"></span>
+  </div>
+  <script type="text/javascript">
+    window.___gcfg = {lang: 'ja'};
+    (function() {
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    })();
+  </script>
+<% end %>
+  
+</div>

@@ -1,0 +1,28 @@
+<% if @genres.size > 0 %>
+<div class="genreForm">
+  <p>ジャンル</p>
+  
+  <% @genres.each do |genre| %>
+  <% chk = (@s_genre_id == genre.id.to_s) ? 'checked="checked"' : '' %>
+  <div class="d0 genre<%= genre.name.camelize %>">
+    <label><input type="radio" name="s_genre_id" value="<%= genre.id %>" <%= chk %> /><%= genre.title %></label>
+  </div>
+  
+  <% if (children = genre.public_children).size > 0 %>
+  <div class="children">
+    <% children.each do |c| %>
+    <% chk = (@s_genre_id == c.id.to_s) ? 'checked="checked"' : '' %>
+    <div class="d1 genre<%= c.name.camelize %>">
+      <label><input type="radio" name="s_genre_id" value="<%= c.id %>" <%= chk %> /><%= c.title %></label>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+  <% end %>
+</div>
+<% end %>
+    
+<div class="keywordForm">
+  <p>キーワード</p>
+  <%= f.text_field :s_keyword, :name => :s_keyword %>
+</div>

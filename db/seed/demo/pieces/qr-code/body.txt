@@ -1,0 +1,8 @@
+<div id="qrCode" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="#"><img src="/_common/themes/joruri/top/images/qr.jpg" alt="QRコード" title="QRコード" /></a>
+左のQRコードからスマートフォンサイト、携帯サイトへアクセスできます。
+</div>
+</div>
+<!-- end .piece --></div>

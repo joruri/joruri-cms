@@ -1,0 +1,51 @@
+<div id="attributeAttributes">
+
+<div class="attributeNyusatsu">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="nyusatsu/">入札・調達・売却・契約</a></h2>
+<div class="explain">入札・調達・売却・契約に関する情報を掲載しています。</div>
+</div></div></div></div>
+
+<div class="attributeSaiyojoho">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="saiyojoho/">採用情報</a></h2>
+<div class="explain">採用情報に関する情報を掲載しています。</div>
+</div></div></div></div>
+
+<div class="attributeKakusyushikakushiken">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="kakusyushikakushiken/">各種資格試験</a></h2>
+<div class="explain">各種資格試験に関する情報を掲載しています。</div>
+</div></div></div></div>
+
+<div class="attributeBosyu">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="bosyu/">募集（コンクール、委員等）</a></h2>
+<div class="explain">募集（コンクール、委員等）に関する情報を掲載しています。</div>
+</div></div></div></div>
+
+<div class="attributeEventjoho">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="eventjoho/">イベント情報</a></h2>
+<div class="explain">イベント情報に関する情報を掲載しています。</div>
+</div></div></div></div>
+
+<div class="attributeKyoka">
+<div class="attributeCenter">
+<div class="attributeFront">
+<div class="attributeBack">
+<h2><a href="kyoka/">許可・認可・届出・申請</a></h2>
+<div class="explain">許可・認可・届出・申請に関する情報を掲載しています。</div>
+</div></div></div></div>
+<br class="clear" />
+</div>

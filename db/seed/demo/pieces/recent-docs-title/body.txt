@@ -1,0 +1,5 @@
+<div id="recentDocsTitle" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>新着情報</h2></div>
+</div>
+</div>

@@ -1,0 +1,7 @@
+<div id="emergencyMailmagazine"class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a alt="ジョールリ市メールマガジン登録はこちら" title="ジョールリ市メールマガジン登録はこちら" href="/mailmagazine/">ジョールリ市<br />メールマガジン<br />登録はこちら<br /></a>
+</div>
+</div>
+</div>

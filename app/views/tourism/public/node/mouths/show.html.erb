@@ -1,0 +1,36 @@
+<div class="contentTourism contentTourismMouth">
+
+<div class="header">
+  <h1><%= @item.title %></h1>
+  <span class="publishedAt"><%= (@item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></span>
+  <span class="guestName"><%= @item.guest_name %></span>
+</div>
+
+<div class="images">
+  <% if file = @item.embedded_file(:image1_file_id) %>
+  <a href="<%= "files/image1/#{file.name}" %>" target="_blank">
+    <img src="<%= "files/image1/thumb/#{file.name}" %>" alt="" /></a>
+  <% end %>
+  
+  <% if file = @item.embedded_file(:image2_file_id) %>
+  <a href="<%= "files/image2/#{file.name}" %>" target="_blank">
+    <img src="<%= "files/image2/thumb/#{file.name}" %>" alt="" /></a>
+  <% end %>
+
+  <% if file = @item.embedded_file(:image3_file_id) %>
+  <a href="<%= "files/image3/#{file.name}" %>" target="_blank">
+    <img src="<%= "files/image3/thumb/#{file.name}" %>" alt="" /></a>
+  <% end %>
+</div>
+
+<div class="body">
+  <%=hbr @item.body %>
+</div>
+
+<div class="spot">
+  この観光地の情報を見る：<%= link_to @item.spot.title, @item.spot.public_uri %>
+</div>
+
+<div class="back"><a href="javascript:history.back()">戻る</a></div>
+
+</div>

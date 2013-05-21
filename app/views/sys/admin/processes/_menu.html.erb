@@ -1,0 +1,8 @@
+<h2>プロセス</h2>
+
+<div class="actionMenu">
+  <%= action_menu :index %>
+  <% if @process_name && @process.state != "running" %>
+  <%= link_to "プロセス実行", {:do => :start_process}, :confirm => "プロセスを実行してよろしいですか？" %>
+  <% end %>
+</div>

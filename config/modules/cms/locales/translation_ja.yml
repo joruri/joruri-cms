@@ -1,0 +1,150 @@
+ja:
+  activerecord:
+    attributes:
+      cms/site:
+        state: "状態"
+        node_id: "ROOTディレクトリ"
+        name: "サイト名称"
+        full_uri: "サイトURL"
+        alias_full_uri: "別名URL"
+        mobile_full_uri: "携帯URL"
+        admin_full_uri: "管理画面URL"
+        related_site: "関連サイト"
+
+      cms/site_setting:
+        
+      cms/concept:
+        state: "状態"
+        parent_id: "親コンセプト"
+        level_no: "階層"
+        sort_no: "並び順"
+        name: "コンセプト名"
+
+      cms/site_setting/emergency_layout:
+        value: "レイアウト"
+        sort_no: "並び順"
+        
+      cms/content:
+        state: "状態"
+        concept_id: "コンセプト"
+        model: "コンテンツ種別"
+        name: "コンテンツ名"
+
+      cms/content_setting:
+        content_id: "コンテンツ"
+        name: "設定名"
+        value: "設定値"
+
+      cms/layout:
+        concept_id: "コンセプト"
+        state_no: "状態"
+        sort_no: "並び順"
+        name: "レイアウトID"
+        title: "レイアウト名"
+        head: "標準HEADタグ"
+        body: "標準BODY"
+        stylesheet: "標準スタイルシート"
+        mobile_head: "携帯HEADタグ"
+        mobile_body: "携帯BODY"
+        mobile_stylesheet: "携帯スタイルシート"
+        smart_phone_head: "スマートフォン HEADタグ"
+        smart_phone_body: "スマートフォン BODYタグ"
+        smart_phone_stylesheet: "スマートフォン スタイルシート"
+
+      cms/piece:
+        concept_id: "コンセプト"
+        model: "アイテム種別"
+        state: "状態"
+        content_id: "コンテンツ"
+        name: "ピースID"
+        title: "ピース名"
+        view_title: "表示タイトル"
+        head: "ヘッダー"
+        body: "本文"
+        sort_no: "並び順"
+
+      cms/piece_link_item:
+        state: "状態"
+        name: "リンク名"
+        uri: "URL"
+        sort_no: "並び順"
+        target: "対象ウィンドウ"
+        
+      cms/node:
+        parent_id: "親ディレクトリ"
+        concept_id: "コンセプト"
+        route_id: "パンくず"
+        layout_id:  "レイアウト"
+        state: "状態"
+        content_id: "コンテンツ"
+        model: "アイテム種別"
+        name: "ディレクトリ名"
+        title: "タイトル"
+        body: "本文"
+        mobile_title: "携帯タイトル"
+        mobile_body: "携帯本文"
+
+      cms/kana_dictionary:
+        name: "名称"
+        body: "辞書データ"
+
+      cms/data_text:
+        concept_id: "コンセプト"
+        state: "状態"
+        name: "テキストID"
+        title: "テキスト名"
+        body: "本文"
+        module: "モジュール"
+
+      cms/data_file:
+        concept_id: "コンセプト"
+        state: "状態"
+        node_id: "フォルダ"
+        file: "ファイル"
+        name: "保存ファイル名"
+        title: "表示ファイル名"
+        size: "サイズ"
+
+      cms/data_file_node:
+        concept_id: "コンセプト"
+        name: "フォルダ名"
+        title: "説明"
+
+      cms/feed:
+        state: "状態"
+        name: "フィードID"
+        title: "フィード名"
+        uri: "フィードURL"
+        feed_type: "フィード文書種別"
+        feed_id: "フィード文書ID"
+        feed_title: "フィード文書名"
+        link_alternate: "代替URL"
+        entry_count: "記事取込数"
+        fixed_categories_xml: "カテゴリXML（固定）"
+      
+      cms/stylesheet:
+        path: "パス"
+        name: "ファイル名"
+        body: "内容"
+        new_directory: "新規ディレクトリ名"
+        new_file: "新規ファイル名"
+        new_upload: "ファイル"
+      
+      ## node
+      cms/node/page:
+        name: "ファイル名"
+      cms/node/sitemap:
+        name: "ファイル名"
+
+      ## piece
+      cms/piece/bread_crumb:
+        top_label: "TOPリンク文字"
+      cms/piece/sns_sharing:
+        link_types: "表示種別"
+
+      ## tool
+      cms/model/tool/export:
+        concept_id: "コンセプト"
+      cms/model/tool/import:
+        concept_id: "コンセプト"
+        file: "ファイル"

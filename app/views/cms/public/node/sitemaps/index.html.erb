@@ -1,0 +1,25 @@
+<%
+
+def show_children(node, level = 1, cls = nil)
+  html = ''
+  cls ||= node.name.to_s.gsub(/\..*/, '').camelize(:lower)
+  children = @children.call(node)
+  
+  html += %Q(<li class="level#{level} #{cls}">#{link_to(h(node.title), node.public_uri, :class => "level#{level}")})
+
+  if children.size > 1
+    html += %Q(\n<ul class="level#{level + 1} #{cls}">)
+    children.each do |c|
+      html += show_children(c, level + 1, "#{cls}-#{c.name.gsub(/\..*/, '').camelize(:lower)}")
+    end
+    html += %Q(</ul>)
+  end
+  html += %Q(</li>\n)
+
+  return html
+end
+
+%><ul class="sitemap level1">
+<% @items.each do |item| %>
+<%== show_children(item) %><% end %>
+</ul> 

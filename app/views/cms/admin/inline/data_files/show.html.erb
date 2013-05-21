@@ -1,0 +1,30 @@
+<%= render :partial => 'menu' %>
+
+<%#= render :file => "cms/admin/data/files/show" %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:node_id) %></th>
+    <td><%= safe{@item.node.name} %></td>
+  </tr>
+  <% if @item.image_file? %>
+  <tr>
+    <th><%= @item.locale(:file) %></th>
+    <td>
+      <a href="<%= url_for(:id => @item, :action => :download, :_t => @item.updated_at.to_i) %>" target="_blank">
+        <img src="<%= url_for(:id => @item.id, :action => :thumbnail, :_t => @item.updated_at.to_i) %>" /></a></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:size) %></th>
+    <td><%= @item.eng_unit %> <%= @item.image_size %></td>
+</table>

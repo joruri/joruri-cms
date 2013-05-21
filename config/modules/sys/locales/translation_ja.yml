@@ -1,0 +1,109 @@
+ja: 
+  activerecord: 
+    attributes: 
+      sys/sequence: 
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        name: "名前"
+        version: "バージョン"
+        value: "値"
+      
+      sys/language: 
+        state: "状態"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        sort_no: "並び順"
+        name: "内部名前"
+        title: "表示名称"
+      
+      sys/group: 
+        state: "状態"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        parent_id: "上位グループ"
+        level_no: "階層"
+        sort_no: "並び順"
+        code: "グループID"
+        name: "グループ名"
+        name_en: "グループ名（英語表記）"
+        email: "メールアドレス"
+        ldap: "LDAP同期"
+        ldap_version: "LDAP同期バージョン"
+        web_state: "Web公開"
+        tel: "電話番号"
+        outline_uri: "業務概要URL"
+        role_name: "ロール"
+      
+      sys/group_user: 
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      
+      sys/user: 
+        id: "ID"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        state: "状態"
+        account: "ユーザID"
+        password: "パスワード"
+        ldap: "LDAP同期"
+        ldap_version: "LDAP同期バージョン"
+        auth_no: "ユーザ権限"
+        name: "氏名"
+        name_en: "氏名(英語表記)"
+        kana: "かな"
+        email: "メールアドレス"
+        remember_token: "トークン"
+        remember_token_expires_at: "トークン有効期限"
+        group_id: "グループ"
+        in_group_id: "グループ"
+        role_name: "ロール"
+        current_password: "現在のパスワード"
+        new_password: "新しいパスワード"
+        confirm_password: "新しいパスワード（確認用）"
+      
+      sys/role_name: 
+        name: "ロールID"
+        title: "ロール名"
+        privileges: "権限"
+        groups: "設定グループ"
+        users: "設定ユーザ"
+        
+      sys/object_privilege: 
+        item_unid: "コンセプト"
+        action: "権限"
+        in_actions: "権限"
+        
+      sys/maintenance: 
+        created_at: "作成日時"
+        updated_at: "編集日時"
+        published_at: "公開日時"
+        state: "状態"
+        title: "タイトル"
+        body: "本文"
+      
+      sys/message: 
+        created_at: "作成日時"
+        updated_at: "編集日時"
+        published_at: "公開日時"
+        state: "状態"
+        title: "タイトル"
+        body: "本文"
+      
+      sys/file: 
+        file: "ファイル"
+        name: "保存ファイル名"
+        title: "表示ファイル名"
+      
+      sys/operation_log: 
+        id: "ID"
+        created_at: "操作日時"
+        user_id: "ユーザID"
+        user_name: "ユーザ名"
+        ipaddr: "IPアドレス"
+        uri: "URL"
+        action: "操作"
+        item: "操作アイテム"
+        item_model: "操作アイテム種別"
+        item_id: "操作アイテムID"
+        item_unid: "操作アイテムUNID"
+        item_name: "操作アイテム名"

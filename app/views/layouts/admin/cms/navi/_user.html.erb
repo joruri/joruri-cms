@@ -1,0 +1,9 @@
+<%= link_to "グループ", sys_groups_path(:parent => 0), :class => (current == :group ? 'current' : '') %>
+<%= link_to "ユーザ", sys_users_path, :class => (current == :user ? 'current' : '') %>
+<%= link_to "ロール", sys_role_names_path, :class => (current == :role ? 'current' : '') %>
+<% if Joruri.config[:sys_use_ldap] %>
+<%= link_to "LDAP", sys_ldap_groups_path(:parent => 0), :class => (current == :ldap ? 'current' : '') %>
+<%= link_to "LDAP同期", sys_ldap_synchros_path, :class => (current == :ldap_synchro ? 'current' : '') %>
+<% end %>
+<%= link_to "エクスポート", sys_export_groups_path, :class => (current == :export ? 'current' : '') %>
+<%= link_to "インポート", sys_import_groups_path, :class => (current == :import ? 'current' : '') %>

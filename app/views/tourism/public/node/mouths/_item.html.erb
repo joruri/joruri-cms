@@ -1,0 +1,27 @@
+<%
+
+file1 = item.embedded_thumbnail(:image1_file_id)
+file2 = item.embedded_thumbnail(:image2_file_id)
+file3 = item.embedded_thumbnail(:image3_file_id)
+
+%>
+<div class="header">
+  <h3><%= item.title %></h3>
+  <p class="publishedAt"><%= (item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></p>
+  <p class="guestName"><%= item.guest_name %></p>
+</div>
+<div class="body"><%=hbr item.body %></div>
+
+<% if file1 || file2 || file3 %>
+<div class="mouthPhotos">
+  <% if file1 %>
+    <a href="<%= public_embedded_file_path(file1) %>" target="_blank">
+      <img src="<%= public_embedded_thumbnail_path(file1) %>" alt="" /></a><% end %>
+  <% if file2 %>
+    <a href="<%= public_embedded_file_path(file2) %>" target="_blank">
+      <img src="<%= public_embedded_thumbnail_path(file2) %>" alt="" /></a><% end %>
+  <% if file3 %>
+    <a href="<%= public_embedded_file_path(file3) %>" target="_blank">
+      <img src="<%= public_embedded_thumbnail_path(file3) %>" alt="" /></a><% end %>
+</div>
+<% end %>

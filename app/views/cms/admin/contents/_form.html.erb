@@ -1,0 +1,17 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= concept_form f %>
+  <tr>
+    <th><%= @item.locale :model %></th>
+    <td>
+      <% if @item.id %><%= @item.model_name %><% else %>
+      <%= f.select :model, Cms::Lib::Modules.contents, :include_blank => :true %><% end %>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

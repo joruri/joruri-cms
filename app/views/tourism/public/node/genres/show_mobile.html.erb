@@ -1,0 +1,34 @@
+<div class="contentTourism contentTourismGenre">
+
+<% file = @item.embedded_file(:image_file_id) %>
+<% if file || !@item.body.blank? %>
+<div class="targetGenre targetGenre<%= @item.name.camelize %>">
+  <% if file %>
+  <img src="<%= public_embedded_thumbnail_path(file) %>" alt="" />
+  <% end %>
+  <% if !@item.body.blank? %>
+  <div class="body"><%=hbr @item.body %></div>
+  <% end %>
+</div>
+<% end %>
+
+<% if @items.size > 0 %>
+<div class="genres">
+  <div class="h2">ジャンル一覧</div>
+  <% @items.each do |item| %>
+    <div class="h3 genre genre<%= item.name.camelize %>"><a href="<%= "#{@base_uri}#{item.name}/" %>"><%= item.title %></a></div>
+  <% end %>
+</div>
+<% end %>
+
+<% if @spots.size > 0 %>
+<div class="spots">
+  <div class="h2">観光地一覧</div>
+  <% @spots.each do |item| %>
+  <%= render :partial => "tourism/public/node/spots/item", :locals => {:item => item} %>
+  <% end %>
+  <%= paginate @spots %>
+</div>
+<% end %>
+
+</div>

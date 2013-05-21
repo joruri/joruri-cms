@@ -1,0 +1,320 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Base
+========================================================= */
+
+/* Elements
+----------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-size: 100%;
+  font-style: normal;
+}
+html {
+  height: 100%;
+  font-size: 15px;
+  -webkit-text-size-adjust: none;
+}
+body {
+  height: 100%;
+  line-height: 1.8;
+  border: 0;
+  background-color: #ffffff;
+  font-size: 15px;
+}
+body, td, th, select, option {
+  font-family: ArialMT, "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", Meiryo, "メイリオ", sans-serif;
+}
+input, textarea {
+  font-size: 100%;
+  font-family: Arial, sans-serif;
+}
+blockquote {
+  margin: 10px 20px;
+}
+h1, h2, h3, h4, h5 {
+  font-size: 18px;
+}
+img {
+  border-style: none;
+}
+strong {
+  font-weight: bold;
+}
+pre {
+  font-family: SimHei, "ＭＳ ゴシック", monospace;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+}
+ul {
+  list-style-type: none;
+  list-style-position: outside;
+}
+li {
+  margin: 0;
+  padding: 0;
+  list-style-position:outside;
+}
+a {
+  color: #000000;
+  text-decoration: none;
+}
+
+/* =========================================================
+   Common Classes.
+========================================================= */
+
+/* blank to clear
+----------------------------------------------- */
+div.clearBlank {
+  clear: both;
+  height: 1px;
+  line-height: 1px;
+  font-size: 1px;
+}
+
+/* icon
+----------------------------------------------- */
+img.fileIcon {
+  display: none;
+}
+
+/* Notices
+----------------------------------------------- */
+ul.notices {
+  margin: 0 0 15px;
+  padding: 5px 10px;
+  border: 1px solid #bbddff;
+  background-color: #ddeeff;
+}
+ul.notices li {
+  color: #3355ff;
+}
+
+/* Errors
+----------------------------------------------- */
+.formError {
+  margin: 15px 0;
+  padding: 10px;
+  border: 1px solid #ee0000;
+  color: #ee0000;
+}
+.elementError {
+  margin: 3px 0 0;
+  color: #ee0000;
+}
+.errorExplanation {
+  margin: 0 0 20px;
+  color: #ee0000;
+}
+.errorExplanation h2 {
+  padding: 4px 6px;
+  font-weight: bold;
+  border-top: 1px solid #eeee44;
+  border-bottom: 1px solid #eeee44;
+  background-color: #ffff99;
+}
+.errorExplanation p {
+  margin: 15px 10px 10px;
+  font-weight: bold;
+}
+.errorExplanation ul {
+  margin: 10px 10px 0 30px;
+  list-style-type: disc;
+}
+.errorExplanation li {
+  padding: 1px 0;
+}
+
+/* Form relation
+----------------------------------------------- */
+div.submitters {
+  margin: 20px 10px;
+}
+div.submitters input, div.submitters a {
+  margin: 0 10px;
+}
+div.submitters input {
+  width: 100px;
+}
+
+/* Table for list
+----------------------------------------------- */
+table.list {
+  width: 100%;
+}
+table.list th {
+  padding: 6px 7px;
+  border: 1px solid #bbbbbb;
+  background-color: #e4e4e4;
+  color: #000000;
+  font-weight: lighter;
+  text-align: left;
+}
+table.list td {
+  padding: 6px 7px;
+  border: 1px solid #cccccc;
+}
+table.list tr.cycle td {
+  background-color: #f7f7f7;
+}
+
+/* Table for form
+----------------------------------------------- */
+table.form {
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+table.form th {
+  width: 200px;
+  padding: 6px 7px;
+  border: 1px solid #bbbbbb;
+  background-color: #e4e4e4;
+  color: #000000;
+  font-weight: lighter;
+  text-align: left;
+}
+table.form td {
+  padding: 6px 7px;
+  border: 1px solid #cccccc;
+}
+
+/* Form relation
+----------------------------------------------- */
+div.submitters {
+  margin: 20px 10px;
+}
+div.submitters input, div.submitters a {
+  margin: 0 10px;
+}
+div.submitters input {
+  width: 100px;
+}
+
+/* clearfix
+----------------------------------- */
+.clearfix:after {
+  content: "."; 
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+/* Icons.
+----------------------------------------------- */
+.iconFile, .iconDefault {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/default.gif);
+}
+.iconBmp {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/bmp.gif);
+}
+.iconCsv {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/csv.gif); 
+}
+.iconDoc,
+.iconDocx {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/doc.gif); 
+}
+.iconGif {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/gif.gif); 
+}
+.iconJpg {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/jpg.gif); 
+}
+.iconJpe {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/jpg.gif); 
+}
+.iconJpeg {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/jpg.gif); 
+}
+.iconJtd {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/jtd.gif); 
+}
+.iconLzh {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/lzh.gif); 
+}
+.iconPdf {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/pdf.gif); 
+}
+.iconPng {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/png.gif); 
+}
+.iconPpt {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/ppt.gif); 
+}
+.iconTxt {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/txt.gif); 
+}
+.iconXls,
+.iconXlsx {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/xls.gif);
+}
+.iconZip {
+  background-image: url(/_common/images/icons/zip.gif); 
+}

@@ -1,0 +1,89 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   bbs
+========================================================= */
+.entryForm h2 {
+  line-height: 36px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+  font-size: 110%;
+}
+.entryForm dt {
+  padding: 4px 10px;
+  background-color: #f1f1f1;
+}
+.entryForm input {
+  margin: 15px 10px 20px;
+}
+textarea.body {
+  width: 85%;
+  margin: 15px 10px 10px;
+}
+div.submitters {
+  margin: 10px 0 30px;
+}
+.calendarEvents.calendarMonthlyEvents {
+  margin-bottom: 20px;
+}
+#day01.date, #day02.date, #day03.date, #day04.date,
+#day05.date, #day06.date, #day07.date, #day08.date,
+#day09.date, #day10.date, #day11.date, #day12.date,
+#day13.date, #day14.date, #day15.date, #day16.date,
+#day17.date, #day18.date, #day19.date, #day20.date,
+#day21.date, #day22.date, #day23.date, #day24.date,
+#day25.date, #day26.date, #day27.date, #day28.date,
+#day29.date, #day30.date, #day31.date {
+  padding-left: 5px;
+  border-top: 1px solid #cccccc;
+}
+.sun, .holiday {
+  color: #ff0000 !important;
+}
+.sat {
+  color: #3366ff;
+}
+.date .day {
+  float: left;
+  height: 35px;
+  margin-right: 15px;
+  padding: 5px 0 0 5px;
+}
+.date a {
+  text-decoration: underline;
+}
+.events {
+  float: left;
+  padding-top: 5px;
+}
+.date:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+.calendarEvents.calendarMonthlyEvents h2 {
+  line-height: 45px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-color: #e3f0fa;
+  font-size: 130%;
+}
+.pagination.upperPagination {
+  line-height: 35px;
+  background-color: #f1f1f1;
+  font-size: 120%;
+}
+.pagination.lowerPagination {
+  line-height: 35px;
+  border-top: 1px solid #cccccc;
+  background-color: #f1f1f1;
+  font-size: 120%;
+}

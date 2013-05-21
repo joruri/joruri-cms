@@ -1,0 +1,482 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Pieces
+========================================================= */
+
+/* accessibility-tool
+----------------------------------------------- */
+#commonHeader {
+  width: 100%;
+  height: auto;
+  background-color: #ececec;
+  font-size: 12px;
+}
+#commonHeader .pieceContainer {
+  padding: 4px 10px;
+  text-align: right;
+}
+#headerBody .piece {
+  margin-bottom: 0px;
+}
+.head-tools {
+  width: 100%;
+  margin: 0;
+  padding: 4px 0 3px;
+  background-position: left top;
+  text-align: right;
+}
+
+/* navigationNotice
+----------------------------------------------- */
+#navigationNotice {
+  padding: 6px 10px;
+  background-color: #dddddd;
+  font-weight: bold;
+}
+
+/* common banner
+----------------------------------------------- */
+#commonBanner {
+  clear: both;
+  height: 70px; 
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  text-align: right;
+}
+#commonBanner .logo {
+  float: left;
+  width: 29%;
+  height: 70px;
+  text-align:left;
+}
+#commonBanner .logo a {
+  width: 100%;
+  height: 0px !important;
+  height /**/: 70px; /* gokanmode */
+  line-height: 70px;
+  padding-top: 70px;
+  font-weight: bold;
+  font-size: 200%;
+}
+#commonBanner .menu {
+  float: right;
+  width: 70%;
+  height: 70px;
+  margin: 0px;
+  text-align: right;
+}
+#commonBanner .upperMenu {
+  margin: 25px 0px 0px 0px;
+  padding-right: 10px;
+}
+#commonBanner .lowerMenu {
+  margin: 0 0 5px;
+  padding-right: 10px;
+}
+#commonBanner .menu form {
+  display: inline;
+}
+input#search-box {
+  width: 130px;
+}
+
+/* global navi
+----------------------------------------------- */
+#globalNavi {
+  clear: both;
+  width: 100.3%;
+  height: 34px;
+}
+#globalNavi a {
+  display: block;
+  float: left;
+  width: 12.45%;
+  height: 34px;
+  line-height: 34px;
+  background-color: #002b93;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+}
+#globalNavi a:hover {
+  color: #ffffff;
+}
+#globalNavi a.top {
+  background-color: #42befd;
+}
+#globalNavi a.bosai {
+  background-color: #e34665;
+}
+*:first-child+html #globalNavi a {
+  height: auto;
+}
+
+/* IE */
+* html #globalNavi {
+  width: 100%;
+}
+* html #globalNavi a.bosai {
+  width: 12.2%;
+}
+*:first-child+html #globalNavi {
+  width: 100.3%;
+}
+
+/* global navi active
+----------------------------------------------- */
+#page-index #globalNavi a.top,
+#globalNavi a.current,
+#globalNavi a.current:hover {
+  background-repeat: repeat-x;
+  background-position: left -80px;
+  color: #000000;
+}
+
+/* footer
+----------------------------------------------- */
+/* address
+---------------------- */
+#address {
+  padding:10px 5px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+
+/* footer-navi
+---------------------- */
+#footerNavi {
+  width: 100%;
+  background-color: #001c66;
+}
+#footerNavi .pieceBody {
+  padding: 10px 0;
+  color: #ffffff;
+  text-align: center;
+}
+#footerNavi img {
+  margin-left: 5px;
+  vertical-align: middle;
+}
+#footerNavi a {
+  color: #ffffff;
+}
+#footerNavi a:visited {
+  color: #ffffff;
+}
+#footerNavi a:hover {
+  color: #ffffff;
+}
+#footerNavi img{
+  display: none;
+}
+
+/* breadCrumbs
+----------------------------------------------- */
+#breadCrumbs {
+  clear: both;
+  margin: 7px 0 0;
+  line-height: 1.3;
+}
+#breadCrumbs .direction {
+  margin: 0;
+}
+#pageTop {
+  text-align: right;
+}
+
+/* calendar
+----------------------------------------------- */
+*html .calender {
+  height: 1%;
+}
+#calendar .pieceContainer {
+  width: 99%;
+}
+#menu #calendar .pieceHeader,
+#links #calendar .pieceHeader {
+  display: none;
+}
+#calendar .pieceBody {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #666666;
+}
+#calendar .calendar {
+  float: left;
+  width: 162px;
+  padding: 5px 0 0 6px;
+  font-weight: bold;
+  font-size: 12px;
+}
+#calendar .links {
+  clear: both;
+  padding: 5px 0 10px;
+  text-align: center;
+}
+#calendar .calendar .wdays .wday {
+  display: block;
+  float: left;
+  width: 17px;
+  padding: 2px;
+  border-top: solid 1px #aaaaaa;
+  border-right: solid 1px #aaaaaa;
+  border-bottom: solid 1px #aaaaaa;
+  text-align: center;
+}
+#calendar .calendar .days .day {
+  display: block;
+  float: left;
+  width: 17px;
+  padding: 2px;
+  border-right: solid 1px #aaaaaa;
+  border-bottom: solid 1px #aaaaaa;
+  text-align: center;
+}
+#calendar .calendar .wdays .sun,
+#calendar .calendar .days .sun {
+  border-left: solid 1px #aaaaaa;
+}
+#calendar .calendar .days .sat {
+  color: #3366ff;
+}
+#calendar .calendar .days .sun,
+#calendar .calendar .days .holiday {
+  color: #f00000;
+}
+.january, .february, .march, .april, .may, .june, .july, .august, .september, .october, .november, .december {
+  height: 25px;
+  line-height: 25px;
+  padding-left: 10px;
+}
+.calendar .prevMonth, .calendar .nextMonth {
+  color: #ffffff;
+}
+.links a.prevMonth {
+  padding-left: 13px;
+}
+.links a.nextMonth {
+  padding-right: 13px;
+}
+
+/* piece
+----------------------------------------------- */
+.piece {
+  margin-bottom: 5px;
+}
+#footer .piece {
+  margin-bottom: 0px;
+}
+
+/* ad
+----------------------------------------------- */
+#adBanner .pieceBody {
+  padding: 0px;
+}
+#adBanner a {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* footer-ad
+----------------------------------------------- */
+#footerAdBanner {
+  background-color: #eeeeee;
+  text-align: center;
+}
+#footerAdBanner .pieceBody {
+  padding: 10px 0 5px;
+}
+#footerAdBanner a {
+  margin: 0 10px;
+}
+
+/* page-title
+----------------------------------------------- */
+*html #pageTitle {
+  height: 0;
+}
+#pageTitle .pieceContainer {
+  margin: 0;
+  padding: 0;
+  background-color: #d0e6f3;
+  background-image: url(./images/tl-pegetitle-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#pageTitle .pieceBody {
+  border: 1px solid #233f9b;
+  background-image: url(./images/tl-pagetitle.gif);
+  background-repeat: no-repeat;
+}
+#pageTitle h1 {
+  padding: 7px 0 4px 20px;
+  font-weight: bold;
+  font-size: 200%;
+}
+h1 {
+  color: #000000;
+}
+
+/* side-list
+----------------------------------------------- */
+#links ul,
+#menu ul {
+  padding: 5px 5px 0;
+  background-color: #f5f5f5;
+}
+#links li,
+#menu li {
+  padding: 0 0 5px 8px;
+  background-image: url(./files/icon_square_g.gif);
+  background-repeat: no-repeat;
+  background-position: left 5px;
+}
+#menu .pieceHeader,
+#links .pieceHeader {
+  line-height: 25px;
+  padding: 0 5px;
+  background-color:# 003fcd;
+}
+#menu .pieceHeader h2,
+#links .pieceHeader h2 {
+  color: #ffffff;
+  font-weight: bold;
+}
+#menu ul,
+#links ul {
+  padding: 5px 10px;
+  border: 1px solid #003fcd;
+}
+
+/* Doc Tabs
+--------------------------------------------------------- */
+#docTab {
+  margin-bottom: 15px;
+}
+
+/* tabs
+------------------------------------- */
+#docTabPortal .tabs,
+#docTab .tabs {
+  width: 100%;
+}
+#docTabPortal .tabs a,
+#docTab .tabs a {
+  display: inline-block;
+  float: left;
+  width: 15%; 
+  line-height: 24px;
+  margin-right: 3px;
+  padding: 0 3px;
+  border: 1px solid #cccccc;
+  border-bottom: none;
+  background-color:#dddddd;
+  color: #333333;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+#docTabPortal .tabs:after,
+#docTab .tabs:after {  
+  content: ".";  
+  display: block;  
+  visibility: hidden;  
+  height: 0.1px;  
+  font-size: 0.1em;  
+  line-height: 0;  
+  clear: both;  
+}
+#docTabPortal .tabs a.bosai:hover, #docTab .tabs a.bosai:hover {
+  background-color: #001C66;
+  color: #ffffff;
+}
+#docTabPortal .tabs a:hover,
+#docTab .tabs a:hover {
+  background-color: #001c66;
+  color: #ffffff;
+}
+#docTabPortal .tabs a.bosai,
+#docTab .tabs a.bosai {
+  background-color:#ffcccc;
+  color: #cc0000;
+}
+#docTabPortal .tabs a.current,
+#docTab .tabs a.current {
+  background-color: #001c66;
+  color: #ffffff;
+}
+
+/* content
+------------------------------------- */
+#docTabPortal .wrapper,
+#docTab .wrapper {
+  clear: both;
+  width: 100%;
+  margin: 0;
+  border: 1px solid #cccccc;
+}
+#docTabPortal .content,
+#docTab .content {
+  clear: both;
+  height: auto !important;
+  padding: 10px 0;
+}
+#docTabPortal .content ul,
+#docTab .content ul {
+  padding: 0 20px 0 15px;
+}
+#docTabPortal .content li,
+#docTab .content li {
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 0 10px;
+  background-image: url(./files/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 7px;
+}
+
+/* links
+------------------------------------- */
+#docTab .links .feed {
+  position: absolute;
+  float: left;
+  margin-top: 10px;
+}
+#docTab .links .feed a {
+  display: inline-block;
+} 
+#docTab .links .feed a.rss {
+  width: 40px;
+  height: 0;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-left: 15px;
+  padding-top: 13px;
+  background-image: url(./images/bt-rss.gif);
+  background-repeat: no-repeat;
+} 
+#docTab .links .feed a.atom {
+  width: 45px;
+  height: 0;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-left: 5px;
+  padding-top: 13px;
+  background-image: url(./images/bt-atom.gif);
+  background-repeat: no-repeat;
+}
+#docTabPortal .links .more,
+.links .more {
+  text-align: right;
+  padding: 10px 20px 10px 10px;
+}
+#docTabPortal .links .more a,
+#docTab .links .more a {
+  overflow: hidden;
+  padding-top: 10px; 
+}

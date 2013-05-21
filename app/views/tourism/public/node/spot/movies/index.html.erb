@@ -1,0 +1,17 @@
+<div class="contentTourism contentTourismSpotMovie">
+
+<div class="movies">
+  <h2>ムービーギャラリー</h2>
+  
+  <% if @items.size > 0 %>
+  <ul class="movies">
+    <% @items.each do |item| %>
+    <li><%= render :partial => "tourism/public/node/movies/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
+  <%= paginate @items %>
+</div>
+
+</div>

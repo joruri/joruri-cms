@@ -1,0 +1,7 @@
+<div class="movie">
+  <p class="title"><a href="<%= item.public_uri %>"><%= item.title %></a></p>
+  <% if item.thumbnail_uri %>
+  <a href="<%= item.public_uri %>">
+    <img src="<%= item.thumbnail_uri %>" alt="" /></a>
+  <% end %>
+</div>

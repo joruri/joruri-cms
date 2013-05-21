@@ -1,0 +1,24 @@
+<div class="contentFaqSearchDocs">
+
+<div class="searchInfo">
+  <% if @nosearch %>
+  <div class="nosearch">検索条件を入力してください。</div>
+  <% else %>
+  <div class="hit">
+    <span class="label">検索結果</span><span class="count"><%= "#{@docs.total_entries}" %></span><span class="unit">件</span>
+  </div>
+  <% end %>
+</div>
+
+<% if @docs.size > 0 %>
+<div class="docs">
+  <ul>
+    <% @docs.each do |doc| %>
+    <li><%=link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li>
+    <% end %>
+  </ul>
+  <%= paginate @docs %>
+</div>
+<% end %>
+
+</div>

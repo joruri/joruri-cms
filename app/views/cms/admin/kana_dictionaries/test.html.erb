@@ -1,0 +1,60 @@
+<style type="text/css">
+#cmsKanaResult { margin-bottom: 10px; padding: 8px; background-color: #eee; }
+#cmsKanaResult .mode { margin-bottom: 10px; }
+#cmsKanaResult rp, #cmsKanaResult rt { color: #0b0; font-size: 70%; }
+#cmsKanaResult ruby { color: #b00; }
+.kanaSubmitter { margin: 2px; padding-left: 10px; width: 130px; text-align: left; }
+</style>
+
+<SCRIPT language="javascript" type="text/javascript">
+//window.onload = function(){
+//  previewResult();
+//}
+function previewResult() {
+  var base = document.getElementById("resultPreview")
+  if (!base) return true;
+  var iframe = document.createElement("iframe");
+  iframe.setAttribute("frameBorder", "0");
+  iframe.style.position = "relative";
+  iframe.style.width    = "98%";
+  iframe.style.height   = "300px";
+  iframe.style.border   = "1px solid #bbb";
+  base.appendChild(iframe);
+  if (document.all) {
+    iframedoc = iframe.contentWindow.document;
+  } else {
+    iframedoc = iframe.contentDocument;
+  }
+  iframedoc.writeln("<body></body>");
+  iframedoc.body.innerHTML = document.getElementById("resultValue").value;
+  iframedoc.body.style.fontSize   = "12px";
+}
+</SCRIPT>
+
+<p class="form">動作確認</p>
+
+<%= form_for :item, :url => {:do => :test} do |f| %>
+<table>
+<tr>
+  <td><textarea name="body" style="width: 600px; height: 100px;"><%= params[:body] %></textarea></td>
+  <td>
+    <input type="submit" name="yomi_kana" class="kanaSubmitter" value="→ ふりがな" /><br />
+    <input type="submit" name="talk_kana" class="kanaSubmitter" value="→ 音声テキスト" /><br />
+    <input type="submit" name="talk_file" class="kanaSubmitter" value="→ 音声ファイル" /><br />
+  </td>
+</tr>
+</table>
+<% end %>
+
+<br />
+
+<% if @result %>
+<input type="hidden" name="resultValue" id="resultValue" value="<%#=h @result %>" />
+<div id="cmsKanaResult">
+  <p class="mode">［<%= @mode %>］</p>
+  <%= @result %>
+</div>
+<% end %>
+
+<form method="post">
+</form>

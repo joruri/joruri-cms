@@ -1,0 +1,13 @@
+<p class="form">グループ</p>
+
+<%= form_for(:item, :url => {:action => :export}, :html => {:method => :post}) do |f| %>
+<%= hidden_field_tag :do, 'groups' %>
+<%= f.submit 'エクスポート', :style => 'width: 120px;' %><br />
+<% end %>
+
+<p class="form">ユーザ</p>
+
+<%= form_for(:item, :url => {:action => :export}, :html => {:method => :post}) do |f| %>
+<%= hidden_field_tag :do, 'users' %>
+<%= f.submit 'エクスポート', :style => 'width: 120px;' %><br />
+<% end %>

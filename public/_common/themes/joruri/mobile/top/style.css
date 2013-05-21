@@ -1,0 +1,48 @@
+@charset "UTF-8";
+@import "../base/style.css";
+@import "../base/layouts/col-1.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   TOP
+========================================================= */
+/* midashi
+----------------------------------------------- */
+.midashi {
+  padding: 0.2em;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* top-pickup
+----------------------------------------------- */
+#pickup .pieceBody {
+  padding: 0.3em;
+  text-align: center;
+  background-color: #eeff99;
+}
+.pickupTitle {
+  margin-bottom: 0.5em;
+}
+
+/* contents
+----------------------------------------------- */
+#mayor .pieceHeader,
+#search .pieceHeader,
+#cornerTitle,
+#categoryList .pieceHeader,
+#recommendSite .pieceHeader {
+  margin-bottom: 5px;
+  padding: 0.3em;
+  background-color: #003399;
+  color: #ffffff;
+  font-weight: bold;
+}
+#mayor .pieceHeader a {
+  color: #ffffff;
+}
+
+#menuNavi {
+  padding-top: 5px;
+  border-top: 1px solid #003399;
+}

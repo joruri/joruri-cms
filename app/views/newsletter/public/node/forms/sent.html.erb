@@ -1,0 +1,33 @@
+<div class="contentNewsletter contentNewsletterComplete">
+
+<% if params.has_key?(:subscribe) %>
+
+  <% if @content.sent_addition_body.blank? %>
+  <div class="defaultMessage">
+    <p>メールマガジンの登録を受け付けました。</p>
+    <div class="body">
+      後ほど、ご登録のメールアドレス宛に「登録完了のお知らせ」を送信させていただきます。<br />
+      ご登録ありがとうございました。
+    </div>
+  </div>
+  <% else %>
+  <%== @content.sent_addition_body %>
+  <% end %>
+  
+<% elsif params.has_key?(:unsubscribe) %>
+
+  <% if @content.sent_deletion_body.blank? %>
+  <div class="defaultMessage">
+    <p>メールマガジンの解除を受け付けました。</p>
+    <div class="body">
+      後ほど、ご登録のメールアドレス宛に「解除完了のお知らせ」を送信させていただきます。<br />
+      ご利用ありがとうございました。<br />
+    </div>
+  </div>
+  <% else %>
+  <%== @content.sent_deletion_body %>
+  <% end %>
+  
+<% end %>
+
+</div>

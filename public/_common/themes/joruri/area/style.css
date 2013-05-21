@@ -1,0 +1,226 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   category
+========================================================= */
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.contentArticleArea .latest {
+  margin-bottom: 30px;
+  padding: 0;
+  background-image: url(./images/tl-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+.contentArticleArea .latest h2 {
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-image: url(./images/tl-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+.contentArticleArea ul {
+  padding: 0 5px;
+}
+.contentArticleArea li {
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 5px;
+}
+.contentArticleArea h3 {
+  margin-bottom: 10px;
+  padding: 5px 5px 4px 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+  font-weight: bold;
+  font-size: 120%;
+}
+.more {
+  padding: 0 5px 10px 0;
+  text-align: right;
+}
+
+/* RSS Atom
+----------------------------------------------- */
+.feed {
+  position: relative;
+  top: -32px;
+  right: 10px;
+  float: right;
+  height: 13px;
+  background-color: transparent;
+}
+.feed a.feedRss {
+  display: inline-block;
+  width: 40px;
+  height: 13px;
+  overflow: hidden;
+  background-image: url(./images/bt-rss.gif);
+  background-repeat: no-repeat;
+  text-indent: 50px;
+}
+.feed a.feedAtom {
+  display: inline-block;
+  width: 40px;
+  height: 13px;
+  overflow: hidden;
+  background-image: url(./images/bt-atom.gif);
+  background-repeat: no-repeat;
+  text-indent: 50px;
+}
+
+/* Area Map
+----------------------------------------------- */
+#areaNavi .list {
+  margin-left: 10px;
+  text-align: left;
+}
+#areaNavi .list a {
+  margin: 0 10px 0 0;
+  padding: 0 0 0 7px;
+  background-image: url(./images/ic-list.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+#mapImg {
+  margin: 30px 0 40px;
+  text-align: center;
+}
+
+/* Area Map table
+----------------------------------------------- */
+.contentArticleArea table {
+  width: 100%;
+}
+.contentArticleArea .pageTop {
+  margin: 5px 0 30px;
+  text-align: right;
+}
+.contentArticleArea .pageTop a {
+  padding: 0 0 0 15px;
+  background-image: url(./images/ic-top.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+table.ward {
+  background-color: #232f92;
+  color: #ffffff;
+}
+table.ward a {
+  margin: 0 10px 0 0;
+  padding: 0 0 0 7px;
+  background-image: url(./images/ic-link.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  color: #ffffff;
+}
+table.ward a:visited,
+table.ward a:hover {
+  color: #ffffff;
+}
+table.city a {
+  margin: 0 10px 0 0;
+  padding: 0 0 0 7px;
+  background-image: url(./images/ic-list.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+table.city tr.cycle {
+  background-color: #e3f0fa;
+}
+.contentArticleArea .ward td,
+.contentArticleArea .city td {
+  padding: 5px 7px;
+}
+.contentArticleArea td.name,
+.contentArticleArea td.page,
+.contentArticleArea td.zipCode,
+.contentArticleArea td.tel,
+.contentArticleArea td.formal {
+  width: 15%;
+}
+.contentArticleArea td.address {
+  width: 25%;
+}
+/* Soshiki Ichiran date
+----------------------------------------------- */
+.contentArticleArea dl:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+* html .contentArticleArea dl {
+  height: 1%;
+}
+.contentArticleArea dl {
+  clear: both;
+  display: block;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.contentArticleArea dl.cycle {
+  background: #eee;
+}
+.contentArticleArea dl.ward {
+  border: 1px solid #ccc;
+  background: #E3F0FA;
+}
+.contentArticleArea dt {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleArea dd {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleArea dl {
+  display: block;
+  width: 100%;
+}
+.contentArticleArea dd {
+  margin: 0;
+}
+.contentArticleArea dt.name {
+  width: 10%;
+}
+.contentArticleArea dd.page {
+  display: table;
+  width: 15%;
+}
+.contentArticleArea dd.zipCode {
+  width: 10%;
+}
+.contentArticleArea dd.address {
+  width: 20%;
+}
+.contentArticleArea dd.tel {
+  width: 10%;
+}
+.contentArticleArea dd.formal {
+  width: 15%;
+}
+/* pagination
+----------------------------------------------- */
+.pagination {
+  text-align: center;
+}
+.pagination a {
+  padding: 0 6px;
+}
+.pagination span.current {
+  padding: 0 3px;
+  font-weight: bold;
+  font-size: 150%;
+}

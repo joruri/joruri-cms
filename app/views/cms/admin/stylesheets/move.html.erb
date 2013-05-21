@@ -1,0 +1,17 @@
+<%= form_for :item, :url => "?do=move", :html => {:method => :put} do |f| %>
+  
+<%= error_messages_for :item %>
+
+<p class="form">移動</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :path %></th>
+    <td><%= @item.base_uri %>
+      <%= f.text_field :path, :class => "nameEn", :style => "width: 500px;" %></td>
+  </tr>
+</table>
+
+<%= submit :edit %>
+
+<% end %>

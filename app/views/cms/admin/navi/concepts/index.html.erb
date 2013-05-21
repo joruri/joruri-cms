@@ -1,0 +1,67 @@
+<%
+
+@exists = {}
+@h = []
+
+def set_concept(concept)
+  return h if @exists[concept.id]
+  @exists[concept.id] = true
+  
+  children = concept.readable_children
+  if children.size > 0
+    toggle = %Q(<a class="toggle opened" href="#">-</a>)
+  else
+    toggle = %Q(<span class="toggle empty">-</span>)
+  end
+  li_cls = (Core.concept.id == concept.id) ? "current" : ""
+  
+  @h << %Q(<li id="concept#{concept.id}" class="#{li_cls}">)
+  @h << %Q(#{toggle}#{link_to(concept.name, cms_navi_concept_path(concept.id, :concept => nil), :class => 'name')})
+  if (children).size > 0
+    @h << %Q(<ul class="children concept#{concept.id}">)
+    children.each{|c| set_concept(c) }
+    @h << %Q(</ul>)
+  end
+  @h << %Q(</li>\n)
+end
+
+Cms::Concept.new.readable_children.each{|c| set_concept(c) }
+
+%><%= javascript_tag do %>
+
+$(function() {
+  $('#naviConcepts a.toggle').click(function(){
+    var id = $(this).parent().attr('id');// conceptXX
+    var ul = $('#naviConcepts ul.' + id);
+    ul.toggle();
+    var mk = $('#' + id + ' > a.toggle');
+    mk.html( mk.html() == '+' ? '-' : '+' ).toggleClass('opened');
+    return false;
+  });
+  $('#naviConcepts a.openAll').click(function(){
+    $('#naviConcepts a.toggle').each(function(){
+      if ($(this).html() == '+') $(this).click();
+    });
+    return false;
+  });
+  $('#naviConcepts a.closeAll').click(function(){
+    $('#naviConcepts ul ul a.toggle').each(function(){ // 1階層目は開く
+      if ($(this).html() == '-') $(this).click();
+    });
+    return false;
+  });
+  
+  // default: closeAll
+  $('#naviConcepts a.closeAll').click();
+});
+
+<% end %>
+
+<div id="naviConcepts" class="naviContent">
+  <p>コンセプト一覧</p>
+  <div class="toggleAll">
+    ［ <a class="openAll" href="#">すべて展開</a>
+    / <a class="closeAll" href="#">折りたたむ</a> ］
+  </div>
+  <ul class="root"><%== @h.join %></ul>
+</div>

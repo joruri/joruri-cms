@@ -1,0 +1,19 @@
+<%= form_tag '', :method => :get, :class => 'search' do %>
+
+<table>
+  <tr>
+    <th>レイアウト名</th>
+    <td><%= text_field_tag 's_name_or_title', params[:s_name_or_title], :style => 'width: 200px;' %></td>
+    <th>キーワード</th>
+    <td><%= text_field_tag 's_keyword', params[:s_keyword], :style => 'width: 200px;' %></td>
+    <td><%= select_tag('s_target', options_for_select(Cms::Concept.new.targets, params[:s_target]))%></td>
+    
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

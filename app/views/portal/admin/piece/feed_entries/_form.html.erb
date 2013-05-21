@@ -1,0 +1,21 @@
+<%
+
+blank      = '　' * 16
+categories = Portal::Category.root_items(:content_id => @piece.content.id)
+
+%><p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_form f, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :category %></th>
+    <td><%= f.select_with_tree "in_settings[category]", categories, :label => :title, :include_blank => blank %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,15 @@
+<%
+
+layouts = Cms::Layout.find(:all, :conditions => {:site_id => Core.site.id}, :order => "concept_id, name")
+layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
+
+%><% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <tr>
+    <th>レイアウト</th>
+    <td><%= f.select(:layout_id, layouts, :include_blank => "　") %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

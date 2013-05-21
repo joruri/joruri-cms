@@ -1,0 +1,35 @@
+<%= javascript_tag do %>
+
+// change root directory
+$(function(){
+  $('#naviPath').change(function(){
+    location.href = '<%= sys_storage_files_path.gsub(/\?.*/, '') %>/' + $(this).val();
+  });
+});
+
+<% end %>
+<h2>ファイル管理（<%= ::Storage.env_name %>）</h2>
+
+<div class="navi">
+  <%= select_tag :directory, options_for_select(@roots.map, :selected => @root), :id => "naviPath" %>
+  <% @navi.each do |n, p| %>
+  <span class="separator">&gt;</span> <%= link_to n, sys_storage_files_path(:path => p).gsub(/\?.*/, '') %>
+  <% end %>
+</div>
+
+<div class="actionMenu">
+<%= link_to "上へ", @parent_uri if @dir.index("/") && !@do && @is_dir %>
+<%= link_to :index, @parent_uri if @do || @is_file %>
+<% if @do == "show" %>
+  <%= link_to :edit   , "#{@current_uri}?do=edit" if @is_file %>
+  <%#= link_to :rename , "#{@current_uri}?do=rename" %>
+  <%#= link_to :move   , "#{@current_uri}?do=move" %>
+  <%= link_to :destroy, "#{@current_uri}?do=destroy", :confirm => "削除してよろしいですか？" %>
+<% elsif @do %>
+  <%= link_to :show, "#{@current_uri}?do=show" %>
+<% elsif !@do && @is_dir %>
+  <a href="#" id="newDir">新規ディレクトリ</a>
+  <a href="#" id="newFile">新規ファイル</a>
+  <a href="#" id="newUpload">アップロード</a>
+<% end %>
+</div>

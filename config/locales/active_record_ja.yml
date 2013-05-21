@@ -1,0 +1,38 @@
+ja:
+  errors: &errors
+    template:
+      header:
+        one: "入力もれがあります。"
+        other: "%{count}個の入力もれがあります。"
+      body: "次の項目を確認してください。"
+    messages:
+      accepted: "を受諾してください。"
+      blank: "を入力してください。"
+      choice_one: "はいずれか１つを選択してください。"
+      confirmation: "が一致しません。"
+      email: "は正しいEメールアドレスではありません。"
+      empty: "を入力してください。"
+      equal_to: "は%{count}にしてください。"
+      even: "は偶数にしてください。"
+      exclusion: "は予約されています。"
+      greater_than: "は%{count}より大きい値にしてください。"
+      greater_than_or_equal_to: "は%{count}以上の値にしてください。"
+      inclusion: "は一覧にありません。"
+      invalid: "を正しく入力してください。"
+      less_than: "は%{count}より小さい値にしてください。"
+      less_than_or_equal_to: "は%{count}以下の値にしてください。"
+      not_a_filename: "は半角英数字で入力してください。"
+      not_a_number: "は数値で入力してください。"
+      odd: "は奇数にしてください。"
+      onebyte_characters: "は半角で入力してください。"
+      platform_dependent_characters: "に機種依存文字が含まれています。（%{chars}）"
+      taken: "はすでに存在します。"
+      too_long: "は%{count}文字以内で入力してください。"
+      too_short: "は%{count}文字以上で入力してください。"
+      wrong_length: "は%{count}文字で入力してください。"
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors

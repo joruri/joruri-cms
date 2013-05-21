@@ -1,0 +1,7 @@
+<div class="piece" id="emergencyMode">
+<div class="pieceContainer">
+<div class="pieceBody">
+現在、Joruri市のホームページは、大規模災害時モードで表示されています。
+</div>
+</div>
+</div>

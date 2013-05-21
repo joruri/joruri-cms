@@ -1,0 +1,30 @@
+<%
+
+e_prefix = "#{f.object_name}_in_genre_ids_"
+genres = Tourism::Genre.root_items(:content_id => @content.id)
+
+%><script type="text/javascript">
+//<![CDATA[
+function changeGenre(id) {
+  var selected = new Array();
+  for(var i = 0 ; i < 3 ; i++) {
+    name = '<%= "#{e_prefix}" %>' + i;
+    elem = document.getElementById(name);
+    if (elem.selectedIndex == '') {
+      continue;
+    } else if (selected[elem.selectedIndex] != true) {
+      selected[elem.selectedIndex] = true;
+    } else {
+      alert("同じジャンルは選択できません");
+      document.getElementById('<%= "#{e_prefix}" %>' + id).selectedIndex = '';
+    }
+  }
+}
+//]]>
+</script>
+
+<div>
+<%= f.select_with_tree 'in_genre_ids[0]', genres, :label => :title, :include_blank => "　", :onChange => "changeGenre(0)" %>
+<%= f.select_with_tree 'in_genre_ids[1]', genres, :label => :title, :include_blank => "　", :onChange => "changeGenre(1)" %>
+<%= f.select_with_tree 'in_genre_ids[2]', genres, :label => :title, :include_blank => "　", :onChange => "changeGenre(2)" %>
+</div>

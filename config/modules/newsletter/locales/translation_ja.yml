@@ -1,0 +1,34 @@
+ja:
+  activerecord:
+    attributes:
+      newsletter/doc:
+        state: "状態"
+        delivery_state: "配信状態"
+        started_at: "配信開始日時"
+        delivered_at: "配信完了日時"
+        name: "記事識別ID"
+        title: "タイトル"
+        body: "本文"
+        mobile_title: "携帯用タイトル"
+        mobile_body: "携帯用本文"
+      newsletter/member:
+        state: "状態"
+        letter_type: "メール種別"
+        email : "メールアドレス"
+      newsletter/tester:
+        state: "状態"
+        agent_state: "アドレス種別"
+        name: "備考"
+        email: "メールアドレス"
+      newsletter/request:
+        created_at: "送信日時"
+        request_type: "要求種別"
+        email: "メールアドレス"
+        letter_type: "メール種別"
+        captcha: "画像認証"
+      newsletter/log:
+        state: "状態"
+        letter_type: "メール種別"
+        email : "メールアドレス"
+        message: "メッセージ"
+

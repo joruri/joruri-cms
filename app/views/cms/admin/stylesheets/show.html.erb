@@ -1,0 +1,33 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= concept_view(@item) if @item.directory? %>
+  <tr>
+    <th>ファイル名</td>
+    <td><%= @item.name %></td>
+  </tr>
+  <% if @item.file? %>
+  <tr>
+    <th>ファイル種別</td>
+    <td><%= @item.mime_type %></td>
+  </tr><tr>
+    <th>サイズ</td>
+    <td><%= number_format(@item.size) %> Bytes</td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>更新日時</td>
+    <td><%= safe{@item.mtime.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+</table>
+  
+<% if @item.textfile? %>
+<table class="show">
+  <tr>
+    <th>内容</td>
+  </tr><tr>
+    <td class="pre monospace"><%=hbr @item.body.to_s rescue "#読み込みに失敗しました。" %></td>
+  </tr>
+</table>
+<% end %>
+

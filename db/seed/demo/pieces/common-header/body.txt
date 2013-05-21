@@ -1,0 +1,45 @@
+<!-- skip reading -->
+<div id="commonHeader" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+
+<span id="nocssread">
+<a href="#main">本文へ移動</a>
+</span>
+
+<script type="text/javascript" src="/_common/js/jquery.min.js"></script>
+<script type="text/javascript" src="/_common/js/jquery/cookie.js"></script>
+<script type="text/javascript" src="/_common/js/joruri/accessibility-navi.js"></script>
+<script type="text/javascript" src="/_common/js/joruri/smart-switch.js"></script>
+<script type="text/javascript">$(function() { new SmartSwitch('#smartSwitch', '表示の切り替え'); });</script>
+
+<span class="naviFont">
+  <span class="label">文字サイズ</span>
+  <span class="small" title="文字を小さく">小さく</span>
+  <span class="base">標準</span>
+  <span class="view">100%</span>
+  <span class="big" title="文字を大きく">大きく</span>
+</span>
+
+<span id="smartSwitch"></span>
+
+<a href="#" class="riyou" title="ご利用案内">ご利用案内</a>
+
+<span class="naviTheme">
+  <span class="label">背景色</span>
+  <span class="white" title="白背景">白</span>
+  <span class="blue" title="青背景">青</span>
+  <span class="black" title="黒背景">黒</span>
+</span>
+<span class="naviRuby">
+  <span class="ruby" title="ふりがなをつける">ふりがなをつける</span>
+</span>
+<span class="naviTalk">
+  <span class="talk" title="よみあげる">よみあげる</span>
+  <span class="player"></span>
+</span>
+
+</div>
+</div>
+</div>
+<!-- /skip reading -->

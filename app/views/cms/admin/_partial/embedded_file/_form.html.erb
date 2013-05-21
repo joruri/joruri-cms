@@ -1,0 +1,29 @@
+<%
+
+file  = item.embedded_file(name)
+thumb = item.embedded_thumbnail(name)
+
+filed_id    = "#{f.object_name}_embedded_file_#{name}"
+filed_name  = "#{f.object_name}[in_embedded_file][#{name}]"
+cbox_name   = "#{f.object_name}[in_embedded_file][_delete_#{name}]"
+
+checked = item.in_embedded_file && item.in_embedded_file["_delete_#{name}"] ? 'checked="checked"' : ""
+
+%><%#= hidden_field_tag :_tmp, inline_id %>
+
+<%= f.file_field "embedded_file", :style => 'width: 450px;', :size => 64, :id => filed_id, :name => filed_name %>
+
+<% if file %>
+
+<div style="margin: 5px 0px 5px;">
+  <a href="<%= embedded_file_path(file) %>" target="_blank"><%= "#{file.name}(#{file.eng_unit})" %></a>
+</div>
+
+<% if thumb %>
+<img src="<%= embedded_thumbnail_path(file) %>" style="vertical-align: top; <%= file.reduce_size(:width => 60, :height => 40, :thumbnail => true, :css => true) %>" />
+<% end %>
+
+<label><input type="checkbox" name="<%= cbox_name %>" value="1" <%= checked %> />削除する</label>
+
+<% end %>
+

@@ -1,0 +1,36 @@
+sys:
+  # LDAPの使用
+  use_ldap: true
+  
+  # 管理画面パス
+  admin_uri: /_admin
+
+  # 暗号化パスワード
+  crypt_pass: pass
+  
+  # Ruby Path
+  ruby_bin: "/usr/local/bin/ruby"
+  
+  # ファイル保存(file or db)
+  storage: file
+  
+cms:
+
+  # ページ数付きページ書き出し数
+  publish_more_pages: 999
+  
+  # ふりがな・読み上げの使用
+  use_kana: true
+  
+  # ふりがな
+  mecab_index: "/usr/local/libexec/mecab/mecab-dict-index"
+  mecab_dic: "/usr/local/lib/mecab/dic/ipadic"
+  
+  # 読み上げ
+  sox_bin: "/usr/local/bin/sox"
+  lame_bin: "/usr/bin/lame"
+  talk_bin: "/usr/local/bin/open_jtalk"
+  talk_dic: "/usr/local/share/open_jtalk/dic"
+  talk_voice: "config/voices/mei_normal/mei_normal.htsvoice"
+  talk_opts: "-s 48000 -p 200 -u 0.5 -jm 0.5 -jf 0.5"
+  talk_strlen: 500

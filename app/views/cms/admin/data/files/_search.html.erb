@@ -1,0 +1,19 @@
+<%= form_tag '', :method => :get, :class => 'search' do %>
+
+<table>
+  <tr>
+    <th>フォルダ</th>
+    <td><%= select_tag('s_node_id', '<option value="">　　　　</option>'.html_safe +
+      options_for_select(@nodes.collect{|i| [i.name, i.id.to_s]}, params[:s_node_id])) %></td>
+    <th>ファイル名</th>
+    <td><%= text_field_tag 's_name_or_title', params[:s_name_or_title], :style => 'width: 200px;' %></td>
+    <td><%= select_tag('s_target', options_for_select(Cms::Concept.new.targets, params[:s_target]))%></td>
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

@@ -1,0 +1,17 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <%= concept_form f %>
+  <tr>
+    <th><%= @item.locale :model %></th>
+    <td>
+      <% if @item.id %><%= @item.model_name(:short) %><% else %>
+      <%= f.select :model, Cms::Lib::Modules.contents, :include_blank => :true %><% end %>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

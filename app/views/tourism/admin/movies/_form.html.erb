@@ -1,0 +1,30 @@
+<%= init_tiny_mce %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= f.text_field :uri, :class => 'url' %></td>
+  </tr>
+  <%= tourism_genre_and_spot_form f %>
+  <tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 150px;' %></td>
+  </tr>
+</table>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= f.calendar_date_select :published_at, :class => 'datetime', :time=> true %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

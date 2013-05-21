@@ -1,0 +1,27 @@
+<%
+
+case @item.form_type
+when :select
+  opt = @item.config_options
+  value_form = f.select(:value, opt, :include_blank => "　")
+when :text
+  value_form = f.text_area(:value, :style => "width: 600px; height: 160px;")
+else
+  style = @item.style || "width: 400px;"
+  value_form = f.text_field(:value, :style => style)
+end
+
+upper_text = @item.upper_text ? %Q(<div style="margin: 5px; line-height: 1.2;">#{@item.upper_text}</div>) : ""
+lower_text = @item.lower_text ? %Q(<div style="margin: 5px; line-height: 1.2;">#{@item.lower_text}</div>) : ""
+
+%>
+
+<table class="show">
+  <tr>
+    <th>設定名</th>
+    <td><%= @item.config_name %></td>
+  </tr><tr>
+    <th>設定値</th>
+    <td><%=br upper_text %><%= value_form %><%= @item.config[:comment] %><%=br lower_text %></td>
+  </tr>
+</table>

@@ -1,0 +1,19 @@
+<div id="areaMap">
+<div id="areaNavi">
+<div class="list">
+<a href="/chiiki/north/">北区</a>
+<a href="/chiiki/west/">西区</a>
+<a href="/chiiki/east/">東区</a>
+<a href="/chiiki/south/">南区</a>
+</div>
+</div>
+<div id="mapImg">
+<img src="/_common/themes/joruri/area/images/bg-map.gif" alt="" usemap="#map" />
+<map name="map" id="map">
+<area shape="poly" coords="191,121,375,7,12,7" href="/chiiki/north/" />
+<area shape="poly" coords="191,121,375,233,375,7" href="/chiiki/east/" />
+<area shape="poly" coords="12,233,192,121,375,233" href="/chiiki/south/" />
+<area shape="poly" coords="13,6,13,233,191,121" href="/chiiki/west/" />
+</map>
+</div>
+</div>

@@ -1,0 +1,13 @@
+<p class="form">辞書データ</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'string' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'string body' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,19 @@
+<%
+
+spot = Tourism::Spot.new.public
+spot.and(:content_id, @content.id)
+spot.and(:id, '!=', item.id) if item.id
+spots = spot.find(:all, :order => "published_at DESC").collect{|c| [h(c.title), c.id] }
+
+%><table class="show">
+  <tr>
+    <th>関連記事</th>
+    <td>
+      <table class="noDesign">
+        <tr><td><%= f.array_select "in_rel_spot_ids[0]", spots, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.array_select "in_rel_spot_ids[1]", spots, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.array_select "in_rel_spot_ids[2]", spots, :include_blank => "　" %></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>

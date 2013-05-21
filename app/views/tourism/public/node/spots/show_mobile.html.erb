@@ -1,0 +1,21 @@
+<div class="contentTourism contentTourismSpot">
+
+<div class="h1"><%= @item.title %></div>
+
+<div class="mainImage">
+  <% if file = @item.embedded_thumbnail(:image_file_id) %>
+  <img src="<%= public_embedded_thumbnail_path(file) %>" alt="" />
+  <% end %>
+</div>
+
+<div class="body">
+  <div class="h2">概要</div>
+  <%= @item.body %>
+</div>
+
+<div class="guideBody">
+  <div class="h2">ご案内</div>
+  <%= @item.guide_body %>
+</div>
+
+</div>

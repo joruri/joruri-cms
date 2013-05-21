@@ -1,0 +1,92 @@
+@charset "UTF-8";
+
+/* ---------------------------------------------------------------- */
+/* elements */
+
+html {
+  height: 100%;
+  margin: 0px;
+  font-size: 85%;
+}
+body {
+  height: 100%;
+  margin: 0px;
+  background-image: url(./images/bg-login.gif);
+  color: #000;
+  font-family: Tahoma, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", "MS PGothic", "ＭＳ　Ｐゴシック", sans-serif;
+  line-height: 1.1;
+}
+input {
+  font-family: Tahoma, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", "MS PGothic", "ＭＳ　Ｐゴシック", sans-serif;
+}
+
+/* ---------------------------------------------------------------- */
+/* outline */
+
+#header {
+  height: 25%;
+}
+form {
+  width: 460px;
+  margin: 0px auto;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  background-color: #ffffff;
+  text-align: center;
+}
+#footer {
+  padding: 20px 0px;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- */
+/* details */
+
+form p {
+  margin: 0px;
+  padding: 15px 15px 0px;
+  color: #666;
+  font-size: 100%;
+  font-weight: lighter;
+  text-align: left;
+}
+.notice {
+  margin: -10px 0px 30px;
+  color: #e00;
+  font-weight: bold;
+  text-align: center;
+}
+h1 {
+  margin: 10px auto 40px;
+}
+dl {
+  clear: both;
+  margin: 0px 0px 10px;
+}
+dt {
+  clear: both;
+  float: left;
+  width : 130px;
+  margin: 0px 5px 10px;
+  padding: 2px 0px 0px;
+  text-align: right;
+}
+dd {
+  float: left;
+  margin: 0px 10px 10px;
+  text-align: left;
+}
+dd input {
+  width: 220px;
+  padding: 2px;
+  border: 1px solid #bbb;
+  ime-mode: disabled;
+}
+dd input:focus {
+  background-color: #ffc;
+}
+.submitters {
+  clear: both;
+  padding: 15px 0px 30px;
+}

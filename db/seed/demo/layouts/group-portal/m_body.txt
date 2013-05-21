@@ -1,0 +1,33 @@
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+<div id="headerBody">
+[[piece/mobile-common-header]]
+<!-- end #headerBody --></div>
+<!-- end #headerContainer --></div>
+<!-- end #header --></div>
+
+<div id="content">
+<div id="contentContainer">
+<div id="contentBody">
+
+[[piece/page-title]]
+
+[[content]]
+
+<!-- end #contentBody --></div>
+<!-- end #contentContainer --></div>
+<!-- end #content --></div>
+
+<div id="footer">
+<div id="footerContainer">
+<div id="footerBody">
+
+[[piece/mobile-back-navi]]
+
+<!-- end #footerBody --></div>
+<!-- end #footerContainer --></div>
+<!-- end #footer --></div>
+
+</div>

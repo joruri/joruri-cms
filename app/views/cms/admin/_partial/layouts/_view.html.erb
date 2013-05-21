@@ -1,0 +1,16 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <tr>
+    <th>レイアウト</th>
+    <td>
+      <% if @item.layout %>
+        <%= safe{@item.layout.title} %>
+      <% elsif defined?(@item.inherited_layout) && @item.inherited_layout %>
+        （<%= safe{@item.inherited_layout.title} %>）
+      <% end %>
+    </td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

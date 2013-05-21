@@ -1,0 +1,408 @@
+## Joruri CMS 2.0.0 インストールマニュアル                  2013.5.21
+
+**********************************************************************
+ 1 想定環境
+**********************************************************************
+
+[システム]
+OS         : CentOS 6.4
+Webサーバ  : Apache 2.2
+DBシステム : MySQL 5
+Ruby       : 1.9.3
+Rails      : 3.2.13
+
+[設定]
+IPアドレス : 192.168.0.2
+ドメイン   : 192.168.0.2
+
+**********************************************************************
+ 2 CentOS のインストール
+**********************************************************************
+
+CentOSをインストールします。
+
+インストール完了後、ご利用の環境に合わせて適切なセキュリティ設定を行ってください。
+CentOSに関するセキュリティ設定については、本マニュアルの範囲外となります。
+
+**********************************************************************
+ 3 事前準備
+**********************************************************************
+
+rootユーザに変更します。
+
+  $ su -
+
+必要なパッケージをインストールします。
+
+  # yum -y install \
+      wget make gcc-c++ patch \
+      libxslt libxslt-devel libxml2-devel libyaml-* \
+      libjpeg-devel libpng-devel \
+      librsvg2-devel ghostscript-devel \
+      ImageMagick ImageMagick-devel \
+      curl-devel nkf openldap-devel \
+      shared-mime-info \
+      httpd httpd-devel \
+      mysql-server mysql-devel
+
+必要なパッケージをダウンロードします。
+
+  # cd /usr/local/src/
+  # wget http://joruri.org/download/joruri-2.0.0.tar.gz \
+      http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz \
+      ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz \
+      http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1.tar.gz/download \
+      http://downloads.sourceforge.net/lame/lame-398-2.tar.gz -
+      http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.07.tar.gz \
+      http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.06.tar.gz \
+      http://downloads.sourceforge.net/open-jtalk/open_jtalk_dic_utf_8-1.06.tar.gz \
+      http://mecab.googlecode.com/files/mecab-0.996.tar.gz \
+      http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz \
+      http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+
+Joruriユーザを作成します。
+
+  # useradd joruri
+  # passwd joruri
+
+Joruriソースコードを設置します。
+
+  # mkdir /var/share
+  # tar xvzf joruri-1.3.0.tar.gz -C /var/share
+  # chown -R joruri:joruri /var/share/joruri
+
+**********************************************************************
+ 4 Ruby 環境の構築
+**********************************************************************
+
+======================================================================
+ 4.1 Rubyのインストール
+======================================================================
+
+LibYAMLをインストールします。
+
+  # cd /usr/local/src
+  # tar xvzf yaml-0.1.4.tar.gz && cd yaml-0.1.4
+  # ./configure && make && make install
+
+Rubyをインストールします。
+
+  # cd /usr/local/src
+  # tar xvzf ruby-1.9.3-p392.tar.gz && cd ruby-1.9.3-p392
+  # ./configure && make && make install
+
+======================================================================
+ 4.2 gemライブラリのインストール
+======================================================================
+
+RubyGemsを更新します。
+
+  # gem update --system
+
+Ruby on Railsをインストールします。
+
+  # gem install rails -v 3.2.13
+
+必要なライブラリをインストールします。
+
+  # cd /var/share/joruri
+  # bundle install
+
+**********************************************************************
+ 4 MySQL のインストール
+**********************************************************************
+
+文字エンコーディングの標準を UTF-8 に設定します。
+
+  # vi /etc/my.cnf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  [mysqld]
+  character-set-server=utf8
+  default-table-type=myisam
+  
+  [client]
+  default-character-set = utf8
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  ## [mysqld]にcharacterを設定、[client]とcharacter設定を追加。
+
+MySQLを起動します。
+
+  # /usr/bin/mysql_install_db --user=mysql
+  # /sbin/service mysqld start
+
+自動起動に設定します。
+
+  # /sbin/chkconfig mysqld on
+
+rootユーザのパスワードを設定します。
+  # mysqladmin -u root password "pass"
+
+joruriユーザを作成します。
+  # mysql -u root -ppass -e "grant all on *.* to joruri@localhost IDENTIFIED BY 'pass'"
+
+※パスワードは適切な値を設定してください。本マニュアルでは pass と設定しています。
+
+**********************************************************************
+ 5 Webサーバのインストール
+**********************************************************************
+
+Apacheは[5.1]を、Thinは[5.2]の手順を進めてください。
+
+======================================================================
+ 5.1 Apacheの設定
+======================================================================
+
+設定ファイルを編集します。
+
+  # vi /etc/httpd/conf/httpd.conf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  ServerName 192.168.0.2    #変更
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+Phusion Passengerをインストールします。
+
+  # passenger-install-apache2-module
+  ## 画面の内容を確認して Enterキーを押してください。
+
+  # cp /var/share/joruri/config/samples/passenger.conf /etc/httpd/conf.d/
+
+設定ファイルを登録します。
+
+  # vi /var/share/joruri/config/hosts/joruri.conf
+  ## IPアドレス、ディレクトリパスを環境に合わせて修正してください。
+
+  # ln -s /var/share/joruri/config/hosts/joruri.conf /etc/httpd/conf.d/
+
+設定にエラーがないことを確認し、Apacheを起動します。
+
+  # /sbin/service httpd configtest
+  # /sbin/service httpd start
+
+自動起動に設定します。
+
+  # /sbin/chkconfig httpd on
+
+設定に変更があった場合はApacheを再起動してください。
+
+  # /sbin/service httpd restart
+
+======================================================================
+ 5.2 Thinの設定
+======================================================================
+
+Thinをインストールします。
+
+  # thin install
+  
+  # sed -i "s/\/usr\/bin\/env ruby/\/usr\/local\/bin\/ruby/" /usr/local/bin/thin
+  # chmod 777 /var/share/joruri/tmp/pids
+
+設定ファイルを登録します。
+
+  # vi /var/share/joruri/config/hosts/joruri.yml
+  ## IPアドレス、ディレクトリパスを環境に合わせて修正してください。
+
+  # ln -s /var/share/joruri/config/hosts/joruri.yml /etc/thin/
+
+自動起動に設定します。
+
+  # ln -s /etc/rc.d/thin /etc/rc.d/init.d/thin
+  # /sbin/chkconfig thin on
+
+Thinを起動します。
+
+  # /sbin/service thin start
+
+**********************************************************************
+  6 Joruri の設定
+**********************************************************************
+
+Joruriユーザに変更します。
+
+  # su - joruri
+  $ cd /var/share/joruri
+
+オリジナルファイルをコピーします。
+
+  $ cp config/original/* config/
+
+======================================================================
+ 6.1 設定ファイル
+======================================================================
+
+環境に応じて設定ファイルを編集します。
+Production(本番)モードでの動作を想定しています。
+
+Joruri基本設定
+
+  $ vi config/core.yml
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  title  : 管理画面のウィンドウタイトルに使用されます。
+  uri    : 管理画面のURLになります。http://example.jp/ の形式で記述してください。
+  proxy  : HTTP通信時に使用します。http://example.jp:8080/ の形式で記述してください。
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  
+その他の設定ファイルも適宜編集してください。
+  
+  application.yml ... アプリケーション設定
+  database.yml    ... データベース設定
+  ldap.yml        ... LDAP設定
+  smtp.yml        ... SMTP設定
+
+======================================================================
+ 6.2 データベースの作成
+======================================================================
+
+データベースを作成します。
+
+  $ mysql -u root -p -e "create database joruri character set utf8"
+
+テーブルを作成します。
+
+  $ rake db:schema:load RAILS_ENV=production
+
+初期データを登録します。
+
+  $ rake db:seed RAILS_ENV=production
+
+サンプルデータを登録します。
+
+  $ rake db:seed:demo RAILS_ENV=production
+
+======================================================================
+ 6.3 動作の確認
+======================================================================
+
+ここまでの手順で Joruri にアクセスすることができます。
+
+  公開画面 : http://192.168.0.2/
+
+サンプルデータでは次のユーザが登録されています。
+
+  管理画面 : http://192.168.0.2/_admin
+
+  +---------------+-----------+---------+-----------+
+  |ユーザ名       |権限       |ユーザID |パスワード |
+  +---------------+-----------+---------+-----------+
+  |システム管理者 |管理者     | admin   | admin     |
+  |徳島 太郎      |一般ユーザ | user1   | user1     |
+  |徳島 花子      |一般ユーザ | user2   | user2     |
+  |吉野 三郎      |一般ユーザ | user3   | user3     |
+  +---------------+-----------+---------+-----------+
+
+**********************************************************************
+ 7 ふりがな・読み上げ設定
+**********************************************************************
+
+必要なパッケージをインストールします。
+
+  $ su -
+
+hts_engine API
+
+  # cd /usr/local/src
+  # tar xvzf hts_engine_API-1.07.tar.gz && cd ./hts_engine_API-1.07
+  # ./configure && make && make install
+
+Open JTalk
+
+  # cd /usr/local/src
+  # tar xvzf open_jtalk-1.06.tar.gz && cd open_jtalk-1.06
+  # sed -i "s/#define MAXBUFLEN 1024/#define MAXBUFLEN 10240/" bin/open_jtalk.c
+  # ./configure --with-charset=UTF-8 && make && make install
+
+Dictionary
+
+  # cd /usr/local/src
+  # tar xvzf open_jtalk_dic_utf_8-1.06.tar.gz
+  # mkdir /usr/local/share/open_jtalk
+  # mv open_jtalk_dic_utf_8-1.06 /usr/local/share/open_jtalk/dic
+
+SoX
+
+  # cd /usr/local/src
+  # tar xvzf sox-14.4.1.tar.gz && cd sox-14.4.1
+  # ./configure && make && make install
+
+lame
+
+  # cd /usr/local/src
+  # tar xvzf lame-398-2.tar.gz && cd lame-398-2
+  # ./configure --prefix=/usr && make && make install
+
+MeCab
+
+  # cd /usr/local/src
+  # tar xvzf mecab-0.996.tar.gz && cd mecab-0.996
+  # ./configure --enable-utf8-only && make && make install
+
+MeCab-IPAdic
+
+  # cd /usr/local/src
+  # tar xvzf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801
+  # ./configure --with-charset=utf8 && make && make install
+
+MeCab-Ruby
+
+  # cd /usr/local/src
+  # tar xvzf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996
+  # ruby extconf.rb && make && make install
+
+**********************************************************************
+ 8 定期実行設定
+**********************************************************************
+
+  # su - joruri
+  
+  $ crontab -e
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  RUBY="/usr/local/bin/ruby"
+  RAILS="/var/share/joruri/script/rails runner -e production"
+  
+  ## 公開/非公開日時指定処理
+  10,25,40,55 * * * * $RUBY $RUNNER "Script.run('sys/tasks#exec')"
+  
+  ## トップページ、中間ページ書き出し
+  */15 * * * * $RUBY $RUNNER "Script.run('cms/nodes#publish')"
+  
+  ## 読み上げ音声ファイル書き出し
+  */15 * * * * $RUBY $RUNNER "Script.run('cms/talks#publish')"
+  
+  ## Feed(RSS,Atom)の取り込み
+  0 * * * * $RUBY $RUNNER "Script.run('cms/feeds#read')"
+  
+  ## メールマガジン読者登録
+  */5 * * * * $RUBY $RUNNER "Script.run('newsletter/requests#read')"
+  
+  ## 記事再構築(ページのみ)
+  #0 * * * * $RUBY $RUNNER "Script.run('article/docs#rebuild')"
+  
+  ## FAQ記事再構築(ページのみ)
+  #0 * * * * $RUBY $RUNNER "Script.run('faq/docs#rebuild')"
+  
+  ## アンケート取り込み ※[8.1]を参照
+  #0 * * * * $RUBY $RUNNER "Script.run('enquete/answers#pull')"
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+======================================================================
+ 8.1 アンケートの取り込み
+======================================================================
+
+アンケートの取り込みは下記のように対象のデータベースを設定してください。
+
+  $ cd /var/share/joruri
+  
+  $ vi config/database.yml
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  production_pull_database:
+    adapter : mysql2
+    database: joruri
+    username: joruri
+    password: pass
+    timeout : 5000
+    encoding: utf8
+    reconnect: true
+    host: 192.168.0.4
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+**********************************************************************

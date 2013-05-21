@@ -1,0 +1,34 @@
+<div class="lifeevents">
+<div class="lifeevent lifeeventPregnant">
+<h2><a href="/lifeevent/ninshin.html">妊娠・出産</a></h2>
+<div class="explain">妊娠・出産に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventChild">
+<h2><a href="/lifeevent/kosodate.html">子育て・教育</a></h2>
+<div class="explain">子育て・教育に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventWork">
+<h2><a href="/lifeevent/shushoku.html">就職・退職</a></h2>
+<div class="explain">就職・退職に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventAdult">
+<h2><a href="/lifeevent/seijin.html">成人になったら</a></h2>
+<div class="explain">成人に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventMoving">
+<h2><a href="/lifeevent/hikkoshi.html">引越し</a></h2>
+<div class="explain">引越しに関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventMarriage">
+<h2><a href="/lifeevent/kekkon.html">結婚・離婚</a></h2>
+<div class="explain">結婚・離婚に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventWelfare">
+<h2><a href="/lifeevent/fukushi.html">福祉・介護</a></h2>
+<div class="explain">福祉・介護に関する情報を掲載しています。</div>
+</div>
+<div class="lifeevent lifeeventDeath">
+<h2><a href="/lifeevent/shibo.html">死亡</a></h2>
+<div class="explain">死亡に関する情報を掲載しています。</div>
+</div>
+</div>

@@ -1,0 +1,32 @@
+<%= render :partial => "article/admin/docs/search" %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 60px; text-align: right;">記事番号</th>
+    <th style="width: ;">タイトル</th>
+    <th style="width: 20%; text-align: center;">作成者</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+    <th style="width: 60px; text-align: center;">プレビュー</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td style="text-align: right;"><%= item.id %></td>
+    <td><%= truncate(item.title, :length => 36) %><%= " （更新用）" if item.replace_page? %></td>
+    <td><%= item.creator.user.name_with_account if item.creator && item.creator.user %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime("%Y-%m-%d %H:%M")} %></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <td style="text-align: center;">
+      <%= link_to 'PC', item.preview_uri(:params => {:doc_id => item.id}), :target => '_blank' if item.preview_uri %>
+      <%= link_to '携帯', item.preview_uri(:mobile => true, :params => {:doc_id => item.id}), :target => '_blank' if item.preview_uri %>
+    </td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

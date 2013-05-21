@@ -1,0 +1,11 @@
+<div id="emergency" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>緊急アナウンス</h2></div>
+<div class="pieceBody">
+<ul>
+<li>1月1日 1:11～2月2日 2:22の間メンテナンスの為、Joruri市ホームページが閲覧できなくなります。</li>
+</ul>
+</div>
+<div class="pieceFooter"/></div>
+</div>
+<!-- end .piece --></div>

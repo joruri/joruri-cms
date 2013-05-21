@@ -1,0 +1,27 @@
+<div class="calendarEvents calendarYearlyEvents">
+
+<div class="h2"><%= sprintf("%d年", @year) %></div>
+
+<% @days.each do |day| %>
+  <div class="date <%= day[:class] %>">
+    <%= day[:date_object].strftime("%-m月%-d日") %>（<%= day[:wday_label] %>）
+  </div>
+  <% if day[:holiday] %><div class="holiday">・<%= day[:holiday] %></div><% end %>
+  <% @items[day[:date]].each do |item| %>
+  <div class="event">
+    <% if item.is_a?(Article::Doc) %>・<%= link_to h(item.title), item.public_uri %>
+    <% else %>・<%= item.event_uri.blank? ? hbr(item.title) : link_to(hbr(item.title), item.event_uri) %><% end %>
+  </div>
+  <% end %>
+<% end %>
+<% if @days.size == 0 %><div class="noEvents">　</div><% end %>
+
+<% if @pagination.prev_uri || @pagination.next_uri %>
+<div class="pagination">
+  <%= link_to("<<前の年", @pagination.prev_uri, :accesskey => '*') if @pagination.prev_uri %>
+  <span class="separator">|</span>
+  <%= link_to("次の年#>>", @pagination.next_uri, :accesskey => '#') if @pagination.next_uri %>
+</div>
+<% end %>
+
+<!-- end .calendarEvents --></div>

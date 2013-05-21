@@ -1,0 +1,726 @@
+/* basic style
+----------------------------------------------- */
+body, body div {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+a {
+  color: #ffffff;
+}
+a:visited {
+  color: #ffffff;
+}
+a:hover {
+  color: #ffffff;
+}
+.docTab .content li {
+  color: #ffffff;
+}
+h1 {
+  color: #ffffff;
+}
+#contentBody .docTab .content li {
+  color: #ffffff;
+}
+span {
+  color: #ffffff !important;
+}
+
+/* header
+--------------------------------------------------- */
+#commonHeader,
+#commonHeader .pieceContainer,
+#commonHeader .pieceBody {
+  background: none;
+  color: #000;
+}
+#commonHeader {
+  border-top: none;
+  border-bottom: 1px solid #fff;
+}
+#navigationNotice {
+  color: #000;
+}
+#commonHeader a.riyou {
+  color: #ffffff;
+}
+#commonHeader a.riyou:hover {
+  color: #ffffff;
+}
+
+/* banner style
+----------------------------------------------- */
+#commonBanner .upperMenu .smart,
+#commonBanner .upperMenu .keitai {
+  background-color: #0000bb;
+  border: 1px solid #fff;
+}
+input#search-button, .lowerMenu .chiiki, .lowerMenu .soshiki {
+  border: 1px solid #ffffff;
+  background: none;
+  color: #ffffff;
+}
+/* globalNavi style
+----------------------------------------------- */
+#globalNavi a {
+  width: 12.23%;
+}
+#globalNavi a, #globalNavi a.bosai, #globalNavi a:hover, #globalNavi a.bosai:hover,
+#page-index #globalNavi a.top, #globalNavi a.current, #globalNavi a.current:hover {
+  border: 1px solid #ffffff;
+  background: none;
+  text-decoration: underline;
+}
+
+/* footer style
+----------------------------------------------- */
+#footerNavi .pieceBody,
+#footerNavi a,
+#footerNavi a:visited,
+#footerNavi a:hover {
+  color: #ffffff;
+}
+
+/* menu style
+----------------------------------------------- */
+#mayor .pieceBody,
+#ereaMap {
+  border: none;
+}
+#ereaMap .pieceBody {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+#menu ul {
+  background-color: #0000bb;
+}
+#menu #population caption {
+  background-color: #0000bb;
+  background-image: none;
+  border: 1px solid #ffffff;
+  border-bottom: none;
+  line-height: 1.4;
+  padding: 4px 7px;
+}
+#population th.noBorder,
+#population th {
+  background-color: #0000bb;
+  border: 1px solid #ffffff;
+}
+#population td.noBorder,
+#population td {
+  background-color: #0000bb;
+  border: 1px solid #ffffff;
+}
+#menu .pieceHeader, #links .pieceHeader {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+
+/* links style
+----------------------------------------------- */
+#links ul {
+  background-color: #0000bb;
+}
+#calendar .pieceHeader {
+  border: none;
+  background-color: #0000bb;
+  color: #ffffff;
+  text-align: center;
+}
+#menu #calendar .pieceHeader, #links #calendar .pieceHeader,
+#content #calendar .pieceHeader, #menu #calendarDailyLinks .pieceHeader,
+#links #calendarDailyLinks .pieceHeader, #content #calendarDailyLinks .pieceHeader {
+  display: block;
+  background-image: none;
+}
+#menu #calendar .pieceHeader h2, #links #calendar .pieceHeader h2,
+#content #calendar .pieceHeader h2, #menu #calendarDailyLinks .pieceHeader h2,
+#links #calendarDailyLinks .pieceHeader h2, #content #calendarDailyLinks .pieceHeader h2 {
+  background-image: none;
+  color: #ffffff;
+}
+#calendar .pieceBody {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+#calendar .pieceBody .links {
+  background-image: none;
+}
+#calendar .calendar {
+  width: 160px;
+  margin-left: 1px;
+}
+.sat, .sun, .holiday {
+  color: #ffffff;
+}
+.january, .february, .march, .april, .may, .june,
+.july, .august, .september, .october, .november, .december
+{
+  padding-top: 0;
+  background: #0000bb;
+}
+#calendar .pieceContainer, #calendarDailyLinks .pieceContainer {
+  border: 1px solid #ffffff;
+  background: none;
+}
+
+/* page-title piece
+----------------------------------------------- */
+#pageTitle .pieceBody {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+
+/* category
+----------------------------------------------- */
+.category {
+  background-color: #0000bb;
+}
+.contentArticleCategory .latest {
+  background-image: none;
+}
+.contentArticleCategory .latest h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+.contentArticleCategory h3 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+#ArticleCategory .pieceHeader {
+  background-image: none;
+}
+#ArticleCategory .pieceHeader h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+  color: #ffffff;
+}
+#ArticleCategory .category {
+  border: 1px solid #ffffff;
+}
+/* unit
+----------------------------------------------- */
+table.department {
+  background-color: #0000bb;
+  color: #ffffff;
+  font-weight: bold;
+}
+table.department td {
+  font-weight: bold;
+}
+table.unit tr.cycle {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleUnit .latest {
+  background-image: none;
+}
+.contentArticleUnit .latest h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+.contentArticleUnit h3 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleUnit dl.department, .contentArticleUnit dl.cycle {
+  background-color: #0000bb;
+  color: #ffffff;
+  font-weight: bold;
+}
+/* attribute
+----------------------------------------------- */
+.attribute {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleAttribute .latest {
+  background-image: none;
+}
+.contentArticleAttribute .latest h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+.contentArticleAttribute h3 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+
+/* area
+----------------------------------------------- */
+table.ward
+  background-color: #0000bb;
+  color: #ffffff;
+}
+table.ward td {
+  font-weight: bold;
+}
+table.city tr.cycle {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleArea .latest {
+  background-image: none;
+}
+.contentArticleArea .latest h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+.contentArticleArea h3 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleArea dl.ward, .contentArticleArea dl.cycle {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+/* shinchaku portal
+----------------------------------------------- */
+#recentDocsTitle .pieceHeader {
+  background-image: none;
+}
+#recentDocsTitle h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+
+/* calendar
+----------------------------------------------- */
+.contentArticleEventDocs h2 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.attributeNyusatsu span,
+.attributeSaiyojoho span,
+.attributeKakusyushikakushiken span,
+.attributeBosyu span,
+.attributeEventjoho span,
+.attributeKyoka span {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+#calendarDailyLinks .pieceHeader {
+  border: none;
+}
+#calendarDailyLinks .pieceHeader {
+  border: none;
+}
+#calendarDailyLinks .calendar {
+  width: 160px;
+  margin-left: 1px;
+}
+#calendarDailyLinks .links {
+  width: 166px;
+  margin-left: 1px;
+  border-bottom: 1px solid #9a9a9a;
+  background-image: none;
+}
+.calendarEvents .pagination {
+  background-color: #0000bb;
+}
+#menu li .year,
+#menu li .month {
+  background-color: #0000bb;
+}
+/* doc
+----------------------------------------------- */
+.contentArticleDoc .header {
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.contentArticleDoc .back a {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.contentArticleDoc .maps h2,
+.contentArticleDoc .rels h2,
+.contentArticleDoc .tags h2 {
+  border: 1px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  background-color: #0000bb;
+}
+.inquiry h2 {
+  color: #ffffff;
+}
+
+/* docs
+----------------------------------------------- */
+.contentPortalCategory h2.date,
+.contentPortalEntries h2.date,
+.contentArticleRecentDocs .docs h2 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+
+/* tag
+----------------------------------------------- */
+.contentArticleTags .search,
+.contentFaqTags .search {
+  border: none;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentArticleTags .hit,
+.contentFaqTags .hit {
+  border: 1px solid #ffffff;
+  background-image: none;
+  color: #ffffff;
+}
+
+/* enquete
+----------------------------------------------- */
+.enqueteForms .form h2, .enqueteForm .form h2,
+.enqueteForm .submitters,
+.enqueteForm .back a {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.enqueteForm .column .name {
+  border: 1px solid #ffffff;
+  border-left: 4px solid #ffffff;
+  background-color: #0000bb;
+}
+.enqueteForm .errorExplanation {
+  color: #ffffff !important;
+}
+
+/* sitemap
+----------------------------------------------- */
+.level1 li, ul.level3, ul.level2, .level2 li {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.level2 a, .level3 a {
+  color: #ffffff;
+}
+ul.sitemap li.level1,
+ul.sitemap ul.level2 {
+  background-color: #0000bb;
+}
+
+/* mayor
+----------------------------------------------- */
+#mayorSide {
+  background-color: #0000bb;
+}
+.contentTitle {
+  background-color: #0000bb;
+}
+.contentTitle .contentTitleBody,
+.contentTitle .contentTitleBody h2 {
+  margin: 0px;
+  border: none;
+  background-image: none;
+}
+
+/* recent-docs
+----------------------------------------------- */
+#recentDocs .pieceHeader {
+  border: 1px solid #ffffff;
+  background: none;
+}
+/* doc-tab
+----------------------------------------------- */
+#docTabPortal .tabs a, #docTab .tabs a,
+#docTabPortal .tabs a:hover, #docTab .tabs a:hover,
+#docTabPortal .tabs a.current, #docTab .tabs a.current,
+#docTabPortal .tabs a.bosai, #docTab .tabs a.bosai,
+#docTabPortal .tabs a.bosai:hover, #docTab .tabs a.bosai:hover,
+#docTabPortal .tabs a.bosai.current, #docTab .tabs a.current.bosai {
+  background: none;
+  color: #ffffff;
+}
+
+#docTabPortal .links .feed a.rss, #docTab .links .feed a.rss,
+#docTabPortal .links .feed a.atom, #docTab .links .feed a.atom,
+.feed a.feedRss, .feed a.feedAtom {
+  border: 1px solid #ffffff;
+  background: none;
+}
+/* topic
+----------------------------------------------- */
+#topic .pieceHeader {
+  background-image: none;
+}
+#topic .pieceHeader h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+  color: #ffffff;
+}
+#topic h3 {
+  color: #ffffff;
+}
+
+/* lifeevent
+----------------------------------------------- */
+#lifeEvent .pieceHeader {
+  background-image: none;
+}
+#lifeEvent .pieceHeader h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+  color: #ffffff;
+}
+#lifeEventSide {
+  background-color: #0000bb;
+}
+#contentTitle .pieceContainer {
+  background-image: none;
+}
+#contentTitle .pieceBody {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+#lifeEvent li.pregnant a,
+#lifeEvent li.child a,
+#lifeEvent li.work a,
+#lifeEvent li.adult a,
+#lifeEvent li.moving a,
+#lifeEvent li.marriage a,
+#lifeEvent li.welfare a,
+#lifeEvent li.death a {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.lifeevents .lifeevent {
+  width: 48%;
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+#page-lifeevent-index .contentPage .body h2 {
+  border: none;
+  background-color: transparent;
+}
+#page-lifeevent-ninshin #pageTitle h1,
+#page-lifeevent-kosodate #pageTitle h1,
+#page-lifeevent-shushoku #pageTitle h1,
+#page-lifeevent-seijin #pageTitle h1,
+#page-lifeevent-hikkoshi #pageTitle h1,
+#page-lifeevent-kekkon #pageTitle h1,
+#page-lifeevent-fukushi #pageTitle h1,
+#page-lifeevent-shibo #pageTitle h1 {
+  padding: 0 0 0 10px;
+  background-image: none;
+}
+#page-lifeevent-ninshin #pageTitle .pieceBody,
+#page-lifeevent-kosodate #pageTitle .pieceBody,
+#page-lifeevent-shushoku #pageTitle .pieceBody,
+#page-lifeevent-seijin #pageTitle .pieceBody,
+#page-lifeevent-hikkoshi #pageTitle .pieceBody,
+#page-lifeevent-kekkon #pageTitle .pieceBody,
+#page-lifeevent-fukushi #pageTitle .pieceBody,
+#page-lifeevent-shibo #pageTitle .pieceBody {
+  padding: 0 0 0 10px;
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+#page-lifeevent-ninshin h2.lifeEventTitle,
+#page-lifeevent-kosodate h2.lifeEventTitle,
+#page-lifeevent-shushoku h2.lifeEventTitle,
+#page-lifeevent-seijin h2.lifeEventTitle,
+#page-lifeevent-hikkoshi h2.lifeEventTitle,
+#page-lifeevent-kekkon h2.lifeEventTitle,
+#page-lifeevent-fukushi h2.lifeEventTitle,
+#page-lifeevent-shibo h2.lifeEventTitle {
+  border-bottom: #ffffff solid 1px;
+  border-left: #ffffff solid 1px;
+}
+/* bn
+----------------------------------------------- */
+#bnMailmagazine, #bnFaq, #bnBbs, #application, #inquiry,
+#adBanner .pieceFooter, #bnEvent
+{
+  border: 1px solid #ffffff;
+  background: none;
+}
+#bnMailmagazine .pieceContainer,
+#bnMailmagazine .pieceBody,
+#bnMailmagazine a,
+#bnMailmagazine .toroku,
+#bnFaq .pieceContainer,
+#bnFaq .pieceBody,
+#bnFaq a,
+.bnFaqB,
+#bnBbs .pieceContainer,
+#bnBbs .pieceBody,
+#bnBbs a,
+#bnBbs .bbs,
+#application .pieceContainer,
+#application .pieceBody,
+#application a,
+#inquiry .pieceContainer,
+#inquiry .pieceBody,
+#inquiry a,
+#adBanner .pieceFooter a,
+#bnEvent .pieceContainer,
+#bnEvent .pieceBody,
+#bnEvent a
+{
+  background-color: transparent;
+  color: #ffffff;
+}
+
+/* headerÅEfotter pege
+----------------------------------------------- */
+.contentPage .body h2 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+
+/* emergency
+----------------------------------------------- */
+#emergency .pieceHeader,
+#emergencyApplication .pieceBody,
+#emergencyMailmagazine .pieceBody,
+#emergencyInquiry .pieceBody {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+#emergency {
+  border: 2px solid #ffffff;
+}
+#emergency .pieceBody ul {
+  border: none;
+}
+#emergencyInfo .pieceContainer {
+  border: 2px solid #ffffff;
+  background-color: #0000bb;
+}
+
+/* mailmagazine
+----------------------------------------------- */
+.contentNewsletterForms h2 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.contentNewsletterForms .column .name {
+  border: 1px solid #ffffff;
+  border-left: 4px solid #ffffff;
+  background-color: #0000bb;
+}
+.contentNewsletterForms h2.cornerTitle {
+  background: #0000bb;
+}
+.contentNewsletterForms .summary {
+  border: 1px solid #ffffff;
+  background: #0000bb;
+}
+.contentNewsletterForms .submitters {
+  background: none;
+}
+/* bbs
+----------------------------------------------- */
+.contentBbsThreads .entryForm h2.formTitle {
+  background-color: #0000bb;
+}
+.contentBbsThreads .threadItem h2 {
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentBbsThreads .poster span,
+.contentBbsThreads .poster .no {
+  color: #ffffff;
+}
+.contentBbsThreads .deleteForm h2.formTitle {
+  background-color: #0000bb;
+}
+#bbsRecent .pieceHeader,
+#bbsThread .pieceHeader,
+#bbsRes .pieceHeader {
+  padding: 0 5px 0 10px;
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+#bbsRecent ul,
+#bbsThread ul,
+#bbsRes ul {
+  border-width: medium 1px 1px;
+  border-color: #ffffff;
+  border-style: none solid solid;
+  border-right: 1px solid #ffffff;
+}
+.notice {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.errorExplanation {
+  border-width: medium 1px 1px;
+  border-color: #ffffff;
+  border-style: none solid solid;
+  border-right: 1px solid #ffffff;
+  color: #ffffff;
+}
+.errorExplanation h2 {
+  border-top: 1px solid #ffffff;
+  border-right: none;
+  border-bottom: 1px solid #ffffff;
+  border-left: none;
+  background-color: #0000bb;
+}
+.contentBbsThreads .back a {
+  background-color: #0000bb;
+}
+
+/* faq
+----------------------------------------------- */
+.contentFaqDoc .body.answer,
+.contentFaqDoc .question,
+.contentFaqDoc .header {
+  background-color: #0000bb;
+}
+.contentFaqDoc .back a {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+.contentFaqRecentDocs .date,
+.contentFaqDocs .date {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+.contentFaqCategory .category h2 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+}
+#recentFaqTitle .pieceHeader h2,
+#faqRecentDocs .pieceHeader h2 {
+  border: 1px solid #ffffff;
+  background: none;
+}
+#recentFaqTitle h2,
+#faqRecentDocs .pieceHeader h2,
+.contentFaqCategory .latest {
+  background: none;
+}
+.contentFaqCategory .latest h2 {
+  border: 1px solid #ffffff;
+  background-image: none;
+}
+.contentFaqCategory .category h3 {
+  border: 1px solid #ffffff;
+  background-color: #0000bb;
+  color: #ffffff;
+}
+/* chiiki,soshiki
+----------------------------------------------- */
+.contentArticleUnit .department tr,
+.contentArticleArea .ward tr {
+  border: 1px solid #ffffff;
+}
+.contentArticleUnit .unit tr,
+.contentArticleArea .city tr {
+  border: 1px solid #ffffff;
+  border-top: none;
+}

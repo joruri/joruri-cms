@@ -1,0 +1,12 @@
+<div class="piece" id="emergencyLinkLifeline">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>ライフラインに関する情報</h2></div>
+<div class="pieceBody"><ul>
+
+  <li><a href="#">ジョールリ電力</a></li>
+
+  <li><a href="#">ジョールリガス</a></li>
+
+</ul></div>
+</div>
+<!-- end .piece --></div>

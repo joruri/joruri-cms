@@ -1,0 +1,9 @@
+<div id="mayor" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">[[emoji/happy1]]ようこそ市長室へ</div>
+<div class="pieceBody">
+・<a href="/mayor/">市長のご挨拶</a>
+</form>
+</div>
+</div>
+</div>

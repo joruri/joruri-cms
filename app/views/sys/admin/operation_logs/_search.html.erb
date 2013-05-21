@@ -1,0 +1,26 @@
+<%= form_for :item, :url => '',  :html => {:method => :get, :class => 'search'} do |f| %>
+
+<table>
+  
+  <tr>
+    <th><%= @item.locale(:user_id) %></th>
+    <td><%= text_field_tag 's_user_id', params[:s_user_id], :style => 'width: 120px; ime-mode: disabled;' %></td>
+    <th><%= @item.locale(:action) %></th>
+    <td><%= text_field_tag 's_action', params[:s_action], :style => 'width: 120px; ime-mode: disabled;' %></td>
+    <th>期間</th>
+    <td>
+      <%= text_field_tag :start_date, params[:start_date], :class => "date" %>
+      ～ <%= text_field_tag :close_date, params[:close_date], :class => "date" %>
+    </td>
+    <td class="submitters">
+      <%= submit_tag '検索',   :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+      <span class="separator">|</span>
+      <%= submit_tag 'CSV出力', :name => :csv, :confirm => "CSVを出力します。\n件数が多いと処理に時間がかかることがあります。" %>
+      <%= submit_tag '削除', :name => :destroy, :confirm => "表示中のログを削除してよろしいですか？\n2ページ目以降のログも削除されます。" %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

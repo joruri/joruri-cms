@@ -1,0 +1,17 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_form f, :container => :tr %>
+</table>
+
+<br />
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :list_count %></th>
+    <td><%= f.array_text_field 'in_settings[list_count]', :class => 'number' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

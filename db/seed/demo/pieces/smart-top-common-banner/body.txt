@@ -1,0 +1,7 @@
+<div id="commonBanner" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<div class="logo"><h1>ジョールリ市</h1></div>
+</div>
+</div>
+</div>

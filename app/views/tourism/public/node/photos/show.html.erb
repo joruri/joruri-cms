@@ -1,0 +1,28 @@
+<div class="contentTourism contentTourismPhoto">
+
+<div class="header">
+  <h1><%= @item.title %></h1>
+  <div class="publishedAt"><%= (@item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></div>
+</div>
+
+<% if file = @item.embedded_file(:image_file_id) %>
+<div class="image">
+  <img src="<%= public_embedded_file_path(file) %>" alt="" />
+</div>
+<% end %>
+
+<div class="info">
+  <div class="body"><%= @item.body %></div>
+  <p class="genre"><%= safe{@item.genre.title} %></p>
+  <p class="spot"><%= safe{@item.spot.title} %></p>
+  
+  <% if file = @item.embedded_file(:printing_file_id) %>
+  <div class="printingImage">
+    <a href="<%= public_embedded_file_path(file) %>">印刷用ファイル</a>
+  </div>
+  <% end %>
+</div>
+
+<div class="back"><a href="javascript:history.back()">戻る</a></div>
+
+</div>

@@ -1,0 +1,34 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :state %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'states' %></td>
+  </tr>
+  <%= concept_form f %>
+  <tr>
+    <th><%= @item.locale(:content_id) %></th>
+    <td><%= f.select :content_id, @contents, {}, :onchange2 => "onchangeConentId()" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= f.select :model, @models, :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale :title %></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale :view_title %></th>
+    <td><%= f.text_field :view_title, :class => 'name' %></td>
+  </tr>
+</table>
+
+<%= observe_field :item_concept_id, :update => :item_content_id, :with => 'concept_id',
+  :url => {:action => :content_options} %>
+<%= observe_field(:item_concept_id, :update => :item_model, :with => 'content_id',
+  :url => {:action => :model_options}) %>
+<%= observe_field(:item_content_id, :update => :item_model, :with => 'content_id',
+  :url => {:action => :model_options}) %>
+
+<%= creator_form f %>

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Base
+========================================================= */
+
+/* elements
+----------------------------------------------- */
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  padding: 0;
+  font-family: verdana;
+}
+div {
+  font-size: small;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: disc;
+  list-style-position: outside;
+}
+rp, rt {
+  font-size: 80%;
+  text-decoration: none;
+}
+a {
+  color: #003399;
+  text-decoration: underline;
+}
+a:visited {
+  color: #660066;
+}
+a:hover {
+  color: #660099;
+}

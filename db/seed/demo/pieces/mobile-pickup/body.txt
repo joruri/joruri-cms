@@ -1,0 +1,10 @@
+<div id="pickup" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<div class="orange">■■□―――――□■■</div>
+<div class="pickupTitle">■■■■<br />■■■■■■■■</div>
+<div class="pickupTitle">■■■■<br />■■■■■■■■</div>
+<div class="orange">■■□―――――□■■</div>
+</div>
+</div>
+</div>

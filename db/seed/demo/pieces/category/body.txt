@@ -1,0 +1,193 @@
+<div id="ArticleCategory" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>分野別</h2></div>
+<div class="pieceBody">
+
+<div class="category categoryKurashi">
+<h2><a href="/bunya/kurashi/">くらし</a></h2>
+<div class="children">
+
+<div class="categoryShohiseikatsu">
+<a href="/bunya/shohiseikatsu/">消費生活</a></div>
+<div class="categoryShakaikoken">
+<a href="/bunya/shakaikoken/">社会貢献・NPO</a></div>
+<div class="categoryBohan">
+
+<a href="/bunya/bohan/">防犯・安全</a></div>
+<div class="categorySumai">
+<a href="/bunya/sumai/">すまい</a></div>
+<div class="categoryJinken">
+<a href="/bunya/jinken/">人権・男女共同参画</a></div>
+<div class="categoryKankyo">
+<a href="/bunya/kankyo/">環境</a></div>
+
+<div class="categoryZei">
+<a href="/bunya/zei/">税</a></div>
+<div class="categoryKosodate">
+<a href="/bunya/kosodate/">子育て</a></div>
+<div class="categoryDobutsu">
+<a href="/bunya/dobutsu/">動物・ペット</a></div>
+<div class="categoryRecycle">
+<a href="/bunya/recycle/">リサイクル・廃棄物</a></div>
+</div>
+</div>
+<div class="category categoryFukushi">
+<h2><a href="/bunya/fukushi/">健康・福祉</a></h2>
+<div class="children">
+
+<div class="categoryKenkou">
+
+<a href="/bunya/kenkou/">健康</a></div>
+<div class="categoryIryo">
+<a href="/bunya/iryo/">医療</a></div>
+<div class="categoryKoreisha">
+<a href="/bunya/koreisha/">高齢者・介護</a></div>
+<div class="categoryChikifukushi">
+<a href="/bunya/chikifukushi/">地域福祉</a></div>
+
+<div class="categoryShogaifukushi">
+<a href="/bunya/shogaifukushi/">障害福祉</a></div>
+</div>
+</div>
+<div class="category categoryKyoikubunka">
+<h2><a href="/bunya/kyoikubunka/">教育・文化</a></h2>
+<div class="children">
+
+<div class="categoryKyoiku">
+<a href="/bunya/kyoiku/">教育</a></div>
+
+<div class="categoryBunka">
+<a href="/bunya/bunka/">文化・スポーツ</a></div>
+<div class="categorySeishonen">
+<a href="/bunya/seishonen/">青少年</a></div>
+<div class="categoryShogaigakushu">
+<a href="/bunya/shogaigakushu/">障害学習</a></div>
+<div class="categoryGakko">
+
+<a href="/bunya/gakko/">学校・文化施設</a></div>
+<div class="categoryKokusaikoryu">
+<a href="/bunya/kokusaikoryu/">国際交流</a></div>
+</div>
+</div>
+<div class="category categoryKanko">
+<h2><a href="/bunya/kanko/">観光・魅力</a></h2>
+<div class="children">
+
+<div class="categoryEvent">
+
+<a href="/bunya/event/">観光・イベント</a></div>
+<div class="categoryMeisho">
+<a href="/bunya/meisho/">名所・景観</a></div>
+<div class="categoryBussanhin">
+<a href="/bunya/bussanhin/">物産品</a></div>
+<div class="categoryTaikenspot">
+<a href="/bunya/taikenspot/">体験スポット</a></div>
+
+</div>
+</div>
+<div class="category categorySangyoshigoto">
+<h2><a href="/bunya/sangyoshigoto/">産業・しごと</a></h2>
+<div class="children">
+
+<div class="categoryShigoto">
+<a href="/bunya/shigoto/">産業・しごと</a></div>
+<div class="categoryKoyo">
+<a href="/bunya/koyo/">雇用・労働</a></div>
+
+<div class="categoryShogyo">
+<a href="/bunya/shogyo/">商業・サービス業</a></div>
+<div class="categoryKigyoshien">
+<a href="/bunya/kigyoshien/">企業支援・企業立地</a></div>
+<div class="categoryShigen">
+<a href="/bunya/shigen/">資源・エネルギー</a></div>
+<div class="categoryJohotsushin">
+
+<a href="/bunya/johotsushin/">情報通信・研究開発・科学技術</a></div>
+<div class="categoryKenchiku">
+<a href="/bunya/kenchiku/">建築・土木</a></div>
+<div class="categoryShikaku">
+<a href="/bunya/shikaku/">資格・免許・研修</a></div>
+<div class="categorySangyo">
+<a href="/bunya/sangyo/">産業</a></div>
+
+<div class="categoryKigyo">
+<a href="/bunya/kigyo/">起業</a></div>
+<div class="categoryUjiturn">
+<a href="/bunya/ujiturn/">UJIターン</a></div>
+<div class="categoryChikikeizai">
+<a href="/bunya/chikikeizai/">地域経済</a></div>
+</div>
+</div>
+<div class="category categoryGyoseimachizukuri">
+<h2><a href="/bunya/gyoseimachizukuri/">行政・まちづくり</a></h2>
+<div class="children">
+
+<div class="categoryGyosei">
+<a href="/bunya/gyosei/">行政・まちづくり</a></div>
+<div class="categoryKoho">
+<a href="/bunya/koho/">広報・公聴</a></div>
+<div class="categoryGyoseikaikaku">
+<a href="/bunya/gyoseikaikaku/">行政改革</a></div>
+<div class="categoryZaisei">
+<a href="/bunya/zaisei/">財政・宝くじ</a></div>
+<div class="categoryShingikai">
+<a href="/bunya/shingikai/">審議会</a></div>
+
+<div class="categoryTokei">
+<a href="/bunya/tokei/">統計・監査</a></div>
+<div class="categoryJorei">
+<a href="/bunya/jorei/">条例・規則</a></div>
+<div class="categorySoshiki">
+<a href="/bunya/soshiki/">組織</a></div>
+<div class="categoryJinji">
+
+<a href="/bunya/jinji/">人事・採用</a></div>
+<div class="categoryNyusatsu">
+<a href="/bunya/nyusatsu/">入札・調達</a></div>
+<div class="categoryMachizukuri">
+<a href="/bunya/machizukuri/">まちづくり・都市計画</a></div>
+<div class="categoryDoro">
+<a href="/bunya/doro/">道路・施設</a></div>
+
+<div class="categoryKasen">
+<a href="/bunya/kasen/">河川・砂防</a></div>
+<div class="categoryKuko">
+<a href="/bunya/kuko/">空港・港湾</a></div>
+<div class="categoryDenki">
+<a href="/bunya/denki/">電気・水道</a></div>
+<div class="categoryIkem">
+
+<a href="/bunya/ikem/">意見・募集</a></div>
+<div class="categoryJohokokai">
+<a href="/bunya/johokokai/">情報公開・個人情報保護</a></div>
+<div class="categoryJohoka">
+<a href="/bunya/johoka/">情報化</a></div>
+<div class="categoryShinsei">
+<a href="/bunya/shinsei/">申請・届出・行政サービス</a></div>
+
+<div class="categoryKokyojigyo">
+<a href="/bunya/kokyojigyo/">公共事業・公営企業</a></div>
+</div>
+</div>
+<div class="category categoryBosaigai">
+<h2><a href="/bunya/bosaigai/">防災</a></h2>
+<div class="children">
+
+<div class="categoryBosai">
+<a href="/bunya/bosai/">防災</a></div>
+
+<div class="/bunya/categorySaigai">
+<a href="/bunya/saigai/">災害</a></div>
+<div class="categoryKishojoho">
+<a href="/bunya/kishojoho/">気象情報</a></div>
+<div class="categoryKotsu">
+<a href="/bunya/kotsu/">交通</a></div>
+<div class="categoryShokunoanzen">
+
+<a href="/bunya/shokunoanzen/">食の安全</a></div>
+</div>
+</div>
+
+</div>
+</div>
+</div>

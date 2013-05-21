@@ -1,0 +1,8 @@
+<div id="address" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><hr />
+〒000-0000　ジョールリ県ジョールリ市ジョールリ町11番地1<br />
+TEL：（0000）00-0000
+</div>
+</div>
+</div>

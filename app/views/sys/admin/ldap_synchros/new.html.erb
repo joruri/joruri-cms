@@ -1,0 +1,17 @@
+<%= form_for :item, :url => {:action => :create} do |f| %>
+
+<%= error_messages_for :item %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<div class="submitters">
+
+<div style="color: #b40; text-align: center;">
+<span id="message"></span>
+</div>
+
+<%= f.submit '作成する', :onclick => "$('#message').html('処理を開始しました。しばらくお待ちください。<br /><br />');" %>
+
+</div>
+
+<% end %>

@@ -1,0 +1,21 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body', :style => "height: 120px;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'email' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= f.text_field :uri, :class => 'url' %></td>
+  </tr>
+</table>

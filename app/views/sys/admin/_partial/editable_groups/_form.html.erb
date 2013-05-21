@@ -1,0 +1,18 @@
+<%
+
+groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
+
+%><p class="form">編集権限</p>
+
+<table class="show">
+  <tr>
+    <th>編集可能グループ</th>
+    <td>
+      <table class="noDesign">
+        <tr><td><%= f.select_with_tree "in_editable_groups[0]", groups, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.select_with_tree "in_editable_groups[1]", groups, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.select_with_tree "in_editable_groups[2]", groups, :include_blank => "　" %></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>

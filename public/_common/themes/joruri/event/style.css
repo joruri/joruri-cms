@@ -1,0 +1,105 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   calender
+========================================================= */
+
+/* event-banner
+----------------------------------------------- */
+#eventBanner {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* event-calender
+----------------------------------------------- */
+.contentArticleEventDocs h2 {
+  margin: 0 0 10px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+}
+.contentArticleEventDocs li:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+* html .contentArticleEventDocs li {
+  height: 1%;
+}
+.contentArticleEventDocs li {
+  display: block;
+  clear: both;
+  min-height: 90px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+.contentArticleEventDocs img {
+  float: left;
+  margin-right: 10px;
+}
+.contentArticleEventDocs li .title {
+  margin-bottom: 5px;
+}
+.contentArticleEventDocs table {
+  width: 100%;
+  border-top: 1px solid #666666;
+}
+.contentArticleEventDocs td {
+  padding: 10px;
+  border-bottom: 1px solid #666666;
+}
+.contentArticleEventDocs td.day {
+  width: 15%;
+}
+.contentArticleEventDocs td.title {
+  width: 60%;
+}
+td.attribute span {
+  display: block;
+  width: 90%;
+  padding: 3px 0;
+  border: 1px solid #66666;
+  text-align: center;
+}
+p.attribute {
+  display: block;
+  width: 120px;
+  margin: 0 0 10px 130px;
+  padding: 3px;
+  text-align: center;
+}
+.attributeNyusatsu span, p.attributeNyusatsu {
+  background-color: #95c837;
+  text-align: center;
+}
+.attributeSaiyo span, p.attributeSaiyo {
+  background-color: #b1e6f1;
+  text-align: center;
+}
+.attributeShikakushiken span, p.attributeShikakushiken {
+  background-color: #ffcccc;
+  text-align: center;
+}
+.attributeBosyu span, p.attributeBosyu {
+  background-color: #66ff99;
+  text-align: center;
+}
+.attributeEvent span, p.attributeEvent {
+  background-color: #ffcc00;
+  text-align: center;
+}
+.attributeKyoka span, p.attributeKyoka {
+  background-color: #dbe4ff;
+  text-align: center;
+}
+.pagination {
+  margin-top: 10px;
+  text-align: center;
+}

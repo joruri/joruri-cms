@@ -1,0 +1,32 @@
+<%
+
+pubdate = safe{@item.find_task_by_name('publish').strftime('%Y-%m-%d %H:%M')}
+pubmsg  = "公開してよろしいですか？"
+pubmsg  = "公開日時が設定されています。\n\n[ #{pubdate} ]\n\n直ちに公開してよろしいですか？" if pubdate
+pubmsg  = "公開日時が設定されています。\n（ #{pubdate} ）\n直ちに公開してよろしいですか？" if pubdate
+
+%><h2><%= @content.name %></h2>
+
+<div class="actionMenu">
+<%= action_menu :new %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit if safe{@item.editable?} && !@item.replaced_page? %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+
+<% if params[:action] == 'show' %>
+<%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+<%= link_to("複製（更新用）", {:do => :duplicate_for_replace},
+  :confirm => "複製してよろしいですか？") if @item.editable? && @item.public? && !@item.unid_related? %>
+<%= link_to(:recognize, {:do => :recognize}, :confirm => "承認してよろしいですか？") if @item.recognizable?(Core.user) %>
+<%= link_to(:publish, {:do => :publish}, :confirm => pubmsg) if @item.publishable? %>
+<%= link_to(:close, {:do => :close}, :confirm => "公開を終了してよろしいですか？") if @item.closable? %>
+<% end %>
+
+<span class="separator"></span>
+
+<%= link_to '編集可能', faq_edit_docs_path, :class => (current == :edit ? "current" : "") %>
+<%= link_to '承認待ち', faq_recognize_docs_path, :class => (current == :recognize ? "current" : "") %>
+<%= link_to '公開待ち', faq_publish_docs_path, :class => (current == :publish ? "current" : "") %>
+<%= link_to '記事一覧', faq_all_docs_path, :class => (current == :all ? "current" : "") %>
+</div>

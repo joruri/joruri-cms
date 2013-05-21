@@ -1,0 +1,63 @@
+<style type="text/css">
+form.deliver_production {
+  margin: 10px 0px;
+  padding: 15px;
+  background-color: #def;
+  background-color: #fea;
+  text-align: center;
+}
+form.deliver_production input, form.deliver_test input, form.deliver_log input {
+  width: 170px;
+  padding: 2px 0px;
+  line-height: 1.8;
+}
+form.deliver_production input {
+  color: #800;
+}
+</style>
+
+<p class="form">配信プロセス</p>
+
+<%= script_state_view(@process_name) %>
+
+<p class="form">テスト配信</p>
+
+<table class="show">
+  <tr>
+    <th>
+      <%= form_for :item, :url => {:do => :deliver_test}, :html => {:class => "deliver_test"} do |f| %>
+        <input type="submit" value="テスト配信" onclick="return confirm('テスト配信してよろしいですか？');" />
+      <% end %>
+    </th>
+    <td>
+      <%= @item.testers.collect {|user| user.email }.join("; ") %>
+    </td>
+</table>
+
+<% if @item.delivery_state == "yet" %>
+  <p class="form">本配信</p>
+  
+  <table class="show">
+    <tr>
+      <th>読者数</th>
+      <td><%= @item.members.size.to_i %>名</td>
+  </table>
+  
+  <%= form_for :item, :url => {:do => :deliver_production}, :html => {:class => "deliver_production"} do |f| %>
+    <input type="submit" value="本配信開始" onclick="return confirm('本配信を開始してよろしいですか？');" />
+  <% end %>
+<% end %>
+
+<% if @item.delivery_state == "delivered" %>
+  <p class="form">配信ログ</p>
+  
+  <table class="show">
+    <tr>
+      <th>
+        <%= form_for :item, :url => {:do => :deliver_log}, :html => {:class => "deliver_log"} do |f| %>
+          <input type="submit" value="CSV出力" />
+        <% end %>
+      </th>
+      <td>ログ件数 <%= @item.logs.size.to_i %>件</td>
+  </table>
+<% end %>

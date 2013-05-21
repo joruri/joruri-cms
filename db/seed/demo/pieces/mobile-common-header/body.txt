@@ -1,0 +1,7 @@
+<div id="commonHeader" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<img src="/_common/themes/joruri/mobile/piece/images/header.gif" alt="ジョールリ市" />
+</div>
+</div>
+</div>

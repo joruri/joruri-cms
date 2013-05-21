@@ -1,0 +1,43 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+<tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:concept_id) %></th>
+    <td>
+      <% if @item.concept %>
+        <%= safe{@item.concept.name} %>
+      <% elsif safe{@item.inherited_concept} %>
+        （<%= safe{@item.inherited_concept(:name)} %>）
+      <% end %>
+    </td>
+  </tr>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:content_id) %></th>
+    <td><%= @item.content_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= @item.model_name(:short) %></td>
+  </tr>
+  <% if @item.parent_id != 0 %>
+  <tr>
+    <th><%= @item.locale(:parent_id) %></th>
+    <td><%= safe{@item.parent.title} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:route_id) %></th>
+    <td><%= @item.bread_crumbs.to_links.gsub(/<[\/a].*?>/, '').html_safe %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= safe{@item.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= safe{@item.title} %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

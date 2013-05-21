@@ -1,0 +1,13 @@
+<%= render :partial => "cms/admin/inline/data_files/menu" %>
+
+<%#= render :file => "cms/admin/data/file_nodes/show" %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr>
+</table>

@@ -1,0 +1,204 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Pieces
+========================================================= */
+
+/* common banner
+----------------------------------------------- */
+#commonBanner {
+  clear: both;
+  height: 64px; 
+  background-image: url(./images/header2.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+#commonBanner .logo a.home {
+  display: inline-block;
+  float: right;
+  height: 44px;
+  margin: 10px 10px 10px 0;
+}
+
+/* footer
+----------------------------------------------- */
+/* footer-navi
+---------------------- */
+#footerNavi {
+  width: 100%;
+  margin-top: 10px;
+}
+#footerNavi .pieceBody li {
+  float: left;
+  width: 50%;
+  text-align: center;
+}
+#footerNavi a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  border-bottom: 1px solid #cccccc;
+  background-image: -moz-linear-gradient(top, #777777, #3f3f3f);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#777777), color-stop(100%, #3f3f3f));
+  color: #ffffff;
+}
+#footerNavi li#f1 a,
+#footerNavi li#f3 a {
+  border-right: 1px solid #cccccc;
+}
+
+/* copyright
+---------------------- */
+#copyright {
+  background-color: #00349a;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* page-title
+----------------------------------------------- */
+#pageTitle .pieceContainer {
+  height: 44px;
+  border-top: 1px solid #233f9b;
+  border-bottom: 1px solid #233f9b;
+  background-color: #e1eff7;
+  background-image: url(/_common/themes/joruri/smart/piece/images/title.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+#pageTitle h1 {
+  height: 44px;
+  line-height: 46px;
+  padding-left: 22px;
+  font-size: 140%;
+}
+
+/* tabs
+------------------------------------- */
+#smartDocTab .tabs,
+#smartDocTabPortal .tabs {
+  width: 100%;
+  height: 44px;
+  overflow: hidden;
+}
+#smartDocTab .tabs a,
+#smartDocTabPortal .tabs a {
+  display: inline-block;
+  float: left;
+  width: 24.7%;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/top/images/tab1.png);
+  background-repeat: repeat-x;
+  background-position: left top;
+  color: #ffffff;
+  text-align: center;
+}
+#smartDocTab .tabs:after,
+#smartDocTabPortal .tabs:after {
+  content: "."; 
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#smartDocTab .tabs a.news,
+#smartDocTabPortal .tabs a.news {
+  border-left: none;
+}
+#smartDocTab .tabs a.bosai,
+#smartDocTabPortal .tabs a.bosai {
+  width: 25%;
+  background-image: url(/_common/themes/joruri/smart/top/images/tab2.png);
+}
+#smartDocTab .tabs a.current,
+#smartDocTabPortal .tabs a.current {
+  background-image: url(/_common/themes/joruri/smart/top/images/tab3.png);
+  border-bottom: none;
+  color: #000000;
+}
+
+/* content
+------------------------------------- */
+#smartDocTab .wrapper,
+#smartDocTabPortal .wrapper {
+  clear: both;
+  width: 100%;
+}
+#smartDocTab .content,
+#smartDocTabPortal .content {
+  clear: both;
+  height: auto !important;
+}
+#smartDocTab .content li,
+#smartDocTabPortal .content li {
+  border-bottom: 1px solid #cccccc;
+}
+#smartDocTab .content li a,
+#smartDocTabPortal .content li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-position: 95% center;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#smartDocTab .attributes,
+#smartDocTabPortal .attributes {
+  display: none;
+}
+#smartDocTab .feed,
+#smartDocTabPortal .feed {
+  display: none;
+}
+
+/* more
+----------------------------------------------- */
+.more {
+  width: 100%;
+  height: 44px;
+  margin-bottom: 10px;
+  line-height: 44px;
+  text-align: center;
+}
+.more a {
+  display: block;
+  border-bottom: 1px solid #bbbbbb;
+  background-image: -moz-linear-gradient(top, #ffffff, #dfdfdf);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), color-stop(100%, #dfdfdf));
+}
+
+/* pagination
+----------------------------------------------- */
+.pagination {
+  padding: 0 6px;
+  text-align: center;
+}
+.pagination a {
+  text-decoration: underline;
+}
+.pagination span.current {
+  padding: 0 3px;
+}
+
+/* pageTop
+----------------------------------------------- */
+.pageTop {
+  margin: 5px 10px 30px 0;
+  text-align: right;
+}
+.pageTop a {
+  padding-left: 15px;
+  background-image: url(./images/ic-top.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  text-decoration: underline;
+}

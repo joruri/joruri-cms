@@ -1,0 +1,32 @@
+<div class="contentNewsletter contentNewsletterForms">
+
+<%= form_for :item, :url => "#{@node_uri}change.html" do |f| %>
+
+  <%= error_messages_for "item" %>
+
+  <h2 class="cornerTitle">メールマガジンの解除はこちら</h2>
+
+  <% if !@content.deletion_body.blank? %>
+  <div class="body"><%= @content.deletion_body.html_safe %></div>
+  <% end %>
+
+  <div class="column columnEmail">
+    <div class="name"><%= @item.locale(:email) %> <span class="required">※</span></div>
+    <div class="field"><%= f.text_field :email, :class => 'email' %></div>
+  </div>
+
+  <% if @use_captcha %>
+  <div class="column columnLetterCaptcha">
+    <div class="name">画像認証</div>
+    <div class="field captcha"><%= show_simple_captcha :object => "item", :image_style => "simply_green", :distortion => "middle",
+      :label => "画像の文字を入力してください" %></div>
+  </div>
+  <% end %>
+  
+  <div class="submitters">
+    <input type="submit" name="unsubscribe" value="解除する" />
+  </div>
+
+<% end %>
+
+</div>

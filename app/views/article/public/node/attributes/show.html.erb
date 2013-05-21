@@ -1,0 +1,37 @@
+<div class="contentArticleAttribute contentArticleAttributeDetail">
+
+<div class="latest"><% if !@feed %>
+  <h2>新着情報</h2>
+  <div class="feed">
+    <%= link_to 'RSS' , "index.rss" , :class => 'feedRss' %>
+    <%= link_to 'Atom', "index.atom", :class => 'feedAtom' %>
+  </div>
+  
+  <% if @docs.size > 0 %><ul>
+    <% @docs.each do |doc| %>
+    <li><%= article_doc_list doc, :list_type => @node.setting_value(:list_type) %></li>
+    <% end %>
+  </ul><% end %>
+  <% if !@more && @docs.size > 0 %>
+  <div class="more"><%= link_to '>>新着記事一覧', "more.html" %></div>
+  <% end %>
+<% end %></div>
+
+<% if @more %>
+  <%= paginate @docs %>
+<% elsif @items.size > 0 %><div class="units">
+  <% @items.each do |c| %>
+  <% if (docs = @item_docs.call(c)).size > 0 %><div class="unit">
+    <h3><%= c.title %></h3>
+    <% if docs.size > 0 %><ul>
+      <% docs.each do |doc| %><li>
+        <%=link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li><% end %>
+    </ul><% end %>
+    <% if docs.size > 0 %><div class="more">
+      <%= link_to '>>記事一覧', "#{c.name}/" %>
+    </div><% end %>
+  </div><% end %>
+  <% end %>
+</div><% end %>
+
+</div>

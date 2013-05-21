@@ -1,0 +1,71 @@
+<div class="crudTree">
+<div class="tree">
+  
+  <p>
+    <%= link_to :show, cms_concept_url(@parent.parent_id, @parent) if @parent.id != 0 %>
+    <%= @parent.name %></p>
+  
+  <div class="links">
+    <% if @parent.id != 0 %>
+    <div class="menu"><%= link_to :up, url_for(:parent => @parent.parent_id) %></div>
+    <% end %>
+    
+    <% for item in @items %>
+    <div>
+      <%= link_to :show, url_for(:action => :show, :id => item) %>
+      <%= link_to item.name, url_for(:action => :index, :parent => item) %>
+      <span class="remark"><%= item.sort_no %></span>
+    </div>
+    <% end %>
+  </div>
+  
+</div>
+<div class="content">
+
+  <table class="index">
+  <tr>
+    <th><%= Cms::Content.new.locale(:name) %></th>
+  </tr>
+  <% @parent.contents.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= item.name %></td>
+  </tr>
+  <% end %>
+  <% if @parent.contents.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  </table>
+
+  <br />
+  
+  <table class="index">
+  <tr>
+    <th style="width: 240px;"><%= Cms::Layout.new.locale(:name) %></th>
+    <th><%= Cms::Layout.new.locale(:title) %></th>
+  </tr>
+  <% @parent.layouts.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+  </tr>
+  <% end %>
+  <% if @parent.layouts.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  </table>
+  
+  <br />
+  
+  <table class="index">
+  <tr>
+    <th style="width: 240px;"><%= Cms::Piece.new.locale(:name) %></th>
+    <th><%= Cms::Piece.new.locale(:title) %></th>
+  </tr>
+  <% @parent.pieces.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+  </tr>
+  <% end %>
+  <% if @parent.pieces.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  </table>
+
+</div>
+<div class="footer"></div>
+</div>

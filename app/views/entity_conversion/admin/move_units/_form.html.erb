@@ -1,0 +1,27 @@
+<%= f.hidden_field :state, :value => "move" %>
+
+<p class="form">統合元</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:old_id) %></th>
+    <td>
+      <%= f.select_with_tree :old_id, Sys::Group.find(:all, :conditions => {:level_no => 1}, :order => :sort_no),
+        :include_blank => "// 現在の部局から選択" %>
+    </td>
+  </tr>
+</table>
+
+<p class="form">統合先</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:move_id) %></th>
+    <td>
+      <%= f.select_with_tree :move_id, Sys::Group.find(:all, :conditions => {:level_no => 1}, :order => :sort_no),
+        :include_blank => "// 現在の部局から選択" %>
+      <% opts = @item.class.find(:all, :conditions => {:content_id => @content.id, :state => "new"}, :order => :sort_no) %>
+      または <%= f.select :new_move_id, opts.collect{|c| [c.name, c.id]}, :include_blank => "// 新設される部局から選択" %>
+    </td>
+  </tr>
+</table>

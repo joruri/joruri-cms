@@ -1,0 +1,30 @@
+<%
+
+e_prefix = "#{f.object_name}_in_category_ids_"
+categories = Faq::Category.root_items(:content_id => @content.id)
+
+%><script type="text/javascript">
+//<![CDATA[
+function changeCategory(id) {
+  var selected = new Array();
+  for(var i = 0 ; i < 3 ; i++) {
+    name = '<%= "#{e_prefix}" %>' + i;
+    elem = document.getElementById(name);
+    if (elem.selectedIndex == '') {
+      continue;
+    } else if (selected[elem.selectedIndex] != true) {
+      selected[elem.selectedIndex] = true;
+    } else {
+      alert("同じ分野は選択できません");
+      document.getElementById('<%= "#{e_prefix}" %>' + id).selectedIndex = '';
+    }
+  }
+}
+//]]>
+</script>
+
+<div>
+<%= f.select_with_tree 'in_category_ids[0]', categories, :label => :title, :include_blank => "　", :onChange => "changeCategory(0)" %>
+<%= f.select_with_tree 'in_category_ids[1]', categories, :label => :title, :include_blank => "　", :onChange => "changeCategory(1)" %>
+<%= f.select_with_tree 'in_category_ids[2]', categories, :label => :title, :include_blank => "　", :onChange => "changeCategory(2)" %>
+</div>

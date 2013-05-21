@@ -1,0 +1,58 @@
+<p class="form">変更元</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:old_id) %></th>
+    <td><%= safe{@item.old.full_name} %></td>
+  </tr>
+</table>
+
+<p class="form">変更情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:code) %></th>
+    <td><%= @item.code %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= @item.name_en %></td>
+  </tr><tr>
+    <th><%= @item.locale(:ldap) %></th>
+    <td><%= @item.ldap_label %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr><tr>
+    <th><%= @item.locale(:web_state) %></th>
+    <td><%= safe{@item.web_status.name} %></td>
+  </tr>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= @item.tel %></td>
+  </tr><tr>
+    <th><%= @item.locale(:outline_uri) %></th>
+    <td><%= @item.outline_uri %></td>
+  </tr>
+</table>
+
+<p class="form">文字列置換</p>
+
+<table class="index">
+  <tr>
+    <th style="width: 40%;">検索文字列</th>
+    <th>置換文字列</th>
+  </tr>
+  <% @item.replace_texts.each do |src, dst| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= src %></td>
+    <td><%= dst %></td>
+  </tr>
+  <% end %>
+</table>

@@ -1,0 +1,22 @@
+ja: 
+  activerecord: 
+    attributes: 
+      enquete/content/base:
+        email: "通知先メールアドレス"
+      enquete/form: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "フォーム名"
+        summary: "概要"
+        body: "説明"
+        sent_body: "送信後のメッセージ"
+        captcha: "画像認証"
+      enquete/form_column: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "項目名"
+        body: "説明"
+        column_type: "種別"
+        column_style: "スタイルシート"
+        options: "選択候補"
+        required: "必須入力"

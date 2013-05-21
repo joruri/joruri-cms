@@ -1,0 +1,12 @@
+<% if @node %><div class="feed">
+  <%= link_to 'RSS' , "#{@node.public_uri}index.rss" , :class => 'feedRss' %>
+  <%= link_to 'Atom', "#{@node.public_uri}index.atom", :class => 'feedAtom' %>
+</div><% end %>
+
+<ul><% @docs.each do |doc| %>
+  <li><%=link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li><% end %>
+</ul>
+
+<% if @node %><div class="links">
+  <%= link_to h(@more_label) , @node.public_uri , :class => 'more' %>
+</div><% end %>

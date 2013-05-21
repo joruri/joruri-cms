@@ -1,0 +1,16 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => "states" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => "email" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :letter_type, @item.letter_types %></td>
+  </tr>
+</table>
+
+<%#= creator_form f %>

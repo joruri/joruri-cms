@@ -1,0 +1,12 @@
+<div id="search" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">[[emoji/find]]サイト内検索</div>
+<div class="pieceBody">
+<form action="http://www.google.com/m">
+<input type="hidden" name="hl" value="ja" />
+<input name="q" type="text" size="16" />
+<input type="submit" name="sa" value="検索" align="top" />
+</form>
+</div>
+</div>
+</div>

@@ -1,0 +1,20 @@
+<div class="contentTourism contentTourismMovie">
+
+<div class="header">
+  <h1><%= @item.title %></h1>
+  <div class="publishedAt"><%= (@item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></div>
+</div>
+
+<div class="movie">
+  <%= @item.embedded_html %>
+</div>
+
+<div class="info">
+  <div class="body"><%= @item.body %></div>
+  <p class="genre"><%= safe{@item.genre.title} %></p>
+  <p class="spot"><%= safe{@item.spot.title} %></p>
+</div>
+
+<div class="back"><a href="javascript:history.back()">戻る</a></div>
+
+</div>

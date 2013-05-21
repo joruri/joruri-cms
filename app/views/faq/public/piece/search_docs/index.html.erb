@@ -1,0 +1,32 @@
+<form method="get" action="<%= @node_uri %>">
+  
+  <div class="category1">
+    <p>大分類</p>
+    <%= select_tag :s_category1_id, options_for_select(@categories1, :selected => @s_category1_id.to_i),
+      :onchange => "submit(this.form)" %>
+  </div>
+
+  <div class="category2">
+    <p>中分類</p>
+    <%= select_tag :s_category2_id, options_for_select(@categories2, :selected => @s_category2_id.to_i),
+      :onchange => "submit(this.form)" %>
+  </div>
+  
+  <% if @depth >= 3 %>
+  <div class="category2">
+    <p>小分類</p>
+    <%= select_tag :s_category3_id, options_for_select(@categories3, :selected => @s_category3_id.to_i),
+      :onchange => "submit(this.form)" %>
+  </div>
+  <% end %>
+  
+  <div class="keyword">
+    <p>キーワード</p>
+    <%= text_field_tag :s_keyword, safe{@s_keyword} %>
+  </div>
+  
+  <div class="submitters">
+    <input type="submit" value="検索" />
+    <input type="button" value="リセット" onclick="location.href='<%= @node_uri %>'" />
+  </div>
+</form>

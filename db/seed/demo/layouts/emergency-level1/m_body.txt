@@ -1,0 +1,65 @@
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+<div id="headerBody">
+
+[[piece/mobile-common-header]]
+<div class="midashi">ジョールリ市携帯サイトにようこそ</div>
+
+<!-- end #headerBody --></div>
+<!-- end #Container --></div>
+<!-- end #header --></div>
+
+<div id="banner">
+<div id="bannerContainer">
+<div id="bannerBody">
+
+[[piece/mobile-pickup]]
+
+<!-- end #bannerBody --></div>
+<!-- end #bannerBody --></div>
+<!-- end #bannerBody --></div>
+
+
+<div id="content">
+<div id="contentContainer">
+<div id="contentBody">
+[[piece/mobile-mayor]]
+
+[[piece/mobile-search]]
+
+<div id="cornerTitle"><span style="color:#FFFF00">[[emoji/pencil]]</span>新着情報</div>
+[[piece/recent-docs]]
+<div id="RecentDocsMore" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/shinchaku/">&gt;&gt;新着情報一覧</a>
+</div>
+</div>
+</div>
+
+[[piece/mobile-category-list]]
+
+[[piece/mobile-menu-navi]]
+
+[[piece/mobile-recommend-site]]
+
+<!-- end #contentBody --></div>
+<!-- end #contentContainer --></div>
+<!-- end #content --></div>
+
+
+<div id="footer">
+<div id="footerContainer">
+<div id="footerBody">
+
+[[piece/mobile-address]]
+[[piece/mobile-footer-navi]]
+[[piece/mobile-copyright]]
+
+<!-- end #footerBody --></div>
+<!-- end #footerContainer --></div>
+<!-- end #footer --></div>
+
+</div>

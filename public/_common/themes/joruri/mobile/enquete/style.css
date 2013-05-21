@@ -1,0 +1,85 @@
+@charset "UTF-8";
+@import "../base/style.css";
+@import "../base/layouts/col-1.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   Enquete
+========================================================= */
+
+/* Errors
+----------------------------------------------- */
+.errorExplanation {
+  margin: 0 0 4px;
+  color: #ff0000;
+}
+.errorExplanation h2 {
+  padding: 4px;
+  font-size: small;
+}
+.errorExplanation p {
+  margin: 4px 0 0 4px;
+}
+.errorExplanation ul {
+  margin: 2px 0 2px 20px;
+  list-style-type: disc;
+}
+
+/* Index : enqueteForms
+----------------------------------------------- */
+.enqueteForms .form,
+.enqueteForm .form {
+  margin: 0;
+}
+.enqueteForms .form .h2,
+.enqueteForm .form .h2 {
+  padding: 4px 6px;
+  background-color: #99eeff;
+  font-weight: bold;
+  font-size: 100%;
+}
+.enqueteForms .form .summary,
+.enqueteForm .form .body {
+  padding: 4px 6px;
+}
+
+/* Show : enqueteForm
+----------------------------------------------- */
+.enqueteForm .columns {
+  margin: 0;
+}
+.enqueteForm .column {
+  margin: 5px 0 10px;
+}
+.enqueteForm .column .name {
+  padding: 4px 5px;
+  background-color: #99eeff;
+}
+.enqueteForm .column .body {
+  margin: 10px 0 0 5px;
+}
+.enqueteForm .column .field {
+  margin: 10px 0 0 5px;
+}
+.enqueteForm .submitters {
+  padding: 10px 0;
+  background-color: #cceeff;
+  text-align: center;
+}
+.enqueteForm .errorExplanation {
+  color: #ff0000;
+}
+.enqueteForm .back {
+  margin-top: 20px;
+  text-align: center;
+}
+.required {
+  color: #ff0000;
+}
+
+/* Sent : enqueteSent
+----------------------------------------------- */
+.enqueteSent .message, .enqueteSent .back {
+  margin: 20px 0;
+  text-align: center;
+}

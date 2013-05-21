@@ -1,0 +1,26 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 150px; text-align: center;"><%= @item.locale(:created_at) %></th>
+    <th style="width: 150px; text-align: center;">IPアドレス</th>
+    <th style="width: ;"><%= @item.locale(:email) %></th>
+    <th style="width: 150px; text-align: center;"><%= @item.locale(:letter_type) %></th>
+    <th style="width: 60px; text-align: center;">要求</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= safe{item.created_at.strftime("%Y-%m-%d %H:%M")} %></td>
+    <td style="text-align: center;"><%= item.ipaddr %></td>
+    <td><%= item.email %></td>
+    <td style="text-align: center;"><%= item.letter_type_name %></td>
+    <td style="text-align: center;"><%= item.request_type_name %></td>
+    <td style="text-align: center;"><%= item.state == "disabled" ? "完了" : "待機" %></td>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

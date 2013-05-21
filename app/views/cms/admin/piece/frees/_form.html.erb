@@ -1,0 +1,100 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_form f, :container => :tr %>
+</table>
+
+<table class="show" style="margin: 0px;">
+  <tr>
+    <th>本文</th></tr><tr>
+    <td><%= f.text_area :body, :class => 'body' %></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+var isGecko = false;
+
+/**
+ * Get TextRange
+ */
+function getTextRange (element)
+{
+  var value;
+
+  if (document.selection) {
+    if (true) {
+      value = parent.document.selection.createRange().text;
+    } else {
+      value = document.selection.createRange().text;
+    }
+  } else if (isGecko) {
+    var start = element.selectionStart;
+    var end = element.selectionEnd;
+    value = element.value.substring(start, end);
+  } else {
+    value = '';
+  }
+
+  return value;
+}
+
+
+/**
+ * Set TextRange
+ */
+function setTextRange (element, value)
+{
+
+  if (document.selection) {
+//    if(getTextRange(element)) {
+      if (true) {
+        element.focus();
+        parent.document.selection.createRange().text = value;
+      } else {
+        element.focus();
+        document.selection.createRange().text = value;
+      }
+//    } else {
+//      element.value += value;
+//    }
+  } else if (isGecko) {
+    var start = element.selectionStart;
+    var end   = element.selectionEnd;
+    var len   = element.textLength;
+    var str   = element.value.substring(start, end);
+    var head  = element.value.substring(0, start);
+    var foot  = element.value.substring(end, len);
+    element.value = head + value + foot;
+  } else {
+    element.value += value;
+  }
+}
+
+
+
+/**
+ * set insert text
+ */
+function setText(element, text )
+{
+  var value = getTextRange(element);
+  setTextRange(element, text );
+}
+
+//]]>
+</script>
+<table class="show">
+  <tr>
+    <th>ファイル</th>
+    <td>
+      <a href="#" onclick="return $(this).toggleOpen('#inlineFiles');">閉じる▲</a>
+    </td>
+  </tr>
+</table>
+
+<div class="inlineForm" id="inlineFiles">
+  <iframe src="<%= cms_inline_data_files_path(:parent => 0) %>" style="width: 100%; height: 340px;" frameborder="0"></iframe>
+</div>
+
+<%= creator_form f %>

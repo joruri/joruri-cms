@@ -1,0 +1,288 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   TOP
+========================================================= */
+#commonBanner {
+  background-image: url(./images/header-l.png);
+}
+#commonBanner .logo {
+  background-image: url(./images/header-r.png);
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+#commonBanner .logo h1 {
+  height: 64px;
+  text-indent: -9999px;
+}
+
+/* search-box
+----------------------------------------------- */
+#search {
+  height: 38px;
+  padding: 5px 10px 0;
+  border-top: 1px solid #cccccc;
+}
+#search .searchContainer {
+  margin-right: 70px;
+}
+#search #search-box {
+  width: 100%;
+  height: 30px;
+  border: 1px solid #cccccc;
+}
+#search #searchButton {
+  position: absolute;
+  top: 71px;
+  right: 10px;
+  width: 60px;
+  height: 30px;
+  overflow: hidden;
+  text-indent: -9999px;
+}
+
+/* refinement-menu
+----------------------------------------------- */
+#refinementMenu {
+  width: 100%;
+}
+#refinementMenu:after {
+  content: "."; 
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#refinementMenu ul {
+  border-top: 1px solid #cccccc;
+}
+#refinementMenu li {
+  float: left;
+  width: 50%;
+}
+#refinementMenu li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 45px;
+  border-right: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#refinementMenu li.bunya a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-bunya.png);
+}
+#refinementMenu li.zokusei a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-zokusei.png);
+}
+#refinementMenu li.soshiki a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-soshiki.png);
+}
+#refinementMenu li.chiiki a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-chiiki.png);
+}
+#refinementMenu li.zokusei a,
+#refinementMenu li.chiiki a {
+  border-right: none;
+}
+
+/* topic
+----------------------------------------------- */
+#topic {
+  margin-bottom: 10px;
+}
+#topic:after {
+  content: "."; 
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#topic .pieceHeader {
+  display: none;
+}
+#topic h3 {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #5ccafe, #2ab4fc);
+  background-image: -webkit-gradient(linear, left top, right top, from(#5ccafe), color-stop(100%, #2ab4fc));
+}
+#topic .infomation {
+  padding: 0 10px;
+}
+#topic img {
+  float: left;
+  width: 100px;
+  margin-right: 10px;
+}
+#topic a {
+  text-decoration: underline;
+}
+#topic p.next {
+  text-align: right;
+}
+
+/* lifeevent
+----------------------------------------------- */
+#lifeEvent {
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+#lifeEvent:after {
+  content: "."; 
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+#lifeEvent .pieceHeader {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+#lifeEvent li {
+  float: left;
+  width: 50%;
+}
+#lifeEvent li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 45px;
+  border-top: 1px solid #cccccc;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#lifeEvent li.pregnant a {
+  border-right: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-ninshin.png);
+}
+#lifeEvent li.child a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-kosodate.png);
+}
+#lifeEvent li.work a {
+  border-right: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-shuushoku.png);
+}
+#lifeEvent li.adult a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-seijin.png);
+}
+#lifeEvent li.moving a {
+  border-right: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-hikkoshi.png);
+}
+#lifeEvent li.marriage a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-kekkon.png);
+}
+#lifeEvent li.welfare a {
+  border-right: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-fukushi.png);
+}
+#lifeEvent li.death a {
+  background-image: url(/_common/themes/joruri/smart/top/images/ic-shibou.png);
+}
+
+/* useful-information
+----------------------------------------------- */
+#usefulInformation .pieceHeader {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+#usefulInformation li {
+  border-bottom: 1px solid #cccccc;
+}
+#usefulInformation li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* recent-docs
+------------------------------------- */
+#recentDocs {
+  width: 100%;
+}
+#recentDocs .pieceBody {
+}
+#recentDocs .pieceHeader {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+
+#recentDocs li:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+* html #recentDocs li {
+  height: 1%;
+}
+#recentDocs li {
+  display: block;
+  clear: both;
+  min-height: 90px;
+  margin-bottom: 10px;
+  padding: 0 15px 10px;
+  border-bottom: 1px solid #cccccc;
+}
+#recentDocs li:last-child {
+  margin-bottom: 0;
+}
+#recentDocs li .title {
+  margin-bottom: 5px;
+  padding-left: 10px;
+  background-image: url("../piece/images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+#recentDocs li img {
+  display: inline-block;
+  float: left;
+  width: 120px;
+  height: 90px;
+  margin-right: 10px;
+}
+#recentDocs .feed {
+  display: none;
+}
+#recentDocs .more {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-bottom: 10px;
+  line-height: 44px;
+  text-align: center;
+  border-bottom: 1px solid #bbbbbb;
+  background-image: -moz-linear-gradient(top, #ffffff, #dfdfdf);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), color-stop(100%, #dfdfdf));
+}
+

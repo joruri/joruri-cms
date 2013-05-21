@@ -1,0 +1,10 @@
+<div class="contentArticleAttribute">
+
+<div class="attributes">
+  <div class="h2">■属性一覧</div>
+  <% @items.each do |item| %>
+  <div>・<%= link_to h(item.title), "#{item.name}/" %></div>
+  <% end %>
+</div>
+
+</div>

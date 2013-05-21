@@ -1,0 +1,18 @@
+<%
+
+file1 = @item.embedded_thumbnail(:image1_file_id)
+file2 = @item.embedded_thumbnail(:image2_file_id)
+file3 = @item.embedded_thumbnail(:image3_file_id)
+
+%><div class="contentTourism contentTourismMouth">
+
+<div class="mouth">
+  <p class="title"><%= @item.title %></p>
+  <p class="buestName"><%= @item.guest_name %></p>
+  <p class="body"><%= @item.body %></p>
+  <% if file1 %><div class="image"><img src="<%= public_embedded_thumbnail_path(file1) %>" alt="" /></div><% end %>
+  <% if file2 %><div class="image"><img src="<%= public_embedded_thumbnail_path(file2) %>" alt="" /></div><% end %>
+  <% if file3 %><div class="image"><img src="<%= public_embedded_thumbnail_path(file3) %>" alt="" /></div><% end %>
+</div>
+
+</div>

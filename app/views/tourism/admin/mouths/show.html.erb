@@ -1,0 +1,43 @@
+<%#= init_tiny_mce :readonly => true %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:spot_id) %></th>
+    <td><%= safe{@item.spot.title} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:guest_name) %></th>
+    <td><%= @item.guest_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%=hbr @item.body %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image1_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :image1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image2_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :image2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image3_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :image3_file_id %></td>
+  </tr>
+</table>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= safe{@item.published_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

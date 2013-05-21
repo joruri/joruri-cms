@@ -1,0 +1,14 @@
+<%= init_tiny_mce %>
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= node_base_form f, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <%= render :partial => "cms/admin/_partial/node/show_layout/form", :locals => {:f => f, :item => @item} %>
+</table>
+
+<%= creator_form f %>

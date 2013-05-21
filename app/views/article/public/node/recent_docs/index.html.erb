@@ -1,0 +1,21 @@
+<div class="contentArticleRecentDocs">
+
+<div class="feed">
+  <%=link_to 'RSS' , 'index.rss' , :class => 'feedRss' %>
+  <%=link_to 'Atom', 'index.atom', :class => 'feedAtom' %>
+</div>
+
+<div class="docs">
+  <% @items.each_with_index do |item, idx| %>
+    <% if item[:date] %>
+      <%== "</ul>" if idx != 0  %>
+      <%== %Q(<h2 class="date">#{item[:date]}</h2><ul>) if item[:date] %>
+    <% end %>
+    <li class="<%= cycle '', 'cycle' %>"><%= article_doc_list item[:doc], :list_type => @node.setting_value(:list_type), :attr => item[:doc].categories_and_unit %></li>
+  <% end %>
+  <%== "</ul>" if @docs.size > 0 %>
+</div>
+
+<%= paginate @docs %>
+
+</div>

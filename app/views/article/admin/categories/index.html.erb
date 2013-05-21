@@ -1,0 +1,25 @@
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 20%;"><%= Article::Category.new.locale(:name) %></th>
+    <th style="width: ;"><%= Article::Category.new.locale(:title) %></th>
+    <th style="width: 80px; text-align: right;"><%= Article::Category.new.locale(:sort_no) %></th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;"><%= Article::Category.new.locale(:state) %></th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td><%= item.name %></td>
+    <td><%= link_to h(item.title), url_for(:action => :index, :parent => item) %></td>
+    <td style="text-align: right;"><%= item.sort_no %></td>
+    <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

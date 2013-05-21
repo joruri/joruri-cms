@@ -1,0 +1,31 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   mayor
+========================================================= */
+#pageTitle.piece {
+  margin-bottom: 10px;
+}
+.body {
+  padding-left: 10px;
+}
+#pageTitle h1 {
+  padding-left: 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+}
+.picBox {
+  float: left;
+  margin: 0 25px 0 0;
+}
+.mayorMenu {
+  margin: 20px 0;
+  font-size: 90%;
+  text-align: center;
+}
+.mayorMenu a {
+  text-decoration: underline;
+}

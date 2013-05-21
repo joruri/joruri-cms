@@ -1,0 +1,84 @@
+<script type="text/javascript" src="/_common/js/swfupload/swfupload.js"></script>
+<%= disable_enter_key_js %>
+<%= init_tiny_mce %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title', :style => 'width: 500px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title_kana) %></th>
+    <td><%= f.text_field :title_kana, :class => 'title_kana', :style => 'width: 500px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td class="mceEditor"><%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 200px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:guide_body) %></th>
+    <td class="mceEditor"><%= f.text_area :guide_body, :class => 'body mceEditor', :style => 'height: 400px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:genre_ids) %></th>
+    <td><%= tourism_genres_form f %></td>
+  </tr>
+</table>
+
+<%= tourism_areas_form f %>
+
+<p class="form">詳細情報</p>
+
+<%
+style = {:button => "開く▼"  , :style => "display: none;" }
+style = {:button => "閉じる▲", :style => "display: block;" } if !@item.detail_body.blank?
+%>
+<div style="margin: 10px;"><a id="detail_disp" href="#" onclick="return $(this).toggleOpen('#detailForm');"><%= style[:button] %></a></div>
+<div id="detailForm" style="<%= style[:style] %>">
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:detail_body) %></th>
+    <td class="mceEditor"><%= f.text_area :detail_body, :class => 'body mceEditor', :style => 'height: 200px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image1_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_image1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image2_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_image2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image3_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_image3_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_comment) %></th>
+    <td class="mceEditor"><%= f.text_area :detail_comment, :class => 'body mceEditor', :style => 'height: 200px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info1_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_info1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info2_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_info2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info3_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :detail_info3_file_id %></td>
+  </tr>
+</table>
+
+</div>
+
+<%= google_map_form f %>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= f.calendar_date_select :published_at, :class => 'datetime', :time=> true %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

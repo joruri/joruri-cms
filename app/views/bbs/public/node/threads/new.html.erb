@@ -1,0 +1,21 @@
+<div class="contentBbsThreads">
+
+<% if msg = flash[:notice] %><div class="notice"><%= msg %></div><% end %>
+
+<div class="entryForm">
+  <h2 class="formTitle">投稿フォーム</h2>
+  <%= form_for :item, :url => "#{@node_uri}new" do |f| %>
+    <%= render :partial => "form", :locals => {:f => f} %>
+    <div class="submitters">
+      <% if @use_once_click %>
+      <input type="submit" value="投稿する" onclick="controlSubmitting(this);" />
+      <% else %>
+      <input type="submit" value="投稿する" />
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="back"><%= link_to "戻る", "#{@node_uri}?#{query}" %></div>
+
+</div>

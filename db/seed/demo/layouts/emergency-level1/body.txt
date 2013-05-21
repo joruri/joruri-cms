@@ -1,0 +1,112 @@
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+<div id="headerBody">
+
+[[piece/common-header]]
+
+</div>
+
+<!-- end #headerContainer --></div>
+<!-- end #header --></div>
+
+<div id="banner">
+<div id="bannerContainer">
+<div id="bannerBody">
+
+
+[[piece/common-banner]]
+
+[[piece/global-navi]]
+
+</div>
+<!-- end #bannerContainer --></div>
+<!-- end #banner --></div>
+
+<div id="main">
+
+<div id="wrapper">
+
+<div id="content">
+<div id="contentContainer">
+<div id="contentBody">
+
+[[piece/emergency]]
+
+[[piece/photo]]
+
+[[piece/doc-tab-portal]]
+
+[[piece/topic]]
+
+[[piece/life-event]]
+
+[[piece/category]]
+
+[[piece/portal]]
+
+</div>
+<!-- end #contentContainer --></div>
+<!-- end #content --></div>
+
+<div id="menu">
+<div id="menuContainer">
+<div id="menuBody">
+
+[[piece/mayor]]
+
+[[piece/bn-mailmagazine]]
+
+[[piece/about]]
+
+[[piece/area-information]]
+
+[[piece/basic-information]]
+
+[[piece/application]]
+
+[[piece/useful-information]]
+
+[[piece/population]]
+
+[[piece/qr-code]]
+
+</div>
+<!-- end #menuContainer --></div>
+<!-- end #menu --></div>
+
+<!-- end #wrapper --></div>
+
+<div id="links">
+<div id="linksContainer">
+<div id="linksBody">
+
+[[piece/inquiry]]
+
+[[piece/ad-upper]]
+
+[[piece/calendar]]
+
+[[piece/attract-information]]
+
+</div>
+<!-- end #linksContainer --></div>
+<!-- end #links --></div>
+
+<!-- end #main --></div>
+
+<div id="footer">
+<div id="footerContainer">
+
+
+<div id="footerBody">
+[[piece/address]]
+[[piece/footer-navi]]
+[[piece/ad-lower]]
+</div>
+
+<!-- end #footerContainer --></div>
+<!-- end #footer --></div>
+
+</div>

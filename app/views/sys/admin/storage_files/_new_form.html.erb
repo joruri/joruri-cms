@@ -1,0 +1,80 @@
+<style type="text/css">
+#newForm table {
+  margin: 10px 0px;
+  border: 1px solid #ccc;
+  background-color: #e5e7e5;
+}
+#newForm table th {
+  padding: 12px 5px 12px 10px;
+}
+#newForm table td {
+  padding: 12px 10px;
+}
+</style>
+<%= javascript_tag do %>
+
+function checkFilename() {
+  var name = $('#newForm input[type=file]').val().replace(/\\/g, '/').replace(/.*\//, '');
+  if (name == "") {
+    return false;
+  }
+  if (name.match(/[^0-9a-z\.\-_\+@]/i)) {
+    alert('保存ファイル名を半角英数字で入力してください。');
+    return false;
+  }
+  return true;
+}
+
+$(function(){
+  $('a#newDir').click(function(){
+    var html = $('#newForm table.dir').length ? '' : $('#newDirTemplate').html();
+    $('#newForm').html(html);
+    return false;
+  });
+  $('a#newFile').click(function(){
+    var html = $('#newForm table.file').length ? '' : $('#newFileTemplate').html();
+    $('#newForm').html(html);
+    return false;
+  });
+  $('a#newUpload').click(function(){
+    var html = $('#newForm table.upload').length ? '' : $('#newUploadTemplate').html();
+    $('#newForm').html(html);
+    return false;
+  });
+});
+<% end %>
+
+<%= form_for :item, :url => "#" do |f| %>
+<div id="newDirTemplate" style="display: none;">
+  <table class="dir">
+    <tr>
+      <th>ディレクトリ名</th>
+      <td><input class="nameEn" name="item[new_directory]" size="40" type="text" /></td>
+      <td><input type="submit" name="create_directory" value="作成する" /></td>
+    </tr>
+  </table>
+</div>
+<div id="newFileTemplate" style="display: none;">
+  <table class="file">
+    <tr>
+      <th>ファイル名</th>
+      <td><input class="nameEn" name="item[new_file]" size="40" type="text" /></td>
+      <td><input type="submit" name="create_file" value="作成する" /></td>
+    </tr>
+  </table>
+</div>
+<div id="newUploadTemplate" style="display: none;">
+  <table class="upload">
+    <tr>
+      <th>アップロード</th>
+      <td><input name="item[new_upload]" type="file" size="50" /></td>
+      <td><input type="submit" name="upload_file" value="アップロード" onclick="return checkFilename();" /></td>
+    </tr>
+  </table>
+</div>
+<% end %>
+
+<%= form_for :item, :url => "", :html => {:method => :post, :multipart => true} do |f| %>
+<%= error_messages_for :item %>
+<div id="newForm"></div>
+<% end %>

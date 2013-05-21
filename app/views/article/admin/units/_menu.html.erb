@@ -1,0 +1,14 @@
+<h2><%= @content.name %> : 組織設定</h2>
+
+<div class="navi">
+<%#= link_to '組織', url_for(:action => :index, :parent => 0) %>
+<% tree = @parent.parents_tree; tree.each_with_index do |c, k| %>
+<% if k != 0 %><span class="separator">&gt;</span><% end %><%=link_to c.title, url_for(:action => :index, :parent => c ) %>
+<% end %>
+</div>
+
+<div class="actionMenu">
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@content.editable?} %>
+</div>

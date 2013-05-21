@@ -1,0 +1,17 @@
+<%
+
+return '' if item.recognizers.size == 0
+
+%><p class="form">承認設定</p>
+
+<table class="show">
+  <tr>
+    <th>承認者</th>
+    <td>
+      <% item.recognizers.each do |user| %>
+      <% date = item.recognition.info(user.id).recognized_at %>
+      <%= safe{user.name_with_account} %> / <%= date.blank? ? "未承認" : "承認日時 #{date}" %><br />
+      <% end %>
+    </td>
+  </tr>
+</table>

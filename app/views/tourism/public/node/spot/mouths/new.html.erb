@@ -1,0 +1,17 @@
+<div class="contentTourism contentTourismSpotMouth">
+
+<div class="newMouth">
+  <h2>投稿フォーム</h2>
+  
+  <%= form_for :item, :url => "", :html => {:multipart => true} do |f| %>
+  
+  <%= error_messages_for :item %>
+  
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  
+  <input type="submit" value="投稿する" />
+  
+  <% end %>
+</div>
+
+</div>

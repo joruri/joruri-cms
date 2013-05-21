@@ -1,0 +1,9 @@
+<div id="mayorSide" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><hr />
+・<a href="/mayor/">市長のご挨拶</a><br />
+・<a href="/mayor/profile/">プロフィール</a><br />
+・<a href="/mayor/activity/">市長へのメール</a>
+</div>
+</div>
+</div>

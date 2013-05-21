@@ -1,0 +1,18 @@
+<div id="adBanner" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="#">
+<img src="/_common/themes/joruri/piece/images/bn_ad_01.gif" alt="広告バナー1" title="広告バナー1" /></a>
+<a href="#">
+<img src="/_common/themes/joruri/piece/images/bn_ad_02.gif" alt="広告バナー2" title="広告バナー2" /></a>
+<a href="#">
+<img src="/_common/themes/joruri/piece/images/bn_ad_03.gif" alt="広告バナー3" title="広告バナー3" /></a>
+<a href="#">
+<img src="/_common/themes/joruri/piece/images/bn_ad_04.gif" alt="広告バナー4" title="広告バナー4" /></a>
+
+<div class="pieceFooter"><a href="#">ジョ－ルリ市の広告事業について</a></div>
+
+
+</div>
+</div>
+</div>

@@ -1,0 +1,4 @@
+<ul><% @items.each do |item| %>
+  <li><%=link_to h(item.title), "#{@node_uri}#{item.thread_id}/", :class => "title"
+   %><span class="date">（<%= safe{item.created_at.strftime("%Y年%-m月%-d日")} %>）</span></li><% end %>
+</ul>

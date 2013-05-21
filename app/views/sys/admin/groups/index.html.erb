@@ -1,0 +1,46 @@
+<div class="crudTree">
+<div class="tree">
+
+  <p>
+    <%= link_to :show, sys_group_url(@parent.parent_id, @parent) %>
+    <%= @parent.name %></p>
+  
+  <div class="links">
+    <% if @parent.level_no > 1 %>
+    <div class="menu"><%= link_to :up, url_for(:parent => @parent.parent_id) %></div>
+    <% end %>
+    <% for item in @groups %>
+    <div>
+      <%= link_to :show, url_for(:action => :show, :id => item) %>
+      <%= link_to h(item.name), url_for(:action => :index, :parent => item) %>
+      <span class="remark"><%= item.sort_no %></span>
+    </div>
+    <% end %>
+  </div>
+  
+</div>
+<div class="content">
+
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 30%;">ユーザID</th>
+    <th style="width: ;">氏名</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+  
+  <% for item in @users %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to '詳細', sys_group_user_path(@parent, item) %></td>
+    <td><%= item.account %></td>
+    <td><%= item.name %></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+</div>
+<div class="footer"></div>
+</div>

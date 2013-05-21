@@ -1,0 +1,40 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <%= tourism_genre_and_spot_form f %>
+  <tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:guest_name) %></th>
+    <td><%= f.text_field :guest_name, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 150px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image1_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :image1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image2_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :image2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image3_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :image3_file_id %></td>
+  </tr>
+</table>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= f.calendar_date_select :published_at, :class => 'datetime', :time=> true %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,15 @@
+<h2>新着情報</h2>
+<ul><% @entries.each do |entry| %>
+  <li><%=link_to h(entry.title), entry.public_uri, :target => entry.link_target %><%= entry.date_and_site %>
+  </li><% end %>
+</ul>
+
+<% if @more %>
+  <%= paginate(@entries).to_s.gsub!(/href="(.*?)p([0-9]+)\.html.*?"/, 'href="\\1p1.html?page=\\2&pp=\\2"') %>
+<% else %>
+
+<% if @node %><div class="links">
+  <%= link_to '>>新着記事一覧' , @node_uri , :class => 'more' %>
+</div><% end %>
+
+<% end %>

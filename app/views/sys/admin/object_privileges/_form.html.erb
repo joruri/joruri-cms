@@ -1,0 +1,41 @@
+<%
+
+def make_candidates(args1, args2)
+  choices = []
+  exists  = {}
+  
+  down = lambda do |p, i|
+    next if exists[p.id]
+    exists[p.id] = true
+    
+    choices << [('　　' * i) + p.name, p.unid]
+    Cms::Concept.find(:all, eval("{#{args2}}")).each do |c|
+      down.call(c, i + 1)
+    end
+  end
+  
+  Cms::Concept.find(:all, eval("{#{args1}}")).each {|item| down.call(item, 0) }
+  return choices
+end
+
+concepts = []
+Cms::Site.new.public.find(:all, :order => :id).each do |site|
+  concepts << ["// #{h(site.name)}", '']
+  args1  = %Q( :conditions => ["site_id = #{site.id} AND level_no = 1 AND state = 'public'"], )
+  args1 += %Q( :order => "site_id, sort_no")
+  args2  = %Q( :conditions => ["parent_id = ?", p.id], )
+  args2 += %Q( :order => "site_id, sort_no")
+  concepts += make_candidates(args1, args2)
+end
+
+%><p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:item_unid) %></th>
+    <td><%= f.select :item_unid, concepts, :include_blank => "　", :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:action) %></th>
+    <td><%= f.check_boxes :in_actions, @item.action_labels, :class => 'name' %></td>
+  </tr>
+</table>

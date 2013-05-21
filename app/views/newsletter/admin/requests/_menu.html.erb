@@ -1,0 +1,6 @@
+<h2><%= @content.name %> : 購読ログ</h2>
+
+
+<div class="actionMenu">
+<%= link_to "CSV出力", url_for(:action => :index, :do => :csv) if params[:action] == "index" %>
+</div>

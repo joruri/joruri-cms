@@ -1,0 +1,33 @@
+<%= init_tiny_mce %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, [["公開","public"],["非公開","closed"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %> <span class="note">※</span></th>
+    <td><%= f.text_field :name, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => "height: 100px;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:column_type) %> <span class="note">※</span></th>
+    <td><%= f.select :column_type, @item.column_types.collect{|c| [c[:label], c[:name]]}, :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:options) %><br />（種別が選択形式の時に使用）</th>
+    <td><%= f.text_area :options, :style => "width: 600px; height: 100px;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:required) %></th>
+    <td><%= f.radio_buttons :required, [["必須","1"],["任意","0"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:column_style) %><br />（style=）</th>
+    <td><%= f.text_field :column_style, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => "number" %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,16 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<%= link_to '観光地一覧', tourism_spots_path %>
+<%= link_to '写真一覧', tourism_photos_path %>
+<%= link_to '動画一覧', tourism_movies_path %>
+<%= link_to 'クチコミ', tourism_mouths_path %>
+
+<% if Core.user.has_auth?(:designer) %>
+<%= link_to 'ジャンル設定', tourism_genres_path(:parent => 0) %>
+<%= link_to '地域設定', tourism_areas_path(:parent => 0) %>
+<%= link_to 'コンテンツ設定', tourism_content_settings_path %>
+<% end %>
+</div>

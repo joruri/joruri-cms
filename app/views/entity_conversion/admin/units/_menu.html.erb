@@ -1,0 +1,8 @@
+<h2><%= @content.name %></h2>
+
+<div class="actionMenu">
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%#= action_menu :edit if safe{@item.editable?} && !@item.replaced_page? %>
+<%#= action_menu :destroy if safe{@item.deletable?} %>
+</div>

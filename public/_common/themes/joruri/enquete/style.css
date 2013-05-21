@@ -1,0 +1,104 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   Enquete
+========================================================= */
+
+/* Confirm
+----------------------------------------------- */
+.confirmMessage {
+  margin-bottom: 30px;
+  font-size: 130%;
+  text-align: center;
+}
+
+/* Index : enqueteForms
+----------------------------------------------- */
+.enqueteForms .form, .enqueteForm .form {
+  margin: 10px 0;
+}
+.enqueteForms .form h2, .enqueteForm .form h2 {
+  padding: 7px 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 100%;
+}
+.enqueteForms .form .summary,
+.enqueteForm .form .body {
+  padding: 10px 10px 5px;
+}
+
+/* Show : enqueteForm
+----------------------------------------------- */
+.enqueteForm .columns {
+  margin: 20px 10px;
+}
+.enqueteForm .column {
+  margin: 10px 0 20px;
+}
+.enqueteForm .column .name {
+  padding: 4px 8px;
+  border-left: 4px solid #232f92;
+  background-color: #f1f1f1;
+}
+.form .name a {
+  color: #ffffff;
+}
+.enqueteForm .column .name .required {
+  color: #ff0000;
+}
+.enqueteForm .column .body {
+  margin: 10px 0 0 15px;
+}
+.enqueteForm .column .field {
+  margin: 10px 0 0 15px;
+}
+.enqueteForm .submitters {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #d8ebf8;
+  text-align: center;
+}
+.enqueteForm .captchaForm input {
+  ime-mode: disabled;
+}
+.enqueteForm .captchaForm .image img {
+  margin: 0px 0px 5px;
+  border: 1px solid #008800;
+}
+.enqueteForm .captchaForm .field {
+  margin: 0px;
+}
+.enqueteForm .back {
+  margin-top: 20px;
+  text-align: center;
+}
+.enqueteForm .back a {
+  display: block;
+  width: 95px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+}
+
+/* Sent : enqueteSent
+----------------------------------------------- */
+.enqueteSent .message {
+  margin: 60px 0;
+}
+.enqueteSent .back {
+  text-align: center;
+}
+.enqueteSent .back a {
+  display: block;
+  width: 95px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+}

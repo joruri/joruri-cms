@@ -1,0 +1,24 @@
+<script type="text/javascript">
+//<![CDATA[
+
+// EnterキーによるSubmitを無効化
+function stopSubmitting(event) {
+  if (!event) var event = window.event;
+  var key = (event.keyCode != 0 && event.keyCode != 229) ? event.keyCode : event.charCode;
+  if (key == 13) {
+    event.returnValue = false;
+    return false;
+  }
+}
+
+window.onload = function() {
+  var list = document.getElementsByTagName('input');
+  for (var i=0; i<list.length; i++) {
+    if(list[i].type.match(/^(text|password|radio|checkbox)$/) != ""){
+      list[i].onkeypress = function (event) { return stopSubmitting(event); }
+    }
+  }
+}
+
+//]]>
+</script>

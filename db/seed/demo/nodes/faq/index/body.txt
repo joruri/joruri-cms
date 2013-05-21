@@ -1,0 +1,3 @@
+<div class="faqTitle"><img src="/_common/themes/joruri/faq/images/tl-faq.gif" alt="" />
+<p>ジョールリ市に寄せられる、よくあるお問い合わせとその回答をお調べいただけます。</p>
+</div>

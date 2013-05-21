@@ -1,0 +1,13 @@
+<div id="population" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<table summary="人口">
+<caption>ジョールリ市の人口と世帯数（2010年9月1日現在）</caption>
+<tr><th scope="row">総人口</th><td>00,000人</td></tr>
+<tr><th scope="row">男</th><td>00,000人</td></tr>
+<tr><th scope="row">女</th><td>00,000人</td></tr>
+<tr><th class="noBorder"  scope="row">世帯数</th><td class="noBorder">00,000世帯</td></tr>
+</table>
+</div>
+</div>
+<!-- end .piece --></div>

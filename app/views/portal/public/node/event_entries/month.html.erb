@@ -1,0 +1,18 @@
+<div class="contentPortalEventEntries">
+
+<h2><%= "#{@calendar.year}年#{@calendar.month}月" %></h2>
+
+<table class="calendar">
+  <% @items.each do |item| %><tr>
+    <td class="<%= item[:date_class] %>"><%= item[:anchor] %><%= item[:date] %></td>
+    <td class="title"><%= link_to h(item[:entry].title), item[:entry].public_uri, :target => item[:entry].link_target %><span class="<%= item[:source_class] %>"><%= "（#{h(item[:source_title])}）" if item[:source_title] %></span></td>
+  </tr><% end %>
+</table>
+
+<div class="pagination">
+  <%= link_to("<前の月", @calendar.prev_month_uri, :class => "prevMonth") if @prev_link %>
+  <span class="separator">|</span>
+  <%= link_to("次の月>", @calendar.next_month_uri, :class => "nextMonth") if @next_link %>
+</div>
+
+</div>

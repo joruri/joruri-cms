@@ -1,0 +1,19 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:parent_id) %></th>
+    <td><%= f.select :parent_id, @item.candidate_parents, :include_blank => '（ルート階層）' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

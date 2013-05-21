@@ -1,0 +1,32 @@
+<%= render :partial => 'new_form' %>
+
+<table class="index directories">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 20%;">ファイル名</th>
+    <th >コンセプト/URL</th>
+    <th style="width: 80px; text-align: right;">サイズ</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+  </tr>
+  
+  <% @dirs.each do |item| %>
+  <tr class="directory <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, @stylesheet_path.call(item.path) %> </td>
+    <td class="name"><%= link_to h(item.name), @stylesheets_path.call(item.path) %></td>
+    <td class="uri"><%= safe{item.concept.name} %></td>
+    <td> </td>
+    <td style="text-align: center;"><%= item.mtime.strftime('%Y-%m-%d %H:%M')%></td>
+  </tr>
+  <% end %>
+  
+  <% @files.each do |item| %>
+  <tr class="file <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><br /></td>
+    <td class="name"><%= link_to h(item.name), @stylesheets_path.call(item.path, :do => :show) %></td>
+    <td class="uri"><%= link_to item.public_uri, item.public_uri, :target => '_blank' %> </td>
+    <td style="text-align: right;"><%= number_format item.size(:kb) %> KB</td>
+    <td style="text-align: center;"><%= safe{item.mtime.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+  <% end %>
+  
+</table>

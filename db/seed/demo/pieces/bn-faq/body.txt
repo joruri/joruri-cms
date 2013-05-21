@@ -1,0 +1,5 @@
+<div id="bnFaq" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><a href="/faq/"><span class="bnFaqA">ジョールリ市</span><span class="bnFaqB">FAQ</span></a></div>
+</div>
+</div>

@@ -1,0 +1,13 @@
+<div class="contentArticleDocs">
+
+<div class="docs">
+  <% @items.each_with_index do |item, idx| %>
+  <% if item[:date] %><%== "</ul>" if idx != 0  %>
+  <%== %Q(<h2 class="date">#{item[:date]}</h2><ul>) if item[:date] %>
+  <% end %><li><%=link_to h(item[:doc].title), item[:doc].public_uri %><%= item[:doc].categories_and_unit %></li><% end %>
+  <%== "</ul>" if @docs.size > 0 %>
+</div>
+
+<%= paginate @docs %>
+
+</div>

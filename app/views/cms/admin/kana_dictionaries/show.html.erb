@@ -1,0 +1,13 @@
+<p class="form">辞書データ</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%=hbr @item.body %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

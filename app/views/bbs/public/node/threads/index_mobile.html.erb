@@ -1,0 +1,23 @@
+<div class="contentBbsThreads">
+
+<% if msg = flash[:notice] %><div class="notice"><%= msg %></div><% end %>
+
+<div class="bbsMenu">
+  <a href="./new">新規投稿</a>
+  <% if @use_password %> | <a href="./delete">削除</a><% end %>
+</div>
+
+<div class="threads">
+  <% @threads.each do |item| %>
+  <div class="thread">
+    <div class="threadItem"><%= render :partial => "item", :locals => {:item => item} %></div>
+    <% item.all_responses.each do |res| %>
+    <div class="resItem"><%= render :partial => "item", :locals => {:item => res} %></div>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<%= paginate(@threads) if @threads %>
+
+</div>

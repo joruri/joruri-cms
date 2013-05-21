@@ -1,0 +1,16 @@
+<h2>コンセプト</h2>
+
+<div class="navi">
+<%= link_to 'コンセプト', cms_concepts_path(:parent => 0) %>
+<% tree = @parent.parents_tree; tree.each_with_index do |c, k| %>
+<span class="separator">&gt;</span><%= link_to c.name, url_for(:action => :index, :parent => c ) %>
+<% end %>
+</div>
+
+<div class="actionMenu">
+<%= action_menu :new %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

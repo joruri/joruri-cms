@@ -1,0 +1,28 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:full_uri) %></th>
+    <td><%= @item.full_uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:alias_full_uri) %></th>
+    <td><%= @item.alias_full_uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:mobile_full_uri) %></th>
+    <td><%= @item.mobile_full_uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:admin_full_uri) %></th>
+    <td><%= @item.admin_full_uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:related_site) %></th>
+    <td><%=hbr @item.related_site %></td>
+  </tr><tr>
+    <th>ドキュメントルート</th>
+    <td><%= @item.public_path %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

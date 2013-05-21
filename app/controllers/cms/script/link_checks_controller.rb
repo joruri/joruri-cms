@@ -1,0 +1,95 @@
+# encoding: utf-8
+class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
+  
+  def check
+    options = Script.options
+    
+    pub = Sys::Publisher.new
+    pub.and :site_id, options[:site_id] if options[:site_id]
+    pub.and :uri, 'IS NOT', nil
+    pub.and do |c|
+      c.or :internal_links, 'IS NOT', nil
+      c.or :external_links, 'IS NOT', nil
+    end
+    pubs = pub.find(:all, :select => :id)
+    
+    Script.total pubs.size
+    
+    logs = {} 
+    
+    pubs.each_with_index do |v, idx|
+      pub = Sys::Publisher.find_by_id(v[:id])
+      next unless pub
+      
+      Script.current
+      
+      begin
+        links = pub.internal_links.to_s.split(/\n/)
+        links += pub.external_links.to_s.split(/\n/) if options[:external]
+        
+        links.each do |uri|
+          next if uri.blank?
+          
+          logs[uri] ||= { :count => 0 }
+          
+          log = logs[uri]
+          log[:count]   += 1
+          log[:source] ||= pub.uri
+          
+          if !log[:state]
+            if uri_exists?(uri)
+              log[:state] = 'exists'
+              Script.success
+            else
+              log[:state] = 'failed'
+              Script.error "unreachable url: #{uri}"
+            end
+          end
+        end
+      rescue Script::InterruptException => e
+        raise e
+      rescue Exception => e
+        Script.error e.to_s
+      end
+    end
+    
+    Cms::LinkCheck.connection.execute "TRUNCATE TABLE #{Cms::LinkCheck.table_name}"
+    
+    logs.each do |link, data|
+      check = Cms::LinkCheck.new({
+        :state        => data[:state],
+        :link_uri     => link,
+        :source_uri   => data[:source],
+        :source_count => data[:count],
+      })
+      check.save
+    end
+    
+    render :text => "OK"
+  end
+  
+protected
+  def uri_exists?(uri)
+    require 'open-uri'
+    require "resolv-replace"
+    require 'timeout'
+    
+    ok_code = '200 OK'
+    options = {
+      :proxy => Core.proxy,
+      :progress_proc => lambda {|size| raise ok_code }
+    }
+    
+    begin
+      timeout(2) do
+        open(uri, options) {|f| return true if f.status[0].to_i == 200 }
+      end
+    rescue TimeoutError
+      return false
+    rescue => e
+      return true if e.to_s == ok_code
+    end
+    
+    return false
+  end
+end

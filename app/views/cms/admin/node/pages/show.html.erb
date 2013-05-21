@@ -1,0 +1,39 @@
+<%= init_tiny_mce :readonly => true %>
+
+<% if rep = @item.replace_page %>
+<div class="noticeBox">更新用のページが作成されています : <%= link_to h(rep.title), rep.admin_uri %></div>
+<% elsif org = @item.replaced_page %>
+<div class="noticeBox">更新されるページ : <%= link_to h(org.title), org.admin_uri %></div>
+<% end %>
+
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= node_base_view @item, :container => :tr %>
+</table>
+
+<table class="show" style="margin: 0px;">
+  <tr>
+    <th><%= @item.locale(:body) %></th></tr><tr>
+    <td class="mceEditor"><%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor' %></td>
+  </tr>
+</table>
+
+<% if !@item.mobile_title.blank? || !@item.mobile_body.blank? %>
+<p class="form">携帯向け</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:mobile_title) %></th>
+    <td><%= hbr @item.mobile_title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><%= hbr @item.mobile_body %></td>
+  </tr>
+</table>
+<% end %>
+
+<%= inquiry_view @item %>
+<%= task_view @item %>
+<%= recognizer_view @item %>
+<%= creator_view @item %>

@@ -1,0 +1,11 @@
+<h2><%= @piece.title %> : タブ設定</h2>
+
+<div class="actionMenu">
+<%= link_to "ピース詳細", article_piece_recent_tab_path(@piece.id) %>
+<span class="separator"></span>
+<%= action_menu :new     if safe{@piece.editable?} %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

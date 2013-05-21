@@ -1,0 +1,46 @@
+<%
+
+def error?(col)
+  @item.errors[col].size > 0 ? 'class="field_with_errors"' : ''
+end
+
+groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
+group  = Sys::Group.find_by_id(item.in_inquiry['group_id']) || Core.user_group
+
+%><p class="form">連絡先</p>
+
+<div style="margin: 10px;">
+<%= f.radio_buttons "in_inquiry[state]", [['表示','visible'],['非表示','hidden']], :class => 'status' %>
+</div>
+
+<table class="show">
+<tr>
+  <th>課 <% if @item.inquiry_presence?(:group_id) %><span class="note">※</span><% end %></th>
+  <td><span <%= error?('連絡先（課）') %>>
+    <% if Core.user.has_auth?(:manager) %>
+    <%= f.select_with_tree "in_inquiry[group_id]", groups %>
+    <% else %>
+    <%= safe{group.full_name} %>
+    <input type="hidden" name="<%= f.object_name.to_s %>[in_inquiry][group_id]" value="<%= group.id %>" />
+    <% end %></td>
+</tr><tr>
+  <th>室・担当</th>
+  <td><span <%= error?('連絡先（室・担当）') %>>
+    <%= f.array_text_field "in_inquiry[charge]", :class => 'name' %></span></td>
+</tr><tr>
+  <th>電話番号 <% if @item.inquiry_presence?(:tel) %><span class="note">※</span><% end %></th>
+  <td><span <%= error?('連絡先（電話番号）') %>>
+    <%= f.array_text_field "in_inquiry[tel]", :class => 'number' %></span></td>
+</tr><tr>
+  <th>ファクシミリ</th>
+  <td><span <%= error?('連絡先（ファクシミリ）') %>>
+    <%= f.array_text_field "in_inquiry[fax]", :class => 'number' %></span></td>
+</tr>
+<% if item.inquiry_email_setting != "hidden" %>
+<tr>
+  <th>メールアドレス <% if @item.inquiry_presence?(:email) %><span class="note">※</span><% end %></th>
+  <td><span <%= error?('連絡先（メールアドレス）') %>>
+    <%= f.array_text_field "in_inquiry[email]", :class => 'email' %></span></td>
+</tr>
+<% end %>
+</table>

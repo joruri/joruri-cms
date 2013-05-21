@@ -1,0 +1,21 @@
+<%
+
+layouts = []
+if concept = safe{@node.inherited_concept} || safe{@parent.inherited_concept}
+  concept.parents_tree.each{|c| layouts += c.layouts}
+  layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
+else
+  #layouts << ['// コンセプトが設定されていません', nil]
+end
+
+%><p class="form">大規模災害レイアウト</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :value %></th>
+    <td><%= f.select(:value, layouts, :include_blank => '　　　　') %></td>
+  </tr><tr>
+    <th><%= @item.locale :sort_no %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>

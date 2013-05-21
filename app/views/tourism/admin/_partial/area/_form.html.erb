@@ -1,0 +1,17 @@
+<%
+
+def error?(col)
+  @item.errors[col].size > 0 ? 'class="field_with_errors"' : ''
+end
+
+cond  = {:content_id => @content.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root  = Tourism::Area.find(:all, :conditions => cond, :order => :sort_no)
+
+%>
+<tr>
+  <th>地域</th>
+  <td>
+    <div <%= error?(:area_id) %>>
+      <%= f.select_with_tree :area_id, root, :conditions => {:state => 'public'}, :include_blank => "　", :label => :title %></div>
+  </td>
+</tr>

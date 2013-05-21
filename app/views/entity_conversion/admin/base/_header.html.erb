@@ -1,0 +1,14 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to '変更一覧', entity_conversion_units_path, :class => (current == :base ? "current" : "") %>
+<%= link_to 'テスト', entity_conversion_tests_path, :class => (current == :test ? "current" : "") %>
+<% if Core.user.has_auth?(:manager) %>
+<%= link_to '本実行', entity_conversion_converts_path, :class => (current == :convert ? "current" : "") %>
+<% else %>
+<%= link_to '本実行', "#", :onclick => "alert('管理者権限が必要です。'); return false;" %>
+<% end %>
+</div>

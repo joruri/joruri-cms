@@ -1,0 +1,37 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale :title %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale :more %></th>
+    <td><%= @item.more %></td>
+  </tr><tr>
+    <th>条件</th>
+    <td>
+      <table class="noDesign">
+        <tr>
+          <td>結合</td>
+          <td><%= @item.condition_name %></td>
+        </tr><tr>
+          <td>組織</td>
+          <td><% @item.unit_items.each do |i| %><%= i.title %><br /><% end %></td>
+        </tr><tr>
+          <td>分野</td>
+          <td><% @item.category_items.each do |i| %><%= i.title %> &nbsp;<% end %></td>
+        </tr><tr>
+          <td>属性</td>
+          <td><% @item.attribute_items.each do |i| %><%= i.title %> &nbsp;<% end %></td>
+        </tr><tr>
+          <td>地域</td>
+          <td><% @item.area_items.each do |i| %><%= i.title %> &nbsp;<% end %></td>
+        </tr>
+      </table>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale :sort_no %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+</table>

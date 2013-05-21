@@ -1,0 +1,106 @@
+<%= init_tiny_mce %>
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= node_base_form f, :container => :tr %>
+</table>
+
+<table class="show" style="margin: 0px;">
+  <tr>
+    <th><%= @item.locale(:body) %></th></tr><tr>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => 'width: 100%' %></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+//<![CDATA[
+
+var isGecko = false;
+
+/**
+ * Get TextRange
+ */
+function getTextRange (element) {
+  var value;
+
+  if (document.selection) {
+    if (true) {
+      value = parent.document.selection.createRange().text;
+    } else {
+      value = document.selection.createRange().text;
+    }
+  } else if (isGecko) {
+    var start = element.selectionStart;
+    var end = element.selectionEnd;
+    value = element.value.substring(start, end);
+  } else {
+    value = '';
+  }
+  return value;
+}
+
+/**
+ * Set TextRange
+ */
+function setTextRange (element, value) {
+  if (document.selection) {
+    if (true) {
+      element.focus();
+      parent.document.selection.createRange().text = value;
+    } else {
+      element.focus();
+      document.selection.createRange().text = value;
+    }
+  } else if (isGecko) {
+    var start = element.selectionStart;
+    var end   = element.selectionEnd;
+    var len   = element.textLength;
+    var str   = element.value.substring(start, end);
+    var head  = element.value.substring(0, start);
+    var foot  = element.value.substring(end, len);
+    element.value = head + value + foot;
+  } else {
+    element.value += value;
+  }
+}
+
+/**
+ * set insert text
+ */
+function setText(element, text ) {
+  parent.tinyMCE.execInstanceCommand('item_body','mceInsertContent',true, text);
+  return false;
+}
+
+//]]>
+</script>
+
+<table class="show">
+  <tr>
+    <th>ファイル</th>
+    <td>
+      <a href="#" onclick="return $(this).toggleOpen('#inlineFiles');">閉じる▲</a>
+    </td>
+  </tr>
+</table>
+
+<div class="inlineForm" id="inlineFiles">
+  <iframe src="<%= cms_inline_data_files_path(:parent => 0) %>" style="width: 100%; height: 340px;" frameborder="0"></iframe>
+</div>
+
+<p class="form">携帯向け</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:mobile_title) %></th>
+    <td><%= f.text_field :mobile_title, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><%= f.text_area :mobile_body, :style => 'width: 600px; height: 240px;' %></td>
+  </tr>
+</table>
+
+<%= inquiry_form f %>
+<%= task_form f %>
+<%= recognizer_form f %>
+<%= creator_form f %>

@@ -1,0 +1,18 @@
+<div class="contentPortalCategory contentPortalCategoryDate">
+
+<div class="feed">
+  <%= link_to 'RSS' , "index.rss" , :class => 'feedRss' %>
+  <%= link_to 'Atom', "index.atom", :class => 'feedAtom' %>
+</div>
+
+<div class="entries">
+  <% @items.each_with_index do |item, idx| %>
+  <% if item[:date] %><%== "</ul>" if idx != 0  %>
+  <%== %Q(<h2 class="date">#{item[:date]}</h2><ul>) if item[:date] %>
+  <% end %><li><%=link_to h(item[:entry].title), item[:entry].public_uri, :target => item[:entry].link_target %><%= item[:entry].date_and_site(:date => false) %></li><% end %>
+  <%== "</ul>" if @entries.size > 0 %>
+</div>
+
+<%= paginate @entries %>
+
+</div>

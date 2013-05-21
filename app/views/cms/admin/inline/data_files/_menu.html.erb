@@ -1,0 +1,12 @@
+<div id="content">
+<div class="actionMenu">
+<%= action_menu :new if Core.user.has_priv?(:create, :item => Core.concept) %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit      if safe{@item.editable?} %>
+<%= action_menu :destroy   if safe{@item.deletable?} %>
+<span class="separator"></span>
+<%= link_to 'ファイル', cms_inline_data_files_path %>
+<%= link_to 'フォルダ', cms_inline_data_file_nodes_path %>
+</div>
+</div>

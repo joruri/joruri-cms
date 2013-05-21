@@ -1,0 +1,53 @@
+<%
+
+map     = item.maps.find(:first)
+markers = map ? map.markers : []
+return render(:text => "") unless map
+return render(:text => "") if map.map_lat.blank? || map.map_lng.blank?
+
+%><script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&region=jp"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+function addEvent(element, listener, func) {
+  try {
+    element.addEventListener(listener, func, false);
+  } catch (e) {
+    element.attachEvent('on' + listener, func);
+  }
+}
+
+addEvent(window, 'load', function() {
+  var mapOptions = {
+    center: new google.maps.LatLng(<%= map.map_lat %>, <%= map.map_lng %>),
+    zoom: <%= map.map_zoom %>,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    scaleControl: true,
+    scrollwheel: false
+  };
+  var map = new google.maps.Map(document.getElementById("map1"), mapOptions);
+  
+  <% markers.each_with_index do |marker, idx| %>
+    var marker<%= idx %> = new google.maps.Marker({
+      //title: '<%= marker.name.gsub(/'/, "\\\\'") %>'
+      position: new google.maps.LatLng(<%= marker.lat %>, <%= marker.lng %>),
+      map: map
+    });
+    var infowindow<%= idx %> = new google.maps.InfoWindow({
+      content: '<%= marker.name.gsub(/'/, "\\\\'").gsub(/\r\n|\r|\n/, "<br />") %>',
+      disableAutoPan: false
+    });
+    google.maps.event.addListener(marker<%= idx %>, 'click', function() {
+      infowindow<%= idx %>.open(map, marker<%= idx %>);
+    });
+  <% end %>
+});
+
+//]]>
+</script>
+
+<div class="maps">
+  <h2>地図</h2>
+  <%== "<h3>#{map.title}</h3>" if !map.title.blank? %>
+  <div id="map1" class="map" style="width: 100%; height: 400px"></div>
+</div>

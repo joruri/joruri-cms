@@ -1,0 +1,34 @@
+<%= form_for :item, :url => {:action => :update}, :html => {:method => :put} do |f| %>
+  
+<%= error_messages_for :item %>
+
+<p class="form">基本情報の変更</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:in_group_id) %></th>
+    <td><%= safe{@item.group.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:account) %></th>
+    <td><%= @item.account %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= f.text_field :name_en, :class => 'nameEn' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'email' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:auth_no) %></th>
+    <td><%= @item.auth_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:role_name) %></th>
+    <td><%= @item.role_names.collect{|r| r.title}.join('，') %></td>
+  </tr>
+</table>
+
+<%= submit :edit %>
+
+<% end %>

@@ -1,0 +1,45 @@
+<%= render :partial => 'search' %>
+
+<%#= link_to :up, url_for(:parent => @parent.parent_id) if @parent.parent_id > 0 %>
+  
+<table class="index directories">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 20%;">ファイル名</th>
+    <th style="width: ;">タイトル</th>
+    <th style="width: 20%;">アイテム種別</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+    <th style="width: 60px; text-align: center;">プレビュー</th>
+  </tr>
+  
+  <% @dirs.each do |item| %>
+  <tr class="directory <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, item.admin_uri %></td>
+    <td class="name"><%= link_to h(item.name), url_for(:action => :index, :parent => item) %></td>
+    <td><%= truncate(item.title, :length => 30) %></td>
+    <td><%= item.model_name(:short) %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <td style="text-align: center;">
+      <%= link_to 'PC', item.preview_uri, :target => '_blank' if !item.name.blank? %>
+      <%= link_to '携帯', item.preview_uri(:mobile => true), :target => '_blank' if !item.name.blank? %></td>
+  </tr>
+  <% end %>
+  
+  <% @pages.each do |item| %>
+  <tr class="file <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, item.admin_uri %></td>
+    <td class="name"><%= truncate(item.name, :length => 20) %></td>
+    <td><%= truncate(item.title, :length => 30) %><%= " （更新用）" if item.replace_page? %></td>
+    <td><%= item.model_name(:short) %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <td style="text-align: center;">
+      <%= link_to 'PC', item.preview_uri(:params => {:node_id => item.id}), :target => '_blank' if !item.name.blank? %>
+      <%= link_to '携帯', item.preview_uri(:params => {:node_id => item.id}, :mobile => true), :target => '_blank' if !item.name.blank? %></td>
+  </tr>
+  <% end %>
+
+</table>
+<%#= paginate @items %>

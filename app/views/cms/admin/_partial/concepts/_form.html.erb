@@ -1,0 +1,37 @@
+<%
+
+def error?(col)
+  @item.errors[col].size > 0 ? 'class="field_with_errors"' : ''
+end
+
+@parent ||= 0
+cond   = {:site_id => Core.site.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root   = Cms::Concept.find(:all, :conditions => cond, :order => :sort_no)
+
+%>
+  <tr>
+    <th>コンセプト</th>
+    <td>
+      <div <%= error?(:concept_id) %>>
+        <%= f.select_with_tree :concept_id, root, :conditions => {:state => 'public'}, :include_blank => "　" %></div>
+    </td>
+  </tr>
+<%
+
+if defined?(layout) && layout == true
+
+  layouts = []
+  if concept = safe{@item.inherited_concept} || safe{@parent.inherited_concept} || safe{@item.concept}
+    concept.parents_tree.each{|c| layouts += c.layouts}
+    layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
+  else
+    #layouts << ['// コンセプトを選択してください', nil]
+  end
+
+%>  <tr>
+    <th>レイアウト</th>
+    <td><%= f.select(:layout_id, layouts, :include_blank => '　　　　') %></td>
+  </tr>
+  <%= observe_field(:item_concept_id, :update => :item_layout_id,
+        :with => 'concept_id', :on => 'change', :url => layouts_cms_concepts_path(@parent)) %>
+<% end %>

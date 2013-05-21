@@ -1,0 +1,46 @@
+ja: 
+  activerecord: 
+    attributes: 
+      faq/category: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "分野ID"
+        title: "分野名"
+      
+      faq/doc: 
+        state: "状態"
+        agent_state: "表示端末"
+        published: "公開"
+        closed: "非公開"
+        publish_date: "公開日"
+        close_date: "非公開日"
+        name: "記事URL番号"
+        title: "タイトル"
+        head: "ヘッダー"
+        question: "質問"
+        body: "回答"
+        mobile_title: "携帯タイトル"
+        mobile_body: "携帯本文"
+        recent_state: "新着記事表示"
+        inquiry_charge: "お問い合わせ担当"
+        inquiry_tel: "お問い合わせ電話"
+        inquiry_fax: "お問い合わせファックス"
+        inquiry_email: "お問い合わせメール"
+      
+      faq/doc_rel_doc: 
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        sort_no: "並び順"
+      
+      ## content
+      faq/content/doc:
+        unit_uri: "組織URL"
+        category_uri: "分野URL"
+        attribute_uri: "属性URL"
+        area_uri: "地域URL"
+        tag_uri: "タグ検索URL"
+      
+      ## piece
+      faq/piece/recent_doc:
+        list_count: "表示件数"
+        more_label: "一覧リンク文字"

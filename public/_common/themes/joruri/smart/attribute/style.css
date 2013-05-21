@@ -1,0 +1,92 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   attribute
+========================================================= */
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.contentArticleAttribute .latest h2 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 25px;
+  background-color: #00349a;
+  background-repeat: no-repeat;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-border.png);
+  background-position: 10px center;
+  color: #ffffff;
+}
+.contentArticleAttribute li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  border-bottom: 1px solid #cccccc;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleAttribute h3 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+}
+.feed {
+  display: none;
+}
+.contentArticleAttribute span.attributes {
+  display: none;
+}
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.attribute {
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  border-bottom: 1px solid #cccccc;
+}
+.attributeNyusatsu {
+  background-image: url(./images/ic-nyusatsu.png);
+}
+.attributeSaiyo {
+  background-image: url(./images/ic-saiyo.png);
+}
+.attributeShikakushiken {
+  background-image: url(./images/ic-kakusyushikakushiken.png);
+}
+.attributeBosyu {
+  background-image: url(./images/ic-bosyu.png);
+}
+.attributeEvent {
+  background-image: url(./images/ic-event.png);
+}
+.attributeKyoka {
+  background-image: url(./images/ic-kyoka.png);
+}
+.attribute h2 {
+  height: 44px;
+  line-height: 44px;
+  font-size: 100%;
+}
+.attribute h2 a {
+  display: block;
+  padding: 0 40px 0 50px;
+  overflow: hidden;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link2.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.attribute .explain {
+  display: none;
+}

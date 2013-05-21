@@ -1,0 +1,25 @@
+<div id="commonBanner" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+
+<div class="logo"><h1><a href="/"><img src="/_common/themes/joruri/piece/images/logo.jpg" alt="ジョールリ市" title="ジョールリ市" /></a></h1></div>
+<div class="menu">
+<div class="upperMenu">
+<a class="smart" href="/smart.html"><span>スマートフォンサイト</span></a>
+<a class="keitai" href="/mobile.html"><span>携帯サイト</span></a>
+</div>
+<div class="lowerMenu">
+<form action="http://www.google.com/search">
+  <input type="hidden" name="hl" value="ja" />
+  <input name="q" type="text" size="40" id="search-box" class="text" title="キーワード検索" value="キーワード検索" onfocus="if (this.value == 'キーワード検索') this.value='';" onblur="if (this.value == '') this.value = 'キーワード検索';" />
+  <input type="button" name="sa" value="検索" id="search-button" align="top" />
+</form>
+<a class="chiiki" href="/chiiki/">地域から探す</a>
+<a class="soshiki" href="/soshiki/">組織から探す</a>
+<a class="toiawase" href="/inquiry/">お問い合わせ</a>
+<a class="siteMap" href="/sitemap/">サイトマップ</a>
+</div>
+</div>
+</div>
+</div>
+</div>

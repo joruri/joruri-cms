@@ -1,0 +1,22 @@
+<div class="contentArticleUnit contentArticleUnitDepartment">
+
+<div class="latest">
+  <div class="h2">新着情報</div>
+  <% if @docs.size > 0 %><div class="docs">
+    <% @docs.each do |doc| %>
+    <div>・<%=link_to h(doc.title), doc.public_uri%><%= doc.date_and_unit %></div>
+    <% end %>
+  </div><% end %>
+</div>
+
+<%= paginate @docs %>
+
+<% if (children = @item.public_children).size > 0 %>
+<br />
+<div class="sections">
+  <div class="h3">■課一覧</div>
+  <div><% children.each do |c| %><%= link_to "#{c.title}", "../#{c.name}/" %><span>/</span><% end %></div>
+</div>
+<% end %>
+
+</div>

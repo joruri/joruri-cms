@@ -1,0 +1,22 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_view @item, :container => :tr %>
+</table>
+
+<p class="form">リンク設定</p>
+
+<div class="actionMenu">
+  <%= link_to(:edit, cms_piece_link_items_path(@item.id)) if safe{@item.editable?} %>
+</div>
+
+<table class="show">
+  <% @item.link_items.find(:all, :conditions => {:state => 'public'}).each_with_index do |item, idx| %>
+  <tr>
+    <th>リンク <%= idx + 1 %></th>
+    <td><%= link_to h(item.name), item.uri, :target => item.target %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= creator_view @item %>

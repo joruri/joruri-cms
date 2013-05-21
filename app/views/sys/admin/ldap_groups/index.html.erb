@@ -1,0 +1,23 @@
+<div class="crudTree">
+<div class="tree">
+  <p>
+    <%= @parent ? @parent.ou : 'LDAP' %></p>
+  
+  <div class="links">
+      <% @groups.each do |g| %>
+      <div><%= link_to h(g.ou), url_for(:action => :index, :parent => g.ou) %><br /></div>
+      <% end %>
+      <%== "<div>no groups</div>" if @groups.size == 0 %>
+  </div>
+</div>
+<div class="content">
+  <table class="index">
+    <tr><th>Users</th></tr>
+    <% @users.each do |u| %>
+    <tr class="<%= cycle '', 'cycle' %>"><td><%= u.name %> (<%= u.uid %>)</td></tr>
+    <% end %>
+    <% if @users.size == 0 %><tr><td>no users<br /></td></tr><% end %>
+  </table>
+</div>
+<div class="footer"></div>
+</div>

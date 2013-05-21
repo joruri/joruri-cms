@@ -1,0 +1,19 @@
+<%
+
+return render(:text => "") unless Core.ldap.connection
+
+%><H2>LDAP</h2>
+
+<div class="navi">
+
+<%= link_to "LDAP", sys_ldap_groups_path(:parent => 0) %>
+
+<% @parents.each do |p| %>
+<span class="separator">&gt;</span><%= link_to h(p.ou), url_for(:action => :index, :parent => p.ou) %>
+<% end %>
+
+<% if @parent %>
+<span class="separator">&gt;</span><%= link_to h(@parent.ou), url_for(:action => :index, :parent => @parent.ou) %>
+<% end %>
+
+</div>

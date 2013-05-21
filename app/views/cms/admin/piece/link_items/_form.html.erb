@@ -1,0 +1,18 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= f.text_field :uri, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:target) %></th>
+    <td><%= f.radio_buttons :target, @item.targets, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>

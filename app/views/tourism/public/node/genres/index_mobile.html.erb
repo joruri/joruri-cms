@@ -1,0 +1,12 @@
+<div class="contentTourism contentTourismGenres">
+
+<% @items.each do |item| %>
+  <div class="h2 genre genre<%= item.name.camelize %>"><%=link_to h(item.title), "#{@base_uri}#{item.name}/" %></div>
+
+  <% item.public_children.each do |c1| %>
+    <div class="h3 genre genre<%= c1.name.camelize %>"><%= link_to h(c1.title), "#{@base_uri}#{c1.name}/"  %></div>
+  <% end %>
+  
+<% end %>
+
+</div>

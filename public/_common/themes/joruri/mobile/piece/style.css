@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+/* =========================================================
+   piece
+========================================================= */
+
+/* space
+----------------------------------------------- */
+.pieceContainer {
+  margin-bottom: 1em;
+}
+.pieceBody {
+  padding: 0 0.3em;
+}
+
+/* header
+----------------------------------------------- */
+#commonHeader .pieceContainer {
+  margin-bottom: 0;
+}
+#commonHeader .pieceBody {
+  padding: 0;
+}
+
+/* color
+----------------------------------------------- */
+.blue {
+  padding: 3px 0;
+  color: #0066cc;
+}
+.orange {
+  color: #ff6600;
+}
+
+/* footer
+----------------------------------------------- */
+#backNavi {
+  padding: 3px 3px 5px;
+}
+#address {
+  padding: 3px;
+  border-top: 1px solid #000099;
+}
+#copyright {
+  margin-bottom: 5px;
+  padding: 3px;
+  background-color: #003399;
+  color: #ffffff;
+  text-align: center;
+}
+#copyright .pieceContainer {
+  margin-bottom: 0;
+}
+
+/* corner-title
+----------------------------------------------- */
+#cornerTitle {
+  margin-bottom: 5px;
+  padding: 3px;
+  background-color: #003399;
+  color: #ffffff;
+  font-weight: bold;
+}
+.contentPrefRecentDocs {
+  margin-bottom: 5px;
+  padding: 0px 5px;
+}
+#RecentDocsMore {
+  padding-right: 5px;
+  text-align: right;
+}
+
+/* title
+----------------------------------------------- */
+#pageTitle .pieceContainer,
+#pageTitle .pieceBody {
+  margin-bottom: 0;
+  padding: 0;
+}
+.latest {
+  padding: 0.2em 0;
+}
+.h1 {
+  margin-bottom: 5px;
+  padding: 0.3em;
+  background-color: #003399;
+  color: #ffffff;
+  font-weight: bold;
+}
+.h2 {
+  background-color: #e3f0fa;
+  margin-bottom: 5px;
+  padding: 0.3em;
+}
+
+/* hr
+----------------------------------------------- */
+hr {
+  display: none;
+  height: 1px;
+  border-color: #000099;
+  border-style: solid;
+  background-color: #000099;
+}

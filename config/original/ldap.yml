@@ -1,0 +1,14 @@
+production:
+  host: 192.168.0.3
+  port: 389
+  base: dc=ldap,dc=example,dc=jp
+
+test:
+  host: 192.168.0.3
+  port: 389
+  base: dc=ldap,dc=example,dc=jp
+
+development:
+  host: 192.168.0.3
+  port: 389
+  base: dc=ldap,dc=example,dc=jp

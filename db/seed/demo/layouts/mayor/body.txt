@@ -1,0 +1,84 @@
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+<div id="headerBody">
+
+[[piece/common-header]]
+
+</div>
+
+<!-- end #headerContainer --></div>
+<!-- end #header --></div>
+
+<div id="banner">
+<div id="bannerContainer">
+<div id="bannerBody">
+
+
+[[piece/common-banner]]
+
+[[piece/global-navi]]
+
+</div>
+<!-- end #bannerContainer --></div>
+<!-- end #banner --></div>
+
+
+
+<div id="navi">
+<div id="naviContainer">
+<div id="naviBody">
+
+[[piece/contentTitle]]
+
+[[piece/bread-crumbs]]
+
+</div>
+<!-- end #naviContainer --></div>
+<!-- end #navi --></div>
+
+
+
+<div id="main">
+
+<div id="wrapper">
+
+<div id="content">
+<div id="contentContainer">
+<div id="contentBody">
+
+[[piece/page-title]]
+
+[[content]]
+
+</div>
+<!-- end #contentContainer --></div>
+<!-- end #content --></div>
+
+<div id="menu">
+<div id="menuContainer">
+<div id="menuBody">
+
+[[piece/mayor-side]]
+
+</div>
+<!-- end #menuContainer --></div>
+<!-- end #menu --></div>
+
+<!-- end #wrapper --></div>
+<!-- end #main --></div>
+
+<div id="footer">
+<div id="footerContainer">
+
+
+<div id="footerBody">
+[[piece/address]]
+[[piece/footer-navi]]
+</div>
+
+<!-- end #footerContainer --></div>
+<!-- end #footer --></div>
+
+</div>

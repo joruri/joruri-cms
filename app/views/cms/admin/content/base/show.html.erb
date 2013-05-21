@@ -1,0 +1,49 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:concept_id) %></th>
+    <td><%= safe{@item.concept.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= @item.model_name(:short) %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr>
+</table>
+
+<p class="form">関連ピース</p>
+
+<table class="show">
+  <% @pieces.each do |data| %>
+  <tr>
+    <th><%= data[:name] %></th>
+    <td><%== data[:items].collect{|item| link_to "#{item.title}（#{item.name}）", item.admin_uri }.join(" , ") %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p class="form">関連ディレクトリ</p>
+
+<table class="show">
+  <% @directories.each do |data| %>
+  <tr>
+    <th><%= data[:name] %></th>
+    <td><%== data[:items].collect{|item| link_to "#{item.title}（#{item.name}）", item.admin_uri }.join(" , ") %></td>
+  </tr>
+  <% end %>
+</table>
+
+<p class="form">関連ページ</p>
+
+<table class="show">
+  <% @pages.each do |data| %>
+  <tr>
+    <th><%= data[:name] %></th>
+    <td><%== data[:items].collect{|item| link_to "#{item.title}（#{item.name}）", item.admin_uri }.join(" , ") %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= creator_view @item %>

@@ -1,0 +1,101 @@
+<script type="text/javascript" src="/_common/js/swfupload/swfupload.js"></script>
+<%= javascript_tag do %>
+// イベントカレンダー
+$(function() {
+  $('#item_event_date').change(function() {
+    if ($(this).val() != "") {
+      $('#item_event_state_visible').attr('checked', true);
+    } else {
+      $('#item_event_state_hidden').attr('checked', true);
+    }
+  });
+});
+<% end %>
+
+<%= disable_enter_key_js %>
+<% inline_id = @item.unid || params[:_tmp] %>
+<%= init_tiny_mce :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <% if @item.id %>
+  <tr>
+    <th>記事番号</th>
+    <td colspan="3"><%=@item.id %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>タイトル <span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'title', :style => 'width: 500px;' %></td>
+    <th style="width: 60px;">言語 <span class="note">※</span></th>
+    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.find(:all).collect{|i| [i.title + "　", i.id]}) %></td>
+  </tr>
+  <tr>
+    <th colspan="4">質問 <span class="note">※</span></th></tr><tr>
+    <td colspan="4" class="mceEditor">
+      <%= f.text_area :question, :class => 'body mceEditor', :style => 'height: 200px' %>
+    </td>
+  </tr>
+  <tr>
+    <th colspan="4">回答</th></tr><tr>
+    <td colspan="4" class="mceEditor">
+      <%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 400px;' %>
+    </td>
+  </tr>
+</table>
+
+<%= render :partial => 'faq/admin/_partial/doc_files/form', :locals => {:f => f, :item => @item } %>
+
+<table class="show">
+  <tr>
+    <th>分野</th>
+    <td><%= faq_category_form f %></td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>新着記事表示</th>
+    <td><%= f.radio_buttons :recent_state, @item.recent_states, :class => 'status' %></td>
+  </tr>
+</table>
+
+<%= faq_tag_form f %>
+
+<%= faq_rel_doc_form f %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:agent_state) %></th>
+    <td><%= f.radio_buttons :agent_state, @item.agent_states, :class => 'status' %></td>
+  </tr>
+</table>
+
+<p class="form">携帯向け</p>
+
+<div style="margin: 10px;"><a id="map_disp" href="#" onclick="return $(this).toggleOpen('#mobileForm');">開く▼</a></div>
+<table class="show" id="mobileForm" style="display: none;">
+  <tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><%= f.text_area :mobile_body, :style => 'width: 600px; height: 240px;' %></td>
+  </tr>
+</table>
+
+<%#= google_map_form f %>
+<%= inquiry_form f %>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th>表示日時</th>
+    <td>
+      <%= f.text_field :published_at, :class => 'datetime' %>
+  </td>
+  </tr>
+</table>
+
+<%= recognizer_form f %>
+<%= editable_group_form f %>
+<%= creator_form f %>

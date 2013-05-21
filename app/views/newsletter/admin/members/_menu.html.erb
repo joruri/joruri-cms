@@ -1,0 +1,10 @@
+<h2><%= @content.name %> : 読者</h2>
+
+<div class="actionMenu">
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :new    if safe{@content.creatable?} %>
+<%= action_menu :edit    if safe{@content.editable?} %>
+<%= action_menu :destroy if safe{@content.deletable?} %>
+<%= link_to "CSV出力", url_for(:action => :index, :do => :csv) if params[:action] == "index" %>
+</div>

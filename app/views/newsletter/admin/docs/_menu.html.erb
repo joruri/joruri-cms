@@ -1,0 +1,16 @@
+<h2><%= @content.name %> : 記事</h2>
+
+<div class="actionMenu">
+
+<%= action_menu :new if Core.user.has_auth?(:designer) && Core.user.has_priv?(:create, :item => Core.concept) %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit if safe{@item.editable?} %>
+<%= action_menu :destroy   if safe{@item.editable?} %>
+
+<% if params[:action] == 'show' && @item.editable? %>
+<span class="separator"></span>
+<%= link_to "配信管理", newsletter_deliver_docs_path(:doc => @item.id) %>
+<% end %>
+
+</div>

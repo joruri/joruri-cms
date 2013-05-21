@@ -1,0 +1,22 @@
+<div class="contentArticleTags">
+
+<%= form_tag '', :method => :get, :class => 'search' do %>
+タグ<%= text_field_tag 's_tag', @tag, :cols => '8' %>
+<div class="submitters">
+  &nbsp; &nbsp;
+  <%= submit_tag '検索',     :name => :search %>
+  <%= submit_tag 'リセット', :name => :reset %>
+</div>
+<!-- end .search --><% end %>
+
+<%if @tag.to_s != '' %>
+<div class="hit">検索結果 <span class="count"><%= "#{@docs.total_entries}" %></span>件</div>
+<br />
+<% end %>
+
+<% @docs.each do |doc| %>
+<div class="doc">・<%= link_to h(doc.title), doc.public_uri %></div><% end %>
+
+<%= paginate @docs %>
+
+</div>

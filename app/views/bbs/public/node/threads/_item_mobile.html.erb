@@ -1,0 +1,14 @@
+<% if defined?(res) %>
+<div class="title"><%= item.title %></div>
+<div class="bpdy"><%=hbr item.body %></div>
+<% else %>
+<div class="title"><%= link_to h(item.title), "#{@node_uri}#{item.thread_id}/?#{query}" %></div>
+<% end %>
+<div class="date">No.<%= item.id %> | <%= safe{item.created_at.strftime('%Y年%-m月%-d日 %H:%M')} %></div>
+<div class="poster">
+  <span class="name"><%= item.name %></span>
+  <% if @show_email && !item.email.blank? %>
+  | <span class="email"><%= email_to 'Email', item.email %></span><% end %>
+  <% if @show_uri && !item.uri.blank? %>
+  | <span class="uri"><%= link_to 'URL', item.uri, :target => "_blank" %></span><% end %>
+</div>

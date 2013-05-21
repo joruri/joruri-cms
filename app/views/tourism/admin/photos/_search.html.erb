@@ -1,0 +1,25 @@
+<%
+
+cond  = {:content_id => @content.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root  = Tourism::Genre.find(:all, :conditions => cond, :order => :sort_no)
+
+%><%= form_for :item, :url => {:action => :index}, :html => {:method => :get, :class => 'search'} do |f| %>
+
+<table>
+  <tr>
+    <th>タイトル</th>
+    <td><%= f.text_field 's_title', :style => 'width: 200px;', :name => :s_title %></td>
+    <th>ジャンル</th>
+    <td><%= f.select_with_tree :s_genre_id, root, :conditions => {:state => 'public'}, :include_blank => "　", :label => :title, :name => :s_genre_id %></td>
+    <th>観光地名</th>
+    <td><%= f.text_field 's_spot', :style => 'width: 200px;', :name => :s_spot %></td>
+
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+  
+</table>
+
+<!-- end .search --><% end %>

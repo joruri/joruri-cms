@@ -1,0 +1,209 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   lifeevent
+========================================================= */
+
+/* ContentTitle
+----------------------------------------------- */
+#contentTitle .pieceContainer {
+  height: 44px;
+  border-top: 1px solid #233f9b;
+  border-bottom: 1px solid #233f9b;
+  background-color: #e1eff7;
+  background-image: url(/_common/themes/joruri/smart/piece/images/title.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+#contentTitle h2 {
+  height: 44px;
+  line-height: 46px;
+  padding-left: 22px;
+  font-size: 140%;
+}
+
+/* page-title
+----------------------------------------------- */
+#pageTitle .pieceContainer {
+  border: none;
+  background-color: transparent;
+  background-image: none;
+}
+#pageTitle .pieceBody {
+  background-repeat: repeat-x;
+  background-position: right top;
+  border: none;
+}
+#pageTitle h1 {
+  height: 44px;
+  line-height: 44px;
+  padding: 0;
+  border-left: none;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #000000;
+  font-size: 120%;
+}
+#page-lifeevent-ninshin #pageTitle h1 {
+  padding-left: 40px;
+  background-color: #ffe7ff;
+  background-image: url(./images/tl-ninshin.png);
+}
+#page-lifeevent-kosodate #pageTitle h1 {
+  padding-left: 50px;
+  background-color: #ffecb9;
+  background-image: url(./images/tl-kosodate.png);
+}
+#page-lifeevent-shushoku #pageTitle h1 {
+  padding-left: 48px;
+  background-color: #c5efff;
+  background-image: url(./images/tl-shuushoku.png);
+}
+#page-lifeevent-seijin #pageTitle h1 {
+  padding-left: 40px;
+  background-color: #ccede8;
+  background-image: url(./images/tl-seijin.png);
+}
+#page-lifeevent-hikkoshi #pageTitle h1 {
+  padding-left: 55px;
+  background-color: #e1f5bf;
+  background-image: url(./images/tl-hikkoshi.png);
+}
+#page-lifeevent-kekkon #pageTitle h1 {
+  padding-left: 48px;
+  background-color: #eee9a8;
+  background-image: url(./images/tl-kekkon.png);
+}
+#page-lifeevent-fukushi #pageTitle h1 {
+  padding-left: 45px;
+  background-color: #f5dac4;
+  background-image: url(./images/tl-fukushi.png);
+}
+#page-lifeevent-shibo #pageTitle h1 {
+  padding-left: 45px;
+  background-color: #efdfef;
+  background-image: url(./images/tl-shibou.png);
+}
+
+/* lifeevent-ichiran
+----------------------------------------------- */
+#page-lifeevent-index #pageTitle .pieceContainer {
+  border-top: 1px solid #233f9b;
+  border-bottom: 1px solid #233f9b;
+  background-color: #e1eff7;
+  background-image: url(/_common/themes/joruri/smart/piece/images/title.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+#page-lifeevent-index #pageTitle h1 {
+  line-height: 46px;
+  padding-left: 22px;
+  font-size: 140%;
+}
+.lifeevent {
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  border-bottom: 1px solid #cccccc;
+}
+.lifeeventPregnant {
+  background-color: #ffe7ff;
+  background-image: url(./images/ic-ninshin.png);
+}
+.lifeeventChild {
+  background-color: #ffecb9;
+  background-image: url(./images/ic-kosodate.png);
+}
+.lifeeventWork {
+  background-color: #c5efff;
+  background-image: url(./images/ic-shuushoku.png);
+}
+.lifeeventAdult {
+  background-color: #cdede8;
+  background-image: url(./images/ic-seijin.png);
+}
+.lifeeventMoving {
+  background-color: #e1f6be;
+  background-image: url(./images/ic-hikkoshi.png);
+}
+.lifeeventMarriage {
+  background-color: #eee9a9;
+  background-image: url(./images/ic-kekkon.png);
+}
+.lifeeventWelfare {
+  background-color: #f5dac5;
+  background-image: url(./images/ic-fukushi.png);
+}
+.lifeeventDeath {
+  background-color: #f0dfef;
+  background-image: url(./images/ic-shibou.png);
+}
+.lifeevent h2 {
+  height: 44px;
+  line-height: 44px;
+  font-size: 100%;
+}
+.lifeevent h2 a {
+  display: block;
+  overflow: hidden;
+  padding: 0 40px 0 50px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link2.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lifeevent .explain {
+  display: none;
+}
+
+/* lifeEventTitle
+----------------------------------------------- */
+h2.lifeEventTitle {
+  padding: 3px 10px;
+  border-bottom: 1px solid #cccccc;
+}
+#page-lifeevent-ninshin h2.lifeEventTitle {
+  color: #dd4488;
+}
+#page-lifeevent-kosodate h2.lifeEventTitle {
+  color: #996600;
+}
+#page-lifeevent-shushoku h2.lifeEventTitle {
+  color: #0066bb;
+}
+#page-lifeevent-seijin h2.lifeEventTitle {
+  color: #228888;
+}
+#page-lifeevent-hikkoshi h2.lifeEventTitle {
+  color: #558822;
+}
+#page-lifeevent-kekkon h2.lifeEventTitle {
+  color: #777700;
+}
+#page-lifeevent-fukushi h2.lifeEventTitle {
+  color: #cc5522;
+}
+#page-lifeevent-shibo h2.lifeEventTitle {
+  color: #885588;
+}
+
+/* lifeEvent content
+----------------------------------------------- */
+.contentPage li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentPage li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

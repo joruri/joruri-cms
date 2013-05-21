@@ -1,0 +1,10 @@
+<div class="contentArticleArea">
+
+<div class="wards">
+  <div class="h2">■地域一覧</div>
+  <% @items.each do |item| %>
+  <div>・<%= link_to h(item.title), "#{item.name}/" %></div>
+  <% end %>
+</div>
+
+</div>

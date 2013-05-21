@@ -1,0 +1,25 @@
+<h2>ディレクトリ</h2>
+
+<div class="navi"><% tree = @parent.parents_tree %>
+<% tree.each_with_index do |c, k| %>
+<%= link_to c.title, cms_nodes_path(c) %>
+<% if tree.size != k + 1 %><span class="separator">&gt;</span><% end %>
+<% end %>
+</div>
+
+<div class="actionMenu">
+<%= action_menu :new     if Core.user.has_priv?(:create, :item => @parent.concept) %>
+<%= action_menu :index, cms_nodes_path %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{Core.user.has_priv?(:update, :item => @item.concept)} && !@item.replaced_page? %>
+<%= action_menu :destroy if safe{Core.user.has_priv?(:delete, :item => @item.concept)} %>
+
+<% if params[:action] == 'show' %>
+<%= link_to(:recognize, {:do => :recognize}, :confirm => "承認してよろしいですか？") if @item.recognizable?(Core.user) %>
+<%= link_to(:publish, {:do => :publish}, :confirm => "公開してよろしいですか？") if @item.publishable? %>
+<%= link_to(:close, {:do => :close}, :confirm => "公開を終了してよろしいですか？") if @item.closable? %>
+<%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+<%= link_to("複製（更新用）", {:do => :duplicate_for_replace},
+  :confirm => "複製してよろしいですか？") if @item.public? && !@item.unid_related? %>
+<% end %>
+</div>

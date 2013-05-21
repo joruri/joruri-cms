@@ -1,0 +1,30 @@
+<%= init_tiny_mce :readonly => true %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_date) %></th>
+    <td><%= @item.event_date %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_close_date) %></th>
+    <td><%= @item.event_close_date %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=hbr @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%=hbr @item.body %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_uri) %></th>
+    <td><%= link_to h(@item.event_uri), @item.event_uri, :target => "_blank" %></td>
+  <!--
+  </tr><tr>
+    <th><%#= @item.locale(:image_file_id) %></th>
+    <td><%#= embedded_file_view @item, :name => :image_file_id %></td>
+  </tr>
+  -->
+</table>
+
+<%= creator_view @item %>

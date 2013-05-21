@@ -1,0 +1,70 @@
+<%= javascript_tag do %>
+$(function() {
+    $('.layoutTabs').tabs();
+    $('.layoutSpecTabs').tabs();
+    $('.layoutTabs .ui-tabs-panel').css('padding', '12px 8px');
+    $('.layoutSpecTabs .ui-tabs-panel').css('padding', '12px 8px');
+});
+<% end %>
+
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= concept_form f %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr>
+</table>
+
+<p class="form">レイアウト情報</p>
+
+<div class="layoutTabs">
+  <ul>
+    <li><a href="#layoutTabs1">標準レイアウト</a></li>
+    <li><a href="#layoutTabs2">携帯レイアウト</a></li>
+    <li><a href="#layoutTabs3">スマートフォンレイアウト</a></li>
+  </ul>
+  
+  <div id="layoutTabs1">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs1-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs1-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs1-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs1-1"><%= f.text_area :body, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs1-2"><%= f.text_area :head, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs1-3"><%= f.text_area :stylesheet, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+    </div>
+  </div>
+  <div id="layoutTabs2">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs2-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs2-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs2-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs2-1"><%= f.text_area :mobile_body, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs2-2"><%= f.text_area :mobile_head, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs2-3"><%= f.text_area :mobile_stylesheet, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+    </div>
+  </div>
+  <div id="layoutTabs3">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs3-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs3-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs3-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs3-1"><%= f.text_area :smart_phone_body, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs3-2"><%= f.text_area :smart_phone_head, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+      <div id="layoutTabs3-3"><%= f.text_area :smart_phone_stylesheet, :style => 'width: 99%; height: 400px; font-family: monospace, sans-serif;' %></div>
+    </div>
+  </div>
+</div>
+
+<%= creator_form f %>

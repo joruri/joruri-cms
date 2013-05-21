@@ -1,0 +1,25 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:full_uri) %></th>
+    <td><%= f.text_field :full_uri, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:alias_full_uri) %></th>
+    <td><%= f.text_field :alias_full_uri, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:mobile_full_uri) %></th>
+    <td><%= f.text_field :mobile_full_uri, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:admin_full_uri) %></th>
+    <td><%= f.text_field :admin_full_uri, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:related_site) %>（改行区切り）</th>
+    <td><%= f.text_area :related_site, :class => 'head', :style => 'ime-mode: disabled;' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

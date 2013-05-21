@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+/* =========================================================
+   Layout 3 Columns
+========================================================= */
+
+/* body
+----------------------------------------------- */
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0; 
+}
+
+/* container
+----------------------------------------------- */
+#container {
+  width: 100%;
+  max-width: 1200px;
+  min-width: 800px;
+  margin: 0 auto;
+}
+* html #container {
+  width:expression(document.documentElement.clientWidth < 802? "800px" : document.documentElement.clientWidth > 1202? "1200px" : "auto");
+}
+
+/* header
+----------------------------------------------- */
+#header {
+  clear: both;
+}
+#headerContainer {
+  padding: 0 10px;
+}
+
+/* banner
+----------------------------------------------- */
+#banner {
+  clear: both;
+  margin-bottom: 7px;
+}
+#bannerContainer {
+  padding: 0 10px;
+}
+
+/* navi
+----------------------------------------------- */
+#navi {
+  clear: both;
+}
+#naviContainer {
+  padding: 0 10px;
+}
+
+/* main
+----------------------------------------------- */
+#main {
+  clear: both;
+  margin-top: 10px;
+  padding: 0 10px;
+}
+#main:after {
+  content: "";
+  clear: both;
+  height: 0;
+  display: block;
+  visibility: hidden;
+}
+
+/* wrapper
+----------------------------------------------- */
+#wrapper {
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 0 -190px 30px 0;
+}
+
+/* content(center column)
+----------------------------------------------- */
+#content {
+  float: right;
+  width: 100%;
+  margin-left: -180px;
+}
+#contentContainer {
+  margin-right: 180px;
+  margin-left: 180px;
+}
+
+/* menu(left column)
+----------------------------------------------- */
+#menu {
+  float: left;
+  margin: 0;
+  width: 170px;
+}
+
+/* links(right column)
+----------------------------------------------- */
+#links {
+  float: right;
+  width: 170px;
+  margin: 0;
+}
+
+/* footer
+----------------------------------------------- */
+#footer {
+  clear: both;
+  width: 100%;
+}
+#footerContainer {
+  padding: 30px 10px 0;
+}
+
+/* pieces
+----------------------------------------------- */
+#main .pieceSeparator {
+  margin: 10px 0;
+}

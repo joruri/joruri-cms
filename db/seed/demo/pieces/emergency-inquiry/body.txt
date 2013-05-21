@@ -1,0 +1,7 @@
+<div id="emergencyInquiry" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/mailmagazine/" title="ジョールリ市へのお問い合わせはこちら" alt="ジョールリ市へのお問い合わせはこちら">ジョールリ市への<br/>お問い合わせはこちら</a>
+</div>
+</div>
+</div>

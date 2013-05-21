@@ -1,0 +1,11 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:item_unid) %></th>
+    <td><%= safe{@item.concept.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:action) %></th>
+    <td><%= @item.action_names.join('，').force_encoding('utf-8') %></td>
+  </tr>
+</table>

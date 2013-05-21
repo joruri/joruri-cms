@@ -1,0 +1,18 @@
+<xml>
+  <groups>
+    <group condition='and' more='/shinchaku/' name='shinchaku' sort_no='0' title='新着情報'/>
+    <group condition='or' more='' name='saiyo' sort_no='10' title='採用情報・募集'>
+      <attribute>2</attribute>
+      <attribute>4</attribute>
+    </group>
+    <group condition='or' more='' name='event' sort_no='05' title='観光・イベント'>
+      <category>26</category><attribute>5</attribute>
+    </group>
+    <group condition='or' more='' name='nyusatsu' sort_no='25' title='入札情報'>
+      <attribute>1</attribute>
+    </group>
+    <group condition='or' more='' name='bosai' sort_no='30' title='防災'>
+      <category>66</category>
+    </group>
+  </groups>
+</xml>

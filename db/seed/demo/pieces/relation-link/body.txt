@@ -1,0 +1,16 @@
+<div id="relationLink" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>関連リンク</h2></div>
+<div class="pieceBody">
+<ul>
+<li><a href="#">スポーツ月間情報</a></li>
+<li><a href="#">学校給食・献立</a></li>
+<li><a href="#">市内小中学校</a></li>
+<li><a href="#">市内幼稚園</a></li>
+<li><a href="#">公民館情報</a></li>
+<li><a href="#">ジョールリ市の文化財</a></li>
+<li><a href="#">ジョールリ市ふるさと探訪　年数表の変更</a></li>
+</ul>
+</div>
+</div>
+<!-- end .piece --></div>

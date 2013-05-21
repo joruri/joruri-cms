@@ -1,0 +1,28 @@
+<table class="show">
+  <tr>
+    <th>地域</th>
+    <td><a href="#" onclick="return $(this).toggleOpen('#inlineAreas');">開く▼</a></td>
+  </tr>
+</table>
+
+<div id="inlineAreas" class="inlineForm" style="display: none; padding: 10px;">
+  <input type="hidden" name="<%= "#{f.object_name}[in_area_ids][_]" %>" value="" />
+  
+  <% Tourism::Area.root_items(:content_id => @content.id).each do |c| %>
+  <div><%= f.check_boxes "in_area_ids", [[c.title, c.id]] %></div>
+  
+  <% if (a = c.children).size > 0 %><div style="margin-left: 2em;"><% a.each do |c2| %>
+    <%= f.check_boxes "in_area_ids", [[c2.title, c2.id]] %>
+    
+    <% if (a2 = c2.children).size > 0 %><div style="margin-left: 2em;"><% a2.each do |c3| %>
+      <%= f.check_boxes "in_area_ids", [[c3.title, c3.id]] %>
+      
+      <% if (a3 = c3.children).size > 0 %><div style="margin-left: 2em;"><% a3.each do |c4| %>
+        <%= f.check_boxes "in_area_ids", [[c4.title, c4.id]] %>
+        
+      <% end %></div><% end %>
+    <% end %></div><% end %>
+  <% end %></div><% end %>
+  
+  <% end %>
+</div>

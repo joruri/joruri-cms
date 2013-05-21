@@ -1,0 +1,46 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= @item.status.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:code) %></th>
+    <td><%= @item.code %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= @item.name_en %></td>
+  </tr><tr>
+    <th><%= @item.locale(:ldap) %></th>
+    <td><%= @item.ldap_label %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr><tr>
+    <th><%= @item.locale(:role_name) %></th>
+    <td><%== @item.role_names.collect{|c| link_to(c.title, sys_object_privileges_path(c.id)) }.join(", ") %></td>
+  </tr>
+</table>
+
+<p class="form">Web公開</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:web_state) %></th>
+    <td><%= @item.web_status.name %></td>
+  </tr>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= @item.tel %></td>
+  </tr><tr>
+    <th><%= @item.locale(:outline_uri) %></th>
+    <td><%= @item.outline_uri %></td>
+  </tr>  
+</table>

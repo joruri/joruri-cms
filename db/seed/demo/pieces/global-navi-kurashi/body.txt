@@ -1,0 +1,14 @@
+<div id="globalNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a class="top" href="/"><span>トップ</span></a>
+<a class="kurashi current" href="/bunya/kurashi/"><span>くらし</span></a>
+<a class="fukushi" href="/bunya/fukushi/"><span>健康・福祉</span></a>
+<a class="kyoiku" href="/bunya/kyoikubunka/"><span>教育・文化</span></a>
+<a class="kanko" href="/bunya/kanko/"><span>観光・魅力</span></a>
+<a class="sangyoshigoto" href="/bunya/sangyoshigoto/"><span>産業・しごと</span></a>
+<a class="gyoseimachizukuri" href="/bunya/gyoseimachizukuri/"><span>行政・まちづくり</span></a>
+<a class="bosai" href="/bunya/bosaigai/"><span>防災</span></a>
+</div>
+</div>
+</div>

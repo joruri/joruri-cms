@@ -1,0 +1,40 @@
+<script type="text/javascript">
+//<![CDATA[
+function controlSubmitting(bt) {
+  bt.disabled=true;
+  setTimeout(function(){ bt.disabled=false; }, 700);
+  bt.form.submit();
+}
+//]]>
+</script>
+
+<%= error_messages_for :item %>
+
+<%= f.hidden_field :parent_id %>
+<%= f.hidden_field :thread_id %>
+
+<dl>
+  <dt><%= @item.locale(:name) %></dt>
+  <dd><%= f.text_field :name, :class => "text name" %></dd>
+  <dt><%= @item.locale(:title) %></dt>
+  <dd><%= f.text_field :title, :class => "text title" %></dd>
+  <dt><%= @item.locale(:body) %></dt>
+  <dd><%= f.text_area :body, :class => "body" %></dd>
+  <% if @show_email %>
+  <dt><%= @item.locale(:email) %></dt>
+  <dd><%= f.text_field :email, :class => "text email" %></dd>
+  <% end %>
+  <% if @show_uri %>
+  <dt><%= @item.locale(:uri) %></dt>
+  <dd><%= f.text_field :uri, :class => "text uri" %></dd>
+  <% end %>
+  <% if @use_password %>
+  <dt><%= @item.locale(:password) %></dt>
+  <dd><%= f.password_field :password, :class => "text password" %></dd>
+  <% end %>
+  <% if @use_captcha %>
+  <dt class="captcha">画像認証</dt>
+  <dd class="captcha"><%= show_simple_captcha :object => "item", :image_style => "simply_green", :distortion => "middle",
+    :label => "画像の文字を入力してください" %></dd>
+  <% end %>
+</dl>

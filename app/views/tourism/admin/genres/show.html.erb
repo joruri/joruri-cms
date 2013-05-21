@@ -1,0 +1,33 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr>
+  <%= concept_view @item, :container => :tr %>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%#= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width: 100%; height: 150px;' %>
+      <%=hbr @item.body %>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale(:image_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:list_image_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :list_image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

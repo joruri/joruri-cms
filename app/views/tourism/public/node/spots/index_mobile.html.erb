@@ -1,0 +1,9 @@
+<div class="contentTourism contentTourismSpots">
+
+<% @items.each do |item| %>
+<%= render :partial => "tourism/public/node/spots/item", :locals => {:item => item} %>
+<% end %>
+
+<%= paginate @spots %>
+
+</div>

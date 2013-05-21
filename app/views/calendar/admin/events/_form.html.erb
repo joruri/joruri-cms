@@ -1,0 +1,32 @@
+<%= init_tiny_mce %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, [["公開","public"],["非公開","closed"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_date) %> <span class="note">※</span></th>
+    <td><%= f.text_field :event_date, :class => 'date' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_close_date) %> <span class="note">※</span></th>
+    <td><%= f.text_field :event_close_date, :class => 'date' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %> <span class="note">※</span></th>
+    <td><%= f.text_area :title, :style => "width: 80%; height: 2.5em;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :style => "width: 80%; height: 10em;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:event_uri) %></th>
+    <td><%= f.text_field :event_uri, :class => 'url' %></td>
+  <!--
+  </tr><tr>
+    <th><%#= @item.locale(:image_file_id) %></th>
+    <td><%#= embedded_file_form f, :name => :image_file_id %></td>
+  -->
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,18 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, [["公開","public"],["非公開","closed"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:id) %></th>
+    <td><%= @item.id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:link_alternate) %></th>
+    <td><%= f.text_field :link_alternate, :class => 'url' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:summary) %></th>
+    <td><%= f.text_area :summary, :class => 'body' %></td>
+  </tr>
+</table>

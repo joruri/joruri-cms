@@ -1,0 +1,28 @@
+<div class="contentTourism contentTourismSearchSpots">
+
+<div class="searchInfo">
+  <% if @nosearch %>
+  <div class="nosearch">検索条件を入力してください。</div>
+  <% else %>
+  <div class="hit">
+    <span class="label">検索結果</span><span class="count"><%= "#{@items.total_entries}" %></span><span class="unit">件</span>
+  </div>
+  <div class="condition">
+    <% if @s_genre %><span class="genre">ジャンル：<%= @s_genre.title %></span><% end %>
+    <% if @s_keyword %><span class="keyword">キーワード：<%= @s_keyword %></span><% end %>
+  </div>
+  <% end %>
+</div>
+
+<% if @items.size > 0 %>
+<div class="photos">
+  <ul class="photos">
+    <% @items.each do |item| %>
+    <li><%= render :partial => "tourism/public/node/photos/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <%= paginate @items %>
+</div>
+<% end %>
+
+</div>

@@ -1,0 +1,23 @@
+<%
+
+cond = {:site_id => Core.site.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root = Cms::Concept.find(:all, :conditions => cond, :order => :sort_no)
+
+layouts = [['// コンセプトを選択してください', nil]]
+
+if safe{item.show_concept}
+  layouts = []
+  item.show_concept.parents_tree.each{|c| layouts += c.layouts}
+  layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
+end
+
+%><tr>
+    <th><%= item.locale :show_concept_id %></th>
+    <td><%= f.select_with_tree "in_settings[show_concept_id]", root, :conditions => {:state => 'public'}, :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= item.locale :show_layout_id %></th>
+    <td><%= f.array_select 'in_settings[show_layout_id]', layouts, :include_blank => "　" %></td>
+  </tr>
+<%= observe_field(:item_in_settings_show_concept_id, :update => :item_in_settings_show_layout_id,
+      :with => 'concept_id', :on => 'change', :url => layouts_cms_concepts_path(:parent => 0))
+%>

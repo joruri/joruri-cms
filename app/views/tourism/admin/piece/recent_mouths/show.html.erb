@@ -1,0 +1,17 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_view @item, :container => :tr %>
+</table>
+
+<br />
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :list_count %></th>
+    <td><%= @item.setting_value(:list_count) %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

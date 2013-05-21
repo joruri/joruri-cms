@@ -1,0 +1,8 @@
+<div id="inquiry" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/inquiry/">
+ジョールリ市へのお問い合わせはこちら</a>
+</div>
+</div>
+</div>

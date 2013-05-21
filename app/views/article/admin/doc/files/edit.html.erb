@@ -1,0 +1,9 @@
+<%= render :partial => 'article/admin/doc/files/menu' %>
+
+<%= form_for :item, :url => {:action => :update}, :html => {:method => :put, :multipart => true} do |f| %>
+  
+<%= error_messages_for :item %>
+
+<%= render :partial => 'article/admin/doc/files/form', :locals => {:f => f, :submit_label => "編集"} %>
+
+<% end %>

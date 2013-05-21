@@ -1,0 +1,13 @@
+<h2><%= @content.name %> : <%= truncate(@parent.title, :length => 20) %></h2>
+
+<% if @node && nil %>
+<div class="navi"><%= link_to @node_uri, @node_uri, :target => "_blank" %></div>
+<% end %>
+
+<div class="actionMenu">
+<%= link_to "スレッド一覧", bbs_items_path %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

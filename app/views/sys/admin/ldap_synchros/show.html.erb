@@ -1,0 +1,40 @@
+<%
+
+def children(group)
+  %><%= "\n" %><%
+  %><div class="group"><%= "#{group.code} / #{group.name} / #{group.name_en} / #{group.email}" %></div><%
+  if group.users.size > 0
+    %><%= "\n" %><%
+    %><div class="users"><%= group.users.collect{|u| u.name}.join(', ') %></div><%
+  end
+  if group.children.size > 0
+    %><%= "\n" %><%
+    %><div class="groups"><%
+    group.children.each {|c| children(c)}
+    %></div><%
+  end
+end
+
+%>
+<style type="text/css">
+#ldapView { margin-top: 15px; }
+#ldapView .groups { margin: 10px 0px 0px 20px; }
+#ldapView .group  { margin: 12px 0px 0px 0px; padding: 4px 6px; background-color: #ddd; color: #060; }
+#ldapView .users  {
+  margin: 0px 0px 0px 0px; padding: 4px 6px;
+  border: 1px solid #ddd; border-width: 0px 1px 1px 1px;
+  font-size: 80%; line-height: 1.3; font-family: verdana; }
+</style>
+
+<p class="form">中間データ</p>
+
+<%= form_for :item, :url => {:action => :synchronize} do |f| %>
+  <div class="submitters">
+    <span id="message" style="color: #b40; text-align: center;"></span>
+    <input type="submit" value="同期する" onclick="$('#message').html('処理を開始しました。しばらくお待ちください。<br /><br />');" />
+  </div>
+<% end %>
+
+<div id="ldapView">
+<% @items.each {|group| children(group)} %>
+</div>

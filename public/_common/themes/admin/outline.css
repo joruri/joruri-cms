@@ -1,0 +1,357 @@
+/* =========================================================
+    Outline.
+========================================================= */
+
+/* Container
+--------------------------------------------------------- */
+#container {
+  min-width: 1110px;
+}
+
+/* Header
+--------------------------------------------------------- */
+#header {
+  height: 60px;
+  padding: 0px;
+  background-image: url(images/header-bg.jpg);
+  background-position: left top;
+  background-repeat: repeat-x;
+}
+#header h1 {
+  float: left;
+  width: 556px;
+  background-image: url(images/header-logo.jpg);
+  background-position: left top;
+  background-repeat: no-repeat;
+  line-height: 60px;
+}
+#header h1 a {
+  display: block;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-position: 10px 0px;
+  text-decoration: none;
+  text-indent: -9999px;
+}
+#header .menu {
+  float: right;
+  padding-top: 25px;
+  text-align: right;
+}
+#header .menu a {
+  margin: 0px 20px 0px 0px;
+  color: #fff;
+  text-decoration: none;
+}
+#header .menu a:hover {
+  color: #ff0;
+}
+
+/* Banner
+--------------------------------------------------------- */
+#banner {
+}
+
+/* Main
+--------------------------------------------------------- */
+#main {
+}
+
+/* Main
+--------------------------------------------------------- */
+#navi {
+  margin-bottom: 15px;
+  border-top: 1px solid #68c;
+}
+
+/* Wrapper
+--------------------------------------------------------- */
+#wrapper {
+}
+
+/* Content
+--------------------------------------------------------- */
+#content {
+  margin: 0px 15px;
+}
+#contentHeader {
+  margin-bottom: 5px;
+}
+#content .navi {
+  margin: 5px 0px 10px 0px;
+  padding: 8px 20px;
+  border: 1px dashed #9a9;
+  border-width: 1px 0px;
+  background-color: #f6f8f4;
+}
+#contentHeader .navi a {
+  display: inline-block;
+  padding: 0px 0px;
+  text-decoration: none;
+}
+#contentHeader .navi span.separator {
+  margin: 0px 8px;
+  font-family: sans-serif;
+}
+#contentHeader h2 {
+  height: 41px;
+  margin: 0px;
+  padding: 0px 16px 0px;
+  background-image: url(images/content-h2-bg.gif);
+  background-repeat: no-repeat;
+  color: #070;
+  font-size: 130%;
+  font-weight: normal;
+  line-height: 32px;
+  text-shadow: 1px 1px 2px #dfe;
+}
+#content .noticeBox {
+  margin: 15px 0px;
+  padding: 10px;
+  border: 1px solid #4b4;
+}
+#content .actionMenu {
+  margin: 5px 0px 15px 0px;
+  vertical-align: bottom;
+}
+#content .actionMenu span {
+  display: inline-block;
+  margin: 0px 4px 0px 8px;
+  padding: 4px 1px;
+}
+#content .actionMenu span.separator {
+  display: inline-block;
+  margin: 0px 4px;
+  border-left: 1px solid #ccc;
+}
+#content .actionMenu a {
+  display: inline-block;
+  margin: 0px 2px 0px 0px;
+  min-width: 60px;
+  padding: 7px 12px;
+  border: 1px solid #bbb;
+  border-width: 1px 1px 1px 1px;
+  background-color: #f8f8f8;
+  background-image: url(images/bg-action-menu.png);
+  box-shadow: 1px 1px 1px #eee;
+  text-decoration: none;
+  text-align: center;
+}
+#content .actionMenu a.current {
+  color: #c00;
+}
+#contentBody {
+}
+
+/* Footer
+--------------------------------------------------------- */
+#footer {
+  clear: both;
+}
+#footerContainer {
+  padding: 20px 0px;
+}
+
+/* Navi
+--------------------------------------------------------- */
+#navi td.menu {
+  padding: 0px;
+  font-size: 100%;
+}
+
+/* Main Menu
+------------------------------------- */
+#navi td.menu .mainMenu {
+  height: 32px;
+  background-color: #E3EFFD;
+  background-image: url(images/bg-main-menu.png);
+  background-position: left bottom;
+  background-repeat: repeat-x;
+}
+#navi td.menu .mainMenu a {
+  display: inline-block;
+  width: 110px;
+  border-right: 1px solid #bcc8ea;
+  color: #04b;
+  text-decoration: none;
+  text-align: center;
+  line-height: 31px;
+}
+#navi td.menu .mainMenu a:hover {
+  background-color: #E3EFFD;
+  color: #e00;
+}
+#navi td.menu .mainMenu a.current {
+  background-color: #fff;
+  border-bottom: 1px solid #fff;
+  color: #c00;
+}
+
+/* Content Menu
+------------------------------------- */
+#navi td.menu .contentMenu {
+  clear: both;
+  height: 30px;
+  margin-top: 1px;
+  background-color: #fff;
+  line-height: 31px;
+}
+#navi td.menu .contentMenu a {
+  display: inline;
+  padding: 0px 20px;
+  border-right: 1px solid #ccc;
+  text-decoration: none;
+  text-align: center;
+}
+#navi td.menu .contentMenu a.current {
+  color: #c00;
+}
+
+/* Navi Selector
+------------------------------------- */
+#navi table {
+  width: 100%;
+  border-bottom: 1px solid #bcc8ea;
+  box-shadow: 0px 0px 2px #ddd;
+}
+#navi td.selector {
+  width: 210px;
+  padding: 0px;
+  background-color: #fff;
+  vertical-align: top;
+}
+#navi td.menu {
+  border-left: 1px solid #bcc8ea;
+  vertical-align: top;
+}
+#currentNaviSite, #currentNaviConcept {
+  display: block;
+  overflow: hidden;
+  height: 31px;
+  margin: 0px;
+  padding: 0px 20px 0px 0px;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  color: #024;
+  text-decoration: none;
+  line-height: 31px;
+  cursor: pointer;
+}
+#currentNaviSite {
+  height: 31px;
+  background-image: url(images/navi-site-bg.gif);
+}
+#currentNaviConcept {
+  height: 31px;
+  border-top: 1px solid #bcc8ea;
+  background-image: url(images/navi-concept-bg.gif);
+}
+#currentNaviSite:hover, #currentNaviConcept:hover {
+  color: #c00;
+}
+#currentNaviSite span, #currentNaviConcept span {
+  display: inline-block;
+  overflow: hidden;
+  width: 22px;
+  height: 30px;
+  margin: 0px 8px 0px 0px;
+  background-repeat: no-repeat;
+  text-indent: -9999px;
+  vertical-align: top;
+  outline: 0px;
+}
+
+/* Navi Content
+------------------------------------- */
+.naviContent {
+  position: relative;
+  width: 90%;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #bbb;
+  background-color: #fff;
+}
+.naviContent p {
+  margin: 0px 0px 10px;
+  padding: 0px 0px;
+  background-repeat: no-repeat;
+  background-position: 0px 40%;
+  color: #28F;
+  font-size: 130%;
+  font-weight: bold;
+}
+
+/* sites */
+#naviSites ul {
+  margin: 0px;
+  padding: 0px;
+}
+#naviSites li {
+  margin: 6px 0px 0px 4px;
+  padding: 0px 0px 0px 12px;
+  background-image: url(images/ic-navi-site-li.png);
+  background-repeat: no-repeat;
+  background-position: 0px 50%;
+}
+#naviSites li.current {
+  margin: 10px 0px 8px 4px;
+}
+#naviSites li.current a {
+  padding: 2px 6px 1px;
+  border: 1px solid #faa;
+  background-color: #fed;
+  color: #c00;
+  text-decoration: none;
+}
+
+/* concepts */
+#naviConcepts .toggleAll {
+  margin: 0px 0px 15px;
+  color: #777;
+  font-size: 90%;
+}
+#naviConcepts .toggleAll a {
+  color: #777;
+  text-decoration: none;
+}
+#naviConcepts .toggleAll a:hover {
+  text-decoration: underline;
+}
+#naviConcepts ul {
+  margin: 0px 0px 0px 20px;
+}
+#naviConcepts ul.root {
+  margin-left:  0px;
+}
+#naviConcepts li {
+  margin: 6px 0px 0px 0px;
+}
+#naviConcepts li.current {
+  margin: 10px 0px 8px 0px;
+}
+#naviConcepts li.current > a.name {
+  display: inline-block;
+  margin: 2px 0px;
+  padding: 2px 6px 1px;
+  border: 1px solid #faa;
+  background-color: #fed;
+  color: #c00;
+  text-decoration: none;
+}
+#naviConcepts .toggle {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  background-image: url(images/ic-navi-concept-open.png);
+  background-repeat: no-repeat;
+  line-height: 16px;
+  text-indent: -9999px;
+  outline: 0;
+}
+#naviConcepts .opened {
+  background-image: url(images/ic-navi-concept-close.png);
+}
+#naviConcepts .empty {
+  background-image: url(images/ic-navi-concept-empty.png);
+}

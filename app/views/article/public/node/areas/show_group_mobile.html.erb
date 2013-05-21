@@ -1,0 +1,22 @@
+<div class="contentArticleArea contentArticleAreaGroup">
+
+<div class="latest">
+  <div class="h2">新着情報</div>
+  <% if @docs.size > 0 %><div class="docs">
+    <% @docs.each do |doc| %>
+    <div>・<%=link_to h(doc.title), doc.public_uri%><%= doc.date_and_unit %></div>
+    <% end %>
+  </div><% end %>
+</div>
+
+<%= paginate @docs %>
+
+<% if @items.size > 0 %>
+<br />
+<div class="cities">
+  <div class="h3">■市町村一覧</div>
+  <div><% @items.each do |c| %><%= link_to "#{c.title}", "../#{c.name}/" %><span>/</span><% end %></div>
+</div>
+<% end %>
+
+</div>

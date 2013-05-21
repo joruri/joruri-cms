@@ -1,0 +1,20 @@
+<div class="piece" id="emergencyLinkBousai">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>防災関係機関のページ</h2></div>
+<div class="pieceBody"><ul>
+
+  <li><a href="#">気象関係情報</a></li>
+
+  <li><a href="#">地方気象台</a></li>
+
+  <li><a href="#">台風情報</a></li>
+
+  <li><a href="#">土砂災害警戒情報</a></li>
+
+  <li><a href="#">地震情報</a></li>
+
+  <li><a href="#">地震情報</a></li>
+
+</ul></div>
+</div>
+<!-- end .piece --></div>

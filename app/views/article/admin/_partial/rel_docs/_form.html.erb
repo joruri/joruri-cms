@@ -1,0 +1,19 @@
+<%
+
+doc = Article::Doc.new.public
+doc.and(:content_id, @content.id)
+doc.and(:id, '!=', item.id) if item.id
+docs = doc.find(:all, :order => "published_at DESC").collect{|c| [ truncate(c.title, :length => 50), c.id] }
+
+%><table class="show">
+  <tr>
+    <th>関連記事</th>
+    <td>
+      <table class="noDesign">
+        <tr><td><%= f.array_select "in_rel_doc_ids[0]", docs, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.array_select "in_rel_doc_ids[1]", docs, :include_blank => "　" %></td></tr>
+        <tr><td><%= f.array_select "in_rel_doc_ids[2]", docs, :include_blank => "　" %></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,7 @@
+<div id="copyright" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+Coryright(c) 2010 Joruri city
+</div>
+</div>
+</div>

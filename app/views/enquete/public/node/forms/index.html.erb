@@ -1,0 +1,12 @@
+<div class="enqueteForms">
+
+<% @items.each do |item| %>
+<div class="form">
+  <h2 class="name"><%= link_to h(item.name), "#{Page.current_node.public_uri}#{item.id}/" %></h2>
+  <% if !item.summary.blank? %><div class="summary"><%== item.summary %></div><% end %>
+</div>
+<% end %>
+
+<%= paginate @items %>
+
+</div>

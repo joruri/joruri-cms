@@ -1,0 +1,11 @@
+<div id="menuNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><hr />
+・<a href="/event/">イベントカレンダー</a><br />
+・<a href="/chiiki/">地域別</a><br />
+・<a href="/soshiki/">組織別</a><br />
+・<a href="#">関連リンク</a><br />
+・<a href="#">アクセス</a><br />
+</div>
+</div>
+</div>

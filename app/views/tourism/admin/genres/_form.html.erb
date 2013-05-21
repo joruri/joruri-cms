@@ -1,0 +1,30 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <%= concept_and_layout_form f %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 150px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:list_image_file_id) %></th>
+    <td><%= embedded_file_form f, :name => :list_image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

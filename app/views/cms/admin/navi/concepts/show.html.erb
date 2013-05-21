@@ -1,0 +1,47 @@
+<table class="index">
+  <tr>
+    <th><%= Cms::Content.new.locale(:name) %></th>
+  </tr>
+  <% @item.contents.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= link_to h(item.name), item.admin_uri %></td>
+  </tr>
+  <% end %>
+  <% if @item.contents.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+</table>
+
+<br />
+
+<% if Core.user.has_auth?(:designer) %>
+  
+  <table class="index">
+    <tr>
+      <th style="width: 300px;"><%= Cms::Layout.new.locale(:name) %></th>
+      <th><%= Cms::Layout.new.locale(:title) %></th>
+    </tr>
+    <% @item.layouts.find(:all, :order => "name, id").each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td><%= link_to h(item.name), cms_layout_path(item) %></td>
+      <td><%= item.title %></td>
+    </tr>
+    <% end %>
+    <% if @item.layouts.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  </table>
+  
+  <br />
+  
+  <table class="index">
+    <tr>
+      <th style="width: 300px;"><%= Cms::Piece.new.locale(:name) %></th>
+      <th><%= Cms::Piece.new.locale(:title) %></th>
+    </tr>
+    <% @item.pieces.find(:all, :order => "name, id").each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td><%= link_to h(item.name), item.admin_uri %></td>
+      <td><%= item.title %><%= " （更新用）" if item.replace_page? %></td>
+    </tr>
+    <% end %>
+    <% if @item.pieces.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  </table>
+  
+<% end %>

@@ -1,0 +1,4 @@
+<% @items.each do |item| %>
+<%== %Q(<div class="date">#{item[:date]}</div>) if item[:date] %>
+<div class="doc">・<%= link_to h(item[:doc].title), item[:doc].public_uri %></div>
+<% end %>

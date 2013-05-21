@@ -1,0 +1,246 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   Doc
+========================================================= */
+
+/* docs
+----------------------------------------------- */
+.contentArticleDoc .header {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-top: 1px solid #232f92;
+}
+.contentArticleDoc .header h1 {
+  text-align: left;
+}
+.contentArticleDoc .header .publishedAt {
+  text-align: left;
+}
+.contentArticleDoc .body {
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+.contentArticleDoc .maps,
+.contentArticleDoc .rels,
+.contentArticleDoc .tags {
+  margin-bottom: 20px;
+}
+.contentArticleDoc .maps h2,
+.contentArticleDoc .rels h2,
+.contentArticleDoc .tags h2 {
+  margin-bottom: 5px;
+  padding: 3px 0 3px 8px;
+  background-color: #f1f1f1;
+}
+.contentArticleDoc .rels li {
+  margin: 0;
+  padding-left: 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+.contentArticleDoc .rels li a {
+  text-decoration: underline;
+}
+.contentArticleDoc ul,
+.contentArticleDoc ol {
+  margin-left: 20px;
+}
+.contentArticleDoc table,
+.contentArticleDoc th,
+.contentArticleDoc td {
+  border: 1px solid;
+}
+.contentArticleDoc .tags div a {
+  padding-left: 20px;
+  text-decoration: underline;
+}
+.contentArticleDoc .back {
+  clear: both;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.contentArticleDoc .back a {
+  display: block;
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+}
+
+/* docs ichiran
+----------------------------------------------- */
+.contentPortalCategory h2.date,
+.contentPortalEntries h2.date,
+.contentArticleDocs .docs h2 {
+  margin-bottom: 5px;
+  padding: 5px 0 5px 10px;
+  background-color: #f1f1f1;
+}
+.contentPortalCategory .entries ul,
+.contentPortalEntries .entries ul,
+.contentArticleDocs .docs ul {
+  margin-bottom: 10px;
+}
+.contentPortalCategory .entries li,
+.contentPortalEntries .entries li,
+.contentArticleDocs .docs li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+}
+.contentPortalCategory .entries li a,
+.contentPortalEntries .entries li a,
+.contentArticleDocs .docs li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleDocs span.attributes {
+  display: none;
+}
+
+/* address
+----------------------------------------------- */
+.contentArticleDoc .body ul {
+  list-style-type: disc;
+}
+.inquiry {
+  clear: both;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+.inquiry h2 {
+  background-image: none;
+  font-size: 18px;
+}
+.tel, .fax, .email {
+  display: block;
+  width: 100%;
+}
+.top, .middle {
+  margin-bottom: 0;
+}
+
+/* map
+----------------------------------------------- */
+.maps .map {
+  height: 200px !important;
+}
+
+/* =========================================================
+    recent Docs
+========================================================= */
+.contentArticleRecentDocs .docs {
+  margin-left: 10px;
+}
+.contentArticleRecentDocs .docs h2 {
+  margin-bottom: 5px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+}
+.contentArticleRecentDocs .docs ul {
+  margin: 0 0 25px 7px;
+}
+.contentArticleRecentDocs .docs li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-position: 0 7px;
+  background-repeat: no-repeat;
+}
+.contentArticleRecentDocs .feed,
+.contentPortalEntries .feed,
+.contentPortalCategory .feed {
+  display: none;
+}
+
+/* =========================================================
+    tag search
+========================================================= */
+.contentArticleTags table {
+  margin: 20px auto;
+  width: 95%;
+}
+.contentArticleTags table th {
+  display: inline-block;
+  width: 35px;
+  vertical-align: middle;
+  padding-right: 5px;
+  text-align: right;
+}
+.contentArticleTags td {
+  display: inline-block;
+  width: 87%;
+}
+input#s_tag {
+  width: 95% !important;
+  height: 30px;
+}
+.contentArticleTags td.submitters {
+  width: 55%;
+  padding: 10px 0 0 45px;
+}
+.contentArticleTags .hit {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  background-color: #00349a;
+  color: #ffffff;
+}
+.contentArticleTags li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentArticleTags li a {
+  display: block;
+  padding: 0 30px 0 15px;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-kiji.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleTags span.attributes {
+  display: none;
+}
+input.send {
+  float: left;
+  margin-right: 5px;
+}
+input.reset {
+  float: left;
+}
+
+/* =========================================================
+    group-portal
+========================================================= */
+.dir-groupPortal .category h2 a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 30px 0 15px;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  border-bottom: 1px solid #cccccc;
+}
+

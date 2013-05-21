@@ -1,0 +1,13 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= concept_form f %>
+  <tr>
+    <th style=""><%=@item.locale(:name) %><div class="note">※半角英数字のみ</div></th>
+    <td><%= f.text_field :name, :class => 'nameEn', :class => 'name' %></td>
+  </tr>
+  <tr>
+    <th style=""><%=@item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'name', :class => 'title' %></td>
+  </tr>
+</table>

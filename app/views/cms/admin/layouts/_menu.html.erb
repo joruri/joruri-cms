@@ -1,0 +1,15 @@
+<h2>レイアウト</h2>
+
+<div class="actionMenu">
+<%= action_menu :new     if Core.user.has_priv?(:create, :item => Core.concept) %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+
+<% if params[:action] == 'show' %>
+  <% if Core.user.has_priv?(:create, :item => Core.concept) %>
+  <%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+  <% end %>
+<% end %>
+</div>

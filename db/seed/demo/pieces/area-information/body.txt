@@ -1,0 +1,16 @@
+<div id="ereaMap" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">
+<img src="/_common/themes/joruri/top/images/bg-chiiki00.gif" title="地域情報" alt="地域情報" width="168" usemap="#Map" name="a" id="a" />
+<map name="Map" id="map">
+<area shape="rect" coords="2,1,82,24" alt="地域情報" title="地域情報" href="/chiiki/" />
+<area shape="poly" coords="145,106,18,106,82,66" alt="南区" title="南区" href="/chiiki/south/" onmouseover="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki03.gif'" onmouseout="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki00.gif'" />
+<area shape="poly" coords="18,26,145,26,82,66" alt="北部" title="北区" href="/chiiki/north/" onmouseover="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki01.gif'" onmouseout="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki00.gif'" />
+<area shape="poly" coords="145,106,145,26,82,66" alt="東区" title="東区" href="/chiiki/east/" onmouseover="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki02.gif'" onmouseout="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki00.gif'" />
+<area shape="poly" coords="18,26,18,106,82,66" alt="西区" title="西区" href="/chiiki/west/" onmouseover="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki04.gif'" onmouseout="document.a.src = '/_common/themes/joruri/top/images/bg-chiiki00.gif'" />
+</map>
+</div>
+<div class="pieceBody">
+<a href="/chiiki/north/">北区</a><a href="/chiiki/west/">西区</a><a href="/chiiki/east/">東区</a><a href="/chiiki/south/">南区</a></div>
+</div>
+</div>

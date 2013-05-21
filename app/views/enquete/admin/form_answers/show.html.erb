@@ -1,0 +1,23 @@
+<table class="show">
+  <tr>
+    <th>フォーム名</th>
+    <td><%= @item.form.name %></td>
+  </tr><tr>
+    <th>回答日時</th>
+    <td><%= safe{@item.created_at.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr><tr>
+    <th>IPアドレス</th>
+    <td><%= @item.ipaddr %></td>
+  </tr><tr>
+    <th>ユーザエージェント</th>
+    <td><%= @item.user_agent %></td>
+  </tr>
+  
+  <% @item.columns.each do |col| %>
+  <tr>
+    <th><%= safe{col.form_column.name} %></th>
+    <td><%=hbr col.value %></td>
+  </tr>
+  <% end %>
+  
+</table>

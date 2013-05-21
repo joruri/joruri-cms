@@ -1,0 +1,33 @@
+@charset "UTF-8";
+@import "../base/style.css";
+@import "../base/layouts/col-1.css";
+@import "../piece/style.css";
+@import "../doc/style.css";
+
+/* =========================================================
+  category
+========================================================= */
+.pieceBody h1 {
+  margin-bottom: 5px;
+  padding: 4px;
+  background-color: #003399;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: small;
+}
+.pieceHeader h2{
+  margin-bottom: 5px;
+  padding: 3px;
+  background-color: #e3f0fa;
+  font-weight: normal;
+  font-size: small;
+}
+.question span.mark {
+  color: #0049c5;
+}
+.body.answer {
+  padding: 0;
+}
+.body.answer span.mark {
+  color: #ff4c97;
+}

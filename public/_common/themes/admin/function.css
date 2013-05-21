@@ -1,0 +1,258 @@
+@charset "UTF-8";
+
+/* ---------------------------------------------------------------- */
+/* front */
+
+.frontMessage {
+  margin: 20px 5px 20px;
+}
+.frontMessage .header {
+  margin: 0px 0px 15px;
+  padding: 7px 10px;
+  border: 1px solid #eee;
+  border-width: 1px 0px;
+  border-width: 0px;
+  border-radius: 4px;
+  font-size: 110%;
+  vertical-align: top;
+}
+.frontMessageMaintenance .header {
+  border: 1px solid #fc5;
+  background-color: #fcfccc;
+}
+.frontMessageNews .header {
+  border: 1px solid #cde;
+  background-color: #def;
+}
+.frontMessage .header a {
+  margin: 0px 8px 0px;
+  font-size: 90%;
+  font-weight: lighter;
+  text-decoration: none;
+  vertical-align: top;
+}
+.frontMessage ul {
+  margin: 0px 0px 20px;
+}
+.frontMessage li {
+  padding: 0px 0px;
+}
+.frontMessage .title {
+  margin: 10px 10px;
+  padding: 0px 10px;
+  background-image: url(images/ic_list.gif);
+  background-position: left 0.40em;
+  background-repeat: no-repeat;
+}
+.frontMessage .body {
+  display: none;
+  margin: 10px 20px;
+  padding: 10px;
+  border: 1px dashed #996;
+  background-color: #ffd;
+}
+.frontMessage .body h2 {
+  margin: 10px 0px;
+  font-size: 150%;
+}
+.frontMessage .body h3 {
+  margin: 10px 0px;
+  font-size: 120%;
+}
+.frontMessage .body h4 {
+  margin: 10px 0px;
+  font-size: 100%;
+}
+.frontMessage .body ul {
+  margin: 10px;
+  list-style: disc;
+}
+.frontMessage .body li {
+  margin: 0px 0px 0px 2em;
+  padding: 0px;
+}
+.frontMessage .body *:first-child {
+  margin-top: 0px;
+}
+
+/* ---------------------------------------------------------------- */
+/* directory table */
+
+table.directories td.uri a {
+  color: #555;
+}
+table.directories tr.directory td.name {
+  padding: 0 0 0 20px;
+  background-image: url(images/ic-folder.gif);
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+table.directories tr.file .name {
+  padding: 0 0 0 20px;
+  background-image: url(images/ic-file.gif);
+  background-position: 5px center;
+  background-repeat: no-repeat;
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* tree */
+
+.crudTree .navi {
+}
+.crudTree {
+  margin: 10px 0px 0px 0px;
+  padding: 0px;
+}
+.crudTree .tree {
+  float: left;
+  width: 28%;
+  margin: 0px 0px 0px 0px;
+  border: 1px solid #bbb;
+}
+.crudTree .tree p {
+  padding: 8px 6px;
+  background-color: #ddd;
+  border-bottom: 1px solid #bbb;
+}
+.crudTree .tree .links {
+  padding: 0px 5px 5px;
+}
+.crudTree .tree .links div {
+  padding: 7px 0px;
+  border-bottom: 1px solid #e7e7e7;
+}
+.crudTree .tree .links div.menu {
+  margin: 0px -5px 0px;
+  padding: 7px 5px;
+  background-color: #f2f4f2;
+  border-style: none;
+  border-bottom: 1px solid #ddd;
+}
+.crudTree .tree .links .remark {
+  color: #777;
+}
+.crudTree .tree .action {
+  padding: 6px 0px;
+  text-align: center;
+}
+.crudTree .tree .action a {
+  margin: 0px 5px;
+}
+.crudTree .content {
+  float: right;
+  width: 70%;
+}
+.crudTree .content p {
+}
+.crudTree .footer {
+  position: relative;
+  clear: both;
+}
+
+/* ---------------------------------------------------------------- */
+/* map */
+
+.articleMapForm {
+}
+
+/* map form */
+.articleMapForm .mapCanvas {
+  float: left;
+  width: 600px;
+  height: 400px;
+  margin: 0px 10px 10px 0px;
+  border: 1px solid #666;
+}
+.articleMapForm table.mapInfo caption,
+.articleMapForm table.mapForm caption,
+.articleMapForm table.markerForm caption {
+  margin: 0px 0px 8px 0px;
+  padding: 5px 6px;
+  border-left: 6px solid #ccc;
+}
+
+/* info */
+.articleMapForm table.mapInfo {
+  float: left;
+  width: 440px;
+  margin: 0px 10px 10px 0px;
+}
+.articleMapForm table.mapInfo td.point input {
+  width: 150px;
+  height: 1.4em;
+  border: 1px solid #bbb;
+  background-color: #f9f9f9;
+  color: #090;
+  line-height: 1.5;
+}
+.articleMapForm table.mapInfo td.zoom input {
+  width: 30px;
+  height: 1.4em;
+  border: 1px solid #bbb;
+  background-color: #f9f9f9;
+  color: #090;
+  line-height: 1.5;
+}
+
+/* form */
+.articleMapForm table.mapForm {
+  float: left;
+  width: 440px;
+  margin: 0px 0px 10px 0px;
+}
+.articleMapForm table.mapForm td.name input {
+  width: 270px;
+}
+.articleMapForm table.mapForm td.point input {
+  width: 150px;
+}
+.articleMapForm table.mapForm td.zoom input {
+  width: 30px;
+}
+
+/* marker */
+.articleMapForm table.markerForm {
+  clear: both;
+}
+.articleMapForm table.markerForm td {
+  padding: 3px 5px;
+}
+.articleMapForm table.markerForm th.name {
+  width: 60px;
+  text-align: center;
+}
+.articleMapForm table.markerForm td.name {
+  width: 330px;
+}
+.articleMapForm table.markerForm td.name input {
+  width: 310px;
+}
+.articleMapForm table.markerForm th.point {
+  width: 60px;
+  text-align: center;
+}
+.articleMapForm table.markerForm td.point {
+  width: 320px;
+}
+.articleMapForm table.markerForm td.point input {
+  width: 150px;
+}
+.articleMapForm table.markerForm td.action {
+  background-color: #fff;
+}
+.articleMapForm table.markerForm td.action a {
+  display: inline-block;
+  margin: 0px 0px 0px 4px;
+}
+.articleMapForm div.addMarkerForm a {
+  display: block;
+  width: 180px;
+  margin: 5px 0px 0px 600px;
+  padding: 3px 0px;
+  border: 1px solid #bbb;
+  background-color: #eee;
+  text-align: center;
+  text-decoration: none;
+}

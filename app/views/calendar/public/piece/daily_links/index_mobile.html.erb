@@ -1,0 +1,7 @@
+<div class="month <%= @calendar.month_name.downcase %>"><%= @calendar.month %>月</div>
+
+<%= @calendar.to_html %>
+
+<div class="links"><% if @node %>
+  <%= @pagination.to_links(:class => "pagination lowerPagination") %>
+<% end %></div>

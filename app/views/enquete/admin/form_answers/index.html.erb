@@ -1,0 +1,24 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 60px; text-align: right;">ID</th>
+    <th style="width: 120px; text-align: center;">回答日時</th>
+    <th style="width: 120px;">IPアドレス</th>
+    <th style="width: ;">ユーザエージェント</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td style="text-align: right;"><%= item.id %></td>
+    <td style="text-align: center;"><%= safe{item.created_at.strftime("%Y-%m-%d %H:%M")} %></td>
+    <td><%= item.ipaddr %></td>
+    <td><%= truncate(item.user_agent, :length => 80) %></td>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

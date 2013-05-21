@@ -1,0 +1,19 @@
+<div class="contentPortalCategory contentPortalCategoryDate">
+
+<div class="h2">新着情報</div>
+<% @items.each do |item| %>
+<%== %Q(<div class="date">#{item[:date]}</div>) if item[:date] %>
+<div class="doc">・<%=link_to h(item[:entry].title), item[:entry].public_uri %><%= item[:entry].date_and_site(:date => false) %></li></div>
+<% end %>
+
+<%= paginate @entries %>
+
+<% if @items.size > 0 && (items = @item.public_children).size > 0 %>
+<br />
+<div class="categories">
+  <div class="h3">■小カテゴリ</div>
+  <div><% items.each do |c| %><%= link_to "#{c.title}", "../#{c.name}/" %><span>/</span><% end %></div>
+</div>
+<% end %>
+
+</div>

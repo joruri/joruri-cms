@@ -1,0 +1,36 @@
+<%= form_tag("", :method => :put) do |f| %>
+  
+  <table class="show">
+    <tr>
+      <th>設定ファイル</th>
+    </tr><tr>
+      <td><%= @file %></td>
+    </tr>
+  </table>
+  
+  <table class="show">
+    <tr>
+      <th>現在の設定</th>
+    </tr><tr>
+      <td><textarea name="current_conf" readonly="readonly" style="width: 98%; height: 160px;"><%= @current_conf %></textarea></td>
+    </tr>
+  </table>
+  
+  <table class="show">
+    <tr>
+      <th>新しい設定</th>
+    </tr><tr>
+      <td><textarea name="update_conf" readonly="readonly" style="width: 98%; height: 160px;"><%= @update_conf %></textarea></td>
+    </tr>
+  </table>
+  
+  <div class="submitters">
+    <% if @current_conf == @update_conf %>
+    最新の設定です。
+    <% else %>
+    <input type="submit" name="update" value="ファイル更新" onclick="return confirm('ファイルを更新してよろしいですか？');" />
+    <% end %>
+  </div>
+  
+<% end %>
+ 

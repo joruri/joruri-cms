@@ -1,0 +1,17 @@
+<%= form_tag '', :method => :get, :class => 'search' do %>
+
+<table>
+  <tr>
+    <th><%= Bbs::Item.new.locale(:id) %></th>
+    <td ><%= text_field_tag 's_id', params[:s_id], :style => 'width: 100px;' %></td>
+    <th>キーワード</th>
+    <td ><%= text_field_tag 's_keyword', params[:s_keyword], :style => 'width: 400px;' %></td>
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

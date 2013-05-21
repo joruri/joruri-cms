@@ -1,0 +1,6 @@
+<div class="actionMenu">
+<%= piece_base_menu @item %>
+<% if @item.editable? && @item.public? && !@item.unid_related? %>
+<%= link_to("複製（更新用）", {:do => :duplicate_for_replace}, :confirm => "複製してよろしいですか？")  %>
+<% end %>
+</div>

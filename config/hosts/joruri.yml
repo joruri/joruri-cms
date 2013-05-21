@@ -1,0 +1,15 @@
+---
+address: 192.168.0.2
+port: 80
+
+chdir: /var/share/joruri
+environment: production
+
+timeout: 30
+log: log/thin.log
+pid: tmp/pids/thin.pid
+max_conns: 1024
+max_persistent_conns: 100
+require: []
+wait: 30
+daemonize: true

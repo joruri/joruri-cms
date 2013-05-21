@@ -1,0 +1,12 @@
+<div class="piece" id="emergencyLinkKasen">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>河川に関する情報</h2></div>
+<div class="pieceBody"><ul>
+
+  <li><a href="#">川の防災情報</a></li>
+
+  <li><a href="#">河川氾濫情報</a></li>
+
+</ul></div>
+</div>
+<!-- end .piece --></div>

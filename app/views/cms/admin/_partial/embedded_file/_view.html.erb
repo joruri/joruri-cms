@@ -1,0 +1,16 @@
+<%
+
+file  = item.embedded_file(name)
+thumb = item.embedded_thumbnail(name)
+
+%><% if file %>
+
+<a href="<%= embedded_file_path(file) %>" target="_blank"><%= "#{file.name}(#{file.eng_unit})" %></a>
+
+<% if thumb %>
+<div style="margin: 5px 0px 0px;">
+  <img src="<%= embedded_thumbnail_path(file) %>" style="<%= file.reduce_size(:width => 60, :height => 40, :thumbnail => true, :css => true) %>" />
+</div>
+<% end %>
+
+<% end %>

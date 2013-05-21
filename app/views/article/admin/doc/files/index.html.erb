@@ -1,0 +1,80 @@
+<%
+  _form_id = 'item_body'
+
+%><%= render :partial => 'article/admin/doc/files/menu' %>
+
+<script type="text/javascript">
+//<![CDATA[
+  function mceInsertContent(value) {
+    parent.tinyMCE.execInstanceCommand('<%= _form_id %>','mceInsertContent',true, value);
+  }
+
+  function selectAction() {
+    var filesForm = document.filesForm;
+    var selectFile;
+    for(i=0; i < filesForm.elements.s_item.length; i++) {
+      if(filesForm.elements.s_item[i].checked == true){ 
+        var element = document.getElementById("link_attach" + filesForm.elements.s_item[i].value);
+        alert(element.getAttribute("onclick"));
+      }
+    }
+  }
+//]]>
+</script>
+
+<% if @items.size > 0 %>
+
+<table class="index files" style="margin: 2px 0px;">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 60px; text-align: center;">添付</th>
+    <th style="width: 90px; text-align: center;">サムネイル</th>
+    <th>ファイル名</th>
+    <th style="width: 120px; text-align: center;">ファイルサイズ</th>
+  </tr>
+  
+  <% @items.each do |item| %>
+  <% file_path = url_for(:action => :download, :id => item) %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;">
+      <%= link_to :show, url_for(:action => :show, :id => item) %>
+    </td>
+    <td style="text-align: center;">
+      <%= link_to '添付', '#', :id => "link_attach#{item.id}", 
+        :onclick => %Q(mceInsertContent('<a href="./files/#{item.escaped_name}" class="#{item.css_class}">#{h(item.united_name)}</a>'); return false;) %>
+    </td>
+    <td style="text-align: center;">
+      <% if item.image_file? %>
+        <% thumb_uri  = url_for(:id => item, :action => :download, :thumb => 1) %>
+        <% thumb_size = item.reduce_size(:width => 80, :height => 48, :thumbnail => true, :css => true) %>
+        <a href="<%= file_path %>" target="_blank"><img src="<%= thumb_uri %>" style="<%= thumb_size %>" /></a>
+      <% else %>
+        <a href="<%= url_for(:id => item, :action => :download) %>" class="<%= item.css_class %>" target="_blank">
+          File</a>
+      <% end %>
+    </td>
+    <td>
+      <%= "files/#{item.name}" %> <%= " （ #{h(item.title)} ）" if item.name != item.title %>
+      <% if item.image_file? %>
+        <div class="pasteLinks">
+          <% script = %Q(<img src='./files/#{item.escaped_name}' alt='#{item.alt}' title='#{item.alt}'>) %>
+          <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
+          <a href="#" id="link_image#{item.id}" onclick="<%= script %>">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
+          
+          <% if item.has_thumbnail? %>
+          <% script = %Q(<img src='./files/thumb/#{item.escaped_name}' alt='' title=''>) %>
+          <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
+          | <a href="#" id="link_image#{item.id}thumb" onclick="<%= script %>">画像貼付 (<%= "#{item.thumb_width}x#{item.thumb_height}" %>)</a>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+    <td style="text-align: center;"><%= item.eng_unit %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<% end %>
+
+<%= paginate @items %>

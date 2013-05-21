@@ -1,0 +1,7 @@
+<div id="topPhoto" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<img src="/_common/themes/joruri/top/images/top-img01.jpg" alt="徳島県立阿波十郎兵衛屋敷－徳島県" title="徳島県立阿波十郎兵衛屋敷－徳島県" />
+</div>
+</div>
+</div>

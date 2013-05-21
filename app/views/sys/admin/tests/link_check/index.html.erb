@@ -1,0 +1,27 @@
+<% if @errors.size > 0 %>
+<div id="errorExplanation" class="errorExplanation">
+  <p>次の項目を確認してください。</p>
+  <ul><% @errors.each do |err| %><li><%= err %></li><% end %></ul>
+</div>
+<% end %>
+
+<%= @checker.notice_messages %>
+
+<%= form_tag do %>
+
+<p class="form">リンクチェック</p>
+
+<table class="show">
+  <tr>
+    <th>URL一覧</th>
+  </tr><tr>
+    <td>
+      <%= text_area_tag "item[body]", @item[:body], :class => "body", :style => "height: 200px;" %><br />
+      Proxy: <%= Core.proxy.nil? ? "指定なし" : Core.proxy.to_s %>
+    </td>
+  </tr>
+</table>
+
+<%= submit [["確認する", :confirm]] %>
+
+<% end %>

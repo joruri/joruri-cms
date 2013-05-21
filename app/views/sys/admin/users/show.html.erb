@@ -1,0 +1,41 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:in_group_id) %></th>
+    <td><%= safe{link_to(@item.group.name, sys_group_path(:parent => @item.group.parent_id, :id => @item.group.id))} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:account) %></th>
+    <td><%= @item.account %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= @item.name_en %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= @item.status.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:auth_no) %></th>
+    <td><%= @item.auth_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:role_name) %></th>
+    <td><%== @item.role_names.collect{|c| link_to(c.title, sys_object_privileges_path(c.id)) }.join(", ") %></td>
+  </tr>
+</table>
+
+<br />
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:ldap) %></th>
+    <td><%= @item.ldap_label %></td>
+  </tr><tr>
+    <th><%= @item.locale(:password) %></th>
+    <td><%= @item.password %></td>
+  </tr>
+</table>

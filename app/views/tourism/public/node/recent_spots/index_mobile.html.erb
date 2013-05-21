@@ -1,0 +1,10 @@
+<div class="contentTourism contentTourismRecentSpots">
+
+<% @items.each do |item| %>
+<%== %Q(<div class="date">#{item[:date]}</div>) if item[:date] %>
+<div class="spot">・<%= link_to h(item[:spot].title), item[:spot].public_uri %></div>
+<% end %>
+
+<%= paginate @spots %>
+
+</div>

@@ -1,0 +1,22 @@
+<div class="frontMessage frontMessageNews">
+
+<div class="header">
+  お知らせ <%= link_to '[管理]', sys_messages_path if Core.user.has_auth?(:manager) %>
+</div>
+
+<ul>
+  <% if @messages.size == 0 %>
+  <li><div class="title">お知らせはありません</div></li>
+  <% end %>
+  
+  <% @messages.each do |item| %>
+  <li>
+    <div class="title">
+      <a href="#" onclick="$('#frmsg<%= item.id %>').toggle(); return false;">
+        <%= item.title %></a>（<%= item.published_at.strftime('%Y-%m-%d %H:%M') %>）</div>
+    <div id="frmsg<%= item.id %>" class="body"><%== item.body %></div>
+  </li>
+  <% end %>
+</ul>
+
+</div>

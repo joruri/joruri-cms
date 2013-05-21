@@ -1,0 +1,29 @@
+<%= render :partial => 'new_form' %>
+
+<table class="index directories">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="">ファイル名</th>
+    <th style="width: 80px; text-align: right;">サイズ</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+  </tr>
+  
+  <% @items.each do |path| %>
+  <% if ::Storage.directory?("#{@path}/#{path}") %>
+  <tr class="directory <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, sys_storage_files_path(:path => "#{@dir}/#{path}/", :do => :show) %></td>
+    <td class="name"><%= link_to path, sys_storage_files_path(:path => "#{@dir}/#{path}/") %></td>
+    <td style="text-align: right;"></td>
+    <td style="text-align: center;"><%= safe{::Storage.mtime("#{@path}/#{path}").strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+  <% else %>
+  <tr class="file <%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><br /></td>
+    <td class="name"><%= link_to path, sys_storage_files_path(:path => "#{@dir}/#{path}", :do => :show) %></td>
+    <td style="text-align: right;"><%= number_format ::Storage.kb_size("#{@path}/#{path}") %> KB</td>
+    <td style="text-align: center;"><%= safe{::Storage.mtime("#{@path}/#{path}").strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+  <% end %>
+  <% end %>
+  
+</table>

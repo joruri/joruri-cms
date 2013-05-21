@@ -1,0 +1,14 @@
+<%= form_for :item, :url => @search_uri, :html => {:method => :get} do |f| %>
+  
+  <% if @form_type == "radio" %>
+  <%= render :partial => "form_radio", :locals => {:f => f} %>
+  <% else %>
+  <%= render :partial => "form_select", :locals => {:f => f} %>
+  <% end %>
+  
+  <div class="submitters">
+    <input type="submit" value="検索" />
+    <input type="button" value="リセット" onclick="location.href='<%= @search_uri %>';"/>
+  </div>
+  
+<% end %>

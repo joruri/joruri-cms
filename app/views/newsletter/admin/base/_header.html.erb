@@ -1,0 +1,12 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to '記事一覧', newsletter_docs_path, :class => (current == :base ? "current" : "") %>
+<%= link_to '読者一覧', newsletter_members_path, :class => (current == :member ? "current" : "") %>
+<%= link_to 'テスト読者', newsletter_testers_path, :class => (current == :tester ? "current" : "") %>
+<%= link_to '購読ログ', newsletter_requests_path, :class => (current == :request ? "current" : "") %>
+<%= link_to '設定', newsletter_content_settings_path, :class => (current == :setting ? "current" : "") %>
+</div>

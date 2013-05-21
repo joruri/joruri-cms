@@ -1,0 +1,7 @@
+<div id="footerNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="#">個人情報の取り扱い</a> / <a href="#">著作権</a> / <a href="#">免責事項</a> / <a href="#">お問い合わせ</a> / <a href="#">このサイトについて</a>
+</div>
+</div>
+</div>

@@ -1,0 +1,42 @@
+<div class="enqueteForm">
+
+<%= form_for :item, :url => "#{Page.current_node.public_uri}#{@item.id}/" do |f| %>
+
+<%= error_messages_for "form" %>
+
+<% if @confirm %>
+<div class="confirmMessage">下記の内容をご確認頂いて、「送信する」を押して下さい。</div>
+<% end %>
+
+<div class="form">
+  <div class="h2 name"><%= @item.name %></div>
+  <% if !@item.body.blank? %><div class="body"><%== @item.body %></div><% end %>
+</div>
+
+<div class="columns">
+  <% @form.elements.each do |e| %>
+  <div class="column">
+    <div class="name"><%= e.label %> <span class="required"><%= "※" if e.required %></span></div>
+    <% if e.message && !@confirm %><div class="body"><%== e.message %></div><% end %>
+    <div class="field"><%= e.tag %></div>
+  </div>
+  <% end %>
+</div>
+
+<% if @form.elements.size > 0 %>
+<div class="submitters">
+  <% if !@confirm %>
+  <input type="submit" class="confirm" value="確認画面へ" />
+  <% else %>
+  <input type="hidden" name="confirm" value="1" />
+  <input type="submit" class="send" value="送信する" />
+  <input type="submit" class="edit" name="edit" value="変更する" />
+  <% end %>
+</div>
+<% end %>
+
+<% end %>
+
+<div class="back"><%= link_to "戻る", Page.current_node.public_uri %></div>
+
+</div>

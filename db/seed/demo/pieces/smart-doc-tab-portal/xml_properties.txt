@@ -1,0 +1,1 @@
+<xml><groups><group more='' name='event' sort_no='10' title='イベント'><category>1</category></group><group more='' name='news' sort_no='0' title='新着情報'/><group more='' name='saiyo' sort_no='20' title='採用'><category>2</category></group><group more='' name='bosai' sort_no='30' title='防災'><category>4</category></group></groups></xml>

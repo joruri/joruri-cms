@@ -1,0 +1,40 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 90px; text-align: center;">サムネイル</th>
+    <th style="width: ;">ファイル名</th>
+    <th style="width: 120px; text-align: center;">サイズ（幅x高さ）</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, {:action => :show, :id => item, :concept => item.concept_id} %></td>
+    <td style="text-align: center;">
+      <% if item.image_file? %>
+        <a href="<%= url_for(:id => item, :action => :download, :concept => item.concept_id, :_t => item.updated_at.to_i) %>" target="_blank">
+        <img src="<%= url_for(:id => item, :action => :thumbnail, :concept => item.concept_id, :_t => item.updated_at.to_i) %>" 
+          style="<%= item.reduce_size(:width => 80, :height => 40, :thumbnail => true, :css => true) %>" /></a>
+      <% else %>
+        <a href="<%= url_for(:id => item, :action => :download, :concept => item.concept_id) %>" class="<%= item.css_class %>" target="_blank">File</a>
+      <% end %>
+    </td>
+    <td><%= "#{safe{item.node.name}} / " if item.node %><%= item.name %><br /><%= "（#{item.title}）" if item.name != item.title %></td>
+    <td style="text-align: center;"><%= item.eng_unit %><br /><%= item.image_size %></td>
+    <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
+    
+    <% if item.public? %>
+    <td style="text-align: center;"><%= link_to item.status.name, item.public_full_uri, :target => '_blank' %></td>
+    <% else %>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <% end %>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

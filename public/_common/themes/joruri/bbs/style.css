@@ -1,0 +1,248 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* contentBbsThreads
+--------------------------------------------------------- */
+.bbsMenu {
+  text-align: center;
+}
+.bbsMenu a.newEntry {
+  display: inline-block;
+  width: 95px;
+  padding: 3px 0;
+  border: 1px solid #bbbbbb;
+  border-width: 0 1px;
+}
+.contentBbsThreads .back {
+  text-align: center;
+}
+.contentBbsThreads .back a {
+  display: block;
+  width: 95px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+  text-decoration: none;
+}
+
+/* Notice and Errors
+----------------------------------------------- */
+.notice {
+  margin: 0 auto 20px;
+  padding: 8px 10px;
+  border: 1px solid #bbddbb;
+  background-color: #eeffee;
+  color: #008800;
+  text-align: center;
+}
+
+/* Entry Form
+----------------------------------------------- */
+.contentBbsThreads .entryForm {
+  width: 90%;
+  margin: 0 auto 20px;
+  border: 1px solid #cccccc;
+}
+.contentBbsThreads .entryForm h2.formTitle {
+  margin: 0 0 10px;
+  padding: 5px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #003586;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+.contentBbsThreads .entryForm dl {
+  width: 575px;
+  margin: 30px auto 10px;
+}
+.contentBbsThreads .entryForm dt {
+  float: left;
+  clear: both;
+  width: 60px;
+  padding-right: 8px;
+  text-align: right;
+}
+.contentBbsThreads .entryForm dd {
+  float: left;
+  margin-bottom: 8px;
+}
+.contentBbsThreads .entryForm input.text {
+  width: 460px;
+}
+.contentBbsThreads .entryForm input.name {
+  width: 330px;
+}
+.contentBbsThreads .entryForm input.email {
+  ime-mode: disabled;
+}
+.contentBbsThreads .entryForm input.uri {
+  ime-mode: disabled;
+}
+.contentBbsThreads .entryForm textarea.body {
+  width: 460px;
+  height: 100px;
+}
+.contentBbsThreads .entryForm input.password {
+  width: 150px;
+  margin-right: 250px;
+}
+.contentBbsThreads .entryForm .submitters {
+  margin: 10px 10px 20px;
+  clear: both;
+  text-align: center;
+}
+.captchaForm input {
+  ime-mode: disabled;
+}
+.captchaForm .image img {
+  margin: 0px 0px 5px;
+  border: 1px solid #008800;
+}
+.contentBbsThreads .entryForm dl:after{
+  content: ".";
+  display: block;  
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}  
+.contentBbsThreads .entryForm dl {
+  display: inline-block;
+}
+*html .clearfix {
+  height: 1%;
+}
+.contentBbsThreads .entryForm dl {
+  display: block;
+}
+
+/* Delete Form
+----------------------------------------------- */
+.contentBbsThreads .deleteForm {
+  width: 90%;
+  margin: 40px auto 20px;
+  padding: 0 0 10px;
+  border: 1px solid #cccccc;
+  text-align: center;
+}
+.contentBbsThreads .deleteForm h2.formTitle {
+  margin: 0 0 10px;
+  padding: 5px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #003586;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+}
+.contentBbsThreads .deleteForm dl {
+  display: inline;
+}
+.contentBbsThreads .deleteForm dt {
+  display: inline;
+}
+.contentBbsThreads .deleteForm dd {
+  display: inline;
+  margin: 0 10px 0 0;
+}
+.contentBbsThreads .deleteForm dd input.no {
+  width: 80px;
+  ime-mode: disabled;
+}
+.contentBbsThreads .deleteForm .errorExplanation {
+  margin: 10px 0;
+}
+
+/* Threads
+----------------------------------------------- */
+.contentBbsThreads .thread {
+  width: 95%;
+  margin: 20px auto;
+  padding: 0;
+  border: 1px solid #bbbbbb;
+}
+.contentBbsThreads .thread .answerLink {
+  float: right;
+  padding: 6px;
+}
+.contentBbsThreads .thread .h2 {
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.contentBbsThreads .thread .body {
+  line-height: 1.3;
+  margin: 10px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.contentBbsThreads .poster {
+  margin: 5px;
+  color: #999999;
+  text-align: right;
+}
+.contentBbsThreads .poster span {
+  margin: 0 4px;
+  color: #000000;
+}
+.contentBbsThreads .poster .no {
+  color: #009900;
+  font-weight: bold;
+}
+.contentBbsThreads .threadItem h2 {
+  padding: 8px 10px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #d3e8f4;
+  color: #000000;
+  font-weight: bold;
+  font-size: 100%;
+}
+.contentBbsThreads .resItem {
+  margin: 0 0 0 30px;
+}
+.contentBbsThreads .resItem h2 {
+  padding: 5px;
+  border-top: 1px solid #cccccc;
+  font-weight: bold;
+  font-size: 100%;
+
+/* side
+----------------------------------------------- */
+#bbsRecent,
+#bbsThread,
+#bbsRes {
+  width: 170px;
+}
+#bbsRecent ul,
+#bbsThread ul,
+#bbsRes ul {
+  padding: 5px;
+}
+#bbsRecent li,
+#bbsThread li,
+#bbsRes li {
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 0 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left 7px;
+}
+#bbsRecent .pieceHeader,
+#bbsThread .pieceHeader,
+#bbsRes .pieceHeader {
+  line-height: 25px;
+  padding: 0 5px 0 10px;
+  background-image: url("./images/tl-side.gif");
+  background-repeat: repeat-y;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* pagination
+----------------------------------------------- */
+.pagination {
+  text-align: center;
+}

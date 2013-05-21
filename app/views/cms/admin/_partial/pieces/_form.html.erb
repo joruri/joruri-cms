@@ -1,0 +1,27 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <%= concept_form f %>
+  <tr>
+    <th><%= @item.locale(:content_id) %></th>
+    <td><%= safe{@item.content_name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= @item.model_name(:short) %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:view_title) %></th>
+    <td><%= f.text_field :view_title, :class => 'name' %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

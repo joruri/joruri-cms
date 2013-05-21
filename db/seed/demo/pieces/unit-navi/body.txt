@@ -1,0 +1,12 @@
+<div id="unitNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">注意：メールで、お問い合わせ・ご質問の際には、必ず「住所」・「氏名」・「電話番号」・「メールアドレス」を明記してください。</div>
+<div class="pieceBody">
+<div class="list">
+<a href="#kikakubu">企画部</a>
+</div>
+<div class="pdfList">
+<a target="_blank" href="#" class="iconFile iconPdf">市町村庁舎の案内はこちら</a></div>
+</div>
+</div>
+<!-- end .piece --></div>

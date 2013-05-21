@@ -1,0 +1,7 @@
+<div id="application" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="#">申請書ダウンロード</a>
+</div>
+</div>
+</div>

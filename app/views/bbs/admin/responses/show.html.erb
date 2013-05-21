@@ -1,0 +1,37 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:id) %></th>
+    <td><%= @item.id %></td>
+  </tr>
+    <th><%= @item.locale(:created_at) %></th>
+    <td><%= safe{@item.created_at.strftime("%Y-%m-%d %H:%M")} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%=hbr @item.body %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= @item.uri %></td>
+  </tr>
+  <% if @content.editable? %>
+  <tr>
+    <th><%= @item.locale(:password) %></th>
+    <td><%= @item.password %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><%= @item.locale(:ipaddr) %></th>
+    <td><%= @item.ipaddr %></td>
+  </tr><tr>
+    <th><%= @item.locale(:user_agent) %></th>
+    <td><%= @item.user_agent %></td>
+  </tr>
+</table>

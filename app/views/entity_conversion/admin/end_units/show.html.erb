@@ -1,0 +1,8 @@
+<p class="form">廃止情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:old_id) %></th>
+    <td><%= safe{@item.old.full_name} %></td>
+  </tr>
+</table>

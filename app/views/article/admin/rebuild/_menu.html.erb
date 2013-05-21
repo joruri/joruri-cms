@@ -1,0 +1,6 @@
+<h2><%= @content.name %> : 再構築</h2>
+
+<div class="actionMenu">
+  <%= link_to "再構築 / ページのみ", {:do => :start_process}, :confirm => "再構築を開始してよろしいですか？" %>
+  <%= link_to "再構築 / すべて", {:do => :start_process, :file => 1}, :confirm => "再構築を開始してよろしいですか？" %>
+</div>

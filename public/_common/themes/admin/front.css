@@ -1,0 +1,41 @@
+#maintenances .piaceHeader,
+#messages .piaceHeader {
+  margin-bottom: 10px;
+  padding: 1px;
+  border:1px solid #B7D5F5;
+  background-color: #ffffff;
+}
+#maintenances .piaceHeader .title,
+#messages .piaceHeader .title {
+  padding: 5px;
+  background-color: #E3EFFD;
+  font-size: 110%;
+  font-weight: bold;
+}
+#maintenances .piaceHeader a,
+#messages .piaceHeader a {
+  font-size: 80%;
+  font-weight: lighter;
+  text-decoration: none;
+}
+#maintenances .piaceBody,
+#messages .piaceBody {
+  margin-bottom: 20px;
+  padding: 0px 10px;
+}
+#maintenances .piaceBody li,
+#messages .piaceBody li {
+  padding-left: 10px;
+  background-image: url(images/ic_list.gif);
+  background-position: left 7px;
+  background-repeat: no-repeat;
+}
+#maintenances ul .body,
+#messages ul .body {
+  display: none;
+  width: 90%;
+  margin: 8px 0px;
+  padding: 8px;
+  border: 2px dashed #bbc;
+  background-color: #fffff7;
+}

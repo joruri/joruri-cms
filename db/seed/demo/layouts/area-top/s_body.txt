@@ -1,0 +1,51 @@
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+<div id="headerBody">
+
+[[piece/smart-common-banner]]
+
+</div>
+<!-- end #headerContainer --></div>
+<!-- end #header --></div>
+
+<div id="navi">
+<div id="naviContainer">
+<div id="naviBody">
+
+[[piece/page-title]]
+
+</div>
+<!-- end #naviContainer --></div>
+<!-- end #navi --></div>
+
+<div id="main">
+
+<div id="wrapper">
+
+<div id="content">
+<div id="contentContainer">
+<div id="contentBody">
+
+[[content]]
+
+</div>
+<!-- end #contentContainer --></div>
+<!-- end #content --></div>
+
+<!-- end #wrapper --></div>
+<!-- end #main --></div>
+
+<div id="footer">
+<div id="footerContainer">
+<div id="footerBody">
+
+[[piece/smart-footer-navi]]
+[[piece/smart-copyright]]
+
+</div>
+<!-- end #footerContainer --></div>
+<!-- end #footer --></div>
+
+</div>

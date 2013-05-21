@@ -1,0 +1,6 @@
+<%
+
+attributes = Article::Attribute.find(:all, :conditions => {:content_id => @content.id}, :order => :sort_no)
+attributes = attributes.collect{|c| [c.title, c.id]}
+
+%><%= f.array_select 'in_attribute_ids[0]', attributes, :include_blank => "　" %>

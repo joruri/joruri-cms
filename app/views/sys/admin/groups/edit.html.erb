@@ -1,0 +1,9 @@
+<%= form_for :item, :url => {:action => :update}, :html => {:method => :put} do |f| %>
+  
+<%= error_messages_for :item %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<%= submit :edit %>
+
+<% end %>

@@ -1,0 +1,27 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:web_state) %></th>
+    <td><%= f.radio_buttons :web_state, @item.web_states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr>
+  <%= layout_form f, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= f.text_field :tel, :class => 'number' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:outline_uri) %></th>
+    <td><%= f.text_field :outline_uri, :class => 'name' %></td>
+  </tr>
+</table>
+
+<%#= creator_form f %>

@@ -1,0 +1,32 @@
+<p class="form">統合元</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:old_id) %></th>
+    <td><%= safe{@item.old.full_name} %></td>
+  </tr>
+</table>
+
+<p class="form">統合先</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:move_id) %></th>
+    <td><%= safe{@item.move.full_name} %><%= safe{@item.new_move.name} %></td>
+  </tr>
+</table>
+
+<p class="form">文字列置換</p>
+
+<table class="index">
+  <tr>
+    <th style="width: 40%;">検索文字列</th>
+    <th>置換文字列</th>
+  </tr>
+  <% @item.replace_texts.each do |src, dst| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td><%= src %></td>
+    <td><%= dst %></td>
+  </tr>
+  <% end %>
+</table>

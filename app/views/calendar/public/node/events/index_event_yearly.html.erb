@@ -1,0 +1,26 @@
+<div class="calendarEvents calendarYearlyEvents">
+
+<h2><%= sprintf("%d年", @year) %></h2>
+
+<%= @pagination.to_links(:class => "pagination upperPagination") %>
+
+<% if @items.size > 0 %>
+<ul class="events typeEventList">
+  <% @items.each do |item| %>
+  <li class="event <%= "noThumb" if !item[:thumb] %>">
+    <h3 class="date"><%= item[:date_label] %></h3>
+    <h4 class="title"><%= item[:uri].blank? ? h(item[:title]) : link_to(item[:title], item[:uri]) %></h4>
+    <div class="info">
+      <% if item[:thumb] %>
+      <div class="thumb"><img src="<%= item[:thumb_uri] %>" alt="" /></div>
+      <% end %>
+      <% if !item[:body].blank? %><div class="body"><%=hbr item[:body] %></div><% end %>
+    </div>
+  </li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= @pagination.to_links(:class => "pagination lowerPagination") %>
+
+<!-- end .calendarEvents --></div>

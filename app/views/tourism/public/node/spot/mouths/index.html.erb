@@ -1,0 +1,21 @@
+<div class="contentTourism contentTourismSpotMouth">
+
+<div class="mouths">
+  <h2>クチコミ</h2>
+  
+  <div class="post"><a href="new.html">クチコミを投稿する</a></div>
+  
+  <% if @items.size > 0 %>
+  <ul class="mouts">
+    <% @items.each do |item| %>
+    <li id="tourismMouth<%= item.id %>"><%= render :partial => "tourism/public/node/mouths/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
+  <div class="post"><a href="new.html">クチコミを投稿する</a></div>
+  
+  <%= paginate @items %>
+</div>
+
+</div>

@@ -1,0 +1,27 @@
+<%= form_tag '', :method => :get, :class => 'search' do %>
+
+<table>
+  <tr>
+    <th>メールアドレス</th>
+    <td ><%= text_field_tag 's_email', params[:s_email], :style => 'width: 350px;' %></td>
+
+    <th>メール種別</th>
+    <td ><%= select_tag('s_letter_type', '<option></option>'.html_safe + options_for_select(
+        Newsletter::Member.new.letter_types,
+        params[:s_letter_type].to_s ))%></td>
+
+    <th>状態</th>
+    <td ><%= select_tag('s_state', '<option></option>'.html_safe + options_for_select(
+        [['有効','enabled'], ['無効','disabled']],
+        params[:s_state].to_s ))%></td>
+
+
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

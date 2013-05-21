@@ -1,0 +1,20 @@
+<div>
+  <div class="h1"><%= @item.title %></div>
+  <span><%= (@item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></span>
+</div>
+
+<br />
+
+<div class="question">
+  <span class="mark">Q:</span>
+  <%== @item.question %>
+</div>
+
+<div class="body answer">
+  <span class="mark">A:</span>
+  <%== @body %>
+</div>
+
+<br />
+
+<%= render :partial => 'cms/public/_partial/inquiries/view_mobile', :locals => {:item => @item} %>

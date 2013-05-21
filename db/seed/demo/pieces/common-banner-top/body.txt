@@ -1,0 +1,21 @@
+<div id="commonBanner" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><h1><a href="/">ジョールリ市</a></h1><div class="menu">
+<div class="upperMenu">
+<a class="keitai" href="/mobile.html"><img src="/_common/themes/joruri/piece/images/bt-mobile.gif" alt="携帯サイト" title="携帯サイト" /></a>
+</div>
+<div class="lowerMenu">
+<form action="http://www.google.com/search">
+  <input type="hidden" name="hl" value="ja" />
+  <input name="q" type="text" size="40"id="search-box" class="text" />
+  <input type="image" name="sa" value="検索"src="/_common/themes/joruri/piece/images/bt-kensaku.gif" alt="検索" title="検索" align="top" />
+</form>
+<a class="chiiki" href="/chiiki/"><img src="/_common/themes/joruri/piece/images/bt-chiiki.gif" alt="地域から探す" title="地域から探す" /></a>
+<a class="soshiki" href="/soshiki/"><img src="/_common/themes/joruri/piece/images/bt-soshiki.gif" alt="組織から探す" title="組織から探す" /></a>
+<a class="toiawase" href="/inquiry/">お問い合わせ</a>
+<a class="siteMap" href="/sitemap/">サイトマップ</a>
+</div>
+</div>
+</div>
+</div>
+</div>

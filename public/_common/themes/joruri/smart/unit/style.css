@@ -1,0 +1,102 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   category
+========================================================= */
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.contentArticleUnit .latest h2 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 25px;
+  background-color: #00349a;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-border.png);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #ffffff;
+}
+.contentArticleUnit li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+}
+.contentArticleUnit li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleUnit h3 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+}
+.feed {
+  display: none;
+}
+.contentArticleUnit span.attributes {
+  display: none;
+}
+
+/* Soshiki Ichiran
+----------------------------------------------- */
+.contentArticleUnit table {
+  width: 100%;
+}
+.contentArticleUnit td {
+  display: inline-block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 10px;
+}
+.contentArticleUnit td.name,
+.contentArticleUnit td.email {
+  width: 47%;
+}
+.contentArticleUnit td.outline {
+  display: none;
+}
+.contentArticleUnit td.tel {
+  padding: 0 10px 0 15px;
+}
+table.department {
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+table.department .email,
+table.department .tel {
+  display: none;
+}
+table.department td.page a {
+  margin-right: 10px;
+  padding-left: 7px;
+  background-image: url(./images/ic-link.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  color: #ffffff;
+}
+table td.page a {
+  display: block;
+  padding-left: 7px;
+  background-image: url(./images/ic-list.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  text-decoration: underline;
+}
+table.unit tr.cycle {
+  background-color: #e3f0fa;
+}
+

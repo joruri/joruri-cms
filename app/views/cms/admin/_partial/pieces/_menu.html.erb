@@ -1,0 +1,12 @@
+<h2>ピース</h2>
+
+<%= action_menu :new if Core.user.has_priv?(:create, :item => Core.concept) %>
+<%= action_menu :index, cms_pieces_path %>
+<%= action_menu :show %>
+<%= action_menu :edit if safe{item.editable?} && !item.replaced_page? %>
+<%= action_menu :destroy if safe{item.deletable?} %>
+<% if params[:action] == 'show' %>
+  <% if Core.user.has_priv?(:create, :item => Core.concept) %>
+  <%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+  <% end %>
+<% end %>

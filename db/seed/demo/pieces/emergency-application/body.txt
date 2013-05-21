@@ -1,0 +1,7 @@
+<div id="emergencyApplication" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="#" title="申請書ダウンロード" alt="申請書ダウンロード">申請書ダウンロード</a>
+</div>
+</div>
+</div>

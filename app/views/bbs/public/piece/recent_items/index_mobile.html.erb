@@ -1,0 +1,4 @@
+<% @dates.each do |item| %>
+<%== %Q(<div class="date">#{item[:date]}</div>) if item[:date] %>
+<div class="entry">・<%= link_to h(item[:item].title), "#{@node_uri}#{item[:item].thread_id}/" %></div>
+<% end %>

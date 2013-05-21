@@ -1,0 +1,28 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><div id="textTitle" class="autoWrap mailBodyText"><%= @item.title %></div></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><div id="textBody" class="autoWrap mailBodyText"><%= mail_text_wrap(@item.body, 10) %></div></td>
+  </tr>
+</table>
+
+<p class="form">携帯向け</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:mobile_title) %></th>
+    <td><div id="textMobileTitle" class="autoWrap mailBodyText"><%= @item.mobile_title %></div></td>
+  </tr><tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><div id="textMobileBody" class="autoWrap mailBodyText"><%= mail_text_wrap(@item.mobile_body, 10) %></div></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

@@ -1,0 +1,15 @@
+<div class="contentTourism contentTourismSearchSpots">
+
+<% if @nosearch %>
+<div class="nosearch">検索条件を入力してください。</div>
+<% else %>
+<div class="hit"><span class="label">検索結果</span><span class="count"><%= "#{@items.total_entries}" %></span><span class="unit">件</span></div>
+<% end %>
+
+<% @items.each do |item| %>
+<%= render :partial => "tourism/public/node/spots/item", :locals => {:item => item} %>
+<% end %>
+
+<%= paginate @items %>
+
+</div>

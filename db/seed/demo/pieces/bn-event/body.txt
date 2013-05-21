@@ -1,0 +1,8 @@
+<div id="bnEvent" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/calendar/">
+年間行事</a>
+</div>
+</div>
+</div>

@@ -1,0 +1,7 @@
+<% if @items.size > 0 %>
+<ul class="spots">
+  <% @items.each do |item| %>
+  <li><%= render :partial => "tourism/public/node/spots/item", :locals => {:item => item} %></li>
+  <% end %>
+</ul>
+<% end %>

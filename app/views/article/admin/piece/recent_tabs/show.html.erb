@@ -1,0 +1,34 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_view @item, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :list_count %></th>
+    <td><%= @item.setting_value(:list_count) %></td>
+  </tr><tr>
+    <th><%= @item.locale :more_label %></th>
+    <td><%= @item.setting_value(:more_label) %></td>
+  </tr>
+</table>
+
+<p class="form">タブ設定</p>
+
+<div class="actionMenu">
+  <%= link_to(:edit, article_piece_recent_tab_tabs_path(@item.id)) if safe{@item.editable?} %>
+</div>
+
+<table class="show">
+  <% Article::Piece::RecentTabXml.find(:all, @piece).each_with_index do |item, idx| %>
+  <tr>
+    <th>タブ <%= idx + 1 %></th>
+    <td><%= item.title %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= creator_view @item %>

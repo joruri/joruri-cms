@@ -1,0 +1,13 @@
+<div id="search" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<form action="http://www.google.com/search">
+<div class="searchContainer">
+<input type="hidden" name="hl" value="ja" />
+<input name="q" type="text" id="search-box" class="text" />
+</div>
+<input type="image" name="sa" value="検索" id="searchButton" src="/_common/themes/joruri/smart/top/images/bt-kensaku.png" />
+</form>
+</div>
+</div>
+</div>

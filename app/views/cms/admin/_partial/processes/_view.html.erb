@@ -1,0 +1,75 @@
+<style type="text/css">
+.processView {
+  display: table;
+  margin: 15px 0px 20px;
+}
+.processView table {
+  margin: 0px 0px;
+  border: 1px solid #888;
+}
+.processView th {
+  width: 120px;
+  padding: 5px;
+  border: 1px solid #888;
+  background-color: #ddd;
+}
+.processView td {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #888;
+  text-align: center;
+}
+.processView td.log div {
+  text-align: left;
+}
+.processView #reloadTimer {
+  color: #080;
+}
+</style>
+
+<% if params[:start_process] && proc.closed_at.nil? %>
+  <%= javascript_tag do %>
+  
+  var reloadTimer = 10;
+  var reloadTimerId = setInterval(function(){
+    reloadTimer -= 1;
+    $('#reloadTimer').html(reloadTimer + '秒後に更新');
+    if (reloadTimer == 0) {
+      clearInterval(reloadTimerId);
+      location.reload();
+    }
+  }, 1000);
+  <% end %>
+  
+<% end %>
+
+<div class="processView">
+  <table>
+    <tr>
+      <th class="name">プロセス名</th>
+      <td class="name"><%= proc.name %></td>
+      <th class="date">開始日時</th>
+      <td class="date"><%= safe{proc.started_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+      <th class="num">処理数</th>
+      <td class="num"><%= "#{proc.current.to_i}/#{proc.total.to_i}" %></td>
+    </tr><tr>
+      <th class="name">ステータス</th>
+      <td class="name"><%= proc.status %> <span id="reloadTimer"></span></td>
+      <th class="date">更新日時</th>
+      <td class="date"><%= safe{proc.closed_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+      <th class="num">成功</th>
+      <td class="num"><%= proc.success.to_i %></td>
+    </tr><tr>
+      <th class="name">割り込み命令</th>
+      <td class="name"><% stop_link = link_to("停止", {:do => :stop_process}, :confirm => "プロセスを停止してよろしいですか？") %>
+        <%= proc.interrupt.blank? && proc.state == "running" ? stop_link : proc.interrupt %></td>
+      <th class="date">終了日時</th>
+      <td class="date"><%= safe{proc.closed_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+      <th class="num">失敗</th>
+      <td class="num"><%= proc.error.to_i %></td>
+    </tr><tr>
+      <th class="log">ログ</th>
+      <td class="log" colspan="5"><div><%=hbr proc.message %></div></td>
+    </tr>
+  </table>
+</div>

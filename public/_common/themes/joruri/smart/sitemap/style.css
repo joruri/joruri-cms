@@ -1,0 +1,36 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   sitemap
+========================================================= */
+ul.level2.faq {
+  background-color: #ffffff;
+}
+li.level1 a{
+  display: block;
+  line-height: 44px;
+  padding: 0 30px 0 15px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #f1f1f1;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link2.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+li.level2 a {
+  display: block;
+  line-height: 44px;
+  padding-left: 30px;
+  border-bottom: 1px solid #cccccc;
+  background-color: #ffffff; 
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+li.level2.faq-index,
+li.level2.lifeevent-index,
+li.level2.mayor-index {
+  display: none;
+}

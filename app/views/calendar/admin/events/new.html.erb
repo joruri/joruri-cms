@@ -1,0 +1,9 @@
+<%= form_for :item, :url => {:action => :create}, :html => {:multipart => true, :id => 'itemForm'} do |f| %>
+
+<%= error_messages_for :item %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<%= submit(:create) %>
+
+<% end %>

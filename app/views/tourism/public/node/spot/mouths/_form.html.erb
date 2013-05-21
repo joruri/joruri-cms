@@ -1,0 +1,29 @@
+<dl>
+  <dt><%= @item.locale(:title) %></dt>
+  <dd><%= f.text_field :title, :class => 'title' %></dd>
+  
+  <dt><%= @item.locale(:guest_name) %></dt>
+  <dd><%= f.text_field :guest_name, :class => 'name' %></dd>
+  
+  <dt><%= @item.locale(:email) %></dt>
+  <dd><%= f.text_field :email, :class => 'email' %></dd>
+  
+  <dt><%= @item.locale(:body) %></dt>
+  <dd><%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 150px;' %></dd>
+  
+  <dt><%= @item.locale(:image1_file_id) %></dt>
+  <dd><%= embedded_file_form f, :name => :image1_file_id %></dd>
+  <%#= f.file_field :image1_file_id, :size => 64 %>
+  
+  <dt><%= @item.locale(:image2_file_id) %></dt>
+  <dd><%= embedded_file_form f, :name => :image2_file_id %></dd>
+  
+  <dt><%= @item.locale(:image3_file_id) %></dt>
+  <dd><%= embedded_file_form f, :name => :image3_file_id %></dd>
+
+  <% if @use_captcha %>
+  <dt class="captcha">画像認証</dt>
+  <dd class="captcha"><%= show_simple_captcha :object => "item", :image_style => "simply_green", :distortion => "middle",
+    :label => "画像の文字を入力してください" %></dd>
+  <% end %>
+</dl>

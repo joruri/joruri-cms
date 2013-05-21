@@ -1,0 +1,87 @@
+<%
+
+def button(key)
+  uri = eval("new_entity_conversion_#{key}_unit_path")
+  %Q(<a href="#{uri}"><button>追加</button></a>)
+end
+
+%>
+<p class="form">新設</p>
+<div>
+  <table class="index">
+    <tr>
+      <th style="width: 60px; padding: 0px; text-align: center;"><%== button(:new) %></th>
+      <th style="width: 120px;"><%= @item.locale(:code) %></th>
+      <th style="width: ;"><%= @item.locale(:name) %></th>
+    </tr>
+    <% @new_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle', :name => :new %>">
+      <td style="text-align: center;"><%= link_to :show, entity_conversion_new_unit_path(:id => item.id) %></td>
+      <td><%= item.code %></td>
+      <td><%= item.full_name %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<p class="form">変更</p>
+<div>
+  <table class="index">
+    <tr>
+      <th style="width: 60px; padding: 0px; text-align: center;"><%== button(:edit) %></th>
+      <th style="width: 120px;"><%= @item.locale(:code) %></th>
+      <th style="width: 35%;"><%= @item.locale(:name) %></th>
+      <th style="width: 120px;">新 <%= @item.locale(:code) %></th>
+      <th style="width: ;">新 <%= @item.locale(:name) %></th>
+    </tr>
+    <% @edit_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle', :name => :edit %>">
+      <td style="text-align: center;"><%= link_to :show, entity_conversion_edit_unit_path(:id => item.id) %></td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+      <td><%= safe{item.code} %></td>
+      <td><%= safe{item.full_name} %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<p class="form">統合</p>
+<div>
+  <table class="index">
+    <tr>
+      <th style="width: 60px; padding: 0px; text-align: center;"><%== button(:move) %></th>
+      <th style="width: 120px;"><%= @item.locale(:code) %></th>
+      <th style="width: 35%;"><%= @item.locale(:name) %></th>
+      <th style="width: 120px;">新 <%= @item.locale(:code) %></th>
+      <th style="width: ;">新 <%= @item.locale(:name) %></th>
+    </tr>
+    <% @move_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle', :name => :move %>">
+      <td style="text-align: center;"><%= link_to :show, entity_conversion_move_unit_path(:id => item.id) %></td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+      <td><%= safe{item.move.code} %><%= safe{item.new_move.code} %></td>
+      <td><%= safe{item.move.full_name} %><%= safe{item.new_move.full_name} %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+
+<p class="form">廃止</p>
+<div>
+  <table class="index">
+    <tr>
+      <th style="width: 60px; padding: 0px; text-align: center;"><%== button(:end) %></th>
+      <th style="width: 120px;"><%= @item.locale(:code) %></th>
+      <th style="width: ;"><%= @item.locale(:name) %></th>
+    </tr>
+    <% @end_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle', :name => :end %>">
+      <td style="text-align: center;"><%= link_to :show, entity_conversion_end_unit_path(:id => item.id) %></td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>

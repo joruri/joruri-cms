@@ -1,0 +1,5 @@
+<div class="actionMenu">
+<%= action_menu(:show) %>
+<%= link_to("基本情報の変更", url_for(:action => :edit)) if Sys::Setting.value(:change_user_name) == "allowed" %>
+<%= link_to("パスワードの変更", url_for(:action => :edit_password)) if Sys::Setting.value(:change_user_password) == "allowed" %>
+</div>

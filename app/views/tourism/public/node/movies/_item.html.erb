@@ -1,0 +1,8 @@
+<% if uri = item.thumbnail_uri %>
+<a href="<%= item.public_uri %>">
+  <img class="thumb" src="<%= item.thumbnail_uri %>" alt="" /></a>
+<% end %>
+
+<p class="title"><a href="<%= item.public_uri %>"><%= item.title %></a></p>
+<p class="genre"><%= safe{item.genre.title} %></p>
+<p class="spot"><%= safe{item.spot.title} %></p>

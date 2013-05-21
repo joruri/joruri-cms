@@ -1,0 +1,26 @@
+<div class="contentBbsThreads">
+
+<% if @use_password %>
+<div class="deleteForm" id="deleteForm">
+  <h2 class="formTitle">削除フォーム</h2>
+  <%= form_for :item, :url => "#{@node_uri}delete" do |f| %>
+    <% if @delete_error %>
+    <div class="errorExplanation">投稿No.と削除パスを正しく入力してください。</div>
+    <% end %>
+    <input type="hidden" name="_method" value="DELETE" />
+    <dl>
+      <dt>投稿No.</dt>
+      <dd><input class="no" type="text" name="no" value="<%= h(params[:no]) %>" /></dd>
+      <dt>削除パス</dt>
+      <dd><input class="password" type="password" name="password" value="<%= h(params[:password]) %>" /></dd>
+    </dl>
+    <div class="submitters">
+      <input type="submit" value="削除する" />
+    </div>
+  <% end %>
+</div>
+<% end %>
+
+<div class="back"><%= link_to "戻る", "#{@node_uri}?#{query}" %></div>
+
+</div>

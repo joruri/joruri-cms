@@ -1,0 +1,30 @@
+<div class="contentBbsThreads">
+
+<% if msg = flash[:notice] %><div class="notice"><%= msg %></div><% end %>
+
+<div class="threads">
+  <div class="thread">
+    <div class="threadItem"><%= render :partial => "item", :locals => {:item => @thread} %></div>
+    <% @thread.all_responses.each do |res| %>
+    <div class="resItem"><%= render :partial => "item", :locals => {:item => res} %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="entryForm resForm" id="resForm">
+  <h2 class="formTitle">返信フォーム</h2>
+  <%= form_for :item, :url => "#{@node_uri}#{params[:thread]}/?#{query}#resForm" do |f| %>
+    <%= render :partial => "form", :locals => {:f => f} %>
+    <div class="submitters">
+      <% if @use_once_click %>
+      <input type="submit" value="返信する" onclick="controlSubmitting(this);" />
+      <% else %>
+      <input type="submit" value="返信する" />
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div class="back"><%= link_to "戻る", "#{@node_uri}?#{query}" %></div>
+
+</div>

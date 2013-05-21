@@ -1,0 +1,25 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %> <span class="note">※</span></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %> <span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr>
+  <%= layout_form f, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:entry_categories) %><br />（関連付け）</th>
+    <td><%= f.text_area :entry_categories, :style => "width: 600px; height: 100px;" %></td>
+  </tr>
+  <tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

@@ -1,0 +1,15 @@
+<h2>グループ</h2>
+
+<div class="navi">
+<% tree = @parent.parents_tree; tree.each_with_index do |c, k| %>
+<%= link_to h(c.name), sys_groups_path(c) %>
+<% if tree.size != k + 1 %><span class="separator">&gt;</span><% end %>
+<% end %>
+</div>
+
+<div class="actionMenu">
+<%= action_menu :index, sys_groups_path %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

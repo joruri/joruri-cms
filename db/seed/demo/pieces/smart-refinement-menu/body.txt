@@ -1,0 +1,12 @@
+<div id="refinementMenu" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<ul>
+<li class="bunya"><a href="/bunya/">分野</a></li>
+<li class="zokusei"><a href="/zokusei/">属性</a></li>
+<li class="soshiki"><a href="/soshiki/">組織</a></li>
+<li class="chiiki"><a href="/chiiki/">地域</a></li>
+</ul>
+</div>
+</div>
+</div>

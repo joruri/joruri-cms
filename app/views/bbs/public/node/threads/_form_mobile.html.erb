@@ -1,0 +1,34 @@
+<%= error_messages_for :item %>
+
+<%= f.hidden_field :parent_id %>
+<%= f.hidden_field :thread_id %>
+
+<%= @item.locale(:name) %><br />
+<div><%= f.text_field :name, :class => "text name" %></div><br />
+
+<%= @item.locale(:title) %><br />
+<div><%= f.text_field :title, :class => "text title" %></div><br />
+
+<%= @item.locale(:body) %><br />
+<div><%= f.text_area :body, :class => "body" %></div><br />
+
+<% if @show_email %>
+<%= @item.locale(:email) %><br />
+<div><%= f.text_field :email, :class => "text email" %></div><br />
+<% end %>
+
+<% if @show_uri %>
+<%= @item.locale(:uri) %><br />
+<div><%= f.text_field :uri, :class => "text uri" %></div><br />
+<% end %>
+
+<% if @use_password %>
+<%= @item.locale(:password) %><br />
+<div><%= f.password_field :password, :class => "text password" %></div><br />
+<% end %>
+
+<% if @use_captcha %>
+画像認証<br />
+<div><%= show_simple_captcha :object => "item", :image_style => "simply_green", :distortion => "middle",
+    :label => "画像の文字を入力してください" %></div><br />
+<% end %>

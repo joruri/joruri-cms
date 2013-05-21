@@ -1,0 +1,22 @@
+<%= form_tag '', :method => :get, :class => 'search' do %>
+<% blank = '<option></option>'.html_safe %>
+<table>
+  <tr>
+    <th>メールアドレス</th>
+    <td ><%= text_field_tag 's_email', params[:s_email], :style => 'width: 350px;' %></td>
+
+    <th>要求</th>
+    <td ><%= select_tag('s_request_type', blank + options_for_select(@item.request_types, params[:s_request_type].to_s ))%></td>
+
+    <th>状態</th>
+    <td ><%= select_tag('s_state', blank + options_for_select(@item.statuses, params[:s_state].to_s ))%></td>
+    
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+<!-- end .search --><% end %>

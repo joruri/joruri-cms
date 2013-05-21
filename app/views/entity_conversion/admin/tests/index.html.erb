@@ -1,0 +1,62 @@
+<% if @log %>
+<p class="form">実行ログ</p>
+<table class="show">
+  <tr>
+    <th><%= @log.locale(:state) %></th>
+    <td><%= safe{@log.updated_at.strftime("%Y-%m-%d %H:%M")} %> &nbsp;<%= @log.status %></td>
+  </tr><tr>
+    <td colspan="2" style="padding: 0px;">
+      <pre style="overflow-y: scroll; margin: 0px; height: 300px; padding: 5px;"><%=hbr @log.body %></pre>
+    </td>
+  </tr>
+</table>
+<% end %>
+
+<p class="form">変更一覧</p>
+<div>
+  <table class="index">
+    <tr>
+      <th style="width: 60px; padding: 0px; text-align: center;">種別</th>
+      <th style="width: 120px;"><%= @item.locale(:code) %></th>
+      <th style="width: 35%;"><%= @item.locale(:name) %></th>
+      <th style="width: 120px;">新 <%= @item.locale(:code) %></th>
+      <th style="width: ;">新 <%= @item.locale(:name) %></th>
+    </tr>
+    <% @new_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td style="text-align: center;">新設</td>
+      <td><%= item.code %></td>
+      <td><%= item.name %></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% end %>
+    <% @edit_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td style="text-align: center;">変更</td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+      <td><%= safe{item.code} %></td>
+      <td><%= safe{item.name} %></td>
+    </tr>
+    <% end %>
+    <% @move_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td style="text-align: center;">統合</td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+      <td><%= safe{item.move.code} %><%= safe{item.new_move.code} %></td>
+      <td><%= safe{item.move.full_name} %><%= safe{item.new_move.name} %></td>
+    </tr>
+    <% end %>
+    <% @end_items.each do |item| %>
+    <tr class="<%= cycle '', 'cycle' %>">
+      <td style="text-align: center;">廃止</td>
+      <td><%= safe{item.old.code} %></td>
+      <td><%= safe{item.old.full_name} %></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <% end %>
+  </table>
+</div>

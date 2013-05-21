@@ -1,0 +1,21 @@
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 40%;">コンセプト</th>
+    <th style="width: ;">権限</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td><%= safe{item.concept.name} %></td>
+    <td><%= item.action_names.join('，').force_encoding('utf-8') %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

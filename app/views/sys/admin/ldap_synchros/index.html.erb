@@ -1,0 +1,23 @@
+<table class="index" style="width: 610px;">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width:; text-align: center;">バージョン</th>
+    <th style="width: 120px; text-align: right;">グループ数</th>
+    <th style="width: 120px; text-align: right;">ユーザ数</th>
+    <th style="width: 120px; text-align: center;">作成日時</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.version) %></td>
+    <td style="text-align: center;"><%= item.version%></td>
+    <td style="text-align: right;"><%=number_with_delimiter item.group_count %></td>
+    <td style="text-align: right;"><%=number_with_delimiter item.user_count %></td>
+    <td style="text-align: center;"><%= safe{item.created_at.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

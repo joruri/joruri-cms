@@ -1,0 +1,35 @@
+<%= init_tiny_mce :readonly => true %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td>
+      <% if !@item.uri.blank? %>
+      <a href="<%= @item.uri %>">
+        <%= @item.uri %><br /><img src="<%= @item.thumbnail_uri %>" style="margin-top: 5px;" /></a>
+      <% end %>
+    </td>
+  </tr>
+  <%= tourism_genre_and_spot_view @item %>
+  <tr>
+    <th><%= @item.locale(:body) %></th>
+    <td><%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width: 100%; height: 150px;' %></td>
+  </tr>
+</table>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= safe{@item.published_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

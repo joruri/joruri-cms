@@ -1,0 +1,20 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= safe{@item.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:privileges) %></th>
+    <td><%= link_to h(@item.privileges.collect{|c| safe{c.concept.name} }.join(', ')), sys_object_privileges_path(:parent => @item.id) %></td>
+  </tr><tr>
+    <th><%= @item.locale(:groups) %></th>
+    <td><%== @item.groups.collect{|g| link_to(g.name, sys_group_path(g.id, :parent => g.parent_id)) }.join(', ') %></td>
+  </tr><tr>
+    <th><%= @item.locale(:users) %></th>
+    <td><%== @item.users.collect{|u| link_to(u.name, sys_user_path(u.id)) }.join(', ') %></td>
+  </tr>
+</table>

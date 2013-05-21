@@ -1,0 +1,33 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <%= concept_and_layout_form f %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:zip_code) %></th>
+    <td><%= f.text_field :zip_code, :class => 'number' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:address) %></th>
+    <td><%= f.text_field :address, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= f.text_field :tel, :class => 'number' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:site_uri) %></th>
+    <td><%= f.text_field :site_uri, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

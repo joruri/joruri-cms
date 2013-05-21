@@ -1,0 +1,16 @@
+<div class="contentTourism contentTourismMovie">
+
+<div class="h1"><%= @item.title %></div>
+
+<div class="image">
+  <% if @item.thumbnail_uri %>
+  <a href="<%= @item.uri %>">
+    <img src="<%= @item.thumbnail_uri%>" alt="" /></a>
+  <% end %>
+</div>
+
+<div class="body">
+  <%= @item.body %>
+</div>
+
+</div>

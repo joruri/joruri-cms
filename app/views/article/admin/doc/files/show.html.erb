@@ -1,0 +1,20 @@
+<%= render :partial => 'article/admin/doc/files/menu' %>
+
+<table class="show">
+  <tr>
+    <th>ファイル名（保存用）</th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th>ファイル名（表示用）</th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th>アップロード日時</th>
+    <td><%= @item.created_at ? @item.created_at.strftime('%Y-%m-%d %H:%m') : '' %></td>
+  </tr><tr>
+    <th>ファイルサイズ</th>
+    <td><%= @item.eng_unit %> <%= @item.image_size %></td>
+  </tr><tr>
+    <th>ファイル種別</th>
+    <td><%= @item.mime_type %></td>
+  </tr>
+</table>

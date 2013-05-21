@@ -1,0 +1,14 @@
+<div id="settingContent">
+<%= render :partial => 'menu' %>
+
+<table class="show">
+  <tr>
+    <th>設定名</th>
+    <td><%= @item.config_name %></td>
+  </tr><tr>
+    <th>設定値</th>
+    <td><%= @item.value_name || "未設定" %></td>
+  </tr>
+</table>
+     
+</div>

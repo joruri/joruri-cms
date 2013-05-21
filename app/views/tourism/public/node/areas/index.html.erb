@@ -1,0 +1,35 @@
+<div class="contentTourism contentTourismArea">
+
+<% if @items.size > 0 %>
+<div class="areas">
+  <% @items.each do |item| %>
+  
+  <div class="area area<%= item.name.camelize %>">
+    <h2><%=link_to h(item.title), "#{@base_uri}#{item.name}/" %></h2>
+  </div>
+  
+  <% if (children = item.public_children).size > 0 %>
+  <ul class="areas">
+    <% children.each do |c| %>
+    <li><%= link_to h(c.title), "#{@base_uri}#{c.name}/"  %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  
+  <% end %>
+</div>
+<% end %>
+
+<% if @spots.size > 0 %>
+<div class="spots">
+  <h2>観光地一覧</h2>
+  <ul class="spots">
+    <% @spots.each do |item| %>
+    <li><%= render :partial => "tourism/public/node/spots/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <%= paginate @spots %>
+</div>
+<% end %>
+
+</div>

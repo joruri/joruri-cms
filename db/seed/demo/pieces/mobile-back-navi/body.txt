@@ -1,0 +1,7 @@
+<div id="backNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody"><br />
+[0]<a href="/" accesskey="0">トップページに戻る</a>[[emoji/nextItem]]
+</div>
+</div>
+</div>

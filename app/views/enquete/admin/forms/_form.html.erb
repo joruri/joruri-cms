@@ -1,0 +1,27 @@
+<%= init_tiny_mce %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, [["公開","public"],["非公開","closed"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %> <span class="note">※</span></th>
+    <td><%= f.text_field :name, :class => 'title' %></td>
+  </tr><tr>
+    <th class="mceEditor"><%= @item.locale(:summary) %><br />（一覧に表示）</th>
+    <td><%= f.text_area :summary, :class => 'body mceEditor', :style => "height: 200px;" %></td>
+  </tr><tr>
+    <th class="mceEditor"><%= @item.locale(:body) %></th>
+    <td><%= f.text_area :body, :class => 'body mceEditor', :style => "height: 200px;" %></td>
+  </tr><tr>
+    <th class="mceEditor"><%= @item.locale(:sent_body) %></th>
+    <td><%= f.text_area :sent_body, :class => 'body mceEditor', :style => "height: 200px;" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => "number" %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

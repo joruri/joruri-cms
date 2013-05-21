@@ -1,0 +1,77 @@
+@charset "UTF-8";
+@import "../base/style.css";
+@import "../base/layouts/col-1.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   Enquete
+========================================================= */
+/* Index : enqueteForms
+----------------------------------------------- */
+.contentNewsletterForms .form {
+  margin: 0;
+}
+.contentNewsletterForms h2 {
+  padding: 4px 6px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+  font-size: 100%;
+}
+.contentNewsletterForms .form .summary,
+.contentNewsletterForms .form .body {
+  padding: 4px 6px;
+}
+
+/* Errors
+----------------------------------------------- */
+.errorExplanation {
+  margin: 0 0 4px;
+  color: #ff0000;
+}
+.errorExplanation h2 {
+  padding: 4px;
+  background-color: #ffffff;
+  font-size: small;
+}
+.contentNewsletterForms .errorExplanation p {
+  margin: 4px 0 0 4px;
+  background-color: #ffffff;
+}
+.errorExplanation ul {
+  margin: 2px 0 2px 20px;
+  list-style-type: disc;
+}
+
+/* Show : Form
+----------------------------------------------- */
+.contentNewsletterForms .columns {
+  margin: 0;
+}
+.contentNewsletterForms .column {
+  margin: 5px 0 10px;
+}
+.contentNewsletterForms .column .name {
+  padding: 4px 5px;
+  background-color: #e3f0fa;
+}
+.contentNewsletterForms .column .body {
+  margin: 10px 0 0 5px;
+}
+.contentNewsletterForms .column .field {
+  margin: 10px 0 0 5px;
+}
+.contentNewsletterForms .submitters {
+  padding: 10px 0;
+  background-color: #e3f0fa;
+  text-align: center;
+}
+.contentNewsletterForms .errorExplanation {
+  color: #ff0000;
+}
+.contentNewsletterForms .back {
+  margin-top: 20px;
+  text-align: center;
+}
+.required {
+  color: #ff0000;
+}

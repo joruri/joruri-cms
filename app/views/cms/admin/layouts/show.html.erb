@@ -1,0 +1,73 @@
+<%= javascript_tag do %>
+$(function() {
+    $('.layoutTabs').tabs();
+    $('.layoutSpecTabs').tabs();
+    $('.layoutTabs .ui-tabs-panel').css('padding', '12px 8px');
+    $('.layoutSpecTabs .ui-tabs-panel').css('padding', '12px 8px');
+    $('.layoutSpecTabs .pre').css({ minHeight: '300px' });
+});
+<% end %>
+
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:concept_id) %></th>
+    <td><%= safe{@item.concept.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%=hbr @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=hbr @item.title %></td>
+  </tr>
+</table>
+
+<p class="form">レイアウト情報</p>
+
+<div class="layoutTabs">
+  <ul>
+    <li><a href="#layoutTabs1">標準レイアウト</a></li>
+    <li><a href="#layoutTabs2">携帯レイアウト</a></li>
+    <li><a href="#layoutTabs3">スマートフォンレイアウト</a></li>
+  </ul>
+  
+  <div id="layoutTabs1">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs1-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs1-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs1-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs1-1" class="pre monospace"><%=hbr @item.body %></div>
+      <div id="layoutTabs1-2" class="pre monospace"><%=hbr @item.head %></div>
+      <div id="layoutTabs1-3" class="pre monospace"><%=hbr @item.stylesheet %></div>
+    </div>
+  </div>
+  <div id="layoutTabs2">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs2-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs2-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs2-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs2-1" class="pre monospace"><%=hbr @item.mobile_body %></div>
+      <div id="layoutTabs2-2" class="pre monospace"><%=hbr @item.mobile_head %></div>
+      <div id="layoutTabs2-3" class="pre monospace"><%=hbr @item.mobile_stylesheet %></div>
+    </div>
+  </div>
+  <div id="layoutTabs3">
+    <div class="layoutSpecTabs">
+      <ul>
+        <li><a href="#layoutTabs3-1">BODYタグ</a></li>
+        <li><a href="#layoutTabs3-2">HEADタグ</a></li>
+        <li><a href="#layoutTabs3-3">スタイルシート</a></li>
+      </ul>
+      <div id="layoutTabs3-1" class="pre monospace"><%=hbr @item.smart_phone_body %></div>
+      <div id="layoutTabs3-2" class="pre monospace"><%=hbr @item.smart_phone_head %></div>
+      <div id="layoutTabs3-3" class="pre monospace"><%=hbr @item.smart_phone_stylesheet %></div>
+    </div>
+  </div>
+</div>
+
+<%= creator_view @item %>

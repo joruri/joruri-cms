@@ -1,0 +1,70 @@
+<%
+
+role_names = Sys::RoleName.find(:all, :order => :name)
+role_ids   = role_names.collect{|c| c.id.to_s}
+
+max     = 5
+in_name = "##{f.object_name}_in_role_name_ids"
+e1_name = 'role_names1'
+e2_name = 'role_names2'
+e1_evt  = "moveSelectOptions(this.form, '##{e1_name}', '##{e2_name}', #{max});"
+e2_evt  = "moveSelectOptions(this.form, '##{e2_name}', '##{e1_name}');"
+
+e2_list = item.in_role_name_ids.to_s.split(' ').uniq
+e2_list.each{|id| e2_list.delete(id) unless role_ids.index(id)}
+item.in_role_name_ids = e2_list.join(' ')
+
+e1_opt  = []
+e2_opt  = []
+role_names.each{|c| e2_list.index(c.id.to_s) ? e2_opt << c : e1_opt << c }
+e1_opt  = options_for_select(e1_opt.collect{|c| [c.title, c.id]})
+e2_opt  = options_for_select(e2_opt.collect{|c| [c.title, c.id]})
+
+style   = "width: 240px; height: 140px;"
+e1_tag  = select_tag(e1_name, e1_opt, :multiple => true, :onDblClick => e1_evt, :style => style)
+e2_tag  = select_tag(e2_name, e2_opt, :multiple => true, :onDblClick => e2_evt, :style => style)
+
+%><script type="text/javascript">
+//<![CDATA[
+function moveSelectOptions(form, srcId, dstId, max) {
+  $(srcId + ' option:selected').each(function() {
+    var exist = false;
+    var srcOpt = $(this);
+    $(dstId + ' option').each(function() {
+      if ($(this).val() == srcOpt.val()) {
+        exist = true;
+        return;
+      }
+    });
+    if (!exist) {
+      $(dstId).append('<option value="' + srcOpt.val() + '">' + srcOpt.text() + '</option>');
+      srcOpt.remove();
+    }
+  });
+  
+  var ids = [];
+  if (max) {
+    $(dstId + ' option').each(function() {
+      ids.push($(this).val())
+    });
+  } else {
+    $(srcId + ' option').each(function() {
+      ids.push($(this).val())
+    });
+  }
+  $('<%= in_name %>').val(ids.join(' '));
+}
+//]]>
+</script>
+
+<br />
+
+<%= f.hidden_field :in_role_name_ids %>
+<table class="noDesign"><tr><td>
+<%= e1_tag %>
+</td><td>
+<input type="button" value="追加 →" onClick="<%= e1_evt %>" /><br /><br />
+<input type="button" value="← 除外" onClick="<%= e2_evt %>" />
+</td><td>
+<div class="<%= 'field_with_errors' if @item.errors['ロール権限'].size > 0 %>"><%= e2_tag %></div>
+</td></tr></table>

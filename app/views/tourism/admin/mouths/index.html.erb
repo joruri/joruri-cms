@@ -1,0 +1,37 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: ;">タイトル</th>
+    <th style="width: 200px;">観光地</th>
+    <th style="width: 120px; text-align: center;">投稿日時</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;"><%= Tourism::Area.new.locale(:state) %></th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td>
+      <% if thumb = item.embedded_thumbnail(:image1_file_id) %>
+      <img src="<%= embedded_thumbnail_path(thumb) %>" style="float: left; height: 48px; margin-right: 5px;" />
+      <% end %>
+      <% if thumb = item.embedded_thumbnail(:image2_file_id) %>
+      <img src="<%= embedded_thumbnail_path(thumb) %>" style="float: left; height: 48px; margin-right: 5px;" />
+      <% end %>
+      <% if thumb = item.embedded_thumbnail(:image3_file_id) %>
+      <img src="<%= embedded_thumbnail_path(thumb) %>" style="float: left; height: 48px; margin-right: 5px;" />
+      <% end %>
+      <%= item.title %></td>
+    <td><%= safe{truncate(item.spot.title, :length => 12)} %></td>
+    <td style="text-align: center;"><%= item.created_at.strftime('%Y-%m-%d %H:%M')%></td>
+    <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

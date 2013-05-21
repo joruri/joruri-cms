@@ -1,0 +1,19 @@
+<table class="index">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 200px;"><%= Article::Piece::RecentTabXml.new(@piece).locale(:name) %></th>
+    <th style="width: 200px;"><%= Article::Piece::RecentTabXml.new(@piece).locale(:title) %></th>
+    <th style="width: ;">一覧リンク</th>
+    <th style="width: 80px; text-align: right;"><%= Article::Piece::RecentTabXml.new(@piece).locale(:sort_no) %></th>
+  </tr>
+
+  <% @items.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.name) %></td>
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+    <td><%= item.more %></td>
+    <td style="text-align: right;"><%= item.sort_no %></td>
+  </tr>
+  <% end %>
+</table>

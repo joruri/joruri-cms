@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<%= csrf_meta_tags %>
+<title><%= Core.title %></title>
+<%= stylesheet_link_tag "/_common/css/jquery-ui/smoothness/jquery-ui-1.10.2.custom.min.css", :media => "all" %>
+<%= stylesheet_link_tag "/_common/css/jquery-ui/jquery.ui.datetime.css", :media => "all" %>
+<%= stylesheet_link_tag "/_common/themes/admin/style", :media => "all" %>
+<%= javascript_include_tag "/_common/js/jquery.min.js" %>
+<%= javascript_include_tag "/_common/js/jquery.ujs.js" %>
+<%= javascript_include_tag "/_common/js/jquery-ui-1.10.2.custom.min.js" %>
+<%= javascript_include_tag "/_common/js/jquery-ui/jquery.ui.timepicker-addon.js" %>
+<%= javascript_include_tag "/_common/js/jquery-ui/jquery.ui.datepicker-ja.js" %>
+<%= javascript_include_tag "/_common/js/jquery-ui/jquery.ui.timepicker-ja.js" %>
+<%= javascript_include_tag "/_common/js/joruri/admin.js" %>
+</head>
+<body>
+
+<div id="container">
+
+<div id="header">
+<div id="headerContainer">
+
+  <h1><a href="<%= Joruri.admin_uri %>">Joruri</a></h1>
+  <div class="menu">
+    <a class="user" href="<%= sys_my_account_path %>"><%= safe{Core.user_group.name} %>　<%= safe{Core.user.name_with_account} %></a>
+    <a class="web" href="<%= Core.site.full_uri %>" target="_blank">公開画面</a>
+    <a class="logout" href="<%= Joruri.admin_uri %>/logout">ログアウト</a>
+  </div>
+
+<!-- /#headerContainer --></div>
+<!-- /#header --></div>
+
+<div id="banner">
+<div id="bannerContainer">
+
+<!-- /#bannerContainer --></div>
+<!-- /#banner --></div>
+
+<div id="navi">
+<div id="naviContainer">
+
+  <table>
+    <tr>
+      <td class="selector">
+        <a id="currentNaviSite" href="<%= cms_navi_sites_path %>"><span>サイト：</span><%= safe{Core.site.name} %></a>
+        <a id="currentNaviConcept" href="<%= cms_navi_concepts_path %>"><span>コンセプト：</span><%= safe{Core.concept.name} %></a>
+      </td><td class="menu">
+        <%= render :partial => controller.controller_path + '/header' %>
+      </td>
+    </tr>
+  </table>
+
+<!-- /#naviContainer --></div>
+<!-- /#navi --></div>
+
+<div id="main">
+
+<div id="content">
+<div id="contentContainer">
+
+<div id="contentHeader"><% dir = "#{Rails.root}/app/views/#{controller.controller_path}" %>
+  <% if FileTest.exist?("#{dir}/_menu.html.erb") %>
+  <%= render :partial => controller.controller_path + '/menu' %>
+  <% end %>
+</div>
+
+<div id="contentBody">
+<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+<%= yield  %>
+</div>
+
+<div id="contentFooter"></div>
+
+<!-- /#contentContainer --></div>
+<!-- /#content --></div>
+
+<!-- /#main --></div>
+
+<div id="footer">
+<div id="footerContainer">
+
+<%#= :footer %>
+
+<!-- /#footerContainer --></div>
+<!-- /#footer --></div>
+
+<!-- /#container --></div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<%= form_for :item, :url => {:action => :index}, :html => {:method => :get, :class => 'search'} do |f| %>
+
+<table>
+  <tr>
+    <th>キーワード</th>
+    <td><%= f.text_field :s_keyword, :style => 'width: 200px;', :name => :s_keyword %></td>
+    <th>観光地名</th>
+    <td><%= f.text_field 's_spot', :style => 'width: 200px;', :name => :s_spot %></td>
+
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+  
+</table>
+
+<!-- end .search --><% end %>

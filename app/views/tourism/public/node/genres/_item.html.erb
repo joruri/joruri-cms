@@ -1,0 +1,6 @@
+<% if file = item.embedded_thumbnail(:list_image_file_id) %>
+<a href="<%= uri %>">
+  <img src="<%= public_embedded_thumbnail_path(file) %>" alt="" /></a>
+<% end %>
+
+<p class="title"><a href="<%= uri %>"><%= item.title %></a></p>

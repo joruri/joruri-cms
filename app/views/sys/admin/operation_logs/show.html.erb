@@ -1,0 +1,34 @@
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:created_at) %></th>
+    <td><%= safe{@item.created_at.strftime('%Y-%m-%d %H:%M')} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:user_id) %></th>
+    <td><%= @item.user_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:user_name) %></th>
+    <td><%= @item.user_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:ipaddr) %></th>
+    <td><%= @item.ipaddr %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= @item.uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:action) %></th>
+    <td><%= @item.action %></td>
+  </tr><tr>
+    <th><%= @item.locale(:item_model) %></th>
+    <td><%= @item.item_model %></td>
+  </tr><tr>
+    <th><%= @item.locale(:item_id) %></th>
+    <td><%= @item.item_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:item_unid) %></th>
+    <td><%= @item.item_unid %></td>
+  </tr><tr>
+    <th><%= @item.locale(:item_name) %></th>
+    <td><%= @item.item_name %></td>
+  </tr>
+</table>

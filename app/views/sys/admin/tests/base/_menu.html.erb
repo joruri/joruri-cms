@@ -1,0 +1,9 @@
+<h2>動作確認</h2>
+
+<div class="actionMenu">
+<%= link_to "メール送信", sys_tests_mail_path, :class => (current == :mail ? "current" : "") %>
+<%= link_to "リンクチェック", sys_tests_link_check_path, :class => (current == :link ? "current" : "") %>
+<% if Joruri.config[:cms_use_kana] %>
+<%= link_to "ふりがな・読み上げ", cms_tests_kana_path, :class => (current == :kana ? "current" : "") %>
+<% end %>
+</div>

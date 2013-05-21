@@ -1,0 +1,91 @@
+<%
+_input = Proc.new do |name, count, path, width|
+
+  onclick = "document.getElementById('#{name}_#{count}').focus();document.getElementById('#{name}_#{count}').select();"
+  style = "width: #{width}px"
+  text_field_tag "#{name}_#{count}", path, :style => style, :onclick => onclick, :readonly => true
+end
+
+
+%><%= render :partial => 'menu' %>
+
+<script type="text/javascript">
+//<![CDATA[
+  function mceInsertContent(value) {
+    parent.tinyMCE.execInstanceCommand('item_body','mceInsertContent',true, value);
+  }
+
+  function selectAction() {
+    var filesForm = document.filesForm;
+    var selectFile;
+    for(i=0; i < filesForm.elements.s_item.length; i++) {
+      if(filesForm.elements.s_item[i].checked == true){ 
+        var element = document.getElementById("link_attach" + filesForm.elements.s_item[i].value);
+        alert(element.getAttribute("onclick"));
+      }
+    }
+  }
+//]]>
+</script>
+
+<%= render :file => "cms/admin/data/files/_search" %>
+
+<% if @items.size > 0 %>
+
+<table class="index files" style="margin: 2px 0px;">
+
+  <tr>
+    <th style="width: 40px; text-align: center;">詳細</th>
+    <th style="width: 90px; text-align: center;">サムネイル</th>
+    <th style="width: ;">ファイル名</th>
+    <th style="width: 120px; text-align: center;">サイズ</th>
+    <th style="width: 200px; text-align: center;">URL</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+  
+  <% @items.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td style="text-align: center;">
+      <% if item.image_file? %>
+        <a href="<%= url_for(:id => item, :action => :download, :_t => item.updated_at.to_i) %>" target="_blank">
+        <img src="<%= url_for(:id => item, :action => :thumbnail, :_t => item.updated_at.to_i) %>" 
+        style="<%= item.reduce_size(:width => 80, :height => 40, :thumbnail => true, :css => true) %>" /></a>
+      <% else %>
+        <a href="<%= url_for(:id => item, :action => :download) %>" class="<%= item.css_class %>" target="_blank">File</a>
+      <% end %>
+    </td>
+    <td>
+      <%= "#{safe{item.node.name}} / " if item.node %><%= item.name %><br /><%= "（#{item.title}）" if item.name != item.title %>
+      <div class="pasteLinks">
+        <a onclick="parent.setText(parent.document.getElementById('item_body'), '[[file/<%= safe{item.node.name + '/'} %><%= item.name %>]]');" href="#">
+          埋め込みコード貼付</a>
+        <% if item.image_file? %>
+        <% script = %Q(<img src='#{item.public_uri}' alt='#{item.alt}' title='#{item.alt}'>) %>
+        <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
+        | <a href="#" id="link_image#{item.id}" onclick="<%= script %>">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
+        
+        <% if item.has_thumbnail? %>
+        <% script = %Q(<img src='#{item.public_thumbnail_full_uri}' alt='' title=''>) %>
+        <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
+        | <a href="#" id="link_image#{item.id}thumb" onclick="<%= script %>">画像貼付 (<%= "#{item.thumb_width}x#{item.thumb_height}" %>)</a>
+        <% end %>
+      <% end %>
+      </div>
+    </td>
+    <td style="text-align: center;"><%= item.eng_unit %></td>
+    <td style="text-align: center;"><%= _input.call('file_url', item.id, safe{item.public_uri}, 180) %></td>
+    
+    <% if item.public? %>
+    <td style="text-align: center;"><%= link_to item.status.name, item.public_full_uri, :target => '_blank' %></td>
+    <% else %>
+    <td style="text-align: center;"><%= item.status.name %></td>
+    <% end %>
+  </tr>
+  <% end %>
+
+</table>
+
+<% end %>
+
+<%= paginate @items %>

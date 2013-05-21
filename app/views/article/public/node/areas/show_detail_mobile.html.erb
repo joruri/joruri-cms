@@ -1,0 +1,14 @@
+<div class="contentArticleArea contentArticleAreaDetail">
+
+<div class="latest">
+  <div class="h2">新着情報</div>
+  <% if @docs.size > 0 %><div class="docs">
+    <% @docs.each do |doc| %>
+    <div>・<%=link_to h(doc.title), doc.public_uri%><%= doc.date_and_unit %></div>
+    <% end %>
+  </div><% end %>
+</div>
+
+<%= paginate @docs %>
+
+</div>

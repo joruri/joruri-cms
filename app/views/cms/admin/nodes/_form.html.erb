@@ -1,0 +1,27 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= concept_and_layout_form f %>
+  <tr>
+    <th><%= @item.locale(:content_id) %></th>
+    <td><%= f.select :content_id, @contents, {} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= f.select :model, @models, :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:parent_id) %></th>
+    <td><%= f.select :parent_id, @item.candidate_parents, :include_blank => "　" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:route_id) %></th>
+    <td><%= f.select :route_id, @item.candidate_routes, :include_blank => "　" %></td>
+  </tr>
+</table>
+
+<%= observe_field :item_concept_id, :url => {:action => :content_options},
+  :update => :item_content_id, :with => 'concept_id' %>
+<%= observe_field :item_concept_id, :url => {:action => :model_options},
+  :update => :item_model %>
+<%= observe_field :item_content_id, :url => {:action => :model_options},
+  :update => :item_model, :with => 'content_id' %>
+
+<%= creator_form f %>

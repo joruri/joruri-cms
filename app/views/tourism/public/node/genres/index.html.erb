@@ -1,0 +1,20 @@
+<div class="contentTourism contentTourismGenres">
+
+<% @items.each do |item| %>
+  <h2 class="genre genre<%= item.name.camelize %>"><%=link_to h(item.title), "#{@base_uri}#{item.name}/" %></h2>
+
+  <% item.public_children.each do |c1| %>
+    <h3 class="genre genre<%= c1.name.camelize %>"><%= link_to h(c1.title), "#{@base_uri}#{c1.name}/"  %></h3>
+    
+    <% if (children = c1.public_children).size > 0 %>
+    <ul class="genres">
+      <% children.each do |c2| %>
+      <li><%= render :partial => "tourism/public/node/genres/item", :locals => {:item => c2, :uri => "#{@base_uri}#{c2.name}/"} %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  <% end %>
+  
+<% end %>
+
+</div>

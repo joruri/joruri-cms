@@ -1,0 +1,8 @@
+<%= script_state_view(@process_name) %>
+
+<% if @log %>
+<form method="get" action="">
+  <input type="hidden" name="do" value="logs" />
+  <input type="submit" value="ログを保存（CSV）" />
+</form>
+<% end %>

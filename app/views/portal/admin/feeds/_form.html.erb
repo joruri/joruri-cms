@@ -1,0 +1,25 @@
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= f.radio_buttons :state, [["公開","public"],["非公開","closed"]], :class => 'states' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %> <span class="note">※</span></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %> <span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %> <span class="note">※</span></th>
+    <td><%= f.text_field :uri, :class => 'title' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:entry_count) %></th>
+    <td><%= f.text_field :entry_count, :class => "number" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:fixed_categories_xml) %></th>
+    <td><%= f.text_area :fixed_categories_xml, :style => "width: 98%; height: 100px;" %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

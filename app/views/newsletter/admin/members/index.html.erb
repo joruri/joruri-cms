@@ -1,0 +1,24 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: ;"><%= Newsletter::Member.new.locale(:email) %></th>
+    <th style="width: 150px; text-align: center;"><%= Newsletter::Member.new.locale(:letter_type) %></th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td><%= item.email %></td>
+    <td style="text-align: center;"><%= safe{item.letter_type_name} %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime("%Y-%m-%d %H:%M")} %></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

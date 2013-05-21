@@ -1,0 +1,17 @@
+<h2>ディレクトリ</h2>
+
+<div class="navi"><% tree = @parent.parents_tree %>
+  <% tree.each_with_index do |c, idx| %>
+  <%= link_to c.title, cms_nodes_path(c) %>
+  <%= (tree.size == idx + 1) ? link_to("［詳細］", c.admin_uri) : '<span class="separator">&gt;</span>'.html_safe %>
+<% end %>
+</div>
+
+<div class="actionMenu">
+<%= link_to :up, cms_nodes_path(@parent.parent_id) if params[:action] == "index" && @parent.parent_id > 0 %>
+<%= action_menu :new     if Core.user.has_priv?(:create, :item => @parent.concept) %>
+<%= action_menu :index, cms_nodes_path %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{Core.user.has_priv?(:update, :item => @item.concept)} %>
+<%= action_menu :destroy if safe{Core.user.has_priv?(:delete, :item => @item.concept)} %>
+</div>

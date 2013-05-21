@@ -1,0 +1,12 @@
+<% if @genres.size > 0 %>
+<div class="genreForm">
+  <p>ジャンル</p>
+  <%= f.select_with_tree :s_genre_id, @genres, :conditions => {:state => 'public'}, :label => :title,
+    :include_blank => "　", :name => "s_genre_id" %>
+</div>
+<% end %>
+    
+<div class="keywordForm">
+  <p>キーワード</p>
+  <%= f.text_field :s_keyword, :name => :s_keyword %>
+</div>

@@ -1,0 +1,18 @@
+<div id="lifeEvent" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>ライフイベント</h2></div>
+<div class="pieceBody">
+<ul>
+<li class="pregnant"><a href="/lifeevent/ninshin.html">妊娠・出産</a></li>
+<li class="child"><a href="/lifeevent/kosodate.html">子育て・教育</a></li>
+<li class="work"><a href="/lifeevent/shushoku.html">就職・退職</a></li>
+<li class="adult"><a href="/lifeevent/seijin.html">成人になったら</a></li>
+<li class="moving"><a href="/lifeevent/hikkoshi.html">引越し</a></li>
+<li class="marriage"><a href="/lifeevent/kekkon.html">結婚・離婚</a></li>
+<li class="welfare"><a href="/lifeevent/fukushi.html">福祉・介護</a></li>
+<li class="death"><a href="/lifeevent/shibo.html">死亡</a></li>
+</ul>
+
+</div>
+</div>
+<!-- end .piece --></div>

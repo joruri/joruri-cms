@@ -1,0 +1,9 @@
+<div id="naviSites" class="naviContent">
+  <p>サイト一覧</p>
+  <ul>
+    <% @sites.each do |site| %>
+    <% current = (Core.site && Core.site.id == site.id) ? "current" : "" %>
+    <li class="<%= current %>"><%= link_to site.name, cms_navi_site_path(site.id, :concept => nil) %></li>
+    <% end %>
+  </ul>
+</div>

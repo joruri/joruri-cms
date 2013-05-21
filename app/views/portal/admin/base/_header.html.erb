@@ -1,0 +1,10 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to 'フィード一覧', portal_feeds_path, :class => (current == :base ? "current" : "") %>
+<%= link_to 'グループ設定', portal_categories_path(:parent => 0), :class => (current == :category ? "current" : "") %>
+<%= link_to '設定', portal_content_settings_path, :class => (current == :setting ? "current" : "") %>
+</div>

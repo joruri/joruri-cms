@@ -1,0 +1,30 @@
+<div class="calendarEvents calendarYearlyEvents">
+
+<h2><%= sprintf("%d年", @year) %></h2>
+
+<%= @pagination.to_links(:class => "pagination upperPagination") %>
+
+<% @days.each do |day| %>
+<div class="date">
+  <div class="<%= day[:class] %>">
+    <%= day[:date_object].strftime("%-m月%-d日") %>（<%= day[:wday_label] %>）
+  </div>
+  <ul class="events">
+    <% if day[:holiday] %><li class="holiday"><%= day[:holiday] %></li><% end %>
+    <% @items[day[:date]].each do |item| %>
+    <li class="event">
+      <% if item.is_a?(Article::Doc) %>
+        <%= link_to h(item.title), item.public_uri %>
+      <% else %>
+        <%= item.event_uri.blank? ? hbr(item.title) : link_to(hbr(item.title), item.event_uri, :target => "_blank") %>
+      <% end %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<% if @days.size == 0 %><div class="noEvents">　</div><% end %>
+
+<%= @pagination.to_links(:class => "pagination lowerPagination") %>
+
+<!-- end .calendarEvents --></div>

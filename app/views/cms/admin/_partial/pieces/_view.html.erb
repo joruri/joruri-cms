@@ -1,0 +1,28 @@
+<% if defined?(container) && container != :tr %>
+<table class="show">
+<% end %>
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:concept_id) %></th>
+    <td><%= safe{@item.concept.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:content_id) %></th>
+    <td><%= safe{@item.content_name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:model) %></th>
+    <td><%= @item.model_name(:short) %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%=hbr @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%=hbr @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:view_title) %></th>
+    <td><%=hbr @item.view_title %></td>
+  </tr>
+<% if defined?(container) && container != :tr %>
+</table>
+<% end %>

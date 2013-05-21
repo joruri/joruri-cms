@@ -1,0 +1,296 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* FAQ
+----------------------------------------------- */
+.contentFaqDoc {
+  line-height: 1.3;
+}
+.contentFaqDoc .header {
+  padding: 7px 9px;
+  background-color: #e3f5ff;
+  font-size: 120%;
+}
+.contentFaqDoc .header h1 {
+  display: none;
+}
+.question {
+  margin-bottom: 15px;
+  padding: 0 0 5px 37px;
+  background-color: #e3f5ff;
+  background-image:url(./images/ic-question.gif);
+  background-repeat:no-repeat;
+  background-position: 0.7em 0.1em;
+}
+.answer {
+  margin-bottom: 15px;
+  padding: 0 0 5px 37px;
+  background-image: url("./images/ic-answer.gif");
+  background-repeat: no-repeat;
+  background-position: 0.7em 0.1em;
+}
+.rels {
+  padding: 10px 0 10px 36px ;
+  border-top: 1px dotted #999999;
+}
+.rels h2,
+.tags h2,
+.inquiry h2 {
+  font-weight: bold;
+}
+.rels ul {
+  padding-left: 15px;
+}
+.section {
+  display: none;
+}
+.tags {
+  padding: 10px 0 10px 36px ;
+  border-top: 1px dotted #999999;
+}
+.tags a {
+  padding-left: 15px;
+}
+.inquiry {
+  padding: 10px 0 10px 36px;
+  border-top: 1px dotted #999999;
+}
+.inquiry .charge,
+.inquiry .tel,
+.inquiry .fax,
+.inquiry .email {
+  padding-left: 15px;
+}
+#faqRecentDocs .pieceHeader h2, #faqSearch .pieceHeader h2 {
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+#contentBody .faqTitle {
+  margin-bottom: 10px;
+}
+#contentBody .faqTitle p {
+  padding-left: 10px;
+}
+#contentBody .faqTitle img {
+  vertical-align: bottom;
+  margin-bottom: 8px;
+}
+#menuBody .call {
+  vertical-align: bottom;
+  margin-bottom: 5px;
+}
+#faqRecentDocs .pieceBody ul {
+  padding: 0 20px 0 5px;
+}
+#faqRecentDocs .pieceBody li {
+  line-height: 1.5;
+  margin: 0;
+  padding: 0 0 0 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left 7px;
+}
+.contentFaqDoc .back {
+  clear: both;
+  margin-top: 20px;
+  text-align: center;
+}
+.contentFaqDoc .back a {
+  display: block;
+  width: 95px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+}
+.contentFaqRecentDocs .date,
+.contentFaqDocs .date {
+  margin: 0 0 5px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+}
+.contentFaqRecentDocs ul,
+.contentFaqDocs ul {
+  margin: 0 0 5px 5px;
+}
+.contentFaqRecentDocs li,
+.contentFaqDocs li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+#recentFaqTitle .pieceHeader {
+  background-image: url("./images/bg-shinchaku-repeat.gif");
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#recentFaqTitle h2 {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  background-image: url("./images/tl-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+/* FAQ category
+----------------------------------------------- */
+.contentFaqCategory .category h2 {
+  margin-bottom: 10px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f5ff;
+}
+.contentFaqCategory .category .children {
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+.contentFaqCategory .category .children a {
+  display: inline-block;
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: 0 0.5em;
+}
+.contentFaqCategory .latest {
+  margin-bottom: 30px;
+  background-image: url("./images/bg-shinchaku-repeat.gif");
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+.contentFaqCategory .latest h2 {
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-image: url("./images/tl-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+.contentFaqCategory .category h3 {
+  margin-bottom: 10px;
+  padding: 5px 5px 4px 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+  font-weight: bold;
+  font-size: 120%;
+}
+.contentFaqCategory ul {
+  padding: 0 5px;
+}
+.contentFaqCategory li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+.contentFaqCategory .more {
+  padding: 0 5px 10px 0;
+  text-align: right;
+}
+
+/* RSS Atom
+----------------------------------------------- */
+#faqRecentDocs .feed,
+.contentFaqRecentDocs .feed {
+  float: right;
+  height: 0;
+  position: relative;
+  top: -36px;
+  right: 10px;
+}
+#faqRecentDocs .feed a.feedRss,
+.contentFaqRecentDocs .feed a.feedRss,
+.contentFaqCategory .feed a.feedRss,
+#faqRecentDocs .feed a.feedAtom,
+.contentFaqRecentDocs .feed a.feedAtom,
+.contentFaqCategory .feed a.feedAtom {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 5px;
+  border-top: 1px solid #EAA081;
+  border-right: 1px solid #B84000;
+  border-bottom: 1px solid #B84000;
+  border-left: 1px solid #EAA081;
+  overflow: hidden;
+  background-color: #D64000;
+  color: #ffffff;
+  text-decoration: none;
+}
+.links {
+  text-align: right;
+}
+
+/* tag search
+----------------------------------------------- */
+.contentFaqTags .search {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #dddddd;
+  background-color: #e3f0fa;
+}
+.contentFaqTags .search td {
+  padding: 0 15px 0 5px;
+}
+.contentFaqTags .search td input {
+  width: 140px;
+}
+.contentFaqTags .search td.submitters input {
+  width: 70px;
+  font-size: 100%;
+}
+.contentFaqTags .hit {
+  padding: 5px 0 5px 10px;
+  background-image: url(./images/bg-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 110%;
+}
+.contentFaqTags li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 5px;
+}
+.contentFaqTags ul {
+  padding: 10px 5px 25px;
+}
+
+/* FAQ search
+----------------------------------------------- */
+#faqSearch .category1, #faqSearch .category2, #faqSearch .keyword {
+  float: left;
+  margin: 10px 20px 10px 0;
+}
+#faqSearch .category1 p, #faqSearch .category2 p, #faqSearch .keyword p {
+  float: left;
+  padding: 3px 0;
+  margin-right: 10px;
+}
+#faqSearch .submitters {
+  clear: both;
+  margin-top: 0;
+  text-align: center;
+}

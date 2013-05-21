@@ -1,0 +1,30 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 60px; text-align: right;">ID</th>
+    <th style="width: ;">フォーム名</th>
+    <th style="width: 100px; text-align: center;">質問</th>
+    <th style="width: 100px; text-align: center;">回答</th>
+    <th style="width: 80px; text-align: right;">並び順</th>
+    <th style="width: 120px; text-align: center;">作成日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td style="text-align: right;"><%= item.id %></td>
+    <td><%= h(item.name) %></td>
+    <td style="text-align: center;"><%= link_to "質問一覧", enquete_form_columns_path(@content.id, item.id) %></td>
+    <td style="text-align: center;"><%= link_to "回答一覧", enquete_form_answers_path(@content.id, item.id) %></td>
+    <td style="text-align: right;"><%= item.sort_no %></td>
+    <td style="text-align: center;"><%= safe{item.created_at.strftime("%Y-%m-%d %H:%M")} %></td>
+    <td style="text-align: center;"><%= item.status.name %></td>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

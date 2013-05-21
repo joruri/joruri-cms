@@ -1,0 +1,8 @@
+<h2><%= @content.name %> : 変更</h2>
+
+<div class="actionMenu">
+<%= action_menu :index, entity_conversion_units_path %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

@@ -1,0 +1,14 @@
+<div id="usefulInformation" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>お役立ち情報</h2></div>
+<div class="pieceBody">
+<ul>
+<li><a href="#">お役立ち情報01</a></li>
+<li><a href="#">お役立ち情報02</a></li>
+<li><a href="#">お役立ち情報03</a></li>
+<li><a href="#">お役立ち情報04</a></li>
+</ul>
+</div>
+<div class="pieceFooter"></div>
+</div>
+<!-- end .piece --></div>

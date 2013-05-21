@@ -1,0 +1,311 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   Doc
+========================================================= */
+
+/* docs
+----------------------------------------------- */
+.contentArticleDoc .header {
+  clear: both;
+  margin-bottom: 30px;
+  padding: 10px;
+  border-top: 1px solid #232f92;
+  border-bottom: 1px solid #232f92;
+  background-color: #e3f0fa;
+}
+.contentArticleDoc .header h1 {
+  font-weight: bold;
+  font-size: 150%;
+  text-align: center;
+}
+.contentArticleDoc .header .publishedAt {
+  text-align: right;
+}
+.contentArticleDoc .body,
+.contentArticleDoc .maps,
+.contentArticleDoc .rels,
+.contentArticleDoc .tags {
+  margin-bottom: 50px;
+  padding: 0 20px;
+}
+.contentArticleDoc .maps h2,
+.contentArticleDoc .rels h2,
+.contentArticleDoc .tags h2 {
+  margin-bottom: 5px;
+  padding: 3px 0 3px 8px;
+  border-left: 2px solid #232f92;
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+.contentArticleDoc .rels li {
+  margin: 0;
+  padding-left: 8px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 7px;
+}
+.contentArticleDoc ul,
+.contentArticleDoc ol {
+  margin: 0 0 0 40px;
+}
+.contentArticleDoc .tags div a {
+  padding-right: 8px;
+}
+.contentArticleDoc .back {
+  clear: both;
+  text-align: center;
+}
+.contentArticleDoc .back a {
+  display: block;
+  width: 95px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ececec;
+}
+#snsShare {
+  float: right;
+  height: 20px;
+  margin-top: -30px;
+}
+.twitter-share-button, .fbLike, .fb-share-button, .gpShare {
+  float: left;
+  width: 127px !important;
+}
+.fb-share-button {
+  margin-top: 1px;
+  _margin-top: -12px;
+}
+
+/* docs ichiran
+----------------------------------------------- */
+.contentPortalCategory .entries,
+.contentPortalEntries .entries,
+.contentArticleDocs .docs {
+  margin-left: 10px;
+}
+.contentPortalCategory h2.date,
+.contentPortalEntries h2.date,
+.contentArticleDocs .docs h2 {
+  margin: 0 0 5px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+}
+.contentPortalCategory .entries ul,
+.contentPortalEntries .entries ul,
+.contentArticleDocs .docs ul {
+  margin: 0 0 25px 7px;
+}
+.contentPortalCategory .entries li,
+.contentPortalEntries .entries li,
+.contentArticleDocs .docs li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+#page-docs-index #snsShare {
+  display: none;
+}
+/* group-portal
+----------------------------------------------- */
+.contentPortalCategory .category h2 {
+  margin: 0 0 0 10px;
+  padding: 0 0 5px 8px;
+  background-image: url(./images/ic-list.gif);
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+.contentPortalCategory .category .children {
+  margin: 0 0 15px;
+}
+.contentPortalCategory .category .children a {
+  margin: 0 0 0 20px;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: 0px 7px;
+}
+
+/* address
+----------------------------------------------- */
+.contentArticleDoc .body ul {
+  list-style-type: disc;
+}
+.inquiry {
+  clear: both;
+  margin: 0 0 20px;
+  padding: 5px 10px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  color: #333333;
+}
+.inquiry h2 {
+  margin-bottom: 5px;
+  background-image: none;
+  font-weight: bold;
+  font-size: 110%;
+}
+.tel, .fax, .email {
+  display: inline;
+}
+.department, .section {
+  font-weight: bold;
+}
+.top,.middle {
+  margin-bottom: 0;
+}
+.department, .section, .tel, .fax {
+  margin-right: 10px;
+}
+
+/* =========================================================
+    recent Docs
+========================================================= */
+.contentArticleRecentDocs .docs {
+  margin-left: 10px;
+}
+.contentArticleRecentDocs .docs h2 {
+  margin: 0 0 5px;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+}
+.contentArticleRecentDocs .docs ul {
+  margin: 0 0 25px 7px;
+}
+.contentArticleRecentDocs .docs li:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+* html .contentArticleRecentDocs .docs li {
+  height: 1%;
+}
+.contentArticleRecentDocs .docs li {
+  display: block;
+  clear: both;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+.contentArticleRecentDocs .docs li .title {
+  margin: 0;
+  padding-bottom: 5px;
+}
+.contentArticleRecentDocs li img {
+  float: left;
+  margin-right: 10px;
+}
+
+/* pagination
+----------------------------------------------- */
+.pagination {
+  text-align: center;
+}
+.pagination a {
+  padding: 0 6px;
+}
+.pagination span.current {
+  padding: 0 3px;
+  font-weight: bold;
+  font-size: 150%;
+}
+
+/* recent Docs Title
+----------------------------------------------- */
+#recentDocsTitle .pieceHeader {
+  background-image: url(./images/bg-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#recentDocsTitle h2 {
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+
+/* RSS Atom
+----------------------------------------------- */
+.feed {
+  float: right;
+  position: relative;
+  top: -36px;
+  right: 10px;
+  background-color: transparent;
+}
+.feed a.feedRss, .feed a.feedAtom {
+  display: inline-block;
+  margin-left: 5px;
+  padding: 0 5px;
+  border-top: 1px solid #EAA081;
+  border-right: 1px solid #B84000;
+  border-bottom: 1px solid #B84000;
+  border-left: 1px solid #EAA081;
+  background-color: #D64000;
+  color: #ffffff;
+  text-decoration: none;
+}
+.links {
+  text-align: right;
+}
+
+/* SideMenu
+----------------------------------------------- */
+#menu .pieceBody li {
+  margin: 0;
+}
+
+/* =========================================================
+    tag search
+========================================================= */
+.contentArticleTags .search {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #dddddd;
+  background-color: #e3f0fa;
+}
+.contentArticleTags .search td {
+  padding: 0 15px 0 5px;
+}
+.contentArticleTags .search td input {
+  width: 140px;
+}
+.contentArticleTags .search td.submitters input {
+  width: 70px;
+  font-size: 100%;
+}
+.contentArticleTags .hit {
+  padding: 5px 0 5px 10px;
+  background-image: url(./images/bg-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 110%;
+}
+.contentArticleTags li {
+  margin: 0;
+  padding: 0 0 5px 10px;
+  background-image: url(./images/ic-list-shinchaku.gif);
+  background-repeat: no-repeat;
+  background-position: left 5px;
+}
+.contentArticleTags ul {
+  padding: 10px 5px 25px;
+}

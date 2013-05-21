@@ -1,0 +1,14 @@
+<%
+
+concepts = Cms::Concept.new.readable_children
+
+%>
+<p class="form">スタイルシート</p>
+
+<%= form_for(:item, :html => {:method => :post}) do |f| %>
+  <%= hidden_field_tag :do, 'styleseet' %>
+  
+  対象コンセプト : <%= f.select_with_tree :concept_id, concepts, :include_blank => 'すべて' %>
+  <%= f.submit '再構築', :onclick => "$('#message').html('再構築を開始しました。しばらくお待ちください。');" %>
+  <span id="message" style="margin-left: 10px; color: #b40;"></span><br />
+<% end %>

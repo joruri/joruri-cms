@@ -1,0 +1,15 @@
+<div class="contentArticleUnit contentArticleUnitAttribute">
+
+<div class="latest">
+  <h2><%= @attr.title %></h2>
+  
+  <% if @docs.size > 0 %><ul>
+    <% @docs.each do |doc| %><li>
+      <%= link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %>
+    </li><% end %>
+  </ul><% end %>
+  
+  <%= paginate @docs %>
+</div>
+
+</div>

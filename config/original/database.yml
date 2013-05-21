@@ -1,0 +1,50 @@
+production:
+  adapter : mysql2
+  database: joruri
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  reconnect: true
+  host: 127.0.0.1
+
+#production_slave_database:
+#  adapter : mysql2
+#  database: joruri
+#  username: joruri
+#  password: pass
+#  timeout : 5000
+#  encoding: utf8
+#  reconnect: true
+#  host: 
+
+#production_pull_database:
+#  adapter : mysql2
+#  database: joruri
+#  username: joruri
+#  password: pass
+#  timeout : 5000
+#  encoding: utf8
+#  reconnect: true
+#  host: 
+
+test:
+  adapter : mysql2
+  database: joruri
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  reconnect: true
+  host: 127.0.0.1
+
+development:
+  adapter : mysql2
+  database: joruri
+  username: joruri
+  password: pass
+  timeout : 5000
+  encoding: utf8
+  reconnect: true
+  host: 127.0.0.1
+

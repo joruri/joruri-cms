@@ -1,0 +1,31 @@
+<%= form_for :item, :url => '',  :html => {:method => :get, :class => 'search'} do |f| %><%
+
+groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
+groups = f.select_with_tree(:in_group_id, groups)
+group_options = [ ['',''], ['** グループ未設定','no_group'] ]
+groups.scan(/<option value="(.*?)".*?>(.*?)<\/option>/im) {|m| group_options << [ m[1], m[0] ] }
+
+state_options = [ [' ',''], ['有効','enabled'], ['無効','disabled'] ]
+
+%><table>
+  
+  <tr>
+    <th>ユーザID</th>
+    <td ><%= text_field_tag 's_account', params[:s_account], :style => 'width: 120px; ime-mode: disabled;' %></td>
+    <th>氏名</th>
+    <td ><%= text_field_tag 's_name', params[:s_name], :style => 'width: 120px;' %></td>
+    <th>グループ</th>
+    <td><%= select_tag 's_group_id', options_for_select(group_options, params[:s_group_id]) %></td>
+    <th>状態</th>
+    <td><%= select_tag 's_state', options_for_select(state_options, params[:s_state]) %></td>
+
+    <td class="submitters">
+      <%= submit_tag '検索',   :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+
+</table>
+
+
+<!-- end .search --><% end %>

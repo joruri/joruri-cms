@@ -1,0 +1,7 @@
+<div class="actionMenu">
+<%= action_menu :new %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit    if safe{@item.editable?} %>
+<%= action_menu :destroy if safe{@item.deletable?} %>
+</div>

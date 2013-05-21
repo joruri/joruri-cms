@@ -1,0 +1,23 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th>ファイル名</th>
+    <td><%= @item[:name] %> （<%= link_to "ダウンロード", "?do=download" %>）</td>
+  </tr><tr>
+    <th>サイズ</th>
+    <td><%= number_format @item[:size] %> KB</td>
+  </tr><tr>
+    <th>ファイル種別</th>
+    <td><%= @item[:mtime] %></td>
+  </tr>
+</table>
+
+<% begin %><!-- <%= @item[:body] %> -->
+<p class="form">ファイル内容</p>
+<table class="show">
+  <tr><td class="pre monospace"><%= @item[:body] %></td>
+  </tr>
+</table>
+<% rescue Exception => e %> -->
+<% end %>

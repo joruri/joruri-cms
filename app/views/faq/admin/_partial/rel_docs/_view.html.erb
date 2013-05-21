@@ -1,0 +1,14 @@
+<%
+
+return nil if item.rel_docs.size == 0
+
+%><table class="show">
+  <tr>
+    <th>関連記事</th>
+    <td>
+      <% item.rel_docs.each do |doc| %>
+      <%= doc.title %><br />
+      <% end %>
+    </td>
+  </tr>
+</table>

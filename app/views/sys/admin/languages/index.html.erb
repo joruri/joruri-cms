@@ -1,0 +1,25 @@
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 60px; text-align: right;">ID</th>
+    <th style="width: 30%;">内部名称</th>
+    <th style="width: ;">表示名称</th>
+    <th style="width: 80px; text-align: right;">並び順</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td style="text-align: right;"><%= item.id %></td>
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+    <td style="text-align: right;"><%= item.sort_no %></td>
+    <td style="text-align: center;"><%= item.status.name %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

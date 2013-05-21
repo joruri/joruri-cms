@@ -1,0 +1,16 @@
+<%= piece_replace_menu @item %>
+
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_view @item, :container => :tr %>
+</table>
+
+<table class="show" style="margin: 0px;">
+  <tr>
+    <th><%= @item.locale(:body) %></th></tr><tr>
+    <td class="pre monospace"><%=hbr @item.body %><br /></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

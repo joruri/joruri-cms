@@ -1,0 +1,16 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_form f, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :form_type %></th>
+    <td><%= f.array_select 'in_settings[form_type]', @item.form_types, :include_blank => "　" %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

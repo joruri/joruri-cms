@@ -1,0 +1,4 @@
+<%= link_to "コンテンツ", cms_contents_path, :class => (current == :content ? 'current' : '') %>
+<% if Core.user.has_auth?(:manager) %>
+<%= link_to "Rewrite設定", cms_contents_rewrite_path, :class => (current == :rewrite ? 'current' : '') %>
+<% end %>

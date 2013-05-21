@@ -1,0 +1,46 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   ヘッダー・フッターメニューpage
+========================================================= */
+.contentPage .body h2 {
+  margin: 10px 0;
+  padding: 5px 0 5px 10px;
+  background-color: #e3f0fa;
+  font-weight: bold;
+}
+.contentPage .body h3 {
+  font-weight: bold;
+}
+.contentPage .body p {
+  margin: 0 0 15px 10px;
+}
+.contentPage .body ul {
+  margin: 0 0 15px 20px;
+  list-style-type: disc;
+}
+
+/* use
+----------------------------------------------- */
+.use {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+.usefunction {
+  margin: 3px 0;
+  padding: 3px;
+  background-color: #ececec;
+}
+.usefunction img {
+  vertical-align: middle;
+}
+
+/* mobile
+----------------------------------------------- */
+.img-box1 {
+  float: left;
+  margin: 0 30px 0 0;
+}

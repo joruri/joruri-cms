@@ -1,0 +1,16 @@
+<div class="contentTourism contentTourismSpotMouth">
+
+<div class="newMouth">
+  <h2>投稿フォーム</h2>
+  
+  <div class="sentMessage">
+    <%=hbr @content.setting_value(:mouth_sent_message).to_s %>
+  </div>
+  
+</div>
+
+<div class="back">
+  <%= link_to "観光地のページへ戻る", @spot.public_uri %>
+</div>
+
+</div>

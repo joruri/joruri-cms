@@ -1,0 +1,12 @@
+<div class="contentPortalCategory">
+
+<% @items.each do |item| %><div class="category category<%= item.name.camelize %>">
+  <h2><%=link_to h(item.title), "#{item.name}/" %></h2>
+  <% if (children = item.public_children).size > 0 %><div class="children">
+    <% children.each do |c| %>
+      <div class="category<%= c.name.camelize %>">
+        <%= link_to h(c.title), "#{c.name}/"  %></div><% end %>
+  </div><%end%>
+</div><% end %>
+
+</div>

@@ -1,0 +1,39 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: ;">タイトル</th>
+    <th style="width: 200px;">ジャンル/観光地</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;"><%= Tourism::Area.new.locale(:state) %></th>
+    <th style="width: 60px; text-align: center;">プレビュー</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td>
+      <% if uri = item.thumbnail_uri %>
+      <img src="<%= uri %>" style="float: left; height: 48px; margin-right: 5px;" />
+      <% end %>
+      <%= item.title %><br />
+      <%= link_to item.uri, item.uri, :target => '_blank' %>
+    </td>
+    <td>
+      <%= safe{truncate(item.genre.title, :length => 12)} %><br />
+      <%= safe{truncate(item.spot.title, :length => 12)} %>
+    </td>
+    <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
+    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <td style="text-align: center;">
+      <%= link_to 'PC', item.preview_uri(:params => {:spot_id => item.id}), :target => '_blank' if item.preview_uri %>
+      <%= link_to '携帯', item.preview_uri(:mobile => true, :params => {:spot_id => item.id}), :target => '_blank' if item.preview_uri %>
+    </td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

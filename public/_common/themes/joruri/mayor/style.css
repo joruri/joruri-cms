@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   mayor
+========================================================= */
+
+/* SideMenu
+----------------------------------------------- */
+#mayorSide ul {
+  background-color: #e3f0fa;
+}
+
+/* Content
+----------------------------------------------- */
+#contentTitle {
+  margin: 0;
+  padding: 0;
+  background-color: #d0e6f3;
+  background-image: url(../piece/images/tl-pegetitle-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#contentTitle .pieceContainer {
+  border: 1px solid #233f9b;
+  background-image: url(../piece/images/tl-pagetitle.gif);
+  background-repeat: no-repeat;
+}
+#contentTitle .pieceBody {
+  padding: 8px 0 7px 20px;
+  font-weight: bold;
+  font-size: 200%;
+}
+.body {
+  padding-left: 10px;
+}
+.mayor .picBox {
+  float: left;
+  width: 155px;
+}
+.mayor .textBox {
+  margin-left: 155px;
+}
+.mayor .textBox p {
+  margin-bottom: 15px;
+  text-indent: 1em;
+}
+
+/* page-title
+----------------------------------------------- */
+#pageTitle .pieceContainer {
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  background-image: url(./images/tl-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#pageTitle .pieceBody {
+  border: none;
+  background-image: url(./images/tl-bottom2.gif);
+  background-repeat: no-repeat;
+  background-position: right top;
+}
+#pageTitle h1 {
+  margin: 0;
+  padding: 7px 10px;
+  background-image: url(./images/tl-top2.gif);
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+h1 {
+  color: #000000;
+}

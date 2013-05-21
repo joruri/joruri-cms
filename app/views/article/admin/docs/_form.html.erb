@@ -1,0 +1,183 @@
+<script type="text/javascript" src="/_common/js/swfupload/swfupload.js"></script>
+<%= javascript_tag do %>
+
+// EnterキーによるSubmitを無効化
+function stopSubmitting(event) {
+  if (!event) var event = window.event;
+  var key = (event.keyCode != 0 && event.keyCode != 229) ? event.keyCode : event.charCode;
+  if (key == 13) {
+    event.returnValue = false;
+    return false;
+  }
+}
+
+$(function(){
+  // stop the enter key
+  $('#main input').each(function(){
+    if ($(this).attr('type').match(/^(text|password|radio|checkbox|url|email|tel)$/)) {
+      $(this).keypress(function (event) { return stopSubmitting(event); });
+    }
+  });
+
+  // HTML Import
+  var swfu = new SWFUpload({
+    upload_url : "<%= article_tool_import_html_path %>",
+    post_params: {
+      "_session_id" : "<%= request.session_options[:id] %>",
+      "authenticity_token" : "<%= form_authenticity_token %>"
+    },
+    flash_url : "/_common/js/swfupload/swfupload.swf",
+    file_post_name : "file",
+    file_size_limit : "10 MB",
+    file_types : "*.htm;*.html",
+    file_types_description : "HTML File",
+    file_upload_limit : 0,
+    file_queue_limit : 0,
+    button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
+    button_image_url: "/_common/themes/admin/images/bt-html_import.png",
+    button_width: "122",
+    button_height: "25",
+    button_placeholder_id: "uploadHtml",
+    file_dialog_complete_handler : function(numFilesSelected, numFilesQueued) { this.startUpload(); },
+    upload_error_handler : function(file, errorCode, message){ alert('読み込みに失敗しました。'); },
+    upload_success_handler : function(file, data, response) { tinyMCE.activeEditor.setContent(data); },
+    debug: false
+  });
+});
+
+// イベントカレンダー
+$(function() {
+  $('#item_event_date').change(function() {
+    if ($(this).val() != "") {
+      $('#item_event_state_visible').attr('checked', true);
+    } else {
+      $('#item_event_state_hidden').attr('checked', true);
+    }
+  });
+});
+
+// Link Check
+function checkLinks() {
+  var f = $('#itemForm');
+  var m = document.createElement('input');
+  m.setAttribute('type', 'hidden');
+  m.setAttribute('name', 'link_check');
+  m.setAttribute('value', '1');
+  f.append(m);
+  f.submit();
+  return false;
+}
+
+// URL Import
+function importUri() {
+  var uri = window.prompt('URL', 'http://');
+  if (!uri || uri == "" || uri == "http://") {
+    return false;
+  }
+  $.ajax({
+    url: '<%= article_tool_import_uri_path %>',
+    type: 'POST',
+    data: { uri: uri },
+    success: function(data) {
+    tinyMCE.activeEditor.setContent(data);  
+    },
+    error: function(data)  {
+      alert("エラーが発生しました。");
+    }
+  });
+}
+<% end %>
+
+<% inline_id = @item.unid || params[:_tmp] %>
+<%= init_tiny_mce :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') %>
+
+<span class="note">※は必須項目です。</span>
+
+<table class="show">
+  <% if @item.id %>
+  <tr>
+    <th>記事番号</th>
+    <td colspan="3"><%=@item.id %></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th>タイトル <span class="note">※</span></th>
+    <td><%= f.text_field :title, :class => 'title', :style => 'width: 500px;' %></td>
+    <th style="width: 60px;">言語 <span class="note">※</span></th>
+    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.find(:all).collect{|i| [i.title + "　", i.id]}) %></td>
+  </tr>
+  <tr>
+    <th colspan="4">内容</th></tr><tr>
+    <td colspan="4" class="mceEditor">
+      <%= f.text_area :body, :class => 'body mceEditor' %>
+      <div class="lowerMenu">
+        <a href="#" onclick="checkLinks(); return false;">リンクチェック</a>
+        <a href="#" onclick="importUri(); return false;">URLインポート</a>
+        <a href="#" id="uploadHtml">HTMLインポート</a>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<%= render :partial => 'article/admin/_partial/doc_files/form', :locals => {:f => f, :item => @item } %>
+
+<table class="show">
+  <tr>
+    <th>分野</th>
+    <td><%= article_category_form f %></td>
+  </tr><tr>
+    <th>属性</th>
+    <td><%= article_attribute_form f %></td>
+  </tr>
+</table>
+
+<%= article_area_form f %>
+
+<table class="show">
+  <tr>
+    <th>新着記事表示</th>
+    <td><%= f.radio_buttons :recent_state, @item.recent_states, :class => 'status' %></td>
+  </tr><tr>
+    <th>記事一覧表示</th>
+    <td><%= f.radio_buttons :list_state, @item.list_states, :class => 'status' %></td>
+  </tr><tr>
+    <th>イベントカレンダー表示</th>
+    <td><div class="fieldDatetime">
+      <%= f.radio_buttons :event_state, @item.event_states, :class => 'status' %>
+      &nbsp; イベント日付 ：
+      <%= f.text_field :event_date, :class => 'date' %>
+      </div>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale(:sns_link_state) %></th>
+    <td><%= f.radio_buttons :sns_link_state, @item.sns_link_states, :class => 'status' %></td>
+  </tr>
+</table>
+
+<%= article_tag_form f %>
+
+<%= article_rel_doc_form f %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:agent_state) %></th>
+    <td><%= f.radio_buttons :agent_state, @item.agent_states, :class => 'status' %></td>
+  </tr>
+</table>
+
+<p class="form">携帯向け</p>
+
+<div style="margin: 10px;"><a id="map_disp" href="#" onclick="return $(this).toggleOpen('#mobileForm');">開く▼</a></div>
+<table class="show" id="mobileForm" style="display: none;">
+  <tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><%= f.text_area :mobile_body, :style => 'width: 600px; height: 240px;' %></td>
+  </tr>
+</table>
+
+<%= google_map_form f %>
+<%= inquiry_form f %>
+<%= task_form f %>
+<%= recognizer_form f %>
+<%= editable_group_form f %>
+<%= creator_form f %>

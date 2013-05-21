@@ -1,0 +1,25 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:entry_categories) %></th>
+    <td><%=hbr @item.entry_categories %></td>
+  </tr>
+  <tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

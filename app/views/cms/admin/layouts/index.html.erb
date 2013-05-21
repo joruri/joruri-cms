@@ -1,0 +1,24 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 30%;"><%= Cms::Layout.new.locale(:name) %></th>
+    <th style="width: ;"><%= Cms::Layout.new.locale(:title) %></th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">プレビュー</th>
+  </tr>
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, {:action => :show, :id => item, :concept => item.concept_id} %></td>
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+    <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
+    <td style="text-align: center;"><% query = "layout_id=#{item.id}" %>
+      <%= link_to "PC", "#{Core.site.root_node.preview_uri}*.html?#{query}", :target => "_blank" %>
+      <%= link_to "携帯", "#{Core.site.root_node.preview_uri(:mobile => true)}*.html?#{query}", :target => "_blank" %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= paginate @items %>

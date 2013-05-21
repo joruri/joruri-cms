@@ -1,0 +1,46 @@
+<div class="contentFaqDoc">
+
+<div class="header">
+  <h1><%= @item.title %></h1><% if false %>
+   <span class="unit"><%= @item.creator.group.name if @item.creator.group %></span>
+   <span class="separetor">/</span>
+  <% end %><div class="publishedAt"><%= (@item.published_at || Time.now).strftime('%Y年%-m月%-d日') %></div>
+</div>
+
+<div class="question">
+  <%== @item.question %>
+</div>
+
+<div class="body answer">
+  <%== @body %>
+</div>
+
+<%= render :partial => 'cms/public/_partial/maps/view', :locals => {:item => @item} %>
+
+<% if @item.rel_docs(:conditions => {:state => 'public'}).size > 0 %>
+<div class="rels">
+  <h2>関連記事</h2>
+  <ul>
+    <% @item.rel_docs(:conditions => {:state => 'public'}).each do |doc| %>
+    <li><%= link_to h(doc.title), doc.public_uri %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<% if @item.tags.size > 0 && (node = @item.content.tag_node) %>
+<div class="tags">
+  <h2>関連ワード</h2>
+  <div>
+    <% for tag in @item.tags
+    %><%=link_to h(tag.word), node.public_uri + CGI::escape(tag.word) %> 
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+<%= render :partial => 'cms/public/_partial/inquiries/view', :locals => {:item => @item} %>
+
+<div class="back"><a href="javascript:history.back()">戻る</a></div>
+
+<!-- end .contentFaqDoc --></div>

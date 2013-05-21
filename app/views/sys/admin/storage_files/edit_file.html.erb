@@ -1,0 +1,12 @@
+<%= form_for :item, :url => "?do=update", :html => {:method => :post} do |f| %>
+  
+<p class="form">ファイル内容</p>
+
+<% begin %><!-- <%= @item[:body] %> -->
+<textarea name="body" class="pre monospace" style="width: 98%; height: 400px;"><%= @item[:body] %></textarea>
+<%= submit :edit %>
+<% rescue Exception => e %> -->
+  読み込みに失敗しました。
+<% end %>
+
+<% end %>

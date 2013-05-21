@@ -1,0 +1,18 @@
+<%
+
+return nil unless group = item.editable_group
+groups = group.groups
+return nil if groups.size == 0
+
+%><p class="form">編集権限</p>
+
+<table class="show">
+  <tr>
+    <th>編集可能グループ</th>
+    <td>
+      <% groups.each do |group| %>
+      <%= group.full_name %><br />
+      <% end %>
+    </td>
+  </tr>
+</table>

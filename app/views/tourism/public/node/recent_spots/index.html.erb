@@ -1,0 +1,18 @@
+<div class="contentTourism contentTourismRecentSpots">
+
+<div class="feed">
+  <%=link_to 'RSS' , 'index.rss' , :class => 'feedRss' %>
+  <%=link_to 'Atom', 'index.atom', :class => 'feedAtom' %>
+</div>
+
+<div class="spots">
+  <% @items.each_with_index do |item, idx| %>
+  <% if item[:date] %><%== "</ul>" if idx != 0  %>
+  <%== %Q(<h2 class="date">#{item[:date]}</h2><ul>) if item[:date] %>
+  <% end %><li><%=link_to h(item[:spot].title), item[:spot].public_uri %><%= item[:spot].genres_and_unit %></li><% end %>
+  <%== "</ul>" if @spots.size > 0 %>
+</div>
+
+<%= paginate @spots %>
+
+</div>

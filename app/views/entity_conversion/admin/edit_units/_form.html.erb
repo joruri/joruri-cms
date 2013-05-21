@@ -1,0 +1,50 @@
+<%= f.hidden_field :state, :value => "edit" %>
+
+<p class="form">変更元</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:old_id) %></th>
+    <td>
+      <%= f.select_with_tree :old_id, Sys::Group.find(:all, :conditions => {:level_no => 1}, :order => :sort_no),
+        :include_blank => "// 現在の部局から選択" %>
+      <input type="submit" name="sync" value="情報を取得" />
+    </td>
+  </tr>
+</table>
+
+<p class="form">変更情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:code) %></th>
+    <td><%= f.text_field :code, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= f.text_field :name_en, :class => 'nameEn' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:ldap) %></th>
+    <td><%= f.radio_buttons :ldap, @item.ldap_states, :class => 'status' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:web_state) %></th>
+    <td><%= f.radio_buttons :web_state, @item.web_states, :class => 'status' %></td>
+  </tr>
+  <%= layout_form f, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= f.text_field :email, :class => 'email' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= f.text_field :tel, :class => 'number' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:outline_uri) %></th>
+    <td><%= f.text_field :outline_uri, :class => 'url' %></td>
+  </tr>
+
+</table>

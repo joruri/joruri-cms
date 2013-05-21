@@ -1,0 +1,35 @@
+<%
+
+@parent ||= 0
+cond   = {:site_id => Core.site.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root   = Cms::Concept.find(:all, :conditions => cond, :order => :sort_no)
+
+%><p class="form">デザイン</p>
+
+<% if @results.size > 0 %>
+<div style="margin: 10px; padding: 10px; border: 1px solid #8b8; color: #080; line-height: 1.2;">
+  <% @results.each do |msg| %>
+  <%= msg %><br />
+  <% end %>
+</div>
+<% end %>
+
+<%= form_for :item, :html => {:multipart => true} do |f| %>
+
+<%= error_messages_for :item %>
+
+<table class="show" >
+  <tr>
+    <th>ファイル</th>
+    <td><%= f.file_field :file, :size => 64, :style => 'width: 450px;' %></td>
+  </tr><tr>
+    <th>対象コンセプト</th>
+    <td><%= f.select_with_tree :concept_id, root, :conditions => {:state => 'public'}, :include_blank => "　" %></td>
+  </tr>
+</table>
+
+<div class="submitters">
+  <input type="submit" value="インポート" />
+</div>
+
+<% end %>

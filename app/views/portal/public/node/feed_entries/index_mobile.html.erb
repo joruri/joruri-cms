@@ -1,0 +1,10 @@
+<div class="contentPortalEntries">
+
+<% @items.each do |item| %>
+<%== %Q(<div class="date">#{item[:date]}</div>) if item[:date] %>
+<div class="doc">・<%=link_to h(item[:entry].title), item[:entry].public_uri %><%= item[:entry].date_and_site(:date => false) %></li></div>
+<% end %>
+
+<%= paginate @entries %>
+
+</div>

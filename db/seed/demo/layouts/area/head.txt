@@ -1,0 +1,6 @@
+<link rel="stylesheet" type="text/css" href="/_common/themes/joruri/base/layouts/col-3.css" />
+<link rel="stylesheet" type="text/css" href="/_common/themes/joruri/area/style.css" />
+<link rel="alternate stylesheet" type="text/css" href="/_common/themes/joruri/base/colors/white.css" title="white" />
+<link rel="alternate stylesheet" type="text/css" href="/_common/themes/joruri/base/colors/blue.css" title="blue" />
+<link rel="alternate stylesheet" type="text/css" href="/_common/themes/joruri/base/colors/black.css" title="black" />
+<link rel="stylesheet" type="text/css" href="/_common/themes/joruri/base/print/printlayout.css" media="print" />

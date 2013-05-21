@@ -1,0 +1,298 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* FAQ
+----------------------------------------------- */
+#faqRecentDocs .pieceHeader h2, #faqSearch .pieceHeader h2 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 25px;
+  background-color: #00349a;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-border.png");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #ffffff;
+}
+#contentBody .faqTitle {
+  margin: 10px 0 10px;
+}
+#contentBody .faqTitle p {
+  padding: 0 5px;
+}
+.feed {
+  display: none;
+}
+#faqRecentDocs a.more {
+  display: block;
+  border-bottom: 1px solid #bbbbbb;
+  background-image: -moz-linear-gradient(center top , #ffffff, #dfdfdf);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), color-stop(100%,#dfdfdf));
+}
+#faqRecentDocs li,
+.contentFaqRecentDocs li,
+.contentFaqDocs li {
+  border-bottom: 1px solid #CCCCCC;
+}
+#faqRecentDocs li a,
+.contentFaqRecentDocs li a,
+.contentFaqDocs li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-kiji.png");
+  background-position: 95% center;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#faqRecentDocs span.attributes,
+.contentFaqRecentDocs span.attributes,
+.contentFaqDocs span.attributes {
+  display: none;
+}
+.contentFaqRecentDocs .date,
+.contentFaqDocs .date {
+  background-color: #f1f1f1;
+  padding: 5px 0 5px 10px;
+}
+.contentFaqDoc {
+  margin-top: 10px;
+}
+.contentFaqDoc .header {
+  padding: 5px 10px 0;
+  background-color: #e3f5ff;
+}
+.contentFaqDoc .header h1 {
+  display: none;
+}
+.contentFaqDoc .question {
+  margin-bottom: 15px;
+  padding: 0 10px 5px 35px;
+  background-image: url("./images/ic-question.gif");
+  background-repeat: no-repeat;
+  background-position: 8px 6px;
+  background-color: #e3f5ff;
+}
+.contentFaqDoc .answer {
+  margin-bottom: 15px;
+  padding: 0 10px 5px 35px;
+  background-image: url("./images/ic-answer.gif");
+  background-repeat: no-repeat;
+  background-position: 8px 6px;
+}
+.contentFaqDoc .rels,
+.contentFaqDoc .tags {
+  margin-bottom: 20px;
+}
+.contentFaqDoc .maps h2,
+.contentFaqDoc .rels h2,
+.contentFaqDoc .tags h2 {
+  margin-bottom: 5px;
+  padding: 3px 0 3px 8px;
+  background-color: #f1f1f1;
+}
+.contentFaqDoc ul,
+.contentFaqDoc ol {
+  margin-left: 20px;
+}
+.contentFaqDoc .rels li {
+  margin: 0;
+  padding-left: 10px;
+  background-image: url("./images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+.contentFaqDoc .rels li a {
+  text-decoration: underline;
+}
+.contentFaqDoc .tags div a {
+  padding-left: 20px;
+  text-decoration: underline;
+}
+.inquiry {
+  clear: both;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+.inquiry h2 {
+  background-image: none;
+  font-size: 18px;
+}
+.tel, .fax, .email {
+  display: block;
+  width: 100%;
+}
+.contentFaqDoc .back {
+  clear: both;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.contentFaqDoc .back a {
+  display: block;
+  width: 100px;
+  height: 36px;
+  line-height: 36px;
+  margin: 0 auto;
+  padding: 3px 0;
+  border: 1px solid #999999;
+  background-color: #ECECEC;
+}
+
+/* FAQ category
+----------------------------------------------- */
+.contentFaqCategory h2 {
+  height: 44px;
+  line-height: 44px;
+}
+.contentFaqCategory .category h2 a {
+  display: block;
+  margin-top: 10px;
+  padding: 0 30px 0 10px;
+  border-top: 1px solid #01329b;
+  border-bottom: 1px solid #01329b;
+  background-color: #e3f0f9;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link2.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+.contentFaqCategory .children a {
+  display: block;
+  height: 44px;
+  padding: 0 30px 0 15px;
+  line-height: 44px;
+  overflow: hidden;
+  border-bottom: 1px solid #cccccc;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentFaqCategory h3 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+}
+.contentFaqCategory .latest {
+  margin-bottom: 10px;
+}
+.contentFaqCategory .latest h2 {
+  padding-left: 25px;
+  background-color: #00349a;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-border.png");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #ffffff;
+}
+.contentFaqCategory li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentFaqCategory li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 30px 0 15px;
+  overflow: hidden;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-kiji.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentFaqCategory span.attributes {
+  display: none;
+}
+#faqCategoryList h2 {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  vertical-align: middle;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left center , #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+#faqCategoryList li {
+  border-bottom: 1px solid #cccccc;
+}
+#faqCategoryList li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 30px 0 15px;
+  overflow: hidden;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-link.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* FAQ tag search
+----------------------------------------------- */
+.contentFaqTags table {
+  margin: 20px auto;
+  width: 95%;
+}
+.contentFaqTags table th {
+  width: 35px;
+  padding-right: 5px;
+  vertical-align: middle;
+}
+.contentFaqTags td {
+  width: auto;
+}
+input#s_tag {
+  width: 95% !important;
+  height: 30px;
+}
+.contentFaqTags td.submitters {
+  width: 140px;
+}
+.contentFaqTags .hit {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  background-color: #00349a;
+  color: #ffffff;
+}
+.contentFaqTags li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentFaqTags li a {
+  display: block;
+  padding: 0 30px 0 15px;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  background-image: url("/_common/themes/joruri/smart/piece/images/ic-kiji.png");
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentFaqTags span.attributes {
+  display: none;
+}
+
+/* FAQ search
+----------------------------------------------- */
+#faqSearch form {
+  padding: 10px;
+}
+#faqSearch .category1, #faqSearch .category2, #faqSearch .keyword {
+  margin-bottom: 10px;
+}
+#faqSearch .submitters {
+  clear: both;
+  margin-top: 0;
+  text-align: center;
+}

@@ -1,0 +1,17 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to '記事一覧', article_edit_docs_path, :class => (current == :base ? "current" : "") %>
+
+<% if Core.user.has_auth?(:designer) %>
+<%= link_to '組織設定', article_units_path(:parent => 1), :class => (current == :unit ? "current" : "") %>
+<%= link_to '分野設定', article_categories_path(:parent => 0), :class => (current == :category ? "current" : "") %>
+<%= link_to '属性設定', article_attributes_path, :class => (current == :attribute ? "current" : "") %>
+<%= link_to '地域設定', article_areas_path(:parent => 0), :class => (current == :area ? "current" : "") %>
+<%= link_to '再構築'  , article_rebuild_path, :class => (current == :rebuild ? "current" : "") %>
+<%= link_to '設定'    , article_content_settings_path, :class => (current == :setting ? "current" : "") %>
+<% end %>
+</div>

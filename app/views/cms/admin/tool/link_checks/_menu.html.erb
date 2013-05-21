@@ -1,0 +1,6 @@
+<h2>リンクチェック</h2>
+
+<div class="actionMenu">
+  <%= link_to "サイト内チェック", {:do => :start_process}, :confirm => "リンクチェックを開始してよろしいですか？" %>
+  <%= link_to "全リンクチェック", {:do => :start_process, :external => 1}, :confirm => "リンクチェックを開始してよろしいですか？" %>
+</div>

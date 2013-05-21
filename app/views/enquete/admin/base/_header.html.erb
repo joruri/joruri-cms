@@ -1,0 +1,9 @@
+<div class="mainMenu">
+<%= render :partial => 'layouts/admin/cms/menu', :locals => {:current => :content} %>
+</div>
+
+<div class="contentMenu">
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to 'フォーム', enquete_forms_path, :class => (current == :base ? "current" : "") %>
+<%= link_to '設定', enquete_content_settings_path, :class => (current == :setting ? "current" : "") if @content.editable? %>
+</div>

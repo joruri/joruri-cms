@@ -1,0 +1,15 @@
+<div id="about" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>ジョールリ市の紹介</h2></div>
+<div class="pieceBody">
+<ul>
+<li><a href="#">紹介01</a></li>
+<li><a href="#">紹介02</a></li>
+<li><a href="#">紹介03</a></li>
+<li><a href="#">紹介04</a></li>
+<li><a href="#">紹介05</a></li>
+</ul>
+</div>
+<div class="pieceFooter"></div>
+</div>
+<!-- end .piece --></div>

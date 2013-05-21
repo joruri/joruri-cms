@@ -1,0 +1,14 @@
+<%
+
+file1 = item.embedded_thumbnail(:image1_file_id)
+file2 = item.embedded_thumbnail(:image2_file_id)
+file3 = item.embedded_thumbnail(:image3_file_id)
+
+%><div class="mouth">
+  <p class="title"><%= item.title %></p>
+  <p class="buestName"><%= item.guest_name %></p>
+  <p class="body"><%= item.body %></p>
+  <% if file1 || file2 || file3 %> 
+  <p class="more"><a href="<%= item.public_uri %>">写真を見る</a></p>
+  <% end %>
+</div>

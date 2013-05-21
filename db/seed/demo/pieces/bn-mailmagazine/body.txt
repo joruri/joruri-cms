@@ -1,0 +1,10 @@
+<div id="bnMailmagazine" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/mailmagazine/">
+ジョールリ市メールマガジン<br />
+<span class="toroku">登録はこちら</span>
+</a>
+</div>
+</div>
+</div>

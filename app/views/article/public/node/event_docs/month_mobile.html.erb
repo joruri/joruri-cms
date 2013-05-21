@@ -1,0 +1,18 @@
+<div class="contentArticleEventDocs">
+
+<div class="h2"><%= "#{@calendar.year}年#{@calendar.month}月" %></div>
+
+<% @items.each do |item| %>
+<%== %Q(<div class="date" id="#{item[:date_id]}">#{item[:date]}</div>) if item[:date] %>
+<div class="doc">・<%= link_to h(item[:doc].title), item[:doc].public_uri %></div>
+<% end %>
+
+<% if @prev_link || @next_link %>
+<div class="pagination">
+  <%= link_to("<<*前の月", @calendar.prev_month_uri, :accesskey => '*') if @prev_link %>
+  <span class="separator">|</span>
+  <%= link_to("次の月#>>", @calendar.next_month_uri, :accesskey => '#') if @next_link %>
+</div>
+<% end %>
+
+</div>

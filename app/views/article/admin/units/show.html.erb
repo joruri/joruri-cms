@@ -1,0 +1,27 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:web_state) %></th>
+    <td><%= safe{@item.web_status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= @item.tel %></td>
+  </tr><tr>
+    <th><%= @item.locale(:outline_uri) %></th>
+    <td><%= @item.outline_uri %></td>
+  </tr>
+</table>
+
+<%#= creator_view @item %>

@@ -1,0 +1,3 @@
+<div class="latest">
+<div class="contentTitle">新着情報</div>
+</div>

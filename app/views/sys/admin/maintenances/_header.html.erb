@@ -1,0 +1,14 @@
+<%
+unless defined?(current)
+  current = :maintenance 
+end
+%>
+
+<div class="mainMenu">
+<%= link_to "メンテナンス", sys_maintenances_path, :class => (current == :maintenance ? 'current' : '')
+ %><%= link_to "お知らせ"  , sys_messages_path, :class => (current == :message ? 'current' : '') %>
+</div>
+
+<div class="contentMenu">
+<br />
+</div>

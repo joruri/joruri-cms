@@ -1,0 +1,28 @@
+<%
+
+blank_opt  = '<option value="">すべて</option>'.html_safe
+dir_opts   = [["ページ","0"],["ディレクトリ","1"]]
+state_opts = [["公開中","public"],['公開待ち','recognized'],['承認待ち','recognize'],['下書き','draft'],['非公開','closed']]
+
+%><%= form_tag search_cms_nodes_path(:parent => 0), :method => :get, :class => 'search' do %>
+
+<table>
+  <tr>
+    <th>ファイル名</th>
+    <td><%= text_field_tag 's_name_or_title', params[:s_name_or_title], :style => 'width: 200px;' %></td>
+    <th>キーワード</th>
+    <td><%= text_field_tag 's_keyword', params[:s_keyword], :style => 'width: 200px;' %></td>
+    <th>種別</th>
+    <td><%= select_tag('s_directory', blank_opt + options_for_select(dir_opts, params[:s_directory])) %></td>
+    <th>状態</th>
+    <td><%= select_tag('s_state', blank_opt + options_for_select(state_opts, params[:s_state])) %></td>
+
+    <td class="submitters">
+      <%= submit_tag '検索',     :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+    </td>
+  </tr>
+  
+</table>
+
+<!-- end .search --><% end %>

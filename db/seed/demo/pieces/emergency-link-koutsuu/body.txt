@@ -1,0 +1,14 @@
+<div class="piece" id="emergencyLinkKoutsuu">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>交通に関する情報</h2></div>
+<div class="pieceBody"><ul>
+
+  <li><a href="#">道路交通情報</a></li>
+
+  <li><a href="#">通行規制情報</a></li>
+
+  <li><a href="#">日本道路交通情報センター</a></li>
+
+</ul></div>
+</div>
+<!-- end .piece --></div>

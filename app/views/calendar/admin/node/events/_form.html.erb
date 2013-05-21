@@ -1,0 +1,18 @@
+<%= init_tiny_mce %>
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= node_base_form f, :container => :tr %>
+</table>
+<br />
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :list_type %></th>
+    <td><%= f.array_select 'in_settings[list_type]', @item.list_types, :include_blank => "　" %></td>
+  </tr>
+</table>
+
+<%= creator_form f %>

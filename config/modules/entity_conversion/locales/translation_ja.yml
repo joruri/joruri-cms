@@ -1,0 +1,28 @@
+ja: 
+  activerecord: 
+    attributes: 
+      entity_conversion/log: 
+        state: "状態"
+        body: "ログ"
+      entity_conversion/unit: 
+        state: "状態"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        parent_id: "上位グループ"
+        level_no: "階層"
+        sort_no: "並び順"
+        code: "グループID"
+        name: "グループ名"
+        name_en: "グループ名（英語表記）"
+        email: "メールアドレス"
+        ldap: "LDAP同期"
+        ldap_version: "LDAP同期バージョン"
+        web_state: "Web公開"
+        tel: "電話番号"
+        outline_uri: "業務概要URL"
+        role_name: "ロール"
+        old_id: "グループ"
+        old_parent_id: "旧上位グループ"
+        new_parent_id: "上位グループ"
+        move_id: "統合先グループ"
+        new_move_id: "統合先グループ"

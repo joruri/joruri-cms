@@ -1,0 +1,30 @@
+<%= init_tiny_mce :readonly => true %>
+
+<table class="index">
+  <tr>
+    <th style="width: 60px; text-align: center;">編集</th>
+    <th style="width: 200px;">設定名</th>
+    <th style="">設定値</th>
+  </tr>
+
+  <% @items.each do |item| %>
+    <% vs = item.config_view_set || {} %>
+    <% if item.name == 'template_state' %><tr><th colspan="3">テンプレート</th></tr><% end %>
+    <% if item.name == 'signature_state' %><tr><th colspan="3">署名</th></tr><% end %>
+  <tr class="<%= cycle 'cycle', ''%>">
+    <td style="text-align: center;"><%= link_to :edit, url_for(:action => :edit, :id => item.name) %></td>
+    <td><%= item.config_name %></td>
+    <td>
+      <% if item.value_name  %>
+        <% if vs[:show_class] == 'mceEditor' %>
+        <%= text_area_tag "#{item.name}", item.value_name, :class => 'mceEditor', :style => 'width: 600px; height: 120px;' %>
+        <% else %>
+        <div<%= " class='#{vs[:class]}'" if vs[:class] %>><%= mail_text_wrap(item.value_name, 10) %></div>
+        <% end %>
+      <% else %>
+      未設定
+      <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>

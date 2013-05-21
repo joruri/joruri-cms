@@ -1,0 +1,83 @@
+ja: 
+  activerecord: 
+    attributes: 
+      article/unit: 
+        web_state: "状態"
+        sort_no: "並び順"
+        name: "組織ID"
+        title: "組織名"
+        email: "メールアドレス"
+        tel: "電話番号"
+        outline_uri: "業務概要URL"
+      
+      article/category: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "分野ID"
+        title: "分野名"
+      
+      article/attribute: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "属性ID"
+        title: "属性名"
+      
+      article/area: 
+        state: "状態"
+        sort_no: "並び順"
+        name: "地域ID"
+        title: "地域名"
+        zip_code: "郵便番号"
+        address: "住所"
+        tel: "電話番号"
+        site_uri: "公式サイトURL"
+      
+      article/doc: 
+        state: "状態"
+        agent_state: "表示端末"
+        published: "公開"
+        closed: "非公開"
+        publish_date: "公開日"
+        close_date: "非公開日"
+        event_date: "イベント開始日"
+        event_close_date: "イベント終了日"
+        sns_link_state: "SNS連携リンク"
+        name: "記事URL番号"
+        title: "タイトル"
+        head: "ヘッダー"
+        body: "内容"
+        mobile_title: "携帯タイトル"
+        mobile_body: "携帯本文"
+        attribute_id: "属性"
+        recent_state: "新着記事表示"
+        list_state: "記事一覧表示"
+        inquiry_charge: "お問い合わせ担当"
+        inquiry_tel: "お問い合わせ電話"
+        inquiry_fax: "お問い合わせファックス"
+        inquiry_email: "お問い合わせメール"
+      
+      article/doc_rel_doc: 
+        created_at: "作成日時"
+        updated_at: "更新日時"
+        sort_no: "並び順"
+      
+      ## content
+      article/content/doc:
+        unit_uri: "組織URL"
+        category_uri: "分野URL"
+        attribute_uri: "属性URL"
+        area_uri: "地域URL"
+        tag_uri: "タグ検索URL"
+      
+      ## piece
+      article/piece/recent_doc:
+        list_count: "表示件数"
+        more_label: "一覧リンク文字"
+      article/piece/recent_tab:
+        name: "タブID"
+        title: "タブ名"
+        more: "一覧リンク"
+        condition: "結合条件"
+        sort_no: "並び順"
+        list_count: "表示件数"
+        more_label: "一覧リンク文字"

@@ -1,0 +1,82 @@
+<% inline_id = @item.unid %>
+<%= init_tiny_mce :readonly => true %>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr>
+  <% if uri = @item.public_full_uri %>
+  <tr>
+    <th>記事URL</th>
+    <td><div><%= link_to(uri, uri, :target => '_blank') %></div></td>
+  </tr>
+  <% end %>
+  <tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title_kana) %></th>
+    <td><%= @item.title_kana %></td>
+  </tr><tr>
+    <th><%= @item.locale(:image_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :image_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:body) %></th>
+    <td class="mceEditor"><%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width: 100%; height: 150px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:guide_body) %></th>
+    <td class="mceEditor"><%= text_area_tag 'viewGuideBody', @item.guide_body, :class => 'mceEditor', :style => 'width: 100%; height: 350px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:genre_ids) %></th>
+    <td><%= @item.genre_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr><tr>
+    <th><%= @item.locale(:area_ids) %></th>
+    <td><%= @item.area_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr>
+</table>
+
+<% if !@item.detail_body.blank? %>
+<p class="form">詳細情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:detail_body) %></th>
+    <td class="mceEditor"><%= text_area_tag 'dBody', @item.detail_body, :class => 'mceEditor', :style => 'width: 100%; height: 150px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image1_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_image1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image2_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_image2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_image3_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_image3_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_comment) %></th>
+    <td class="mceEditor"><%= text_area_tag 'dComment', @item.detail_comment, :class => 'mceEditor', :style => 'width: 100%; height: 150px;' %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info1_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_info1_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info2_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_info2_file_id %></td>
+  </tr><tr>
+    <th><%= @item.locale(:detail_info3_file_id) %></th>
+    <td><%= embedded_file_view @item, :name => :detail_info3_file_id %></td>
+  </tr>
+</table>
+<% end %>
+
+<%= google_map_view @item %>
+
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:published_at) %></th>
+    <td><%= safe{@item.published_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

@@ -1,0 +1,22 @@
+<div class="frontMessage frontMessageMaintenance">
+
+<div class="header">
+  メンテナンス情報 <%= link_to '[管理]', sys_maintenances_path if Core.user.has_auth?(:manager) %>
+</div>
+
+<ul>
+  <% if @maintenances.size == 0 %>
+  <li><div class="title">お知らせはありません</div></li>
+  <% end %>
+  
+  <% @maintenances.each do |item| %>
+  <li>
+    <div class="title">
+      <a href="#" onclick="$('#frmnt<%= item.id %>').toggle(); return false;">
+        <%= item.title %></a>（<%= item.published_at.strftime('%Y-%m-%d %H:%M') %>）</div>
+    <div id="frmnt<%= item.id %>" class="body"><%== item.body %></div>
+  </li>
+  <% end %>
+</ul>
+
+</div>

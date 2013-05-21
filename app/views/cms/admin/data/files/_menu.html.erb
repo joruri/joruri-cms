@@ -1,0 +1,13 @@
+<h2>ファイル</h2>
+
+<div class="actionMenu">
+<%= action_menu :new if Core.user.has_priv?(:create, :item => Core.concept) %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit      if safe{@item.editable?} %>
+<%= action_menu :destroy   if safe{@item.deletable?} %>
+<span class="separator"></span>
+<% current = defined?(current) && current ? current : :base %>
+<%= link_to 'ファイル', cms_data_files_path, :class => (current == :base ? "current" : "") %>
+<%= link_to 'フォルダ', cms_data_file_nodes_path, :class => (current == :node ? "current" : "") %>
+</div>

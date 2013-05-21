@@ -1,0 +1,3 @@
+<div class="call">
+<img src="/_common/themes/joruri/faq/images/bg-callcenter.gif" alt="コールセンター" title="コールセンター" />
+</div>

@@ -1,0 +1,470 @@
+@charset "UTF-8";
+@import "../emergency/style.css";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   TOP
+========================================================= */
+
+/* mayor
+----------------------------------------------- */
+#mayor {
+  margin-bottom: 5px;
+}
+#mayor .pieceHeader {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+#mayor .pieceBody {
+  padding: 5px;
+  border: 1px solid #001c66;
+}
+#mayor .pieceBody img {
+  float: right;
+  margin: 0 5px;
+}
+#mayor ul {
+  padding: 0;
+  background-color: transparent;
+}
+#mayor ul:after {
+  display: block;
+  clear: both;
+  height: 0.1px;
+  font-size: 0.1em;
+  line-height: 0;
+  content: ".";
+  visibility: hidden;
+}
+
+/* erea
+----------------------------------------------- */
+#ereaMap {
+  border: 1px solid #006058;
+}
+#menu #ereaMap .pieceHeader {
+  padding: 0;
+  background-image: none;
+}
+#ereaMap .pieceBody {
+  padding: 5px;
+  background-color: #fffae8;
+}
+#ereaMap .pieceBody a {
+  padding: 0 7px 0 6px;
+  background-image: url(./images/ic-chiiki.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+/* footer-navi
+----------------------------------------------- */
+#footerNavi {
+  width: 100%;
+  background-color: #fff;
+}
+#footerNavi .pieceBody {
+  padding: 10px 0;
+  color: #333333;
+}
+#footerNavi a {
+  color: #003399;
+}
+#footerNavi a:visited {
+  color: #660099;
+}
+#footerNavi a:hover {
+  color: #ff0000;
+}
+
+/* qr-code
+----------------------------------------------- */
+#qrCode {
+  margin-top: 5px;
+}
+#qrCode img {
+  float: left;
+  margin-right: 4px;
+}
+
+/* top-photo
+----------------------------------------------- */
+#topPhoto {
+  margin-bottom: 7px;
+}
+
+#topPhoto .pieceBody {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* category Ichiran
+----------------------------------------------- */
+#ArticleCategory {
+  clear: both;
+}
+#ArticleCategory .pieceHeader {
+  margin-bottom: 10px;
+  background-image: url(./images/bg-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#ArticleCategory .pieceHeader h2 {
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+.categoryKurashi,
+.categoryFukushi,
+.categoryKyoikubunka,
+.categoryKanko,
+.categorySangyoshigoto,
+.categoryGyoseimachizukuri,
+.categoryBosaigai {
+  float: left;
+  width: 100%;
+  line-height: 1.5;
+  margin-bottom: 5px;
+  padding: 10px 0;
+  background-color: #e3f5ff;
+}
+.categoryBosaigai {
+  background-color: #fbe7eb;
+}
+#ArticleCategory .category h2 {
+  float: left;
+  line-height: 50px;
+  padding: 0 20px 0 60px;
+}
+#ArticleCategory .categoryKurashi h2 {
+  background-image: url(./images/ic-kurashi.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categoryFukushi h2 {
+  background-image: url(./images/ic-fukushi.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categoryKyoikubunka h2 {
+  background-image: url(./images/ic-kyoiku.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categoryKanko h2 {
+  background-image: url(./images/ic-kanko.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categorySangyoshigoto h2 {
+  background-image: url(./images/ic-sangyou.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categoryGyoseimachizukuri h2 {
+  background-image: url(./images/ic-gyosei.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .categoryBosaigai h2 {
+  background-image: url(./images/ic-bosai.gif);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+#ArticleCategory .category .children {
+  margin: 0 10px 0 210px;
+}
+#ArticleCategory .category .children div {
+  display: inline; 
+  padding-right: 10px;
+}
+#ArticleCategory .categoryFukushi,
+#ArticleCategory .categoryKyoikubunka,
+#ArticleCategory .categoryKanko,
+#ArticleCategory .categorySangyoshigoto,
+#ArticleCategory .categoryGyoseimachizukuri,
+#ArticleCategory .categoryBosaigai {
+  clear: both;
+}
+
+/* life event
+------------------------------------- */
+#lifeEvent {
+  clear: both;
+}
+#lifeEvent .pieceHeader {
+  margin-bottom: 10px;
+  background-image: url(./images/bg-shinchaku-repeat.gif);
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+#lifeEvent .pieceHeader h2 {
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+#lifeEvent ul {
+  width: 100%;
+  clear: both;
+}
+#lifeEvent li {
+  float: left;
+  width: 25%;
+  vertical-align: middle;
+  text-align: center;
+}
+#lifeEvent li a {
+  line-height: 1.5;
+  padding: 55px 0 10px 0;
+}
+#lifeEvent li.pregnant a {
+  display: block;
+  margin: 0 6px 8px 0;
+  background-color: #ffe7ff;
+  background-image: url(./images/ic-ninshin.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.child a {
+  display: block;
+  margin: 0 4px 8px 2px;
+  background-color: #ffecb9;
+  background-image: url(./images/ic-kosodate.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.work a {
+  display: block;
+  margin: 0 2px 8px 4px;
+  background-color: #c5efff;
+  background-image: url(./images/ic-shuushoku.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.adult a {
+  display: block;
+  margin: 0 0 8px 6px;
+  background-color: #cdede8;
+  background-image: url(./images/ic-seijin.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.moving {
+  clear: both;
+}
+#lifeEvent li.moving a {
+  display: block;
+  margin: 0 6px 8px 0;
+  background-color: #e1f6be;
+  background-image: url(./images/ic-hikkoshi.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.marriage a {
+  display: block;
+  margin: 0 4px 8px 2px;
+  background-color: #eee9a9;
+  background-image: url(./images/ic-kekkon.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.welfare a {
+  display: block;
+  margin: 0 2px 8px 4px;
+  background-color: #f5dac5;
+  background-image: url(./images/ic-fukushi2.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+#lifeEvent li.death a {
+  display: block;
+  margin: 0 0px 8px 6px;
+  background-color: #f0dfef;
+  background-image: url(./images/ic-shibou.gif);
+  background-repeat: no-repeat;
+  background-position: center 10px;
+}
+
+/* population
+----------------------------------------------- */
+#population.piece {
+  margin: 0 0 10px;
+}
+#menu #population caption {
+  line-height: 1.4;
+  padding: 4px 7px;
+  border: 1px solid #002f9f;
+  background-color: #002f9f;
+  color: #ffffff;
+}
+#menu #population .pieceHeader h2{
+  font-size: 100%;
+  font-weight: normal;
+}
+*html #menu #population .pieceHeader h2{
+  font-size: 90%;
+}
+#population table {
+  width: 100%;
+}
+#population th {
+  padding: 5px 7px;
+  border-left: #002f9f 1px solid;
+  border-right: #999999 1px solid;
+  border-bottom: #999999 1px solid;
+  background-color: #f5f5f5;
+  font-weight: normal;
+  text-align: left;
+}
+#population td {
+  padding: 5px 7px;
+  border-right: #002f9f 1px solid;
+  border-bottom: #999999 1px solid;
+}
+#population th.noBorder {
+  border-right: #999999 1px solid;
+  border-bottom: #002f9f 1px solid;
+  border-left: #002f9f 1px solid;
+}
+#population td.noBorder {
+  border-right: #0086ca 1px solid;
+  border-bottom: #002f9f 1px solid;
+}
+
+/* topic
+----------------------------------------------- */
+#topic {
+  float: left;
+  width: 100%;
+  margin-bottom: 15px;
+}
+#topic .pieceHeader h2 {
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 120%;
+}
+#topic img {
+  float: left;
+}
+#topic h3 {
+  margin-bottom: 5px;
+  padding-left: 180px;
+  color: #f00000;
+  font-weight: bold;
+}
+#topic p {
+  padding-left: 180px;
+}
+#topic .next {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* recent-docs
+------------------------------------- */
+#recentDocs {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+#recentDocs .pieceBody {
+  padding: 5px 15px 0 15px;
+}
+#recentDocs .pieceHeader {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  background-color: #001c66;
+  background-image: url("./images/tl-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left top;
+  color: #ffffff;
+}
+#recentDocs li:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+* html #recentDocs li {
+  height: 1%;
+}
+#recentDocs li {
+  display: block;
+  clear: both;
+  min-height: 90px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+}
+#recentDocs li .title {
+  margin-bottom: 5px;
+  padding-left: 10px;
+  background-image: url("../piece/images/ic-list-shinchaku.gif");
+  background-repeat: no-repeat;
+  background-position: left 7px;
+}
+#recentDocs li img {
+  display: inline-block;
+  float: left;
+  width: 120px;
+  height: 90px;
+  margin-right: 10px;
+}
+#recentDocs .feed {
+  position: absolute;
+  float: left;
+  top: 7px;
+  right: 10px;
+}
+#recentDocs .feed a {
+  display: inline-block;
+} 
+#recentDocs .feed a.feedRss {
+  width: 40px;
+  height: 0;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-left: 15px;
+  padding-top: 13px;
+  background-image: url(../piece/images/bt-rss.gif);
+  background-repeat: no-repeat;
+} 
+#recentDocs .feed a.feedAtom {
+  width: 45px;
+  height: 0;
+  vertical-align: middle;
+  overflow: hidden;
+  margin-left: 5px;
+  padding-top: 13px;
+  background-image: url(../piece/images/bt-atom.gif);
+  background-repeat: no-repeat;
+}
+#recentDocs .links {
+  text-align: right;
+}
+#recentDocs .links .more {
+  padding: 0;
+}

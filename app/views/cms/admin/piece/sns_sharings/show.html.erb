@@ -1,0 +1,16 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= piece_base_view @item, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale :link_types %></th>
+    <td><%= @item.link_types_hash.collect{|k,v| v}.join(', ') %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

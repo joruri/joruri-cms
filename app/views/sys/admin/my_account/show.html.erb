@@ -1,0 +1,26 @@
+<p class="form">ユーザ情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:in_group_id) %></th>
+    <td><%= safe{@item.group.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:account) %></th>
+    <td><%= @item.account %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name_en) %></th>
+    <td><%= @item.name_en %></td>
+  </tr><tr>
+    <th><%= @item.locale(:email) %></th>
+    <td><%= @item.email %></td>
+  </tr><tr>
+    <th><%= @item.locale(:auth_no) %></th>
+    <td><%= @item.auth_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:role_name) %></th>
+    <td><%= @item.role_names.collect{|r| r.title}.join('，') %></td>
+  </tr>
+</table>

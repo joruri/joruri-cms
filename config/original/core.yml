@@ -1,0 +1,14 @@
+production:
+  title  : Joruri
+  uri    : http://192.168.0.2/
+  proxy  : 
+
+test:
+  title  : Joruri
+  uri    : http://192.168.0.2/
+  proxy  :
+
+development:
+  title  : Joruri
+  uri    : http://192.168.0.2/
+  proxy  : 

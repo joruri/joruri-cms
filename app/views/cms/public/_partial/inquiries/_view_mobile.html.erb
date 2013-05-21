@@ -1,0 +1,17 @@
+<%
+
+return if !item.inquiry || !item.inquiry.visible?
+
+%><div class="inquiry">
+  <div class="h2">お問い合わせ</div>
+  <% if item.inquiry.group
+   %><div class="section"><%= item.inquiry.group.name %></div><% end %>
+  <% if !item.inquiry.charge.blank?
+   %><div class="charge"><%= item.inquiry.charge %></div><% end %>
+  <% if !item.inquiry.tel.blank?
+   %><div class="tel">電話番号： <%= tel_to item.inquiry.tel %></div><% end %>
+  <% if !item.inquiry.fax.blank?
+   %><div class="fax">ファクシミリ： <%= item.inquiry.fax %></div><% end %>
+  <% if item.inquiry_email_setting != "hidden" && safe{item.inquiry.email} && !item.inquiry.email.blank?
+   %><div class="email">メールアドレス： <%= email_to item.inquiry.email %></div><% end %>
+</div>

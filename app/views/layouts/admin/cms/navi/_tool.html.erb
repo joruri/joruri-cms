@@ -1,0 +1,5 @@
+<%= link_to "本文検索", "#{Joruri.admin_uri}/cms/tool_search", :class => (current == :search ? 'current' : '') %>
+<%= link_to "リンクチェック", "#{Joruri.admin_uri}/cms/tool_link_checks", :class => (current == :link_check ? 'current' : '') %>
+<%= link_to "エクスポート", "#{Joruri.admin_uri}/cms/tool_export", :class => (current == :export  ? 'current' : '') %>
+<%= link_to "インポート", "#{Joruri.admin_uri}/cms/tool_import", :class => (current == :import  ? 'current' : '') %>
+<%= link_to "再構築", "#{Joruri.admin_uri}/cms/tool_rebuild", :class => (current == :rebuild ? 'current' : '') %>

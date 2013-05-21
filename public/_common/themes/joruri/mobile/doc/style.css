@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import "../base/style.css";
+@import "../base/layouts/col-1.css";
+@import "../piece/style.css";
+
+/* =========================================================
+  doc
+========================================================= */
+h1 {
+  margin-bottom: 5px;
+  padding: 3px;
+  background-color: #003399;
+  color: #ffffff;
+  font-weight: bold;
+}
+.date {
+  font-size: small;
+}
+.body {
+  padding: 0 5px;
+}
+p {
+  margin-bottom: 10px;
+}
+.inquiry {
+  margin: 0 5px;
+  padding: 3px;
+  border-top: 1px solid #999999;
+}
+.inquiry h2 {
+  padding: 0;
+  background-color: #ffffff;
+}
+
+/* shinchaku
+----------------------------------------------- */
+.contentArticleRecentDocs {
+  padding: 0 0.3em;
+}
+ul {
+  margin-bottom: 0.5em;
+}

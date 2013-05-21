@@ -1,0 +1,8 @@
+<div id="recommendSite" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">[[emoji/shiny]]おすすめサイト</div>
+<div class="pieceBody">
+<a href="#">■■■■■</a> / <a href="#">■■■■■</a> / <a href="#">■■■■■</a> / <a href="#">■■■■■</a>
+</div>
+</div>
+</div>

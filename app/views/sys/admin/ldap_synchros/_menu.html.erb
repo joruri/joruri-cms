@@ -1,0 +1,12 @@
+<%
+
+return render(:text => "") unless Core.ldap.connection
+
+%><h2>LDAP同期</h2>
+
+<div class="actionMenu">
+<%= action_menu :new, ['中間データ作成', url_for(:action => :new)] %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :destroy, ['削除', url_for(:actino => :destroy, :id => @version)] %>
+</div>

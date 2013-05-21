@@ -1,0 +1,25 @@
+<div class="contentArticleEventDocs">
+
+<h2><%= "#{@calendar.year}年#{@calendar.month}月" %></h2>
+
+<% if @items.size > 0 %>
+<ul class="calendar">
+  <% @items.each do |item| %>
+  <li>
+    <p class="date" id="<%= item[:date_id] %>"><%= item[:date] %></p>
+    <p class="title"><%= link_to h(item[:doc].title), item[:doc].public_uri %></p>
+    <% if item[:doc].thumbnail_uri %><img src="<%= item[:doc].thumbnail_uri %>" alt="" /><% end %>
+    <p class="<%= item[:attr_class] %>"><%= item[:attr_title] %></p>
+    <div class="body"><%= truncate(item[:doc].summary_body, :length => 80) %></div>
+  </li>
+  <% end %>
+</ul>
+<% end %>
+
+<div class="pagination">
+  <%= link_to("<前の月", @calendar.prev_month_uri, :class => "prevMonth") if @prev_link %>
+  <span class="separator">|</span>
+  <%= link_to("次の月>", @calendar.next_month_uri, :class => "nextMonth") if @next_link %>
+</div>
+
+</div>

@@ -1,0 +1,74 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   bbs
+========================================================= */
+#pageTitle.piece {
+  margin-bottom: 10px;
+}
+.entryForm h2 {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+  font-size: 110%;
+  line-height: 36px;
+}
+.entryForm dt {
+  padding: 4px 10px;
+  background-color: #f1f1f1;
+}
+.entryForm input {
+  margin: 15px 10px 20px;
+}
+textarea.body {
+  width: 85%;
+  height: 230px;
+  margin: 15px 10px 10px;
+}
+div.submitters {
+    margin: 10px 0 25px;
+}
+.answerLink, .threadItem {
+  padding-left: 10px;
+}
+.thread .answerLink {
+  background-color: #d3e8f4;
+}
+.answerLink a {
+  text-decoration: underline;
+}
+.contentBbsThreads {
+  margin-bottom: 20px;
+}
+#bbsRecentEntries .pieceHeader h2 {
+  margin-bottom: 3px;
+  padding-left: 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+  line-height: 36px;
+}
+#bbsRecentEntries ul {
+  padding-left: 10px;
+}
+#bbsRecentEntries li a {
+  text-decoration: underline;
+}
+.back {
+  clear: both;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.back a {
+  background-color: #ececec;
+  border: 1px solid #999999;
+  display: block;
+  height: 36px;
+  line-height: 36px;
+  margin: 0 auto;
+  padding: 3px 0;
+  width: 100px;
+}

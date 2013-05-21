@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    attributes:
+      calendar/event:
+        state: "状態"
+        event_date: "イベント開始日"
+        event_close_date: "イベント終了日"
+        event_uri: "イベントURL"
+        title: "イベント名"
+        body: "内容"
+        image_file_id: "画像"
+      calendar/node/event:
+        list_type: "日別表示形式"

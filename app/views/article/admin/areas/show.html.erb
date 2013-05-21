@@ -1,0 +1,34 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr>
+  <%= concept_view @item, :container => :tr %>
+  <%= layout_view @item, :container => :tr %>
+  <tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= @item.name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:title) %></th>
+    <td><%= @item.title %></td>
+  </tr><tr>
+    <th><%= @item.locale(:zip_code) %></th>
+    <td><%= @item.zip_code %></td>
+  </tr><tr>
+    <th><%= @item.locale(:address) %></th>
+    <td><%= @item.address %></td>
+  </tr><tr>
+    <th><%= @item.locale(:tel) %></th>
+    <td><%= @item.tel %></td>
+  </tr><tr>
+    <th><%= @item.locale(:site_uri) %></th>
+    <td><%= @item.site_uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+</table>
+
+<%= creator_view @item %>

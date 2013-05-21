@@ -1,0 +1,12 @@
+<h2><%= @content.name %> : <%= @feed.title %> : エントリ</h2>
+
+<div class="actionMenu">
+<%= action_menu :new, ["戻る", portal_feeds_path] %>
+<%= action_menu :index %>
+<%= action_menu :show %>
+<%= action_menu :edit %>
+<% if params[:action] == 'index' %>
+  <%= link_to "エントリ更新", portal_feed_entries_path(:do => 'update_entries'), :confirm => "エントリを更新してよろしいですか？" %>
+  <%= link_to "エントリ削除", portal_feed_entries_path(:do => 'delete_entries'), :confirm => "エントリを削除してよろしいですか？" %>
+<% end %>
+</div>

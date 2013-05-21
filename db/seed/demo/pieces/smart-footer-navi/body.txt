@@ -1,0 +1,19 @@
+<div id="footerNavi" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<ul>
+<li id="f1"><a href="#">個人情報の取り扱い</a></li>
+<li id="f2"><a href="#">著作権</a></li>
+<li id="f3"><a href="#">免責事項</a></li>
+<li id="f4"><a href="/inquiry/1/">お問い合わせ</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<script type="text/javascript" src="/_common/js/jquery.min.js"></script>
+<script type="text/javascript" src="/_common/js/jquery/cookie.js"></script>
+<script type="text/javascript" src="/_common/js/joruri/smart-switch.js"></script>
+<script type="text/javascript">$(function() { new SmartSwitch('#smartSwitch', '表示の切り替え'); });</script>
+
+<div id="smartSwitch"></div>

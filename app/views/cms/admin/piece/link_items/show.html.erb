@@ -1,0 +1,18 @@
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:state) %></th>
+    <td><%= safe{@item.status.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:name) %></th>
+    <td><%= safe{@item.name} %></td>
+  </tr><tr>
+    <th><%= @item.locale(:uri) %></th>
+    <td><%= @item.uri %></td>
+  </tr><tr>
+    <th><%= @item.locale(:target) %></th>
+    <td><%= @item.target_name %></td>
+  </tr><tr>
+    <th><%= @item.locale(:sort_no) %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+</table>

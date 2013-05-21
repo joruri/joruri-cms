@@ -1,0 +1,120 @@
+<% inline_id = @item.unid %>
+<%= init_tiny_mce :readonly => true, :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') %>
+
+<% if rep = @item.replace_page %>
+<div class="noticeBox">更新用の記事が作成されています : <%= link_to h(rep.title), {:id => rep.id} %></div>
+<% elsif org = @item.replaced_page %>
+<div class="noticeBox">公開時に更新される記事 : <%= link_to h(org.title), {:id => org.id} %></div>
+<% end %>
+
+<table class="show">
+  <tr>
+    <th>記事番号</th>
+    <td><%= @item.id %></td>
+  </tr><tr>
+    <th>記事URL番号</th>
+    <td colspan="3"><%= @item.name %></td>
+  </tr>
+  <% if uri = @item.public_full_uri %>
+  <tr>
+    <th>記事URL</th>
+    <td><div><%= link_to(uri, uri, :target => '_blank') %></div></td>
+  </tr>
+  <% end %>
+</table>
+
+<table class="show">
+  <tr>
+    <th>タイトル</th>
+    <td><%= @item.title %></td>
+    <th style="width: 60px;">言語</th>
+    <td style="width: 150px;"><%= @item.language.title if @item.language %></td>
+  </tr>
+  <tr style="display:none;">
+    <th>ヘッダー</th>
+    <td colspan="3"><%= hbr(@item.head) %></td>
+  </tr>
+  <tr>
+    <th colspan="4">内容</th></tr><tr>
+    <td colspan="4" class="mceEditor">
+      <%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width:100%' %>
+    </td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>分野</th>
+    <td colspan="3"><%= @item.category_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr><tr>
+    <th>属性</th>
+    <td colspan="3"><%= @item.attribute_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr><tr>
+    <th>地域</th>
+    <td colspan="3"><%= @item.area_items.collect {|c| h(c.title) }.join('， ') %></td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>新着情報表示</th>
+    <td colspan="3">
+      <%= safe{@item.recent_status.name} %>
+    </td>
+  </tr><tr>
+    <th>記事一覧表示</th>
+    <td colspan="3">
+      <%= safe{@item.list_status.name} %>
+    </td>
+  </tr><tr>
+    <th>イベントカレンダー表示</th>
+    <td colspan="3">
+      <%= safe{@item.event_status.name} %>
+      <% if @item.event_date %>&nbsp; イベント日付 : <%= @item.event_date.strftime("%Y-%m-%d") %><% end %>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale(:sns_link_state) %></th>
+    <td colspan="3">
+      <%= safe{@item.sns_link_status.name} %>
+    </td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>関連ワード</th>
+    <td><%= @item.tags.collect {|c| h(c.word) }.join('， ') %></td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>関連記事</th>
+    <td colspan="3"><%= @item.rel_docs.collect {|c| h(c.title) }.join('<br />') %></td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:agent_state) %></th>
+    <td><%= @item.agent_status.name %></td>
+  </tr>
+</table>
+
+<% if !@item.mobile_title.blank? || !@item.mobile_body.blank? %>
+<p class="form">携帯向け</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:mobile_body) %></th>
+    <td><%= hbr @item.mobile_body %></td>
+  </tr>
+</table>
+<% end %>
+
+<%= google_map_view @item %>
+<%= inquiry_view @item %>
+<%= task_view @item %>
+<%= recognizer_view @item %>
+<%= editable_group_view @item %>
+<%= creator_view @item %>

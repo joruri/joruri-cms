@@ -1,0 +1,93 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   category
+========================================================= */
+
+/* shinchaku-ichiran
+----------------------------------------------- */
+.contentArticleArea .latest h2 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#004bee), color-stop(100%, #001a6b));
+  vertical-align: middle;
+  color: #ffffff;
+}
+.contentArticleArea li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentArticleArea li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleArea h3 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+}
+.feed {
+  display: none;
+}
+.contentArticleArea span.attributes {
+  display: none;
+}
+
+/* Area Map table
+----------------------------------------------- */
+.contentArticleArea table {
+  width: 100%;
+}
+.contentArticleArea td {
+  display: inline-block;
+  height: 44px;
+  line-height: 44px;
+  padding: 0 10px;
+}
+table a {
+  padding-left: 7px;
+  background-image: url(./images/ic-list.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  text-decoration: underline;
+}
+table.ward {
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  color: #ffffff;
+}
+table.ward td a {
+  background-image: url(./images/ic-link.gif);
+  color: #ffffff;
+}
+table.ward td.name,
+table.city td.name,
+table.city td.tel {
+  width: 47%;
+}
+table.ward td.zipCode,
+table.ward td.address,
+table.ward td.tel,
+table.ward td.formal,
+table.city td.zipCode,
+table.city td.address,
+table.city td.formal {
+  display: none;
+}
+table.city tr.cycle {
+  background-color: #e3f0fa;
+}

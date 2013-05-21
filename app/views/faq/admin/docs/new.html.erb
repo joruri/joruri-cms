@@ -1,0 +1,16 @@
+<%= form_for :item, :url => {:action => :create},
+  :html => {:multipart => true, :id => 'itemForm', :autocomplete=>"off"} do |f| %>
+
+<%= error_messages_for :item %>
+
+<% if @checker
+checkbox = check_box_tag(:link_check, 0, params[:link_check] == "0") +
+  %Q(<label for="link_check">エラーを無視する</label>).html_safe
+%><%== @checker.notice_messages(:checkbox => checkbox) %>
+<% end %>
+
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+<%= submit(@item.states) %>
+
+<% end %>

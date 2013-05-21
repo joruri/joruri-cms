@@ -1,0 +1,13 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <%= node_base_view @item, :container => :tr %>
+</table>
+
+<p class="form">詳細設定</p>
+
+<table class="show">
+  <%= render :partial => "cms/admin/_partial/node/show_layout/view", :locals => {:item => @item} %>
+</table>
+
+<%= creator_view @item %>

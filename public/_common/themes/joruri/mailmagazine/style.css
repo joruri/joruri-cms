@@ -1,0 +1,91 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   mailmagazine
+========================================================= */
+
+.contentNewsletterForms .summary {
+  margin: 0 0px 15px;
+  padding: 10px;
+  border: 1px solid #dba;
+  background-color: #ffd;
+}
+.contentNewsletterForms h2.cornerTitle {
+  margin: 0px 0px 15px;
+  padding: 7px 10px;
+  background-color: #232f8c;
+  color: #fff;
+}
+.contentNewsletterForms .body {
+  margin: 15px 0px;
+}
+.contentNewsletterForms .column .name {
+  margin: 15px 0px;
+  padding: 5px 8px;
+  background-color: #eee;
+  border-left: 4px solid #232f92;
+}
+.contentNewsletterForms .column .required {
+  color: #e00;
+  font-weight: bold;
+}
+.contentNewsletterForms .column .field {
+  margin: 15px 15px;
+}
+.contentNewsletterForms .column .field .email {
+  width: 400px;
+  ime-mode: disabled;
+}
+.contentNewsletter .captcha img {
+  margin: 0px 0px 5px;
+  border: 1px solid #008800;
+}
+.contentNewsletter .captcha .field {
+  margin: 0px;
+}
+.contentNewsletter .captcha .field input {
+  ime-mode: disabled;
+}
+.contentNewsletterForms .change {
+  margin: 30px 0 0 15px;
+}
+.contentNewsletterForms .change a {
+  padding: 0 0 5px 8px;
+  background-image:url("./images/ic-list.gif");
+  background-repeat:no-repeat;
+  background-position:left 35%;
+}
+.contentNewsletterForms .submitters {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #d8ebf8;
+  text-align: center;
+}
+.contentNewsletterComplete .defaultMessage p {
+  font-size: 120%;
+}
+.contentNewsletterComplete .defaultMessage div.body {
+  margin: 15px 0px;
+}
+
+/* Errors
+----------------------------------------------- */
+x.errorExplanation h2 {
+  padding: 4px;
+  background-color: #ffdddd;
+  font-weight: bold;
+}
+x.contentNewsletterForms .errorExplanation,
+x.contentNewsletterForms .errorExplanation h2 {
+  color: #ff0000;
+}
+x.errorExplanation p {
+  margin-top: 4px;
+}
+x.errorExplanation ul {
+  list-style-type: disc;
+  margin: 2px 20px 15px 20px;
+}

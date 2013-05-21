@@ -1,0 +1,16 @@
+<% if @node %><div class="feed">
+  <%= link_to 'RSS' , "#{@node.public_uri}index.rss" , :class => 'feedRss' %>
+  <%= link_to 'Atom', "#{@node.public_uri}index.atom", :class => 'feedAtom' %>
+</div><% end %>
+
+<% if @docs.size > 0 %>
+<ul>
+  <% @docs.each do |doc| %>
+  <li><%= article_doc_list doc, :list_type => @piece.setting_value(:list_type) %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if @node %><div class="links">
+  <%= link_to h(@more_label), @node.public_uri , :class => 'more' %>
+</div><% end %>

@@ -1,0 +1,34 @@
+<%
+
+def error?(col)
+  @item.errors[col].size > 0 ? 'class="field_with_errors"' : ''
+end
+
+cond  = {:content_id => @content.id, :parent_id => 0, :level_no => 1, :state => 'public'}
+root  = Tourism::Genre.find(:all, :conditions => cond, :order => :sort_no)
+
+cond  = {:content_id => @content.id, :state => 'public'}
+spots = [['// ジャンルを選択してください', nil]]
+
+if safe{@item.genre}
+  item = Tourism::Spot.new.public
+  item.genre_is @item.genre
+  spots = item.find(:all, :order => :title_kana).collect{|i| [i.title, i.id]}
+end
+
+%>
+<tr>
+  <th>ジャンル</th>
+  <td>
+    <div <%= error?(:genre_id) %>>
+      <%= f.select_with_tree :genre_id, root, :conditions => {:state => 'public'}, :include_blank => "　", :label => :title %></div>
+  </td>
+</tr><tr>
+  <th>観光地</th>
+  <td>
+    <div <%= error?(:spot_id) %>>
+      <%= f.select :spot_id, spots, :include_blank => "　" %></div>
+  </td>
+</tr>
+<%= observe_field(:item_genre_id, :update => :item_spot_id,
+      :with => 'genre_id', :on => 'change', :url => spots_tourism_genres_path(@content, 0)) %>

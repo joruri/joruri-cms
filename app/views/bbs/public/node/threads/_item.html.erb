@@ -1,0 +1,13 @@
+<h2>
+  <span class="title"><%= item.title %></span></h2>
+<div class="body">
+  <%= auto_link hbr(item.body), :html => {:target => '_blank'} %></div>
+<div class="poster">
+  <span class="no">No.<%= item.id %></span>
+  | <span class="date"><%= safe{item.created_at.strftime('%Y年%-m月%-d日 %H:%M')} %></span>
+  | <span class="name"><%= item.name %></span>
+  <% if @show_email && !item.email.blank? %>
+  | <span class="email"><%= email_to 'Email', item.email %></span><% end %>
+  <% if @show_uri && !item.uri.blank? %>
+  | <span class="uri"><%= link_to 'URL', item.uri, :target => "_blank" %></span><% end %>
+</div>

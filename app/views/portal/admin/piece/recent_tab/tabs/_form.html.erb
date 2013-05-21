@@ -1,0 +1,30 @@
+<%
+
+blank      = '　' * 16
+categories = Portal::Category.root_items(:content_id => @content.id)
+
+%><table class="show">
+  <tr>
+    <th><%= @item.locale :name %></th>
+    <td><%= f.text_field :name, :class => 'id' %></td>
+  </tr><tr>
+    <th><%= @item.locale :title %></th>
+    <td><%= f.text_field :title %></td>
+  </tr><tr>
+    <th><%= @item.locale :more %></th>
+    <td><%= f.text_field :more %></td>
+  </tr><tr>
+    <th>条件</th>
+    <td>
+      <table class="noDesign">
+        <tr>
+          <td>グループ</td>
+          <td><%= f.select_with_tree "category[0]", categories, :label => :title, :include_blank => blank %></td>
+        </tr>
+      </table>
+    </td>
+  </tr><tr>
+    <th><%= @item.locale :sort_no %></th>
+    <td><%= f.text_field :sort_no, :class => 'number' %></td>
+  </tr>
+</table>

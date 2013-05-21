@@ -1,0 +1,11 @@
+<div class="month <%= @calendar.month_name.downcase %>"><%= @calendar.month %>月</div>
+
+<%= @calendar.to_html %>
+
+<% if @node %><div class="links">
+  <%= link_to "前の月", @calendar.prev_month_uri, :class => "prevMonth" %>
+  <span class="separatorLeft">|</span>
+  <%= link_to '一覧へ', @calendar.current_month_uri, :class => "currentMonth" %>
+  <span class="separatorRight">|</span>
+  <%= link_to "次の月", @calendar.next_month_uri, :class => "nextMonth" %>
+</div><% end %>

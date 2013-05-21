@@ -1,0 +1,1 @@
+<div id="attractInformation" class="piece"><div class="pieceContainer"><div class="pieceHeader"><h2>注目情報</h2></div><div class="pieceBody">  <ul>    <li><a href="#">注目情報01</a></li>    <li><a href="#">注目情報02</a></li>    <li><a href="#">注目情報03</a></li>    <li><a href="#">注目情報04</a></li>  </ul></div><div class="pieceFooter"></div></div><!-- end .piece --></div>

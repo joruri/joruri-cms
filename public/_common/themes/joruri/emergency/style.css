@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+/* =========================================================
+   emergency
+========================================================= */
+#emergency{
+  margin-bottom: 7px;
+}
+#emergency .pieceHeader {
+  background-color: #f00000;
+  color: #ffffff;
+}
+#emergency .pieceHeader h2 {
+  padding: 0 0 0 15px;
+  line-height: 35px;
+  font-weight: bold;
+  font-size: 120%;
+}
+#emergency .pieceBody ul {
+  padding: 5px 5px 5px 15px;
+  border-color: #dd0000;
+  border-style: none solid solid;
+  border-width: medium 2px 2px;
+}
+
+/* =========================================================
+   emergencyInfo
+========================================================= */
+#emergencyInfo {
+  margin-bottom: 7px;
+}
+#emergencyInfo .pieceContainer {
+  padding: 5px;
+  border: 2px solid #4D4D4D;
+  background-color: #FFFF6A;
+}
+#emergencyInfo .pieceHeader {
+  border-bottom: 1px solid #000000;
+}
+#emergencyInfo .pieceHeader h2 {
+  padding-bottom: 5px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+#emergencyInfo ul {
+  padding: 5px;
+}
+#emergencyInfo li {
+  padding-left: 10px;
+  background-image: url(./files/icon_square_red.gif);
+  background-repeat: no-repeat;
+  background-position: 0 6px;
+}
+
+/* =========================================================
+   emergencyMode
+========================================================= */
+#emergencyMode {
+  margin: 5px 0 0;
+}
+#emergencyMode .pieceContainer {
+  padding: 5px 0;
+  border-top: 1px solid #f00000;
+  border-bottom: 1px solid #f00000;
+  color: #dd0000;
+}

@@ -1,0 +1,14 @@
+<p class="form">公開日時設定</p>
+
+<table class="show">
+  <tr>
+    <th>表示日時</th>
+    <td><%= f.text_field :published_at, :class => 'datetime' %></td>
+  </tr><tr>
+    <th>公開開始日時</th>
+    <td><%= f.array_text_field 'in_tasks[publish]', :class => 'datetime' %></td>
+  </tr><tr>
+    <th>公開終了日時</th>
+    <td><%= f.array_text_field 'in_tasks[close]', :class => 'datetime' %></td>
+  </tr>
+</table>

@@ -1,0 +1,56 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   mailmagazine
+========================================================= */
+#pageTitle.piece {
+  margin-bottom: 10px;
+}
+.contentNewsletterForms .summary,
+.contentNewsletterForms .form,
+.contentNewsletterForms .change {
+  margin: 10px 10px 5px;
+}
+.contentNewsletterForms h2 {
+  line-height: 36px;
+  padding-left: 10px;
+  background-color: #232f8c;
+  color: #ffffff;
+  font-size: 110%;
+}
+.contentNewsletterForms .column {
+  margin: 10px 0 20px;
+}
+.contentNewsletterForms .column .name{
+  padding: 4px 10px;
+  background-color: #f1f1f1;
+}
+.contentNewsletterForms .field {
+  margin: 10px 15px 0;
+}
+.contentNewsletterForms .required {
+  color: #ff0000;
+}
+label {
+  vertical-align: middle;
+  margin: 0 9px 0 2px;
+}
+div.submitters {
+  margin: 20px 5px;
+}
+.errorExplanation h2 {
+  line-height: 20px;
+  margin-top: 10px;
+  background-color: #ffdddd;
+  color: #ff0000;
+  font-weight: bold;
+}
+.contentNewsletterComplete {
+  padding: 10px 10px 5px;
+}
+.change a{
+  text-decoration: underline;
+}

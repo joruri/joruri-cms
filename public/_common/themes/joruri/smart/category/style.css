@@ -1,0 +1,108 @@
+@charset "UTF-8";
+@import "../base/init.css";
+@import "../base/style.css";
+@import "../piece/style.css";
+
+/* =========================================================
+   category
+========================================================= */
+.contentArticleCategory h2 {
+  line-height: 44px;
+}
+.contentArticleCategory h2 a {
+  display: block;
+  padding: 0 10px;
+}
+.contentArticleCategory .children a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  border-bottom: 1px solid #cccccc;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.contentArticleCategory .latest h2 {
+  padding-left: 25px;
+  background-color: #00349a;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-border.png);
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  color: #ffffff;
+}
+.contentArticleCategory .category h2 a {
+  margin-top: 10px;
+  padding-right: 30px;
+  border-top: 1px solid #01329b;
+  border-bottom: 1px solid #01329b;
+  background-color: #e3f0f9;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link2.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+}
+.contentArticleCategory .categoryBosaigai h2 a {
+  border-top: 1px solid #d5002c;
+  border-bottom: 1px solid #d5002c;
+  background-color: #ffe6ea;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link3.png);
+}
+.contentArticleCategory h3 {
+  height: 44px;
+  line-height: 44px;
+  padding-left: 15px;
+  background-color: #e3f0fa;
+  color: #333333;
+}
+.contentArticleCategory li {
+  border-bottom: 1px solid #cccccc;
+}
+.contentArticleCategory li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-kiji.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.feed {
+  display: none;
+}
+.contentArticleCategory span.attributes {
+  display: none;
+}
+
+/* category-list
+------------------------------------- */
+#categoryList h2 {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  padding-left: 10px;
+  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
+  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
+  vertical-align: middle;
+  color: #ffffff;
+}
+#categoryList li {
+  border-bottom: 1px solid #cccccc;
+}
+#categoryList li a {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  overflow: hidden;
+  padding: 0 30px 0 15px;
+  background-image: url(/_common/themes/joruri/smart/piece/images/ic-link.png);
+  background-repeat: no-repeat;
+  background-position: 95% center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

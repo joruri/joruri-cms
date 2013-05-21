@@ -1,0 +1,7 @@
+<div class="piece" id="emergencyEreaInformation">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>地域情報</h2></div>
+<div class="pieceBody">
+<a href="/chiiki/north/">北区</a><a href="/chiiki/west/">西区</a><a href="/chiiki/east/">東区</a><a href="/chiiki/south/">南区</a></div>
+</div>
+</div>

@@ -1,0 +1,19 @@
+<%
+
+creator = "#{safe{item.creator.group.name}}　#{safe{item.creator.user.name_with_account}}"
+
+%><p class="form">作成者</p>
+
+<table class="show">
+  <tr>
+    <th>作成者</th>
+    <td><%= creator %></td>
+  </tr><tr>
+    <th>作成日時</th>
+    <td colspan="3"><%= safe{@item.created_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+  </tr><tr>
+    <th>編集日時</th>
+    <td colspan="3"><%= safe{@item.updated_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+  </tr>
+</table>
+

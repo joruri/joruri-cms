@@ -1,0 +1,27 @@
+<%= render :partial => 'search' %>
+
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 20%;">ユーザID</th>
+    <th style="width: 20%;">氏名</th>
+    <th style="width: ;">グループ</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">状態</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td><%= item.account %></td>
+    <td><%= item.name %></td>
+    <td><%= safe{item.group.full_name} %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= item.status.name %></td>
+  </tr>
+  <% end %>
+
+</table>
+
+<%= paginate @items %>

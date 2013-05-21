@@ -1,0 +1,117 @@
+<%
+
+dimg1  = @item.embedded_file(:detail_image1_file_id)
+dimg2  = @item.embedded_file(:detail_image2_file_id)
+dimg3  = @item.embedded_file(:detail_image3_file_id)
+dfile1 = @item.embedded_file(:detail_info1_file_id)
+dfile2 = @item.embedded_file(:detail_info2_file_id)
+dfile3 = @item.embedded_file(:detail_info3_file_id)
+
+%><div class="contentTourism contentTourismSpot">
+
+<div class="header">
+  <h1><%= @item.title %><%= "（#{@item.title_kana}）" if !@item.title_kana.blank? %></h1>
+</div>
+
+<div class="mainImage">
+  <% if file = @item.embedded_file(:image_file_id) %>
+  <img src="<%= public_embedded_file_path(file) %>" alt="" />
+  <% end %>
+</div>
+
+<div class="body">
+  <h2>概要</h2>
+  <%= @item.body %>
+</div>
+
+<div class="guideBody">
+  <h2>ご案内</h2>
+  <%= @item.guide_body %>
+</div>
+
+<% if @item.has_detail_contents? %>
+<div class="detail">
+  <% if dimg1 || dimg2 || dimg3 %>
+  <div class="detailImage">
+    <% if dimg1 %><img src="<%= public_embedded_thumbnail_path(dimg1) %>" alt="" /><% end %>
+    <% if dimg2 %><img src="<%= public_embedded_thumbnail_path(dimg2) %>" alt="" /><% end %>
+    <% if dimg3 %><img src="<%= public_embedded_thumbnail_path(dimg3) %>" alt="" /><% end %>
+  </div>
+  <% end %>
+  
+  <div class="detailBody"><%= @item.detail_body %></div>
+  
+  <% if !@item.detail_comment.blank? %>
+  <div class="detailComment"><%= @item.detail_comment %></div>
+  <% end %>
+  
+  <% if dfile1 || dfile2 || dfile3 %>
+  <div class="detailFile">
+    <% if dfile1 %><a href="<%= public_embedded_file_path(dfile1) %>" class="<%= dfile1.css_class %>">
+      <%= "#{dfile1.title} (#{dfile1.eng_unit})" %></a><% end %>
+    <% if dfile2 %><a href="<%= public_embedded_file_path(dfile2) %>" class="<%= dfile2.css_class %>">
+      <%= "#{dfile2.title} (#{dfile2.eng_unit})" %></a><% end %>
+    <% if dfile3 %><a href="<%= public_embedded_file_path(dfile3) %>" class="<%= dfile3.css_class %>">
+      <%= "#{dfile3.title} (#{dfile3.eng_unit})" %></a><% end %>
+  </div>
+  <% end %>
+</div>
+<% end %>
+
+<% if @photos.size > 0 %>
+<div class="photos">
+  <h2>フォトギャラリー</h2>
+  <ul class="photos">
+    <% @photos.each do |item| %>
+    <li><%= render :partial => "tourism/public/node/photos/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <div class="more"><a href="photos/">もっと見る</a></div>
+</div>
+<% end %>
+
+<% if @movies.size > 0 %>
+<div class="movies">
+  <h2>ムービーギャラリー</h2>
+  <ul class="photos">
+    <% @movies.each do |item| %>
+    <li><%= render :partial => "tourism/public/node/movies/item", :locals => {:item => item} %></li>
+    <% end %>
+  </ul>
+  <div class="more"><a href="movies/">もっと見る</a></div>
+</div>
+<% end %>
+
+<% if @docs.size > 0 %>
+<div class="docs">
+  <h2>関連記事</h2>
+  <ul>
+    <% @docs.each do |item| %>
+    <li><%= link_to item.title, "mouths/#tourismMouth#{item.id}" %><%= item.date_and_unit %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<div class="mouths">
+  <h2>クチコミ</h2>
+  <div class="post">
+    <a href="mouths/new.html">クチコミを投稿する</a>
+  </div>
+  <% if @mouths.size > 0 %>
+  <ul>
+    <% @mouths.each do |item| %>
+    <li><%= link_to item.title, "mouths/#tourismMouth#{item.id}" %></li>
+    <% end %>
+  </ul>
+  <div class="more">
+    <a href="mouths/">もっと見る</a>
+  </div>
+  <% end %>
+</div>
+
+<%= render :partial => 'cms/public/_partial/maps/view', :locals => {:item => @item} %>
+
+<div class="back"><a href="javascript:history.back()">戻る</a></div>
+
+</div>

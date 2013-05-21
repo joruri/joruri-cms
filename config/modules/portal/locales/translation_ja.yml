@@ -1,0 +1,51 @@
+ja:
+  activerecord:
+    attributes:
+      portal/feed:
+        state: "状態"
+        name: "フィードID"
+        title: "フィード名"
+        uri: "フィードURL"
+        feed_type: "フィード文書種別"
+        feed_id: "フィード文書ID"
+        feed_title: "フィード文書名"
+        link_alternate: "代替URL"
+        entry_count: "記事取込数"
+        fixed_categories_xml: "カテゴリXML（固定）"
+
+      portal/feed_entry:
+        id: "記事ID"
+        state: "状態"
+        entry_updated: "更新日時"
+        title: "タイトル"
+        summary: "概要"
+        link_alternate: "記事URL"
+        link_enclosure: "コンテンツURL"
+        categories: "分類"
+        author_name: "作成者名"
+        author_email: "作成者メールアドレス"
+        author_uri: "作成者URI"
+
+      portal/category:
+        state: "状態"
+        sort_no: "並び順"
+        name: "グループID"
+        title: "グループ名"
+        entry_categories: "記事分類"
+        created_at: "作成日時"
+
+      ## content
+      portal/content/base:
+        doc_content_id: "記事コンテンツ"
+
+      ## piece
+      portal/piece/feed_entry:
+        category: "グループ"
+      portal/piece/recent_tab:
+        list_count: "表示件数"
+        more_label: "一覧リンク文字"
+        name: "タブID"
+        title: "タブ名"
+        more: "一覧リンク"
+        sort_no: "並び順"
+        

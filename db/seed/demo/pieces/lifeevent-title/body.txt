@@ -1,0 +1,6 @@
+<div class="piece" id="contentTitle">
+<div class="pieceContainer">
+<div class="pieceBody"><h2>ライフイベント</h2>
+</div>
+</div>
+<!-- end .piece --></div>

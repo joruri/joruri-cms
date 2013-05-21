@@ -1,0 +1,29 @@
+<table class="index">
+  
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: ;">レイアウト名</th>
+    <th style="width: 80px; text-align: right;">並び順</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 60px; text-align: center;">プレビュー</th>
+    <th style="width: 60px; text-align: center;">反映</th>
+  </tr>
+  
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.id) %></td>
+    <td><%= safe{item.layout.title} %></td>
+    <td style="text-align: right;"><%= item.sort_no %></td>
+    <td style="text-align: center;"><%= safe{item.layout.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><% if @node %>
+      <%= link_to 'PC', @node.preview_uri(:params => {:layout_id => item.value}), :target => '_blank' %>
+      <%= link_to '携帯', @node.preview_uri(:mobile => true, :params => {:layout_id => item.value}), :target => '_blank' %>
+    <% end %></td>
+    <td style="text-align: center;"><% if @node %>
+      <% if @node.layout_id.to_s == item.value.to_s %>適用中<% else%>
+      <%= link_to "反映", url_for(:action => :change, :id => item.id), :confirm => "反映してよろしいですか？"%><% end%>
+    <% end %></td>
+  </tr>
+  <% end %>
+
+</table>

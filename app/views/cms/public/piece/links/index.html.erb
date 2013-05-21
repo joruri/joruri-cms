@@ -1,0 +1,10 @@
+<%
+
+links = @piece.link_items.find(:all, :conditions => {:state => 'public'})
+return render(:text => "") if links.size == 0
+
+%><ul>
+<% links.each do |item| %>
+  <li><%= link_to h(item.name), item.uri, :target => item.target %></li>
+<% end %>
+</ul>

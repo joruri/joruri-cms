@@ -1,0 +1,15 @@
+<div class="piece" id="topic">
+<div class="pieceContainer">
+<div class="pieceHeader"><h2>旬のジョールリ</h2></div>
+<div class="pieceBody">
+
+<h3>[[text/topic-midashi]]</h3>
+<div class="infomation">
+<img title="旬のジョールリ" alt="旬のジョールリ" src="/_common/themes/joruri/top/images/nophoto.gif" />
+<p>[[text/topic-text]]</p>
+<p class="next"><a href="#">→詳しくはこちら</a></p>
+</div>
+
+</div>
+</div>
+</div>

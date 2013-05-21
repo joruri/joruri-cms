@@ -1,0 +1,7 @@
+<div id="copyright" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+&copy;ジョールリ市
+</div>
+</div>
+</div>

@@ -1,0 +1,13 @@
+<div class="enqueteSent">
+
+<div class="message">
+  <% if @item.sent_body.blank? %>
+    <div style="text-align: center;">ご入力内容を送信しました。</div>
+  <% else %>
+    <%== @item.sent_body %>
+  <% end %>
+</div>
+
+<div class="back"><%= link_to "戻る", Page.current_node.public_uri %></div>
+
+</div>

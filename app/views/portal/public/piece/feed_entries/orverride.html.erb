@@ -1,0 +1,16 @@
+<div<%= " class=\"latest\"" if @mode == 'article_more' %>>
+<h2>新着情報</h2>
+<ul><% @entries.each do |entry| %>
+  <li><%=link_to h(entry.title), entry.public_uri, :target => entry.link_target %><%= entry.date_and_site %>
+  </li><% end %>
+</ul>
+
+<% if @more %>
+  <%= paginate(@entries).to_s.gsub!(/href="(.*?)page=([0-9]+).*?"/, 'href="feed.p\\2.html"') %>
+<% else %>
+<% if @node %><div class="more">
+  <%= link_to '>>新着記事一覧' , @node_uri %>
+</div><% end %>
+<% end %>
+
+</div>

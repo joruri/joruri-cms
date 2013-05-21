@@ -1,0 +1,28 @@
+<table class="index">
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 200px;">プロセス</th>
+    <th style="width: ;">概要</th>
+    <th style="width: 120px; text-align: center;">開始日時</th>
+    <th style="width: 120px; text-align: center;">更新日時</th>
+    <th style="width: 120px; text-align: center;">終了日時</th>
+    <th style="width: 80px; text-align: center;">処理数</th>
+    <th style="width: 60px; text-align: center;">成功</th>
+    <th style="width: 60px; text-align: center;">失敗</th>
+  </tr>
+  
+  <% @items.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.name.gsub(/[^_\w]/, "@")) %></td>
+    <td><%= item.name %></td>
+    <td><%= item.title %></td>
+    <td style="text-align: center;"><%= safe{item.started_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= safe{item.closed_at.strftime('%Y-%m-%d %H:%M')} %></td>
+    <td style="text-align: center;"><%= item.current %><%= "/#{item.total}" if item.total %></td>
+    <td style="text-align: right;"><%= item.success %></td>
+    <td style="text-align: right;"><%= item.error %></td>
+  </tr>
+  <% end %>
+
+</table>

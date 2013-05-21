@@ -1,0 +1,9 @@
+<div id="bnBbs" class="piece">
+<div class="pieceContainer">
+<div class="pieceBody">
+<a href="/bbs/">
+ジョールリ市<br />
+<span class="bbs">掲示板</span></a>
+</div>
+</div>
+</div>

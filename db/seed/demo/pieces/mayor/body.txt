@@ -1,0 +1,12 @@
+<div id="mayor" class="piece">
+<div class="pieceContainer">
+<div class="pieceHeader">市長室</div>
+<div class="pieceBody"><a href="/mayor/"><img src="/_common/themes/joruri/top/images/mayor01.jpg" alt="ジョールリ市長" title="ジョールリ市長" /></a>
+<ul>
+<li><a href="/mayor/">市長のご挨拶</a></li>
+<li><a href="/mayor/profile/">プロフィール</a></li>
+<li><a href="/mayor/activity/">市長へのメール</a></li>
+</ul>
+</div>
+</div>
+</div>

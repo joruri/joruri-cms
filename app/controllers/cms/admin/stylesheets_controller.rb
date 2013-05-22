@@ -2,16 +2,24 @@
 class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
   
+  @@mkdir_root = nil
+  
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
+    
+    if !@@mkdir_root
+      dir = Cms::Stylesheet.new_by_path("").upload_path
+      ::Storage.mkdir_p(dir) if !::Storage.exists?(dir)
+      @@mkdir_root = true
+    end
+    
     @root      = "#{Core.site.public_path}/_common/themes"
     @path      = params[:path].to_s
     @full_path = "#{@root}/#{@path}"
     @base_uri  = ["#{Core.site.public_path}/", "/"]
-
-    @path = params[:path].present? ? params[:path] : ''
-    @item = Cms::Stylesheet.new_by_path(@path)
-    unless ::Storage.exists?(@item.upload_path)
+    @item      = Cms::Stylesheet.new_by_path(@path)
+    
+    if !::Storage.exists?(@item.upload_path)
       return http_error(404) if flash[:notice]
       flash[:notice] = "指定されたパスは存在しません。（ #{@item.upload_path} ）"
       redirect_to(cms_stylesheets_path(''))

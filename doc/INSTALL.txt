@@ -52,7 +52,7 @@ rootユーザに変更します。
       http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz \
       ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz \
       http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1.tar.gz/download \
-      http://downloads.sourceforge.net/lame/lame-398-2.tar.gz -
+      http://downloads.sourceforge.net/lame/lame-398-2.tar.gz \
       http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.07.tar.gz \
       http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.06.tar.gz \
       http://downloads.sourceforge.net/open-jtalk/open_jtalk_dic_utf_8-1.06.tar.gz \
@@ -68,7 +68,7 @@ Joruriユーザを作成します。
 Joruriソースコードを設置します。
 
   # mkdir /var/share
-  # tar xvzf joruri-1.3.0.tar.gz -C /var/share
+  # tar xvzf joruri-2.0.0.tar.gz -C /var/share
   # chown -R joruri:joruri /var/share/joruri
 
 **********************************************************************
@@ -161,6 +161,7 @@ Apacheは[5.1]を、Thinは[5.2]の手順を進めてください。
 
 Phusion Passengerをインストールします。
 
+  # gem innstall passenger --no-ri --no-rdoc -v 3.0.19
   # passenger-install-apache2-module
   ## 画面の内容を確認して Enterキーを押してください。
 
@@ -277,9 +278,9 @@ Joruri基本設定
 
   公開画面 : http://192.168.0.2/
 
-サンプルデータでは次のユーザが登録されています。
-
   管理画面 : http://192.168.0.2/_admin
+
+サンプルデータでは次のユーザが登録されています。
 
   +---------------+-----------+---------+-----------+
   |ユーザ名       |権限       |ユーザID |パスワード |
@@ -356,39 +357,24 @@ MeCab-Ruby
   
   $ crontab -e
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  RUBY="/usr/local/bin/ruby"
-  RAILS="/var/share/joruri/script/rails runner -e production"
+  RUN="/usr/local/bin/ruby /var/share/joruri/script/rails runner -e production"
+  LOG=">> /var/share/joruri/log/cron.log 2>&1"
   
-  ## 公開/非公開日時指定処理
-  10,25,40,55 * * * * $RUBY $RUNNER "Script.run('sys/tasks#exec')"
-  
-  ## トップページ、中間ページ書き出し
-  */15 * * * * $RUBY $RUNNER "Script.run('cms/nodes#publish')"
-  
-  ## 読み上げ音声ファイル書き出し
-  */15 * * * * $RUBY $RUNNER "Script.run('cms/talks#publish')"
-  
-  ## Feed(RSS,Atom)の取り込み
-  0 * * * * $RUBY $RUNNER "Script.run('cms/feeds#read')"
-  
-  ## メールマガジン読者登録
-  */5 * * * * $RUBY $RUNNER "Script.run('newsletter/requests#read')"
-  
-  ## 記事再構築(ページのみ)
-  #0 * * * * $RUBY $RUNNER "Script.run('article/docs#rebuild')"
-  
-  ## FAQ記事再構築(ページのみ)
-  #0 * * * * $RUBY $RUNNER "Script.run('faq/docs#rebuild')"
-  
-  ## アンケート取り込み ※[8.1]を参照
-  #0 * * * * $RUBY $RUNNER "Script.run('enquete/answers#pull')"
+  10,25,40,55 * * * * $RUN "Script.run('sys/tasks#exec')" $LOG   # 日時指定処理
+  */15 * * * * $RUN "Script.run('cms/nodes#publish')" $LOG       # ページ書き出し
+  */15 * * * * $RUN "Script.run('cms/talks#publish')" $LOG       # 音声書き出し
+  */30 * * * * $RUN "Script.run('cms/feeds#read')" $LOG          # フィード取り込み
+  */5 * * * * $RUN "Script.run('newsletter/requests#read')" $LOG # メルマガ読者登録
+  #0 * * * * $RUN "Script.run('article/docs#rebuild')" $LOG      # 記事再構築(ページ)
+  #0 * * * * $RUN "Script.run('faq/docs#rebuild')" $LOG          # FAQ再構築(ページ)
+  #0 * * * * $RUN "Script.run('enquete/answers#pull')" $LOG      # アンケート取り込み ※[8.1]
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ======================================================================
  8.1 アンケートの取り込み
 ======================================================================
 
-アンケートの取り込みは下記のように対象のデータベースを設定してください。
+アンケートの取り込みは対象のデータベース設定を追加してください。
 
   $ cd /var/share/joruri
   
@@ -403,6 +389,12 @@ MeCab-Ruby
     encoding: utf8
     reconnect: true
     host: 192.168.0.4
+  
+  production_pull_database_2:
+    # settings
+  
+  production_pull_database_3:
+    # settings
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 **********************************************************************

@@ -36,6 +36,13 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
 
     flash[:notice] = ('インポートが終了しました。<br />' + Core.messages.join('<br />')).html_safe
     return redirect_to(:action => :index)
+    
+  rescue CSV::MalformedCSVError => e
+    flash[:notice] = "インポートに失敗しました。（不正なCSVデータ）"
+    return redirect_to(:action => :index)
+  rescue Exception => e
+    flash[:notice] = "インポートに失敗しました。（#{e}）"
+    return redirect_to(:action => :index)
   end
 
   def import_groups(csv)

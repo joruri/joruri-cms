@@ -4,24 +4,43 @@
 
 <p class="form">基本情報</p>
 
-<% begin %>
-  <% f.text_area(:body) %>
+<% if @item.directory? %>
+
+  <table class="show">
+    <%= concept_form(f) if @item.directory? %>
+    <tr>
+      <th><%= @item.locale :name %></th>
+      <td><%= f.text_field :name, :class => "nameEn" %></td>
+    </tr>
+  </table>
+
+<% else %>
+
+  <table class="show">
+    <tr>
+      <th><%= @item.locale :name %></th>
+      <td><%= f.text_field :name, :class => "nameEn" %></td>
+    </tr>
+  </table>
+  
+  <% if @item.textfile? %>
   <table class="show">
     <tr>
       <th><%= @item.locale :body %></th>
     </tr><tr>
-      <td><%= f.text_area :body, :class => 'body', :style => "height: 400px;" %></td>
+      <td>
+        <% begin %><!-- <%= @item[:body] %> -->
+        <%= f.text_area :body, :class => 'body pre monospace', :style => "height: 400px;" %>
+        <% rescue Exception => e %>
+        --> 読み込みに失敗しました。
+        <% end %>
+      </td>
     </tr>
   </table>
-  <%= submit :edit %>
-<% rescue %>
-  <table class="show">
-    <tr>
-      <th><%= @item.locale :body %></th>
-    </tr><tr>
-      <td>#読み込みに失敗しました。</td>
-    </tr>
-  </table>
+  <% end %>
+  
 <% end %>
+
+  <%= submit :edit %>
 
 <% end %>

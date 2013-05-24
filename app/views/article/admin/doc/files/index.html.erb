@@ -5,20 +5,11 @@
 
 <script type="text/javascript">
 //<![CDATA[
-  function mceInsertContent(value) {
-    parent.tinyMCE.execInstanceCommand('<%= _form_id %>','mceInsertContent',true, value);
-  }
 
-  function selectAction() {
-    var filesForm = document.filesForm;
-    var selectFile;
-    for(i=0; i < filesForm.elements.s_item.length; i++) {
-      if(filesForm.elements.s_item[i].checked == true){ 
-        var element = document.getElementById("link_attach" + filesForm.elements.s_item[i].value);
-        alert(element.getAttribute("onclick"));
-      }
-    }
-  }
+function mceInsertContent(value) {
+  parent.tinyMCE.execInstanceCommand('<%= _form_id %>','mceInsertContent',true, value);
+}
+
 //]]>
 </script>
 

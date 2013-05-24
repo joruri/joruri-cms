@@ -11,7 +11,7 @@ class Sys::Lib::Form::Checker
           uri = m[0]
           uri = ::File.join(Core.site.full_uri, uri) if uri =~ /^\//
           next if uri =~ /^(#|mailto:|javascript:)/i
-          next if uri !~ /^http:/i
+          next if uri !~ /^https?:/i
           uri = CGI::unescapeHTML(uri)
           @links[uri] = uri_exists?(uri) unless @links.key?(uri)
         end

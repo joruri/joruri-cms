@@ -32,7 +32,7 @@ class Faq::Doc < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => :content_id,
     :if => %Q(!replace_page?)
   
-  validates_presence_of :state, :recent_state, :language_id, :question,
+  validates_presence_of :state, :recent_state, :language_id, :question, :body,
     :if => %Q(state == "recognize")
   validates_length_of :title,  :maximum => 200,
     :if => %Q(state == "recognize")
@@ -173,6 +173,16 @@ class Faq::Doc < ActiveRecord::Base
     self
   end
 
+  def tag_is(tag)
+    if tag.to_s.blank?
+      self.and 0, 1
+    else
+      qw = self.connection.quote_string(tag).gsub(/([_%])/, '\\\\\1')
+      self.and "sql", "EXISTS (SELECT * FROM faq_tags WHERE faq_docs.unid = faq_tags.unid AND word LIKE '#{qw}%') "
+    end
+    self
+  end
+  
   def group_is(group)
     conditions = []
     

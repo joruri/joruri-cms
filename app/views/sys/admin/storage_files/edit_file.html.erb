@@ -1,5 +1,7 @@
 <%= form_for :item, :url => "?do=update", :html => {:method => :post} do |f| %>
-  
+
+<% if 1 || @item[:mime_type] =~ /(text|javascript)/i %>
+
 <p class="form">ファイル内容</p>
 
 <% begin %><!-- <%= @item[:body] %> -->
@@ -7,6 +9,8 @@
 <%= submit :edit %>
 <% rescue Exception => e %> -->
   読み込みに失敗しました。
+<% end %>
+
 <% end %>
 
 <% end %>

@@ -88,11 +88,11 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
     uri  = item.public_uri
     uri  = (uri =~ /\?/) ? uri.gsub(/(.*\.html)\?/, '\\1') : "#{uri}"
     path = "#{item.public_path}"
-    item.publish_page(render_public_as_string(uri, :site => item.site), :path => path)
+    item.publish_page(render_public_as_string(uri, :site => item.site), :path => path, :uri => uri)
     
     uri  = item.public_uri
     uri  = (uri =~ /\?/) ? uri.gsub(/(.*\.html)\?/, '\\1.r?') : "#{uri}.r"
     path = "#{item.public_path}.r"
-    item.publish_page(render_public_as_string(uri, :site => item.site), :path => path, :dependent => :ruby)
+    item.publish_page(render_public_as_string(uri, :site => item.site), :path => path, :uri => uri, :dependent => :ruby)
   end
 end

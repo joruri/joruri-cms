@@ -42,20 +42,20 @@ module Cms::Model::Rel::Inquiry
   
   def validate_inquiry
     if @inquiry && @inquiry['state'] == 'visible'
-      if inquiry_presence?(:group) && @inquiry['group_id'].blank?
-        errors["連絡先（課）"] = "を入力してください。"
+      if inquiry_presence?(:group_id) && @inquiry['group_id'].blank?
+        errors[:in_inquiry_group_id] = error_locale(:empty)
       end
       if inquiry_presence?(:tel) && @inquiry['tel'].blank?
-        errors["連絡先（電話番号）"] = "を入力してください。"
+        errors[:in_inquiry_tel] = error_locale(:empty)
       end
-      errors["連絡先（電話番号）"] = :onebyte_characters if @inquiry['tel'].to_s !~/^[ -~｡-ﾟ]*$/
-      errors["連絡先（ファクシミリ）"] = :onebyte_characters if @inquiry['fax'].to_s !~/^[ -~｡-ﾟ]*$/
+      errors[:in_inquiry_tel] = error_locale(:onebyte_characters) if @inquiry['tel'].to_s !~/^[ -~｡-ﾟ]*$/
+      errors[:in_inquiry_fax] = error_locale(:onebyte_characters) if @inquiry['fax'].to_s !~/^[ -~｡-ﾟ]*$/
       
       if inquiry_email_setting != "hidden"
         if inquiry_presence?(:email) && @inquiry['email'].blank?
-          errors["連絡先（メールアドレス）"] = "を入力してください。"
+          errors[:in_inquiry_email] = error_locale(:blank)
         end
-        errors["連絡先（メールアドレス）"] = "を正しく入力してください。" if @inquiry['email'].to_s !~/^[ -~｡-ﾟ]*$/
+        errors[:in_inquiry_email] = error_locale(:invalid) if @inquiry['email'].to_s !~/^[ -~｡-ﾟ]*$/
       end
     end
   end

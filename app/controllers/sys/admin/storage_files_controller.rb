@@ -128,15 +128,23 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
     
     if params[:create_directory]
       if name = validate_name(params[:item][:new_directory])
-        ::Storage.mkdir("#{@path}/#{name}")
-        flash[:notice] = "ディレクトリを作成しました。"
+        if ::Storage.exists?("#{@path}/#{name}")
+          flash[:notice] = "ディレクトリは既に存在します。"
+        else
+          ::Storage.mkdir("#{@path}/#{name}")
+          flash[:notice] = "ディレクトリを作成しました。"
+        end
         return redirect_to(@current_uri)
       end
       
     elsif params[:create_file]
       if name = validate_name(params[:item][:new_file])
-        ::Storage.write("#{@path}/#{name}", "")
-        flash[:notice] = "ファイルを作成しました。"
+        if ::Storage.exists?("#{@path}/#{name}")
+          flash[:notice] = "ファイルは既に存在します。"
+        else
+          ::Storage.write("#{@path}/#{name}", "")
+          flash[:notice] = "ファイルを作成しました。"
+        end
         return redirect_to("#{@current_uri}/#{name}?do=show")
       end
       

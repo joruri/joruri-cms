@@ -48,7 +48,7 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
   
   def create
     @item = Sys::Group.new(params[:item])
-    @item.parent_id = @parent.id
+    #@item.parent_id = @parent.id
     parent = Sys::Group.find_by_id(@item.parent_id)
     @item.level_no = parent ? parent.level_no + 1 : 1
     _create @item

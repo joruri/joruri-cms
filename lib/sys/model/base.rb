@@ -11,7 +11,12 @@ module Sys::Model::Base
     label = I18n.t name, :scope => [:activerecord, :attributes, self.class.to_s.underscore]
     return label =~ /^translation missing:/ ? name.to_s.humanize : label
   end
-
+  
+  def error_locale(name)
+    label = I18n.t name, :scope => [:errors, :messages]
+    return label =~ /^translation missing:/ ? name.to_s.humanize : label
+  end
+  
   def expand_join_query(joins)
     join_dependency = ActiveRecord::Associations::ClassMethods::InnerJoinDependency.new(self.class, joins, nil)
     " #{join_dependency.join_associations.collect { |assoc| assoc.association_join }.join} "

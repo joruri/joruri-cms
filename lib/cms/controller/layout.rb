@@ -84,8 +84,8 @@ module Cms::Controller::Layout
     ## layout
     if Page.layout
       #
-    #elsif Core.set_mode('preview') && params[:layout_id]
-    # Page.layout = Cms::Layout.find(params[:layout_id])
+    elsif Core.set_mode('preview') && params[:layout_id]
+     Page.layout = Cms::Layout.find(params[:layout_id]) # emergency
     elsif layout = Cms::Lib::Layout.inhertited_layout
       Page.layout    = layout.clone
       Page.layout.id = layout.id

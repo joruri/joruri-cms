@@ -1,30 +1,21 @@
 <%
-_input = Proc.new do |name, count, path, width|
 
+_input = Proc.new do |name, count, path, width|
   onclick = "document.getElementById('#{name}_#{count}').focus();document.getElementById('#{name}_#{count}').select();"
   style = "width: #{width}px"
   text_field_tag "#{name}_#{count}", path, :style => style, :onclick => onclick, :readonly => true
 end
 
-
 %><%= render :partial => 'menu' %>
 
 <script type="text/javascript">
 //<![CDATA[
-  function mceInsertContent(value) {
-    parent.tinyMCE.execInstanceCommand('item_body','mceInsertContent',true, value);
-  }
 
-  function selectAction() {
-    var filesForm = document.filesForm;
-    var selectFile;
-    for(i=0; i < filesForm.elements.s_item.length; i++) {
-      if(filesForm.elements.s_item[i].checked == true){ 
-        var element = document.getElementById("link_attach" + filesForm.elements.s_item[i].value);
-        alert(element.getAttribute("onclick"));
-      }
-    }
-  }
+function pasteText(id) {
+  parent.insertText(parent.document.getElementById('item_body'), $(id).val());
+  return false;
+}
+
 //]]>
 </script>
 
@@ -58,20 +49,19 @@ end
     <td>
       <%= "#{safe{item.node.name}} / " if item.node %><%= item.name %><br /><%= "（#{item.title}）" if item.name != item.title %>
       <div class="pasteLinks">
-        <a onclick="parent.setText(parent.document.getElementById('item_body'), '[[file/<%= safe{item.node.name + '/'} %><%= item.name %>]]');" href="#">
-          埋め込みコード貼付</a>
+        <input type="hidden" id="srcCode<%= item.id %>" value="<%= %Q([[file/#{safe{item.node.name + '/'}}#{item.name}]]) %>" />
+        <a href="#" onclick="return pasteText('#srcCode<%= item.id %>');">埋め込みコード貼付</a>
+        
         <% if item.image_file? %>
-        <% script = %Q(<img src='#{item.public_uri}' alt='#{item.alt}' title='#{item.alt}'>) %>
-        <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
-        | <a href="#" id="link_image#{item.id}" onclick="<%= script %>">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
+        <input type="hidden" id="srcImage<%= item.id %>" value="<%= %Q(<img src="#{item.public_uri}" alt="#{item.alt}" title="#{item.alt}" />) %>" />
+        | <a href="#" onclick="return pasteText('#srcImage<%= item.id %>');">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
         
         <% if item.has_thumbnail? %>
-        <% script = %Q(<img src='#{item.public_thumbnail_full_uri}' alt='' title=''>) %>
-        <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
-        | <a href="#" id="link_image#{item.id}thumb" onclick="<%= script %>">画像貼付 (<%= "#{item.thumb_width}x#{item.thumb_height}" %>)</a>
+        <input type="hidden" id="srcThumb<%= item.id %>" value="<%= %Q(<img src="#{item.public_thumbnail_full_uri}" alt="" title="" />) %>" />
+        | <a href="#" onclick="return pasteText('#srcThumb<%= item.id %>');">画像貼付 (<%= "#{item.thumb_width}x#{item.thumb_height}" %>)</a>
         <% end %>
-      <% end %>
-      </div>
+        <% end %>
+        </div>
     </td>
     <td style="text-align: center;"><%= item.eng_unit %></td>
     <td style="text-align: center;"><%= _input.call('file_url', item.id, safe{item.public_uri}, 180) %></td>

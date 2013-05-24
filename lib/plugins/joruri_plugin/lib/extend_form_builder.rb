@@ -11,6 +11,14 @@ module ActionView
 end
 
 class ActionView::Helpers::FormBuilder
+  
+  def error_wrapping(method, tag)
+    name = method.gsub(/^.*?\[/, '').gsub(/\]\[/, '_').gsub(/\]$/, '')
+    ins  = @template.instance_variable_get("@#{@object_name}")
+    err  = ins.errors[name.to_sym]
+    return err.size > 0 ? ActionView::Base.field_error_proc.call(tag, ins) : tag
+  end
+  
   def array_name(method)
     pos = method.index('[').to_i
     pre = pos == 0 ? method : method.slice(0, pos)
@@ -56,7 +64,8 @@ class ActionView::Helpers::FormBuilder
     value  = array_value(method)
     method = array_name(method)
     
-    @template.text_field_tag(method, value, options)
+    tag = @template.text_field_tag(method, value, options)
+    return error_wrapping(method, tag)
   end
   
   def array_select(method, choices, options = {}, html_options = {})
@@ -73,7 +82,8 @@ class ActionView::Helpers::FormBuilder
     end
     options.delete(:selected)
     
-    return @template.select_tag(method, choices.html_safe, options).html_safe
+    tag = @template.select_tag(method, choices.html_safe, options).html_safe
+    return error_wrapping(method, tag)
   end
   
   def select_with_tree(method, root, options = {})
@@ -109,7 +119,9 @@ class ActionView::Helpers::FormBuilder
     options.delete(:label)
 
     choices = '' if choices.empty?
-    return @template.select_tag(method, choices.html_safe, options).html_safe
+    
+    tag  = @template.select_tag(method, choices.html_safe, options).html_safe
+    return error_wrapping(method, tag)
   end
   
   def radio_buttons(method, choices, options = {})

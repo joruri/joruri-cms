@@ -22,6 +22,8 @@ class Sys::Group < ActiveRecord::Base
   has_and_belongs_to_many :role_names, :association_foreign_key => :role_id,
     :class_name => 'Sys::RoleName', :join_table => 'sys_users_roles', :foreign_key => :group_id
   
+  validates_presence_of :parent_id,
+    :if => %Q(level_no_was.blank? || level_no_was != 1)
   validates_presence_of :state, :level_no, :code, :name, :name_en, :ldap
   validates_uniqueness_of :code
   

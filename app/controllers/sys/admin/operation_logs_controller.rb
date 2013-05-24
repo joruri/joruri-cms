@@ -61,8 +61,8 @@ protected
     require 'csv'
     
     csv = CSV.generate do |csv|
-      fields = [:id, :created_at, :user_id, :user_name, :ipaddr, :uri, :action, :item_model, :item_id, :item_unid, :item_name]
-      csv << fields.collect {|c| @item.locale(c) }
+      fields = ["ログID", :created_at, :user_id, :user_name, :ipaddr, :uri, :action, :item_model, :item_id, :item_unid, :item_name]
+      csv << fields.collect {|c| c.is_a?(Symbol) ? @item.locale(c) : c}
       
       items.each do |item|
         row = []

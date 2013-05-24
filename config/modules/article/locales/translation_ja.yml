@@ -51,10 +51,11 @@ ja:
         attribute_id: "属性"
         recent_state: "新着記事表示"
         list_state: "記事一覧表示"
-        inquiry_charge: "お問い合わせ担当"
-        inquiry_tel: "お問い合わせ電話"
-        inquiry_fax: "お問い合わせファックス"
-        inquiry_email: "お問い合わせメール"
+        in_inquiry_group_id: "連絡先（課）"
+        in_inquiry_charge: "連絡先（室・担当）"
+        in_inquiry_tel: "連絡先（電話番号）"
+        in_inquiry_fax: "連絡先（ファクシミリ）"
+        in_inquiry_email: "連絡先（メールアドレス）"
       
       article/doc_rel_doc: 
         created_at: "作成日時"

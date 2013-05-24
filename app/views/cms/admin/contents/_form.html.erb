@@ -6,7 +6,7 @@
     <th><%= @item.locale :model %></th>
     <td>
       <% if @item.id %><%= @item.model_name %><% else %>
-      <%= f.select :model, Cms::Lib::Modules.contents, :include_blank => :true %><% end %>
+      <%= f.select :model, Cms::Lib::Modules.contents.sort{|a, b| a[0] <=> b[0]}, :include_blank => :true %><% end %>
     </td>
   </tr><tr>
     <th><%= @item.locale :name %></th>

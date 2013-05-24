@@ -1,9 +1,8 @@
 # encoding: utf-8
 class Faq::Content::Setting < Cms::ContentSetting
+  
   set_config :word_dictionary, :name => "本文/単語変換辞書",
     :form_type => :text, :lower_text => "CSV形式（例　対象文字,変換後文字 ）"
-  set_config :allowed_attachment_type, :name => "添付ファイル/許可する種類",
-    :comment => "（例　<tt>gif,jpg,png,pdf,doc,xls,ppt,odt,ods,odp</tt> ）"
   set_config :inquiry_email_display, :name => "連絡先/メールアドレス表示",
     :options => [["表示","visible"],["非表示","hidden"]]
   set_config :recognition_type, :name => "承認/承認フロー",

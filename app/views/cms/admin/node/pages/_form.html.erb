@@ -1,4 +1,6 @@
 <%= init_tiny_mce %>
+<%= use_text_range_js %>
+
 <p class="form">基本情報</p>
 
 <table class="show">
@@ -11,69 +13,6 @@
     <td><%= f.text_area :body, :class => 'body mceEditor', :style => 'width: 100%' %></td>
   </tr>
 </table>
-
-<script type="text/javascript">
-//<![CDATA[
-
-var isGecko = false;
-
-/**
- * Get TextRange
- */
-function getTextRange (element) {
-  var value;
-
-  if (document.selection) {
-    if (true) {
-      value = parent.document.selection.createRange().text;
-    } else {
-      value = document.selection.createRange().text;
-    }
-  } else if (isGecko) {
-    var start = element.selectionStart;
-    var end = element.selectionEnd;
-    value = element.value.substring(start, end);
-  } else {
-    value = '';
-  }
-  return value;
-}
-
-/**
- * Set TextRange
- */
-function setTextRange (element, value) {
-  if (document.selection) {
-    if (true) {
-      element.focus();
-      parent.document.selection.createRange().text = value;
-    } else {
-      element.focus();
-      document.selection.createRange().text = value;
-    }
-  } else if (isGecko) {
-    var start = element.selectionStart;
-    var end   = element.selectionEnd;
-    var len   = element.textLength;
-    var str   = element.value.substring(start, end);
-    var head  = element.value.substring(0, start);
-    var foot  = element.value.substring(end, len);
-    element.value = head + value + foot;
-  } else {
-    element.value += value;
-  }
-}
-
-/**
- * set insert text
- */
-function setText(element, text ) {
-  parent.tinyMCE.execInstanceCommand('item_body','mceInsertContent',true, text);
-  return false;
-}
-
-//]]>
-</script>
 
 <table class="show">
   <tr>

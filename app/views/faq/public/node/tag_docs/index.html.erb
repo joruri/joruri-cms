@@ -18,10 +18,12 @@
   <span class="label">検索結果</span><span class="count"><%= "#{@docs.total_entries}" %></span><span class="unit">件</span></div>
 <% end %>
 
+<% if @docs.size > 0 %>
 <ul class="docs">
   <% @docs.each do |doc| %>
   <li><%= link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li><% end %>
 </ul>
+<% end %>
 
 <%= paginate @docs %>
 

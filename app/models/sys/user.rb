@@ -21,8 +21,9 @@ class Sys::User < ActiveRecord::Base
 #  attr_accessor :in_group_id, :current_password, :new_password, :confirm_password
   
   validates_uniqueness_of :account
-  validates_presence_of :state, :account, :name, :ldap
+  
   validates_presence_of :in_group_id, :if => %Q(in_group_id == '')
+  validates_presence_of :state, :account, :name, :ldap
   
   after_save :save_users_roles
   after_save :save_group, :if => %Q(@_in_group_id_changed)

@@ -13,10 +13,10 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
       @@mkdir_root = true
     end
     
-    @root      = "#{Core.site.public_path}/_common/themes"
+    @root      = "#{Rails.root}/public/_common/themes"
     @path      = params[:path].to_s
     @full_path = "#{@root}/#{@path}"
-    @base_uri  = ["#{Core.site.public_path}/", "/"]
+    @base_uri  = ["#{Rails.root}/public", "/"]
     @item      = Cms::Stylesheet.new_by_path(@path)
     
     if !::Storage.exists?(@item.upload_path)
@@ -43,6 +43,10 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     return rename  if params[:do] == 'rename'
     return move    if params[:do] == 'move'
     return destroy if params[:do] == 'destroy'
+    
+    if params[:do] == 'download'
+      return send_data(::Storage.read(@full_path), :content_type => ::Storage.mime_type(@full_path), :disposition => :attachment)
+    end
     
     if params[:do].nil? && !@item.directory?
       params[:do] = "show"
@@ -91,20 +95,31 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     return false
   end
   
-  def rename
+  def update
     return error_auth unless @item.editable?
     
-    if request.put?
+    old_path = @item.upload_path
+    
+    if @item.directory?
       @item.concept_id = params[:item][:concept_id]
-      @item.site_id    = Core.site.id if @item.concept_id 
-      
-      if @item.rename(params[:item][:name])
-        flash[:notice] = '更新処理が完了しました。'
-        location = @stylesheets_path.call(::File.dirname(@path))
-        return redirect_to(location)
-      end
+      @item.site_id    = Core.site.id if @item.concept_id
+    else 
+      @item.body = params[:item][:body] if params[:item].has_key?(:body)
     end
-    render :action => :rename
+    
+    if !@item.valid? || !@item.update_item
+      flash[:notice] = '更新処理に失敗しました。'
+      return render(:action => :edit)
+    end
+    
+    if @item.name != params[:item][:name] && !@item.rename(params[:item][:name])
+      flash[:notice] = '更新処理に失敗しました。'
+      return render(:action => :edit)
+    end
+      
+    flash[:notice] = '更新処理が完了しました。'
+    location = @stylesheets_path.call(::File.dirname(@path))
+    return redirect_to(location)
   end
   
   def move
@@ -112,25 +127,13 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     
     if request.put?
       if @item.move(params[:item][:path])
-        flash[:notice] = '更新処理が完了しました。'
+        flash[:notice] = '移動処理が完了しました。'
         location = @stylesheets_path.call(::File.dirname(@path))
         return redirect_to(location)
       end
     end
+    
     render :action => :move
-  end
-  
-  def update
-    return error_auth unless @item.editable?
-    
-    @item.body = params[:item][:body]
-    
-    if @item.valid? && @item.update_file
-      flash[:notice] = '更新処理が完了しました。'
-      location = @stylesheets_path.call(::File.dirname(@path))
-      return redirect_to(location)
-    end
-    render :action => :edit
   end
   
   def destroy

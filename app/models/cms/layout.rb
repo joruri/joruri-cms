@@ -211,13 +211,13 @@ class Cms::Layout < ActiveRecord::Base
   
   def remove_css_files
     path = stylesheet_path
-    ::Storage.rm_f(path)
+    ::Storage.rm_rf(path)
     
     path = ::File.dirname(path) + '/mobile.css'
-    ::Storage.rm_f(path)
+    ::Storage.rm_rf(path)
     
     path = ::File.dirname(path) + '/smart_phone.css'
-    ::Storage.rm_f(path)
+    ::Storage.rm_rf(path)
     
     ::Storage.rmdir(::File.dirname(path)) rescue nil
     return true

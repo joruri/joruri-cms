@@ -97,7 +97,7 @@ ja:
       sys/operation_log: 
         id: "ID"
         created_at: "操作日時"
-        user_id: "ユーザID"
+        user_id: "ユーザID（内部ID）"
         user_name: "ユーザ名"
         ipaddr: "IPアドレス"
         uri: "URL"

@@ -22,6 +22,8 @@ class Cms::Node < ActiveRecord::Base
   has_many   :children, :foreign_key => :parent_id,  :class_name => 'Cms::Node',
     :order => :name, :dependent => :destroy
 
+  validates_presence_of :concept_id,
+    :if => %Q(parent_id == 0)
   validates_presence_of :parent_id, :state, :model, :name, :title
   validates_uniqueness_of :name, :scope => [:site_id, :parent_id],
     :if => %Q(!replace_page?)

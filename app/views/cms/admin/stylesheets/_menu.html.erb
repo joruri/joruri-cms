@@ -1,6 +1,6 @@
 <%
 
-root = "/#{@root.gsub(@base_uri[0], "")}"
+root = "#{@root.gsub(@base_uri[0], "")}"
 navi = [ link_to(root, "#{cms_stylesheets_path}") ]
 prev = []
 
@@ -23,8 +23,7 @@ current = @path ? "#{cms_stylesheets_path}/#{@path}" : cms_stylesheets_path
 <%= link_to "上へ", parent if @path != "" && !params[:do] && @item.directory? %>
 <%= link_to :index, parent if params[:do] %>
 <% if params[:do] == "show" %>
-  <%= link_to :edit, current + "?do=edit" if @item.textfile? %>
-  <%= link_to "名称変更", current +"?do=rename" %>
+  <%= link_to :edit, current + "?do=edit" %>
   <%= link_to "移動", current + "?do=move" %>
   <%= link_to "削除", current + "?do=destroy", :confirm => "削除してよろしいですか？" %>
 <% elsif params[:do] %>

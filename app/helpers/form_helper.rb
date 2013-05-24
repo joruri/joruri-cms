@@ -50,6 +50,10 @@ module FormHelper
     render :partial => 'sys/admin/_partial/disable_enter_key/js'
   end
   
+  def use_text_range_js
+    render :partial => 'sys/admin/_partial/text_range/js'
+  end
+  
   def observe_field(field, params)
     on     = params[:on] ? params[:on].to_s : "change"
     url    = url_for(params[:url])

@@ -14,18 +14,16 @@ class Faq::Public::Node::TagDocsController < Cms::Controller::Public::Base
       return redirect_to("#{@base_uri}#{CGI::escape(@tag)}")
     end
     
-    @docs = Array.new.paginate
-    
     if @tag
       doc = Faq::Doc.new.public
       doc.agent_filter(request.mobile)
       doc.and :content_id, Page.current_node.content.id
       doc.and 'language_id', 1
-      doc.and 0, 1 if @tag.to_s == ''
-      qw = doc.connection.quote_string(@tag).gsub(/([_%])/, '\\\\\1')
-      doc.and "sql", "EXISTS (SELECT * FROM faq_tags WHERE faq_docs.unid = faq_tags.unid AND word LIKE '#{qw}%') "
+      doc.tag_is @tag
       doc.page params[:page], (request.mobile? ? 20 : 50)
       @docs = doc.find(:all, :order => 'published_at DESC')
+    else
+      @docs = Article::Doc.find(:all, :conditions => ["0 = 1"])
     end
     
     return true if render_feed(@docs)

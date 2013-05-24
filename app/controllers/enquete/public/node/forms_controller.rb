@@ -84,8 +84,11 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
     ## send mail to answer
     answer_email = nil
     answer.columns.each do |col|
-      if col.form_column.name =~ /^(メールアドレス|Email|E-mail)$/i
-        answer_email = col.value if !col.value.blank?
+      if col.form_column.name =~ /^(メールアドレス|Email|E-mail)/i
+        if !col.value.blank?
+          answer_email = col.value
+          break
+        end
       end
     end
     begin

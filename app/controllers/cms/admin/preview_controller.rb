@@ -24,8 +24,8 @@ class Cms::Admin::PreviewController < Cms::Controller::Admin::Base
     act  = opt[:action]
     
     opt.each {|k,v| params[k] = v }
-    #opt[:layout_id] = params[:layout_id] if params[:layout_id]
-    #opt[:authenticity_token] = params[:authenticity_token] if params[:authenticity_token]
+    opt[:layout_id] = params[:layout_id] if params[:layout_id]
+    opt[:authenticity_token] = params[:authenticity_token] if params[:authenticity_token]
     
     res = render_component :controller => ctl, :action => act, :params => params
     response.content_type = res.content_type

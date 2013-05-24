@@ -274,7 +274,6 @@ class Article::Doc < ActiveRecord::Base
       qw = self.connection.quote_string(tag).gsub(/([_%])/, '\\\\\1')
       self.and "sql", "EXISTS (SELECT * FROM article_tags WHERE article_docs.unid = article_tags.unid AND word LIKE '#{qw}%') "
     end
-    
     self
   end
   

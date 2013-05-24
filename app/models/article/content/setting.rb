@@ -1,5 +1,6 @@
 # encoding: utf-8
 class Article::Content::Setting < Cms::ContentSetting
+  
   set_config :word_dictionary, :name => "本文/単語変換辞書",
     :form_type => :text, :lower_text => "CSV形式（例　対象文字,変換後文字 ）"
   set_config :auto_link_check, :name => "本文/自動リンクチェック",

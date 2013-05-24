@@ -24,13 +24,14 @@ class Cms::Stylesheet < ActiveRecord::Base
   end
   
   def concept(reload = nil)
-    return @_concept if !reload && @_concept
-    if directory?
-      @_concept = concept_id ? Cms::Concept.find_by_id(concept_id) : nil
-    else
-      dir = self.class.new_by_path(::File.dirname(path))
-      @_concept = dir ? dir.concept : nil
-    end
+    return @_concept if @_concept && !reload
+    return @_concept = Cms::Concept.find_by_id(concept_id) if concept_id
+    
+    dir = ::File.dirname(path)
+    return @_concept = nil if !dir.blank? && dir =~ /^(\.+|\/)$/
+    
+    parent = self.class.new_by_path(dir)
+    @_concept = parent ? parent.concept : nil
   end
   
   def upload_path
@@ -60,10 +61,10 @@ class Cms::Stylesheet < ActiveRecord::Base
   
   def read_body
     begin
+      self.body = false
       self.body = NKF.nkf('-w', ::Storage.read(upload_path).to_s) if textfile?
-      
     rescue => e
-      self.body = "#読み込みに失敗しました。" + e.message
+      # #読み込み失敗
     end
   end
   
@@ -192,8 +193,12 @@ class Cms::Stylesheet < ActiveRecord::Base
     return false
   end
   
-  def update_file
-    ::Storage.write(upload_path, self.body)
+  def update_item
+    if ::Storage.file?(upload_path)
+      ::Storage.write(upload_path, self.body)
+    else
+      save
+    end
     return true
   rescue => e
     errors.add :base, e.to_s
@@ -210,7 +215,8 @@ class Cms::Stylesheet < ActiveRecord::Base
     is_dir = directory?
     ::Storage.mv(src, dst) if src != dst
     
-    self.path = ::File.join(::File.dirname(path), @new_name)
+    self.path = ::File.join(::File.dirname(path), @new_name).gsub(/^\.\//, '')
+    
     return false if is_dir && !save
     
     return true
@@ -254,8 +260,12 @@ class Cms::Stylesheet < ActiveRecord::Base
     return false
   end
   
+protected
+
   def remove_file
+    is_dir = directory?
     ::Storage.rm_rf(upload_path)
+    self.class.destroy_all(["site_id = ? AND path LIKE ?", site_id, path.to_s.gsub(/\/$/, '') + "/%"]) if is_dir
     return true
   rescue => e
     errors.add :base, e.to_s

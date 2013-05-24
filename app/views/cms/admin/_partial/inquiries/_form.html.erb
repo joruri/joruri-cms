@@ -16,31 +16,28 @@ group  = Sys::Group.find_by_id(item.in_inquiry['group_id']) || Core.user_group
 <table class="show">
 <tr>
   <th>課 <% if @item.inquiry_presence?(:group_id) %><span class="note">※</span><% end %></th>
-  <td><span <%= error?('連絡先（課）') %>>
+  <td>
     <% if Core.user.has_auth?(:manager) %>
-    <%= f.select_with_tree "in_inquiry[group_id]", groups %>
+    <%= f.select_with_tree "in_inquiry[group_id]", groups, :include_blank => "" %>
     <% else %>
     <%= safe{group.full_name} %>
     <input type="hidden" name="<%= f.object_name.to_s %>[in_inquiry][group_id]" value="<%= group.id %>" />
-    <% end %></td>
+    <% end %>
+  </td>
 </tr><tr>
   <th>室・担当</th>
-  <td><span <%= error?('連絡先（室・担当）') %>>
-    <%= f.array_text_field "in_inquiry[charge]", :class => 'name' %></span></td>
+  <td><%= f.array_text_field "in_inquiry[charge]", :class => 'name' %></td>
 </tr><tr>
   <th>電話番号 <% if @item.inquiry_presence?(:tel) %><span class="note">※</span><% end %></th>
-  <td><span <%= error?('連絡先（電話番号）') %>>
-    <%= f.array_text_field "in_inquiry[tel]", :class => 'number' %></span></td>
+  <td><%= f.array_text_field "in_inquiry[tel]", :class => 'number' %></td>
 </tr><tr>
   <th>ファクシミリ</th>
-  <td><span <%= error?('連絡先（ファクシミリ）') %>>
-    <%= f.array_text_field "in_inquiry[fax]", :class => 'number' %></span></td>
+  <td><%= f.array_text_field "in_inquiry[fax]", :class => 'number' %></td>
 </tr>
 <% if item.inquiry_email_setting != "hidden" %>
 <tr>
   <th>メールアドレス <% if @item.inquiry_presence?(:email) %><span class="note">※</span><% end %></th>
-  <td><span <%= error?('連絡先（メールアドレス）') %>>
-    <%= f.array_text_field "in_inquiry[email]", :class => 'email' %></span></td>
+  <td><%= f.array_text_field "in_inquiry[email]", :class => 'email' %></td>
 </tr>
 <% end %>
 </table>

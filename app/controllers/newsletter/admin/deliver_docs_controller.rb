@@ -80,7 +80,7 @@ protected
     require 'csv'
     
     csv = CSV.generate do |csv|
-      csv << ["ID", "送信日時", "メールアドレス", "メール種別", "結果", "備考"]
+      csv << ["ログID", "送信日時", "メールアドレス", "メール種別", "結果", "備考"]
       @doc.logs.find(:all, :order => "id").each do |data|
         row = []
         row << data.id

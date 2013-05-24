@@ -1,0 +1,31 @@
+<script type="text/javascript">
+//<![CDATA[
+
+var textRange = null;
+
+function getTextRange(textarea) {
+  textarea.focus();
+  return document.selection.createRange();
+}
+
+function insertText(textarea, txt) {
+  if (textarea.style.display == "none") { // TinyMCE
+    parent.tinyMCE.execInstanceCommand(textarea.id, 'mceInsertContent', true, txt);
+    return;
+  }
+  if (document.selection) { // IE6
+    textarea.focus();
+    parent.document.selection.createRange().text = txt;
+    return;
+  }
+  var index = textarea.selectionStart;
+  var length = textarea.selectionEnd - index;
+  textarea.value = textarea.value.substr(0, index) +
+  txt + textarea.value.substr(index + length);
+  textarea.focus();
+  var newCaretPosition = index + txt.length;
+  textarea.setSelectionRange(newCaretPosition, newCaretPosition);
+}
+
+//]]>
+</script>

@@ -68,13 +68,13 @@
     `source_count` int(11) DEFAULT NULL,
     PRIMARY KEY (`id`)
   );
-  ALTER TABLE `cms_sites`
-    ADD COLUMN `alias_full_uri` VARCHAR(255) NULL AFTER `full_uri`,
-    ADD COLUMN `admin_full_uri` VARCHAR(255) NULL AFTER `mobile_full_uri`;
   ALTER TABLE `cms_kana_dictionaries`
     DROP COLUMN `unidic_body`,
     DROP COLUMN `ipadic_body`,
     ADD COLUMN `mecab_csv` LONGTEXT DEFAULT NULL AFTER `body`;
+  ALTER TABLE `cms_sites`
+    ADD COLUMN `alias_full_uri` VARCHAR(255) NULL AFTER `full_uri`,
+    ADD COLUMN `admin_full_uri` VARCHAR(255) NULL AFTER `mobile_full_uri`;
   ALTER TABLE `cms_talk_tasks`
     ADD COLUMN `published_at` DATETIME DEFAULT NULL AFTER `updated_at` ;
   
@@ -133,13 +133,11 @@
     ADD COLUMN `total_count` INT(11) DEFAULT NULL  AFTER `mobile_body` ,
     ADD COLUMN `success_count` INT(11) DEFAULT NULL  AFTER `total_count` , 
     ADD COLUMN `error_count` INT(11) DEFAULT NULL  AFTER `success_count` ;
-  ALTER TABLE `newsletter_members`
-    ADD COLUMN `ipaddr` VARCHAR(255) DEFAULT NULL;
   ALTER TABLE `newsletter_requests`
     DROP COLUMN `unsubscribe_email` ,
     DROP COLUMN `request_state` ,
     DROP COLUMN `token` ,
-    ADD COLUMN `ipaddr` VARCHAR(255) NULL,
+    ADD COLUMN `ipaddr` VARCHAR(255) DEFAULT NULL,
     CHANGE COLUMN `subscribe_email` `email` TEXT DEFAULT NULL;
   ALTER TABLE `newsletter_tests`
     RENAME TO `newsletter_testers`;

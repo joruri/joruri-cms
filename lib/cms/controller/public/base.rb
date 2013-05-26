@@ -39,7 +39,9 @@ class Cms::Controller::Public::Base < Sys::Controller::Public::Base
       end
       
       path = "#{Page.site.public_path}" + Core.request_uri.gsub(/\/$/, "/index.html")
-      return send_storage_file(path) if ::Storage.exists?(path) && !request.mobile? && !request.smart_phone?
+      if ::Storage.exists?(path)
+        return send_storage_file(path) if (!request.mobile? && !request.smart_phone?) || cookies[:pc_view] == "on"
+      end
     end
   end
   

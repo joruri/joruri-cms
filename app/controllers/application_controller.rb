@@ -109,7 +109,7 @@ private
     elsif ::Storage.exists?("#{Rails.public_path}/500.html")
       html = ::Storage.read("#{Rails.public_path}/500.html")
     else
-      html = "<html>\n<head></head>\n<body>\n<p>#{message}</p>\n</body>\n</html>\n"
+      html = "<html>\n<head><title>#{status}</title></head>\n<body>\n<p>#{message}</p>\n</body>\n</html>\n"
     end
     
     if request.format.to_s =~ /xml/i

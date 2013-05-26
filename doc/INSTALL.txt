@@ -358,16 +358,15 @@ MeCab-Ruby
   $ crontab -e
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   RUN="/usr/local/bin/ruby /var/share/joruri/script/rails runner -e production"
-  LOG=">> /var/share/joruri/log/cron.log 2>&1"
   
-  10,25,40,55 * * * * $RUN "Script.run('sys/tasks#exec')" $LOG   # 日時指定処理
-  */15 * * * * $RUN "Script.run('cms/nodes#publish')" $LOG       # ページ書き出し
-  */15 * * * * $RUN "Script.run('cms/talks#publish')" $LOG       # 音声書き出し
-  */30 * * * * $RUN "Script.run('cms/feeds#read')" $LOG          # フィード取り込み
-  */5 * * * * $RUN "Script.run('newsletter/requests#read')" $LOG # メルマガ読者登録
-  #0 * * * * $RUN "Script.run('article/docs#rebuild')" $LOG      # 記事再構築(ページ)
-  #0 * * * * $RUN "Script.run('faq/docs#rebuild')" $LOG          # FAQ再構築(ページ)
-  #0 * * * * $RUN "Script.run('enquete/answers#pull')" $LOG      # アンケート取り込み ※[8.1]
+  10,25,40,55 * * * * $RUN "Script.run('sys/tasks#exec')"   # 日時指定処理
+  */15 * * * * $RUN "Script.run('cms/nodes#publish')"       # ページ書き出し
+  */15 * * * * $RUN "Script.run('cms/talks#publish')"       # 音声書き出し
+  */30 * * * * $RUN "Script.run('cms/feeds#read')"          # フィード取り込み
+  */5 * * * * $RUN "Script.run('newsletter/requests#read')" # メルマガ読者登録
+  #0 * * * * $RUN "Script.run('article/docs#rebuild')"      # 記事再構築(ページ)
+  #0 * * * * $RUN "Script.run('faq/docs#rebuild')"          # FAQ再構築(ページ)
+  #0 * * * * $RUN "Script.run('enquete/answers#pull')"      # アンケート取り込み ※[8.1]
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ======================================================================

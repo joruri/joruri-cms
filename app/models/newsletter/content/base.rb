@@ -1,5 +1,6 @@
 # encoding: utf-8
 class Newsletter::Content::Base < Cms::Content
+  
   has_many :docs, :foreign_key => :content_id, :class_name => 'Newsletter::Doc',
     :dependent => :destroy
   has_many :members, :foreign_key => :content_id, :class_name => 'Newsletter::Member',
@@ -8,7 +9,7 @@ class Newsletter::Content::Base < Cms::Content
     :dependent => :destroy
   has_many :testers, :foreign_key => :content_id, :class_name => 'Newsletter::Tester',
     :dependent => :destroy
-  has_many :logs, :foreign_key => :content_id, :class_name => 'Newsletter::DeliveryLog',
+  has_many :logs, :foreign_key => :content_id, :class_name => 'Newsletter::Log',
     :dependent => :destroy
 
   def form_node
@@ -17,6 +18,11 @@ class Newsletter::Content::Base < Cms::Content
     item.and :content_id, id
     item.and :model, 'Newsletter::Form'
     @form_node = item.find(:first, :order => :id)
+  end
+  
+  def mail_from
+    addr = setting_value("sender_address")
+    !addr.blank? ? addr : "webmaster@" + site.full_uri.gsub(/^.*?\/\/(.*?)(:|\/).*/, '\\1')
   end
   
   def sender_address

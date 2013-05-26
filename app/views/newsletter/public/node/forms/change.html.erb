@@ -4,7 +4,7 @@
 
   <%= error_messages_for "item" %>
 
-  <h2 class="cornerTitle">メールマガジンの解除はこちら</h2>
+  <h2 class="cornerTitle"><%= @content.name %>の解除はこちら</h2>
 
   <% if !@content.deletion_body.blank? %>
   <div class="body"><%= @content.deletion_body.html_safe %></div>
@@ -24,7 +24,7 @@
   <% end %>
   
   <div class="submitters">
-    <input type="submit" name="unsubscribe" value="解除する" />
+    <input type="submit" value="確認メールを送信する" />
   </div>
 
 <% end %>

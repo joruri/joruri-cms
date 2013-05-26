@@ -1,0 +1,25 @@
+<div class="contentNewsletter contentNewsletterForms">
+
+<%= form_for :item, :url => "" do |f| %>
+
+  <h2 class="cornerTitle"><%= @content.name %>の登録確認</h2>
+  
+  <%= error_messages_for "item" %>
+  
+  <div class="column columnEmail">
+    <div class="name"><%= @item.locale(:email) %> <span class="required">※</span></div>
+    <div class="field"><%= @item.email %></div>
+  </div>
+  
+  <div class="column columnLetterType">
+    <div class="name"><%= @item.locale(:letter_type) %> <span class="required">※</span></div>
+    <div class="field"><%= @item.letter_type_name %></div>
+  </div>
+  
+  <div class="submitters">
+    <input type="submit" value="登録する" />
+  </div>
+
+<% end %>
+
+</div>

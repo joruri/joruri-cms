@@ -12,13 +12,13 @@ Cms::ContentSetting.create(:content_id => content.id, :name => "sender_address",
 Cms::ContentSetting.create(:content_id => content.id, :name => "summary",
   :value => %Q(<p>「ジョールリ市メールマガジン」は、ジョールリ市が発行するメールマガジンです。</p><p>市政の動きやイベント情報などを配信しています。</p><p>毎週金曜日発行です。</p><p>&nbsp;</p><p><span style="color: #ff0000;">※このメールマガジンはサンプルです</span></p>))
 Cms::ContentSetting.create(:content_id => content.id, :name => "addition_body",
-  :value => %Q(<p>下記のフォームより登録できます。</p><p>メールアドレスと、メールタイプを選択して「登録する」ボタンをクリックしてください。</p>))
+  :value => %Q(<p>下記のフォームより登録できます。</p><p>メールアドレスを入力し、メール種別を選択してください。</p>))
 Cms::ContentSetting.create(:content_id => content.id, :name => "deletion_body",
-  :value => %Q(<p>配信を解除するメールアドレスを入力し、「解除する」をクリックしてください。</p>))
+  :value => %Q(<p>配信を解除するメールアドレスを入力してください。</p>))
 Cms::ContentSetting.create(:content_id => content.id, :name => "sent_addition_body",
-  :value => %Q(<p>メールマガジンの登録を受け付けました。</p><p>&nbsp;</p><p>後ほど、ご登録のメールアドレス宛に「登録完了のお知らせ」を送信させていただきます。</p><p>ご登録ありがとうございました。</p>))
+  :value => %Q(<p>メールマガジンの登録を受け付けました。</p><p>&nbsp;</p><p>後ほど、ご登録のメールアドレス宛に「登録完了のお知らせ」をお送りいたします。</p><p>ご登録ありがとうございました。</p>))
 Cms::ContentSetting.create(:content_id => content.id, :name => "sent_deletion_body",
-  :value => %Q(<p>メールマガジンの解除を受け付けました。</p><p>&nbsp;</p><p>後ほど、ご登録のメールアドレス宛に「解除完了のお知らせ」を送信させていただきます。</p><p>ご利用ありがとうございました。</p>))
+  :value => %Q(<p>メールマガジンの解除を受け付けました。</p><p>&nbsp;</p><p>後ほど、ご登録のメールアドレス宛に「解除完了のお知らせ」をお送りいたします。</p><p>ご利用ありがとうございました。</p>))
 
 ## ---------------------------------------------------------
 ## cms/concept

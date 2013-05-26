@@ -1,0 +1,20 @@
+<div class="contentNewsletter contentNewsletterForms">
+
+<%= form_for :item, :url => "" do |f| %>
+
+  <h2 class="cornerTitle"><%= @content.name %>の解除確認</h2>
+  
+  <%= error_messages_for "item" %>
+  
+  <div class="column columnEmail">
+    <div class="name"><%= @item.locale(:email) %> <span class="required">※</span></div>
+    <div class="field"><%= @item.email %></div>
+  </div>
+  
+  <div class="submitters">
+    <input type="submit" value="解除する" />
+  </div>
+
+<% end %>
+
+</div>

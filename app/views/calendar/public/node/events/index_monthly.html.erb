@@ -16,8 +16,10 @@
     <li class="event">
       <% if item.is_a?(Article::Doc) %>
         <%= link_to h(item.title), item.public_uri %>
+        <%= safe{item.event_close_date.strftime("（～%-m月%-d日）")} if item.event_close_date %>
       <% else %>
         <%= item.event_uri.blank? ? hbr(item.title) : link_to(hbr(item.title), item.event_uri, :target => "_blank") %>
+        <%= safe{item.event_close_date.strftime("（～%-m月%-d日）")} if item.event_close_date %>
       <% end %>
     </li>
     <% end %>

@@ -46,7 +46,39 @@ class Newsletter::Request < ActiveRecord::Base
       end
     end
   end
-
+  
+  def email_hash
+    require 'digest/md5'
+    Digest::MD5.new.update("#{email}#{Joruri.config[:sys_crypt_pass]}").to_s
+  end
+  
+  def subscribe_guide_body
+    line = '-' * (mobile? ? 15 : 50)
+    
+    body = []
+    body << "下記のURLにアクセスして登録を完了させてください。\n"
+    body << "#{content.form_node.public_full_uri}subscribe/#{CGI.escape(email)}/#{email_hash}?type=#{letter_type}\n\n"
+    body << "#{line}\n"
+    body << "■メールアドレス\n#{email}\n\n"
+    body << "■メールタイプ\n#{letter_type_name}\n"
+    body << "#{line}\n"
+    body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
+    body.join
+  end
+  
+  def unsubscribe_guide_body
+    line = '-' * (mobile? ? 15 : 50)
+    
+    body = []
+    body << "下記のURLにアクセスして解除を完了させてください。\n"
+    body << "#{content.form_node.public_full_uri}unsubscribe/#{CGI.escape(email)}/#{email_hash}\n\n"
+    body << "#{line}\n"
+    body << "■メールアドレス\n#{email}\n"
+    body << "#{line}\n"
+    body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
+    body.join
+  end
+  
   def subscribe_notice_body
     line = '-' * (mobile? ? 15 : 50)
     
@@ -71,7 +103,7 @@ class Newsletter::Request < ActiveRecord::Base
     body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
     body.join
   end
-
+  
   def search(params)
     params.each do |n, v|
       next if v.to_s == ''

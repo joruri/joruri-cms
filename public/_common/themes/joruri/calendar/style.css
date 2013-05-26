@@ -40,6 +40,7 @@ h2 {
 }
 .date .day {
   float: left;
+  width: 8em;
   height: 35px;
   margin-right: 15px;
   padding-top: 5px;
@@ -57,7 +58,6 @@ h2 {
   padding-top: 5px;
 }
 .events li {
-  line-height: 1;
   padding-bottom: 5px;
 }
 .pagination {

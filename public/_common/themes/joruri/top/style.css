@@ -429,8 +429,6 @@
 #recentDocs li img {
   display: inline-block;
   float: left;
-  width: 120px;
-  height: 90px;
   margin-right: 10px;
 }
 #recentDocs .feed {

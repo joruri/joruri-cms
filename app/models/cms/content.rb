@@ -8,8 +8,12 @@ class Cms::Content < ActiveRecord::Base
   include Cms::Model::Rel::Concept
   include Cms::Model::Auth::Concept
 
-  has_many   :settings, :foreign_key => :content_id, :class_name => 'Cms::ContentSetting',
+  has_many :settings, :foreign_key => :content_id, :class_name => 'Cms::ContentSetting',
     :order => :sort_no, :dependent => :destroy
+  has_many :pieces, :foreign_key => :content_id, :class_name => 'Cms::Piece',
+    :dependent => :destroy
+  has_many :nodes, :foreign_key => :content_id, :class_name => 'Cms::Node',
+    :dependent => :destroy
     
   validates_presence_of :concept_id, :state, :model, :name
 

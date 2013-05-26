@@ -9,7 +9,7 @@ class Util::String::Crypt
   rescue
     return false
   end
-   
+  
   def self.decrypt(msg, pass = 'phrase', salt = nil)
     dec = OpenSSL::Cipher::Cipher.new('aes-256-cbc')
     dec.decrypt

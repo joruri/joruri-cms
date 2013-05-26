@@ -57,6 +57,7 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     events = (events + event_docs)
     events.sort! {|a, b| a.event_date <=> b.event_date }
     events.each do |ev|
+      next if !@items[ev.event_date.to_s]
       @items[ev.event_date.to_s] << ev
     end
     

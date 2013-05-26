@@ -683,7 +683,6 @@ ActiveRecord::Schema.define(:version => 20110803122623) do
     t.string   "request_type", :limit => 15
     t.text     "email"
     t.string   "letter_type",  :limit => 15
-    t.string   "ipaddr"
   end
 
   add_index "newsletter_requests", ["content_id", "request_type"], :name => "content_id"

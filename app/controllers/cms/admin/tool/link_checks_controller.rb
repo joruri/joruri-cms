@@ -31,7 +31,7 @@ protected
     require 'csv'
     
     csv = CSV.generate do |csv|
-      csv << ["リンクID", "チェック日時", "リンク先URL", "結果", "リンク元URL", "リンク元数"]
+      csv << ["ログID", "チェック日時", "リンク先URL", "結果", "リンク元URL", "リンク元数"]
       
       @logs = Cms::LinkCheck.find(:all)
       @logs.each do |data|

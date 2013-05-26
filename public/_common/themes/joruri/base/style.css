@@ -142,6 +142,28 @@ ul.notices li {
   padding: 1px 0px;
 }
 
+/* field with errors
+----------------------------------------------- */
+.field_with_errors {
+  display: inline;
+}
+.field_with_errors input,
+.field_with_errors textarea, 
+.field_with_errors select {
+  border: 1px solid #e00;
+}
+.field_with_errors input[type=radio] {
+  margin-right: 6px;
+  outline: 1px solid #e00;
+}
+.field_with_errors + .field_with_errors,
+.field_with_errors ~ .field_with_errors {
+  display: inline;
+}
+.field_with_errors input[type="hidden"] {
+  display: none;
+}
+
 /* Table for list
 ----------------------------------------------- */
 table.list {

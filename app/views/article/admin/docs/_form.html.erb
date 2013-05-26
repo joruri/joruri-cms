@@ -146,6 +146,7 @@ function importUri() {
       <%= f.radio_buttons :event_state, @item.event_states, :class => 'status' %>
       &nbsp; イベント日付 ：
       <%= f.text_field :event_date, :class => 'date' %>
+      ～ <%= f.text_field :event_close_date, :class => 'date' %>
       </div>
     </td>
   </tr><tr>

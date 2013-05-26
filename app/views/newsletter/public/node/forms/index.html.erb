@@ -6,7 +6,7 @@
   <div class="summary"><%== @content.summary %></div>
   <% end %>
   
-  <h2 class="cornerTitle">メールマガジンの登録はこちら</h2>
+  <h2 class="cornerTitle"><%= @content.name %>の登録はこちら</h2>
   
   <%= error_messages_for "item" %>
   
@@ -33,7 +33,7 @@
   <% end %>
   
   <div class="submitters">
-    <input type="submit" name="subscribe" value="登録する" />
+    <input type="submit" value="確認メールを送信する" />
   </div>
 
 <% end %>

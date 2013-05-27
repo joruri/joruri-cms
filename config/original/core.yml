@@ -4,11 +4,11 @@ production:
   proxy  : 
 
 test:
-  title  : Joruri
-  uri    : http://192.168.0.2/
+  title  : 
+  uri    : 
   proxy  :
 
 development:
-  title  : Joruri
-  uri    : http://192.168.0.2/
+  title  : 
+  uri    : 
   proxy  : 

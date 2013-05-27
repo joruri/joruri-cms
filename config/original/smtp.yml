@@ -1,23 +1,23 @@
 production:
-  address:        localhost
-  port:           25
-  domain:         localhost
-  user_name:      
-  password:       
+  address       : localhost
+  port          : 25
+  domain        : localhost
+  user_name     :      
+  password      :       
   authentication: 
 
 test:
-  address:        localhost
-  port:           25
-  domain:         localhost
-  user_name:      
-  password:       
+  address       : 
+  port          : 
+  domain        : 
+  user_name     :      
+  password      :       
   authentication: 
 
 development:
-  address:        localhost
-  port:           25
-  domain:         localhost
-  user_name:      
-  password:       
+  address       : 
+  port          : 
+  domain        : 
+  user_name     :      
+  password      :       
   authentication: 

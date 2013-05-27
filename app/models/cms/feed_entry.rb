@@ -6,7 +6,9 @@ class Cms::FeedEntry < ActiveRecord::Base
 
   belongs_to :status,         :foreign_key => :state,             :class_name => 'Sys::Base::Status'
   belongs_to :feed,           :foreign_key => :feed_id,           :class_name => 'Cms::Feed'
-
+  
+  validates_presence_of :link_alternate, :title
+  
   def public
     self.and "#{self.class.table_name}.state", 'public'
     self.join "INNER JOIN `cms_feeds` ON `cms_feeds`.id = `cms_feed_entries`.feed_id"

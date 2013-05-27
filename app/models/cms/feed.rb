@@ -11,7 +11,7 @@ class Cms::Feed < ActiveRecord::Base
   has_many   :entries,        :foreign_key => :feed_id,         :class_name => 'Cms::FeedEntry',
     :dependent => :destroy
 
-  validates_presence_of :name, :uri, :title
+  validates_presence_of :name, :title, :uri
 
   def public
     self.and "#{self.class.table_name}.state", 'public'

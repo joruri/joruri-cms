@@ -4,7 +4,7 @@
 
 <% if @link_entry_form %>
 <div class="bbsMenu">
-  <%= link_to "新規投稿", "#{@node_uri}new", :class => "newEntry" %>
+  <%= link_to "新規投稿", "#{@node_uri}new.html", :class => "newEntry" %>
 </div>
 <% else %>
 <div class="entryForm">
@@ -46,9 +46,9 @@
     <input type="hidden" name="_method" value="DELETE" />
     <dl>
       <dt>投稿No.</dt>
-      <dd><input class="no" type="text" name="no" value="<%= h(params[:no]) %>" /></dd>
+      <dd><input class="no" type="text" name="no" value="<%= params[:no] %>" autocomplete="off" /></dd>
       <dt>削除パス</dt>
-      <dd><input class="password" type="password" name="password" value="<%= h(params[:password]) %>" /></dd>
+      <dd><input class="password" type="password" name="password" value="<%= params[:password] %>" /></dd>
     </dl>
     <input type="submit" value="削除する" />
   <% end %>

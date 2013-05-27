@@ -4,7 +4,7 @@
 
 <div class="entryForm">
   <h2 class="formTitle">投稿フォーム</h2>
-  <%= form_for :item, :url => "#{@node_uri}new" do |f| %>
+  <%= form_for :item, :url => "#{@node_uri}new.html" do |f| %>
     <%= render :partial => "form", :locals => {:f => f} %>
     <%= submit "投稿する" %>
   <% end %>

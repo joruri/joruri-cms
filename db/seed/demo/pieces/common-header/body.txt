@@ -16,8 +16,7 @@
 <span class="naviFont">
   <span class="label">文字サイズ</span>
   <span class="small" title="文字を小さく">小さく</span>
-  <span class="base">標準</span>
-  <span class="view">100%</span>
+  <span class="base" title="標準サイズ">標準</span>
   <span class="big" title="文字を大きく">大きく</span>
 </span>
 

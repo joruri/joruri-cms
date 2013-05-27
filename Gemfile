@@ -17,7 +17,6 @@ gem 'rails_autolink', '1.0.9'
 gem 'jquery-rails', '2.2.1'
 gem 'therubyracer', '0.11.4', :platforms => :ruby
 gem 'galetahub-simple_captcha', '0.1.5', :require => 'simple_captcha'
-gem 'ruby-ldap', '0.9.12' rescue puts($!)
 gem 'multi_db', '0.3.1'
 gem 'thin','1.5.1'
 
@@ -26,3 +25,6 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
 end
+
+require "yaml"
+gem 'ruby-ldap', '0.9.12' if ::YAML.load_file(File.dirname(__FILE__) + "/config/application.yml")["sys"]["use_ldap"]

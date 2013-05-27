@@ -29,22 +29,22 @@ production:
 #  host: 
 
 test:
-  adapter : mysql2
-  database: joruri
-  username: joruri
-  password: pass
-  timeout : 5000
-  encoding: utf8
-  reconnect: true
-  host: 127.0.0.1
+  adapter : 
+  database: 
+  username: 
+  password: 
+  timeout : 
+  encoding: 
+  reconnect: 
+  host: 
 
 development:
-  adapter : mysql2
-  database: joruri
-  username: joruri
-  password: pass
-  timeout : 5000
-  encoding: utf8
-  reconnect: true
-  host: 127.0.0.1
+  adapter : 
+  database: 
+  username: 
+  password: 
+  timeout : 
+  encoding: 
+  reconnect: 
+  host: 
 

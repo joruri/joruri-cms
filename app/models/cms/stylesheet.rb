@@ -97,7 +97,8 @@ class Cms::Stylesheet < ActiveRecord::Base
       next if name =~ /^\.+/
       child_path = ::File.join(upload_path, name)
       next if ::Storage.file?(child_path)
-      items << self.class.new_by_path(::File.join(path, name))
+      cpath = path.blank? ? name : ::File.join(path, name)
+      items << self.class.new_by_path(cpath)
     end
     items
   end
@@ -108,7 +109,8 @@ class Cms::Stylesheet < ActiveRecord::Base
       next if name =~ /^\.+/
       child_path = ::File.join(upload_path, name)
       next if ::Storage.directory?(child_path)
-      items << self.class.new_by_path(::File.join(path, name))
+      cpath = path.blank? ? name : ::File.join(path, name)
+      items << self.class.new_by_path(cpath)
     end
     items
   end

@@ -357,16 +357,16 @@ MeCab-Ruby
   
   $ crontab -e
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  RUN="/usr/local/bin/ruby /var/share/joruri/script/rails runner -e production"
+  RAKE="/usr/local/bin/ruby /usr/local/bin/rake -f /var/share/joruri/Rakefile RAILS_ENV=production"
   
-  10,25,40,55 * * * * $RUN "Script.run('sys/tasks#exec')"   # 日時指定処理
-  */15 * * * * $RUN "Script.run('cms/nodes#publish')"       # ページ書き出し
-  */15 * * * * $RUN "Script.run('cms/talks#publish')"       # 音声書き出し
-  */30 * * * * $RUN "Script.run('cms/feeds#read')"          # フィード取り込み
-  */5 * * * * $RUN "Script.run('newsletter/requests#read')" # メルマガ読者登録
-  #0 * * * * $RUN "Script.run('article/docs#rebuild')"      # 記事再構築(ページ)
-  #0 * * * * $RUN "Script.run('faq/docs#rebuild')"          # FAQ再構築(ページ)
-  #0 * * * * $RUN "Script.run('enquete/answers#pull')"      # アンケート取り込み ※[8.1]
+  10,25,40,55 * * * * $RAKE sys:tasks:exec    # 日時指定処理
+  */15 * * * * $RAKE cms:nodes:publish        # ページ書き出し
+  */15 * * * * $RAKE cms:talks:publish        # 音声書き出し
+  */30 * * * * $RAKE cms:feeds:read           # フィード取り込み
+  */10 * * * * $RAKE newsletter:requests:read # メルマガ読者登録
+  # 00 * * * * $RAKE article:docs:rebuild     # 記事再構築(ページ)
+  # 00 * * * * $RAKE faq:docs:rebuild         # FAQ再構築(ページ)
+  # 00 * * * * $RAKE enquete:answers:pull     # アンケート取り込み ※[8.1]
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ======================================================================

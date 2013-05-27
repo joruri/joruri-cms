@@ -22,7 +22,7 @@ class Script
     end
     
     ## run
-    ruby   = Joruri.config[:sys_ruby_bin]
+    ruby   = Joruri.config[:sys_ruby_bin] || "/usr/local/bin/ruby"
     runner = "#{Rails.root}/script/rails runner"
     opts   = options.inspect
     cmd    = "#{ruby} #{runner} -e #{Rails.env} \"Script.run('#{path}', #{opts})\""

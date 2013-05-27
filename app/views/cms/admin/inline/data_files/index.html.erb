@@ -57,7 +57,7 @@ function pasteText(id) {
         | <a href="#" onclick="return pasteText('#srcImage<%= item.id %>');">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
         
         <% if item.has_thumbnail? %>
-        <input type="hidden" id="srcThumb<%= item.id %>" value="<%= %Q(<img src="#{item.public_thumbnail_full_uri}" alt="" title="" />) %>" />
+        <input type="hidden" id="srcThumb<%= item.id %>" value="<%= %Q(<img src="#{item.public_thumbnail_uri}" alt="" title="" />) %>" />
         | <a href="#" onclick="return pasteText('#srcThumb<%= item.id %>');">画像貼付 (<%= "#{item.thumb_width}x#{item.thumb_height}" %>)</a>
         <% end %>
         <% end %>

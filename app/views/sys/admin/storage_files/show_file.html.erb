@@ -16,7 +16,8 @@
 <% if 1 || @item[:mime_type] =~ /(text|javascript)/i %>
 <p class="form">ファイル内容</p>
 <table class="show">
-  <tr><td class="pre monospace"><%= @item[:body] rescue "#読み込みに失敗しました。" %></td>
+  <tr>
+    <td class="pre monospace"><% begin %><%= @item[:body]  %><% rescue %>読み込みに失敗しました。<% end %></td>
   </tr>
 </table>
 <% end %>

@@ -8,7 +8,7 @@ module EntityConversion::Lib::Convertor::Production
     if unit.parent
       parent_id = unit.parent.id
     elsif parent = unit.new_parent
-      parent_id = Sys::Group.find_by_code(parent.code).id
+      parent_id = Sys::Group.uncached { Sys::Group.find_by_code(parent.code).id }
     end
     
     group = Sys::Group.new({
@@ -54,9 +54,9 @@ module EntityConversion::Lib::Convertor::Production
     if move = unit.move
       new_id = move.id
     elsif move = unit.new_move
-      new_id = Sys::Group.find_by_code(move.code).id
+      new_id = Sys::Group.uncached { Sys::Group.find_by_code(move.code).id }
     end
-    group.destroy
+    group.destroy if group.id != new_id
   end
   
   def convert_end(unit, group)
@@ -70,21 +70,21 @@ module EntityConversion::Lib::Convertor::Production
       if value.is_a?(Fixnum)
         value = new_id
       elsif value.is_a?(String)
-        value.gsub(/(^| )#{old_id}( |$)/)
+        value = value.gsub(/((^| )#{old_id}( |$))/, '\\2' + "#{new_id}" + '\\3')
       end
       item.send("#{field}=", value)
     end
-    item.save
+    @logs << "Error: #{item.errors.full_messages.join(', ')}" if !item.save(:validate => false)
   end
   
   def replace_texts_save(item, fields, texts)
     fields.each do |field|
       next if item.send(field).blank?
       value = item.send(field)
-      texts.each {|src, dst| value.gsub!(Regexp.escape(src), dst) }
+      texts.each {|src, dst| value = value.gsub(/#{Regexp.escape(src)}/, dst) }
       item.send("#{field}=", value)
     end
-    item.save
+    @logs << "Error: #{item.errors.full_messages.join(', ')}" if !item.save(:validate => false)
   end
   
 end

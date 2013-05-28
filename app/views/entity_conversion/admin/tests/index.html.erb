@@ -6,7 +6,7 @@
     <td><%= safe{@log.updated_at.strftime("%Y-%m-%d %H:%M")} %> &nbsp;<%= @log.status %></td>
   </tr><tr>
     <td colspan="2" style="padding: 0px;">
-      <pre style="overflow-y: scroll; margin: 0px; height: 300px; padding: 5px;"><%=hbr @log.body %></pre>
+      <pre style="margin: 0px; padding: 5px;"><%=hbr @log.body %></pre>
     </td>
   </tr>
 </table>

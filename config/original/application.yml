@@ -2,18 +2,15 @@ sys:
   # LDAPの使用
   use_ldap: true
   
-  # 管理画面パス
-  admin_uri: /_admin
-
   # 暗号化パスワード
   crypt_pass: pass
-  
-  # Ruby Path
-  ruby_bin: "/usr/local/bin/ruby"
   
   # ファイル保存(file or db)
   storage: file
   
+  # 管理画面パス
+  admin_uri: /_admin
+
 cms:
 
   # ページ数付きページ書き出し数

@@ -22,7 +22,7 @@ class Script
     end
     
     ## run
-    ruby   = Joruri.config[:sys_ruby_bin] || "/usr/local/bin/ruby"
+    ruby   = "#{Config::CONFIG["bindir"]}/ruby"
     runner = "#{Rails.root}/script/rails runner"
     opts   = options.inspect
     cmd    = "#{ruby} #{runner} -e #{Rails.env} \"Script.run('#{path}', #{opts})\""
@@ -146,7 +146,7 @@ end
 
 ## /usr/local/lib/ruby/gems/1.9.1/gems/rack-1.4.5/lib/rack/lock.rb
 module Rack
-  class Lock
+  class LockXXX
     def call(env)
       is_http = caller.slice(-1, 1) !~ /script\/rails/
       

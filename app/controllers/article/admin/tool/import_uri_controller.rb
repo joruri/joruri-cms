@@ -6,7 +6,7 @@ class Article::Admin::Tool::ImportUriController < Cms::Controller::Admin::Base
     uri = params[:uri]#.join('/')
     return http_error(404) if uri.blank?
     
-    res = Util::Http::Request.send(uri)
+    res = Util::Http::Request.get(uri)
     return http_error(404) if res.status != 200
     
     data = res.body.to_utf8.gsub(/.*<body[^>]+>(.*)<\/body>.*/m, '\\1')

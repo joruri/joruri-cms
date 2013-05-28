@@ -119,28 +119,6 @@ h3 {
   text-align: right;
 }
 
-/* RSS Atom
------------------------------------------------ */
-.feed {
-  float: right;
-  position: relative;
-  top: -36px;
-  right: 10px;
-  background-color: transparent;
-}
-.feed a.feedRss, .feed a.feedAtom {
-  display: inline-block;
-  margin-left: 5px;
-  padding: 0 5px;
-  border-top: 1px solid #EAA081;
-  border-right: 1px solid #B84000;
-  border-bottom: 1px solid #B84000;
-  border-left: 1px solid #EAA081;
-  background-color: #D64000;
-  color: #ffffff;
-  text-decoration: none;
-}
-
 /* pagination
 ----------------------------------------------- */
 .pagination {

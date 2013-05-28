@@ -83,4 +83,34 @@ module EntityConversion::Lib::Convertor::Test
     @end_ids[group.id] = true
   end
   
+  def replace_group_id_save(item, fields, old_id, new_id)
+    fields.each do |field|
+      next if item.send(field).blank?
+      value = item.send(field)
+      if value.is_a?(Fixnum)
+        value = new_id
+      elsif value.is_a?(String)
+        value = value.gsub(/((^| )#{old_id}( |$))/, '\\2' + "#{new_id}" + '\\3')
+      end
+      item.send("#{field}=", value)
+    end
+    if !item.valid?
+      return if item.errors.size == 1 && item.errors.keys[0].to_s =~/file/
+      raise item.errors.full_messages.join(", ")
+    end
+  end
+  
+  def replace_texts_save(item, fields, texts)
+    fields.each do |field|
+      next if item.send(field).blank?
+      value = item.send(field).clone
+      texts.each {|src, dst| value = value.gsub(/#{Regexp.escape(src)}/, dst) }
+      item.send("#{field}=", value)
+    end
+    if !item.valid?
+      return if item.errors.size == 1 && item.errors.keys[0].to_s =~/file/
+      raise item.errors.full_messages.join(", ")
+    end
+  end
+  
 end

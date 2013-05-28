@@ -37,7 +37,7 @@ class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
           log[:source] ||= pub.uri
           
           if !log[:state]
-            if uri_exists?(uri)
+            if ::Util::Http.exists?(uri)
               log[:state] = 'exists'
               Script.success
             else
@@ -68,28 +68,4 @@ class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
     render :text => "OK"
   end
   
-protected
-  def uri_exists?(uri)
-    require 'open-uri'
-    require "resolv-replace"
-    require 'timeout'
-    
-    ok_code = '200 OK'
-    options = {
-      :proxy => Core.proxy,
-      :progress_proc => lambda {|size| raise ok_code }
-    }
-    
-    begin
-      timeout(2) do
-        open(uri, options) {|f| return true if f.status[0].to_i == 200 }
-      end
-    rescue TimeoutError
-      return false
-    rescue => e
-      return true if e.to_s == ok_code
-    end
-    
-    return false
-  end
 end

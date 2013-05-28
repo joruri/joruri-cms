@@ -6,7 +6,7 @@ class Util::Config
     
     if !@@cache[filename]
       file = "#{Rails.root}/config/#{filename}.yml"
-      @@cache[filename] = YAML.load_file(file)
+      @@cache[filename] = YAML.load(ERB.new(IO.read(file)).result)
     end
     
     section = options[:section]

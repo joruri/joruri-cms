@@ -392,14 +392,14 @@
   padding: 5px 15px 0 15px;
 }
 #recentDocs .pieceHeader {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 10px;
-  background-color: #001c66;
-  background-image: url("./images/tl-shinchaku.gif");
-  background-repeat: no-repeat;
-  background-position: left top;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
   color: #ffffff;
+  font-weight: bold;
 }
 #recentDocs li:after {
   content: ".";
@@ -429,36 +429,12 @@
 #recentDocs li img {
   display: inline-block;
   float: left;
-  margin-right: 10px;
+  margin-right: 5px;
 }
 #recentDocs .feed {
   position: absolute;
   float: left;
-  top: 7px;
-  right: 10px;
-}
-#recentDocs .feed a {
-  display: inline-block;
-} 
-#recentDocs .feed a.feedRss {
-  width: 40px;
-  height: 0;
-  vertical-align: middle;
-  overflow: hidden;
-  margin-left: 15px;
-  padding-top: 13px;
-  background-image: url(../piece/images/bt-rss.gif);
-  background-repeat: no-repeat;
-} 
-#recentDocs .feed a.feedAtom {
-  width: 45px;
-  height: 0;
-  vertical-align: middle;
-  overflow: hidden;
-  margin-left: 5px;
-  padding-top: 13px;
-  background-image: url(../piece/images/bt-atom.gif);
-  background-repeat: no-repeat;
+  top: 3px;
 }
 #recentDocs .links {
   text-align: right;

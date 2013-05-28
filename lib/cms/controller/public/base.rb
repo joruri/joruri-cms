@@ -24,7 +24,7 @@ class Cms::Controller::Public::Base < Sys::Controller::Public::Base
       params[:page] = page.to_i if page !~ /^0+$/
     end
     
-    ## response from storage
+    ## response by storage
     if ::Storage.env == :db && Core.user.id == 0
       
       ## valid redirect_uri

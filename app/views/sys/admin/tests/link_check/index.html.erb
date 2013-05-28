@@ -17,7 +17,8 @@
   </tr><tr>
     <td>
       <%= text_area_tag "item[body]", @item[:body], :class => "body", :style => "height: 200px;" %><br />
-      Proxy: <%= Core.proxy.nil? ? "指定なし" : Core.proxy.to_s %>
+      HTTP Proxy: <%= Core.proxy %><br /> 
+      HTTPS Proxy: <%= Core.proxy(:https) %><br /> 
     </td>
   </tr>
 </table>

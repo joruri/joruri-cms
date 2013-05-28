@@ -36,11 +36,11 @@ class Cms::Lib::Navi::Jtalk
     
     html = CGI::unescapeHTML(html)
     html.gsub!("&nbsp;", " ")
-    html.gsub!(/[\s\t\v\n、，　「」【】（）\(\)]+/, " ")
+    html.gsub!(/[\s\t\v\n、，　「」【】（）\(\)<>\[\]]+/, " ")
     html.gsub!(/\s*。+\s*/, "。")
     html.gsub!(/。+/, "。")
     html.tr!('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
-    html.gsub!(/^[、。]+/, "")
+    html.gsub!(/^[、。 ]+/, "")
     html.gsub!(/[、。]+$/, "")
     
     texts = []
@@ -88,7 +88,7 @@ class Cms::Lib::Navi::Jtalk
     
     if options[:uri]
       options[:uri].sub!(/\/index\.html$/, '/')
-      res = Util::Http::Request.send(options[:uri])
+      res = Util::Http::Request.get(options[:uri])
       text = res.status == 200 ? res.body : nil
     end
     return false unless text
@@ -112,7 +112,7 @@ class Cms::Lib::Navi::Jtalk
       cnf = Tempfile::new(["talk", ".cnf"], '/tmp')
       wav = Tempfile::new(["talk", ".wav"], '/tmp')
       
-      cnf.puts(text)
+      cnf.puts(text.strip)
       cnf.close
       
       cmd = "#{talk_bin} -m #{talk_voice} -x #{talk_dic} #{talk_opts}"

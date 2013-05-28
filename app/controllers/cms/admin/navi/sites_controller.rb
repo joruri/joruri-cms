@@ -17,7 +17,7 @@ class Cms::Admin::Navi::SitesController < Cms::Controller::Admin::Base
     if site
       cookies[:cms_site] = { :value => site.id, :path => '/', :expires => (Time.now + 60*60*24*7) }
     else
-      cookies[:cms_site] = { :value => nil, :path => '/', :expires => (Time.now - 60) }
+      cookies.delete :cms_site
     end
     session.delete(:cms_concept)
     return redirect_to "#{Joruri.admin_uri}"

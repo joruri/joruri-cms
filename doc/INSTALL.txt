@@ -123,7 +123,7 @@ Ruby on Railsをインストールします。
   [client]
   default-character-set = utf8
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  ## [mysqld]にcharacterを設定、[client]とcharacter設定を追加。
+  ## [mysqld]に設定を追加、[client]と設定を追加。
 
 MySQLを起動します。
 
@@ -156,7 +156,7 @@ Apacheは[5.1]を、Thinは[5.2]の手順を進めてください。
 
   # vi /etc/httpd/conf/httpd.conf
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  ServerName 192.168.0.2    #変更
+  ServerName 192.168.0.2
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 Phusion Passengerをインストールします。
@@ -238,9 +238,10 @@ Joruri基本設定
 
   $ vi config/core.yml
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  title  : 管理画面のウィンドウタイトルに使用されます。
-  uri    : 管理画面のURLになります。http://example.jp/ の形式で記述してください。
-  proxy  : HTTP通信時に使用します。http://example.jp:8080/ の形式で記述してください。
+  title      : 管理画面ウィンドウタイトル
+  uri        : 管理画面URL (記述例 http://example.jp/)
+  http_proxy : HTTP プロキシー (記述例 http://example.jp:8080/)
+  https_proxy: HTTPSプロキシー (記述例 http://example.jp:8080/)
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   
 その他の設定ファイルも適宜編集してください。
@@ -367,6 +368,7 @@ MeCab-Ruby
   # 00 * * * * $RAKE article:docs:rebuild     # 記事再構築(ページ)
   # 00 * * * * $RAKE faq:docs:rebuild         # FAQ再構築(ページ)
   # 00 * * * * $RAKE enquete:answers:pull     # アンケート取り込み ※[8.1]
+  # 00 * * * * $RAKE db:session:sweep         # DBセッション削除
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ======================================================================

@@ -217,6 +217,46 @@ div.submitters input {
   padding: 2px 20px;
 }
 
+/* feed
+----------------------------------------------- */
+.feed {
+  position: relative;
+  top: -36px;
+  right: 0px;
+  float: right;
+  background-color: transparent;
+}
+.feed a, .feed a {
+  display: inline-block;
+} 
+.feed a.rss, .feed a.atom, a.feedRss, a.feedAtom {
+  margin-right: 5px;
+  padding: 0 5px;
+  border-top: 1px solid #EAA081;
+  border-right: 1px solid #B84000;
+  border-bottom: 1px solid #B84000;
+  border-left: 1px solid #EAA081;
+  background-color: #D64000;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* pagination
+----------------------------------------------- */
+.pagination {
+  text-align: center;
+}
+.pagination a {
+  padding: 0 6px;
+}
+.pagination em {
+  padding: 0 3px;
+  font-weight: bold;
+  font-size: 150%;
+  font-style: normal;
+}
+
 /* Icons.
 ----------------------------------------------- */
 .iconFile, .iconDefault {

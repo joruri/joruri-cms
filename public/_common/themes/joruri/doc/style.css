@@ -207,20 +207,6 @@
   margin-right: 10px;
 }
 
-/* pagination
------------------------------------------------ */
-.pagination {
-  text-align: center;
-}
-.pagination a {
-  padding: 0 6px;
-}
-.pagination span.current {
-  padding: 0 3px;
-  font-weight: bold;
-  font-size: 150%;
-}
-
 /* recent Docs Title
 ----------------------------------------------- */
 #recentDocsTitle .pieceHeader {
@@ -238,31 +224,6 @@
   color: #ffffff;
   font-weight: bold;
   font-size: 120%;
-}
-
-/* RSS Atom
------------------------------------------------ */
-.feed {
-  float: right;
-  position: relative;
-  top: -36px;
-  right: 10px;
-  background-color: transparent;
-}
-.feed a.feedRss, .feed a.feedAtom {
-  display: inline-block;
-  margin-left: 5px;
-  padding: 0 5px;
-  border-top: 1px solid #EAA081;
-  border-right: 1px solid #B84000;
-  border-bottom: 1px solid #B84000;
-  border-left: 1px solid #EAA081;
-  background-color: #D64000;
-  color: #ffffff;
-  text-decoration: none;
-}
-.links {
-  text-align: right;
 }
 
 /* SideMenu

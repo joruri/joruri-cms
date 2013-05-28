@@ -83,9 +83,9 @@ class EntityConversion::Lib::Convertor::Base
       
       @logs << "- #{group.name} > #{move.name} ##{unit.id}"
       replace_group_id(unit, clone)
-      convert_move(unit, group)
       replace_texts(texts)
-      @changed << [Sys::Group.find_by_code(unit.code), clone]
+      convert_move(unit, group)
+      @changed << [Sys::Group.uncached { Sys::Group.find_by_code(unit.code) }, clone]
     end
     
     @logs << "\n# 廃止"
@@ -128,9 +128,11 @@ class EntityConversion::Lib::Convertor::Base
     if unit.move
       new_id = unit.move.id
     elsif unit.new_move
-      move = Sys::Group.find_by_code(unit.new_move.code)
+      move = Sys::Group.uncached { Sys::Group.find_by_code(unit.new_move.code) }
       new_id = move.id rescue nil
     end
+    
+    return if group.id == new_id # no change
     
     target_fields(:group_id).each do |cls, fields|
       records = 0
@@ -139,7 +141,7 @@ class EntityConversion::Lib::Convertor::Base
       fields.each do |f|
         cond.or f, "REGEXP", "(^| )#{group.id}( |$)"
       end
-      items = cls.find(:all, :conditions => cond.where)
+      items = cls.uncached { cls.find(:all, :conditions => cond.where) }
       
       if items.size > 0
         records += items.size
@@ -154,6 +156,8 @@ class EntityConversion::Lib::Convertor::Base
   def replace_texts(texts)
     @logs << "  replace_texts:"
     
+    return if texts.size == 0 # no change
+    
     target_fields(:text).each do |cls, fields|
       records = 0
       
@@ -161,7 +165,7 @@ class EntityConversion::Lib::Convertor::Base
       fields.each do |f|
         texts.each {|src, dst| cond.or f, "REGEXP", Regexp.escape(src) }
       end
-      items = cls.find(:all, :conditions => cond.where)
+      items = cls.uncached { cls.find(:all, :conditions => cond.where) }
       
       if items.size > 0
         records += items.size

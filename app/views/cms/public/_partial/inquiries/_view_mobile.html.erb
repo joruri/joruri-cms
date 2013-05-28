@@ -1,6 +1,6 @@
 <%
 
-return if !item.inquiry || !item.inquiry.visible?
+return if !item.inquiry || !item.inquiry.visible? || !item.inquiry.group
 
 %><div class="inquiry">
   <div class="h2">お問い合わせ</div>

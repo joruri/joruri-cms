@@ -14,6 +14,13 @@ namespace :db do
     end
   end
   
+  namespace :session do
+    ## sweep session
+    task :sweep => :environment do
+      Session.sweep
+    end
+  end
+  
   namespace :storage do
     
     ## import file to db

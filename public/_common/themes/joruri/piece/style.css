@@ -728,32 +728,16 @@ h1 {
 
 /* links
 ------------------------------------- */
+#docTabPortal .links,
+#docTab .links {
+  padding: 10px 20px 15px 15px;
+}
 #docTabPortal .links .feed,
 #docTab .links .feed {
-  position: absolute;
+  position: static;
   float: left;
-  margin-top: 10px;
 }
-#docTabPortal .links .feed a,
-#docTab .links .feed a {
-  display: inline-block;
-} 
-#docTabPortal .links .feed a.rss,
-#docTab .links .feed a.rss,
-#docTabPortal .links .feed a.atom,
-#docTab .links .feed a.atom {
-  margin-left: 15px;
-  padding: 0 5px;
-  border-top: 1px solid #EAA081;
-  border-right: 1px solid #B84000;
-  border-bottom: 1px solid #B84000;
-  border-left: 1px solid #EAA081;
-  background-color: #D64000;
-  color: #ffffff;
-  text-decoration: none;
-} 
 #docTabPortal .links .more, .links .more {
-  padding: 10px 20px 10px 10px;
   text-align: right;
 }
 #docTabPortal .links .more a,

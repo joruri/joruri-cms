@@ -13,37 +13,13 @@ class Sys::Lib::Form::Checker
           next if uri =~ /^(#|mailto:|javascript:)/i
           next if uri !~ /^https?:/i
           uri = CGI::unescapeHTML(uri)
-          @links[uri] = uri_exists?(uri) unless @links.key?(uri)
+          @links[uri] = ::Util::Http.exists?(uri) unless @links.key?(uri)
         end
       end
     rescue TimeoutError
       @links['Timeout(20sec)'] = false
     end
     return @links.index(false) ? false : true
-  end
-  
-  def uri_exists?(uri)
-    require 'open-uri'
-    require "resolv-replace"
-    require 'timeout'
-    
-    ok_code = '200 OK'
-    options = {
-      :proxy => Core.proxy,
-      :progress_proc => lambda {|size| raise ok_code }
-    }
-    
-    begin
-      timeout(2) do
-        open(uri, options) {|f| return true if f.status[0].to_i == 200 }
-      end
-    rescue TimeoutError
-      return false
-    rescue => e
-      return true if e.to_s == ok_code
-    end
-    
-    return false
   end
   
   def errors

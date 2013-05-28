@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110803122623) do
+ActiveRecord::Schema.define(:version => 20130528121406) do
 
   create_table "article_areas", :force => true do |t|
     t.integer  "unid"
@@ -670,7 +670,6 @@ ActiveRecord::Schema.define(:version => 20110803122623) do
     t.text     "email"
     t.integer  "delivered_doc_id"
     t.datetime "delivered_at"
-    t.string   "ipaddr"
   end
 
   add_index "newsletter_members", ["content_id", "letter_type", "created_at"], :name => "content_id"
@@ -683,6 +682,7 @@ ActiveRecord::Schema.define(:version => 20110803122623) do
     t.string   "request_type", :limit => 15
     t.text     "email"
     t.string   "letter_type",  :limit => 15
+    t.string   "ipaddr"
   end
 
   add_index "newsletter_requests", ["content_id", "request_type"], :name => "content_id"
@@ -714,6 +714,16 @@ ActiveRecord::Schema.define(:version => 20110803122623) do
   end
 
   add_index "portal_categories", ["parent_id", "content_id", "state"], :name => "parent_id"
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "simple_captcha_data", :force => true do |t|
     t.string   "key",        :limit => 40

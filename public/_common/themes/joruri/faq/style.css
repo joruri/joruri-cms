@@ -131,18 +131,13 @@
   background-repeat: no-repeat;
   background-position: 0 7px;
 }
-#recentFaqTitle .pieceHeader {
-  background-image: url("./images/bg-shinchaku-repeat.gif");
-  background-repeat: repeat-x;
-  background-position: left top;
-}
 #recentFaqTitle h2 {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 10px;
-  background-image: url("./images/tl-shinchaku.gif");
-  background-repeat: no-repeat;
-  background-position: left top;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
   color: #ffffff;
   font-weight: bold;
   font-size: 120%;
@@ -205,38 +200,6 @@
 }
 .contentFaqCategory .more {
   padding: 0 5px 10px 0;
-  text-align: right;
-}
-
-/* RSS Atom
------------------------------------------------ */
-#faqRecentDocs .feed,
-.contentFaqRecentDocs .feed {
-  float: right;
-  height: 0;
-  position: relative;
-  top: -36px;
-  right: 10px;
-}
-#faqRecentDocs .feed a.feedRss,
-.contentFaqRecentDocs .feed a.feedRss,
-.contentFaqCategory .feed a.feedRss,
-#faqRecentDocs .feed a.feedAtom,
-.contentFaqRecentDocs .feed a.feedAtom,
-.contentFaqCategory .feed a.feedAtom {
-  display: inline-block;
-  margin-left: 5px;
-  padding: 0 5px;
-  border-top: 1px solid #EAA081;
-  border-right: 1px solid #B84000;
-  border-bottom: 1px solid #B84000;
-  border-left: 1px solid #EAA081;
-  overflow: hidden;
-  background-color: #D64000;
-  color: #ffffff;
-  text-decoration: none;
-}
-.links {
   text-align: right;
 }
 

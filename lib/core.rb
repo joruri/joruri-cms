@@ -61,8 +61,8 @@ class Core
   end
   
   ## Proxy.
-  def self.proxy
-    @@config['proxy']
+  def self.proxy(schema = "http")
+    schema.to_s =~ /^https/ ? (@@config['https_proxy'] || @@config['http_proxy']) : @@config['http_proxy']
   end
   
   ## Parses query string.

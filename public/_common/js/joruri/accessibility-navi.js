@@ -166,7 +166,7 @@ function JoruriAcNavi_talk(flag) {
   
   var uri   = location.pathname;
   var now   = new Date();
-  var param = '?' + now.getDay() + now.getHours();
+  var param = '?' + now.getDay() + now.getHours() + now.getMinutes();
   
   if (uri.match(/\/$/)) uri += 'index.html';
   uri  = uri.replace(/\.html\.r$/, '.html');

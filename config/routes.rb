@@ -5,8 +5,6 @@ Joruri::Application.routes.draw do
   match "_layouts/*path"   => "cms/public/layouts#index"
   match "_files/*path"     => "cms/public/files#index", :format => false
   match "_emfiles/*path"   => "cms/public/embedded_files#index", :format => false
-  match "*path.html.mp3"   => "cms/public/talk#index"
-  match "*path.html.r.mp3" => "cms/public/talk#index"
   
   ## tools
   match "/_tools/captcha/:action" => "simple_captcha", :as => :simple_captcha

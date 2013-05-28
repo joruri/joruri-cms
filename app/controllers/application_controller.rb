@@ -98,23 +98,31 @@ private
       end
     end
     
-    ## Render
-    html = nil
-    if Page.site && ::Storage.exists?("#{Page.site.public_path}/#{status}.html")
-      html = ::Storage.read("#{Page.site.public_path}/#{status}.html")
-    elsif Core.site && ::Storage.exists?("#{Core.site.public_path}/#{status}.html")
-      html = ::Storage.read("#{Core.site.public_path}/#{status}.html")
-    elsif ::Storage.exists?("#{Rails.public_path}/#{status}.html")
-      html = ::Storage.read("#{Rails.public_path}/#{status}.html")
-    elsif ::Storage.exists?("#{Rails.public_path}/500.html")
-      html = ::Storage.read("#{Rails.public_path}/500.html")
-    else
-      html = "<html>\n<head><title>#{status}</title></head>\n<body>\n<p>#{message}</p>\n</body>\n</html>\n"
+    ## render mp3
+    if Core.request_uri =~ /\.html(\.r)?\.mp3/
+      path   = ::File.join(Page.site.public_path, Core.request_uri)
+      path   = path.gsub(/\.html\.r\.mp3$/, '.html.mp3')
+      files  = []
+      files << "#{Page.site.public_path}404.html.mp3"
+      files << "#{Rails.root}/public/404.html.mp3"
+      files.each {|file| return send_storage_file(file) if ::Storage.exists?(file) }
     end
+    
+    ## render
+    files = []
+    files << "#{Page.site.public_path}/#{status}.html" if Page.site
+    files << "#{Core.site.public_path}/#{status}.html" if Core.site
+    files << "#{Rails.public_path}/#{status}.html"
+    files << "#{Rails.public_path}/500.html"
+    
+    html = nil
+    files.each {|file| html = ::Storage.read(file) if html.nil? && ::Storage.exists?(file) }
+    html ||= "<html>\n<head><title>#{status}</title></head>\n<body>\n<p>#{message}</p>\n</body>\n</html>\n"
     
     if request.format.to_s =~ /xml/i
       render :status => status, :xml => "<errors><error>#{message}</error></errors>"
     else
+      cookies.delete(:navigation_ruby) if Core.request_uri =~ /\.html\.r$/ && cookies[:navigation_ruby]
       render :status => status, :inline => html.html_safe
     end
   end

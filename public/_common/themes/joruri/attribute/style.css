@@ -26,13 +26,12 @@
   background-position: left top;
 }
 .contentArticleAttribute .latest h2 {
-  height: 30px;
-  line-height: 30px;
   margin-bottom: 10px;
-  padding-left: 10px;
-  background-image: url(./images/tl-shinchaku.gif);
-  background-repeat: no-repeat;
-  background-position: left top;
+  padding: 3px 10px;
+  background:#0952EB;
+  background: -moz-linear-gradient(top, #0952EB, #001C66);
+  background: -webkit-gradient(linear, center top, center bottom, from(#0952EB), to(#001C66));
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#0952EB', endColorstr='#001C69');
   color: #ffffff;
   font-weight: bold;
   font-size: 120%;
@@ -57,35 +56,6 @@
 .more {
   padding: 0 5px 10px 0;
   text-align: right;
-}
-
-/* RSS Atom
------------------------------------------------ */
-.feed {
-  position: relative;
-  top: -32px;
-  right:10px;
-  float: right;
-  height: 13px;
-  background-color: transparent;
-}
-.feed a.feedRss {
-  display: inline-block;
-  width: 40px;
-  height: 13px;
-  overflow: hidden;
-  background-image: url(./images/bt-rss.gif);
-  background-repeat: no-repeat;
-  text-indent: 50px;
-}
-.feed a.feedAtom {
-  display: inline-block;
-  width: 40px;
-  height: 13px;
-  overflow: hidden;
-  background-image:url(./images/bt-atom.gif);
-  background-repeat:no-repeat;
-  text-indent: 50px;
 }
 
 /* shinchaku-ichiran
@@ -137,18 +107,4 @@
 .attributeBosyu,
 .attributeKyoka {
   margin-left: 15px;
-}
-
-/* pagination
------------------------------------------------ */
-.pagination {
-  text-align: center;
-}
-.pagination a {
-  padding: 0 6px;
-}
-.pagination span.current {
-  padding: 0 3px;
-  font-weight: bold;
-  font-size: 150%;
 }

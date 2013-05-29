@@ -58,10 +58,11 @@
   ALTER TABLE `sys_users_roles`
     ADD COLUMN `group_id` INT(11) AFTER `rid`;
   ALTER TABLE `sys_publishers`
-    ADD COLUMN `internal_links` LONGTEXT NULL  AFTER `content_hash` ,
-    ADD COLUMN `external_links` LONGTEXT NULL  AFTER `internal_links`,
-    ADD COLUMN `site_id` INT(11) NULL DEFAULT NULL  AFTER `unid`,
-    ADD COLUMN `uri` VARCHAR(255) NULL DEFAULT NULL  AFTER `path` ;
+    ADD COLUMN `internal_links` LONGTEXT NULL AFTER `content_hash` ,
+    ADD COLUMN `external_links` LONGTEXT NULL AFTER `internal_links`,
+    ADD COLUMN `site_id` INT(11) NULL DEFAULT NULL AFTER `unid`,
+    ADD COLUMN `uri` VARCHAR(255) NULL DEFAULT NULL AFTER `path`,
+    ADD COLUMN `rel_unid` INT(11) NULL DEFAULT NULL AFTER `unid` ;
   DROP TABLE sys_group_changes;
   DROP TABLE sys_group_change_settings;
   DROP TABLE sys_group_change_logs;
@@ -139,10 +140,10 @@
     PRIMARY KEY (`id`)
   );
   ALTER TABLE `newsletter_docs`
-    ADD COLUMN `started_at` DATETIME DEFAULT NULL  AFTER `delivery_state`,
-    ADD COLUMN `total_count` INT(11) DEFAULT NULL  AFTER `mobile_body` ,
-    ADD COLUMN `success_count` INT(11) DEFAULT NULL  AFTER `total_count` , 
-    ADD COLUMN `error_count` INT(11) DEFAULT NULL  AFTER `success_count` ;
+    ADD COLUMN `started_at` DATETIME DEFAULT NULL AFTER `delivery_state`,
+    ADD COLUMN `total_count` INT(11) DEFAULT NULL AFTER `mobile_body` ,
+    ADD COLUMN `success_count` INT(11) DEFAULT NULL AFTER `total_count` , 
+    ADD COLUMN `error_count` INT(11) DEFAULT NULL AFTER `success_count` ;
   ALTER TABLE `newsletter_requests`
     DROP COLUMN `unsubscribe_email` ,
     DROP COLUMN `request_state` ,

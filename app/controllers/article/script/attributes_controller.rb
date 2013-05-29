@@ -15,7 +15,7 @@ class Article::Script::AttributesController < Cms::Controller::Script::Publicati
       units.each do |unit|
         uri  = "#{@node.public_uri}#{item.name}/#{unit.name}/"
         path = "#{@node.public_path}#{item.name}/#{unit.name}/"
-        publish_more(item, :uri => uri, :path => path, :dependent => "#{unit.name}")
+        publish_more(item, :rel_unid => unit.unid, :uri => uri, :path => path, :dependent => "/#{unit.name}")
       end
     end
     

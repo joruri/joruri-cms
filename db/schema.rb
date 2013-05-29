@@ -887,6 +887,7 @@ ActiveRecord::Schema.define(:version => 20130528121406) do
 
   create_table "sys_publishers", :force => true do |t|
     t.integer  "unid"
+    t.integer  "rel_unid"
     t.integer  "site_id"
     t.string   "dependent",      :limit => 64
     t.datetime "created_at"

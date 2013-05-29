@@ -31,15 +31,15 @@ class Article::Script::CategoriesController < Cms::Controller::Script::Publicati
   def publish_children(item, child, units)
     uri  = "#{@node.public_uri}#{child.name}/"
     path = "#{@node.public_path}#{child.name}/"
-    publish_page(item, :uri => uri, :path => path, :dependent => "#{child.name}")
-    publish_more(item, :uri => uri, :path => path, :file => 'more', :dependent => "#{child.name}/more")
-    publish_page(item, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => "#{child.name}/rss")
-    publish_page(item, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => "#{child.name}/atom")
+    publish_page(child, :uri => uri, :path => path)
+    publish_more(child, :uri => uri, :path => path, :file => 'more', :dependent => :more)
+    publish_page(child, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => :rss)
+    publish_page(child, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
     
     units.each do |unit|
       uri  = "#{@node.public_uri}#{child.name}/#{unit.name}/"
       path = "#{@node.public_path}#{child.name}/#{unit.name}/"
-      publish_more(item, :uri => uri, :path => path, :dependent => "#{child.name}/#{unit.name}")
+      publish_more(child, :rel_unid => unit.unid, :uri => uri, :path => path, :dependent => "/#{unit.name}")
     end
   end
 end

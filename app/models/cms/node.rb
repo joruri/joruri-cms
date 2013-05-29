@@ -37,12 +37,6 @@ class Cms::Node < ActiveRecord::Base
     errors.add :route_id, :invalid if id != nil && id == route_id
   end
   
-#  def concept
-#    #これがあるとディレクトリ＞ディレクトリ＞新規作成＞登録する　でサーバエラーとなる？
-#    #でも他のサーバエラーのために入れたはず。。。#
-#    	Cms::Concept.find(concept_id)
-#  end
-  
   def states
     [['公開保存','public'],['非公開保存','closed']]
   end

@@ -13,10 +13,10 @@ class Portal::Script::CategoriesController < Cms::Controller::Script::Publicatio
       item.public_children.each do |c|
         uri  = "#{@node.public_uri}#{c.name}/"
         path = "#{@node.public_path}#{c.name}/"
-        publish_page(item, :uri => uri, :path => path, :dependent => "#{c.name}")
-        publish_more(item, :uri => uri, :path => path, :first => 2, :dependent => "#{c.name}/more")
-        publish_page(item, :uri => "#{uri}index.rss" , :path => "#{path}index.rss", :dependent => :rss)
-        publish_page(item, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
+        publish_page(c, :uri => uri, :path => path)
+        publish_more(c, :uri => uri, :path => path, :first => 2, :dependent => :more)
+        publish_page(c, :uri => "#{uri}index.rss" , :path => "#{path}index.rss", :dependent => :rss)
+        publish_page(c, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
       end
     end
 

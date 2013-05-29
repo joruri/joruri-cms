@@ -63,7 +63,8 @@
 .inquiry .email {
   padding-left: 15px;
 }
-#faqRecentDocs .pieceHeader h2, #faqSearch .pieceHeader h2 {
+#faqRecentDocs .pieceHeader h2, #faqSearch .pieceHeader h2,
+.contentFaqCategory .latest h2 {
   margin-bottom: 10px;
   padding: 3px 10px;
   background:#0952EB;
@@ -142,7 +143,9 @@
   font-weight: bold;
   font-size: 120%;
 }
-
+#faqRecentDocs .links {
+  text-align: right;
+}
 /* FAQ category
 ----------------------------------------------- */
 .contentFaqCategory .category h2 {
@@ -167,18 +170,6 @@
   background-image: url("./images/bg-shinchaku-repeat.gif");
   background-repeat: repeat-x;
   background-position: left top;
-}
-.contentFaqCategory .latest h2 {
-  height: 30px;
-  line-height: 30px;
-  margin-bottom: 10px;
-  padding-left: 10px;
-  background-image: url("./images/tl-shinchaku.gif");
-  background-repeat: no-repeat;
-  background-position: left top;
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 120%;
 }
 .contentFaqCategory .category h3 {
   margin-bottom: 10px;

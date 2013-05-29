@@ -4,6 +4,8 @@ module Cms::Model::Base::Page::Publisher
   def self.included(mod)
     mod.has_many :publishers, :foreign_key => 'unid', :primary_key => 'unid', :class_name => 'Sys::Publisher',
       :dependent => :destroy
+    mod.has_many :rel_publishers, :foreign_key => 'rel_unid', :primary_key => 'unid', :class_name => 'Sys::Publisher',
+      :dependent => :destroy
     mod.after_save :close_page
   end
   
@@ -94,6 +96,7 @@ module Cms::Model::Base::Page::Publisher
     
     pub ||= Sys::Publisher.new
     pub.unid           = unid
+    pub.rel_unid       = options[:rel_unid]
     pub.site_id        = site_id if respond_to?(:site_id)
     pub.site_id        = content.site_id if respond_to?(:content) && content
     pub.dependent      = options[:dependent] ? options[:dependent].to_s : nil
@@ -107,10 +110,13 @@ module Cms::Model::Base::Page::Publisher
     end
     
     return pub
+  rescue Exception => e
+    dump e
   end
   
   def close_page(options = {})
     publishers.destroy_all
+    rel_publishers.destroy_all
     return true
   end
   

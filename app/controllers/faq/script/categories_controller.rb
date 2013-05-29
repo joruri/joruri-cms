@@ -11,13 +11,13 @@ class Faq::Script::CategoriesController < Cms::Controller::Script::Publication
       publish_page(item, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
       
       item.public_children.each do |c|
-        publish_children(item, c,)
+        publish_children(item, c)
         
         c.public_children.each do |c2|
-          publish_children(item, c2,)
+          publish_children(item, c2)
           
           c2.public_children.each do |c3|
-            publish_children(item, c3,)
+            publish_children(item, c3)
           end
         end
       end
@@ -29,9 +29,9 @@ class Faq::Script::CategoriesController < Cms::Controller::Script::Publication
   def publish_children(item, child)
     uri  = "#{@node.public_uri}#{child.name}/"
     path = "#{@node.public_path}#{child.name}/"
-    publish_page(item, :uri => uri, :path => path, :dependent => "#{child.name}")
-    publish_more(item, :uri => uri, :path => path, :file => 'more', :dependent => "#{child.name}/more")
-    publish_page(item, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => "#{child.name}/rss")
-    publish_page(item, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => "#{child.name}/atom")
+    publish_page(child, :uri => uri, :path => path)
+    publish_more(child, :uri => uri, :path => path, :file => 'more', :dependent => :more)
+    publish_page(child, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => :rss)
+    publish_page(child, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
   end
 end

@@ -21,7 +21,7 @@ class Cms::Controller::Script::Publication < ApplicationController
     
     site = params[:site] || @site
     pub = item.publish_page(render_public_as_string(params[:uri], :site => site),
-      :path => params[:path], :uri => params[:uri], :dependent => params[:dependent])
+      :rel_unid => params[:rel_unid], :path => params[:path], :uri => params[:uri], :dependent => params[:dependent])
     return false unless pub
     #return true if params[:path] !~ /(\/|\.html)$/
 
@@ -58,7 +58,7 @@ class Cms::Controller::Script::Publication < ApplicationController
       begin
         timeout(80) do
           item.publish_page(render_public_as_string(uri, :site => site),
-            :path => path, :uri => uri, :dependent => dep)
+            :rel_unid => params[:rel_unid], :path => path, :uri => uri, :dependent => dep)
         end
       rescue TimeoutError => e
         Script.error "#{uri} #{e}"
@@ -85,7 +85,7 @@ class Cms::Controller::Script::Publication < ApplicationController
       uri  = "#{params[:uri]}#{file}#{page}.html"
       path = "#{params[:path]}#{file}#{page}.html"
       dep  = "#{params[:dependent]}#{page}"
-      rs   = publish_page(item, :uri => uri, :site => params[:site], :path => path, :dependent => dep)
+      rs   = publish_page(item, :rel_unid => params[:rel_unid], :uri => uri, :site => params[:site], :path => path, :dependent => dep)
       unless rs
         stopp = p
         break

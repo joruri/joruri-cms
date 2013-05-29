@@ -41,6 +41,7 @@
 <div id="contentContainer">
 <div id="contentBody">
 
+[[piece/faq-search]]
 [[piece/faq-recent-title]]
 [[content]]
 

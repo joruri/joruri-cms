@@ -31,15 +31,15 @@ class Article::Script::AreasController < Cms::Controller::Script::Publication
   def publish_children(item, child, attrs)
     uri  = "#{@node.public_uri}#{child.name}/"
     path = "#{@node.public_path}#{child.name}/"
-    publish_page(item, :uri => uri, :path => path, :dependent => "#{child.name}")
-    publish_more(item, :uri => uri, :path => path, :file => 'more', :dependent => "#{child.name}/more")
-    publish_page(item, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => "#{child.name}/rss")
-    publish_page(item, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => "#{child.name}/atom")
+    publish_page(child, :uri => uri, :path => path)
+    publish_more(child, :uri => uri, :path => path, :file => 'more', :dependent => :more)
+    publish_page(child, :uri => "#{uri}index.rss", :path => "#{path}index.rss", :dependent => :rss)
+    publish_page(child, :uri => "#{uri}index.atom", :path => "#{path}index.atom", :dependent => :atom)
     
     attrs.each do |attr|
       uri  = "#{@node.public_uri}#{child.name}/#{attr.name}/"
       path = "#{@node.public_path}#{child.name}/#{attr.name}/"
-      publish_more(item, :uri => uri, :path => path, :dependent => "#{child.name}/#{attr.name}")
+      publish_more(child, :rel_unid => attr.unid, :uri => uri, :path => path, :dependent => "/#{attr.name}")
     end
   end
 end

@@ -35,7 +35,7 @@ module Cms::Model::Base::Node
   
   def admin_uri
     controller = model.underscore.pluralize.gsub(/^(.*?\/)/, "\\1c#{inherited_concept(:id)}/#{parent_id}/node_")
-    return "#{Core.uri}_admin/#{controller}/#{id}"
+    return "#{Joruri.admin_uri}/#{controller}/#{id}"
   end
   
   def edit_admin_uri

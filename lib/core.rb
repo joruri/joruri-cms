@@ -49,17 +49,6 @@ class Core
     return @@now = Time.now.to_s(:db)
   end
   
-  ## Absolute path.
-  def self.uri
-    return '/' unless @@config['uri'].match(/^[a-z]+:\/\/[^\/]+\//)
-    @@config['uri'].sub(/^[a-z]+:\/\/[^\/]+\//, '/')
-  end
-  
-  ## Full URI.
-  def self.full_uri
-    @@config['uri']
-  end
-  
   ## Proxy.
   def self.proxy(schema = "http")
     schema.to_s =~ /^https/ ? (@@config['https_proxy'] || @@config['http_proxy']) : @@config['http_proxy']
@@ -75,6 +64,11 @@ class Core
     old = @@mode
     @@mode = mode
     return old
+  end
+  
+  ## URI
+  def self.full_uri
+    @@env["SCRIPT_URI"].gsub(/^([a-z]+:\/\/[^\/]+\/).*/, '\\1')
   end
   
   ## LDAP.
@@ -169,10 +163,12 @@ class Core
   
 private
   def self.recognize_mode
-    if @@request_uri =~ /^\/_[a-z]+(\/|$)/
+    if @@request_uri =~ /^#{Regexp.escape(Joruri.admin_uri)}/
+      @@mode = "admin"
+    elsif @@request_uri =~ /^\/_[a-z]+(\/|$)/
       @@mode = @@request_uri.gsub(/^\/_([a-z]+).*/, '\1')
     else
-      @@mode = 'public'
+      @@mode = "public"
     end
   end
   

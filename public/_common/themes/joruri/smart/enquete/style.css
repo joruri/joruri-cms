@@ -89,6 +89,10 @@ input[type="checkBox"]  {
   top: -5px;
   margin-right: 5px;
 }
+.textField,
+.textArea {
+  width: 100% !important;
+}
 
 /* Sent : enqueteSent
 ----------------------------------------------- */

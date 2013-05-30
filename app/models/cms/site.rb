@@ -45,7 +45,7 @@ class Cms::Site < ActiveRecord::Base
     full_uri.gsub(/^[a-z]+:\/\/([^\/]+)\/.*/, '\1')
   end
   
-  def admin_uri(options = {})
+  def admin_uri(options = {}) # full_uri
     uri  = admin_full_uri.blank? ? Core.full_uri : admin_full_uri
     uri += options[:path].gsub(/^\//, '') if options[:path]
     uri

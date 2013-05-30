@@ -1,12 +1,4 @@
-<%
-
-_input = Proc.new do |name, count, path, width|
-  onclick = "document.getElementById('#{name}_#{count}').focus();document.getElementById('#{name}_#{count}').select();"
-  style = "width: #{width}px"
-  text_field_tag "#{name}_#{count}", path, :style => style, :onclick => onclick, :readonly => true
-end
-
-%><%= render :partial => 'menu' %>
+<%= render :partial => 'menu' %>
 
 <script type="text/javascript">
 //<![CDATA[
@@ -29,8 +21,8 @@ function pasteText(id) {
     <th style="width: 40px; text-align: center;">詳細</th>
     <th style="width: 90px; text-align: center;">サムネイル</th>
     <th style="width: ;">ファイル名</th>
-    <th style="width: 120px; text-align: center;">サイズ</th>
     <th style="width: 200px; text-align: center;">URL</th>
+    <th style="width: 120px; text-align: center;">ファイルサイズ</th>
     <th style="width: 60px; text-align: center;">状態</th>
   </tr>
   
@@ -63,8 +55,12 @@ function pasteText(id) {
         <% end %>
         </div>
     </td>
+    <td style="text-align: center;">
+      <% eid = "file_uri#{item.id}" %>
+      <% onclick = "document.getElementById('#{eid}').focus(); document.getElementById('#{eid}').select();" %>
+      <%= text_field_tag "#{eid}", safe{item.public_uri}, :style => "width: 180px;", :onclick => onclick, :readonly => true %>
+    </td>
     <td style="text-align: center;"><%= item.eng_unit %></td>
-    <td style="text-align: center;"><%= _input.call('file_url', item.id, safe{item.public_uri}, 180) %></td>
     
     <% if item.public? %>
     <td style="text-align: center;"><%= link_to item.status.name, item.public_full_uri, :target => '_blank' %></td>

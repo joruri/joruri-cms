@@ -899,7 +899,8 @@ ActiveRecord::Schema.define(:version => 20130528121406) do
     t.text     "external_links", :limit => 2147483647
   end
 
-  add_index "sys_publishers", ["unid", "dependent"], :name => "unid"
+  add_index "sys_publishers", ["rel_unid"], :name => "rel_unid"
+  add_index "sys_publishers", ["unid"], :name => "unid"
 
   create_table "sys_recognitions", :force => true do |t|
     t.datetime "created_at"

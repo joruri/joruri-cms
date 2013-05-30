@@ -105,13 +105,11 @@ module Cms::Model::Base::Page::Publisher
     pub.uri          ||= public_uri.gsub(/\?.*/, '') rescue nil
     pub.content_hash   = hash
     if pub.changed?
-      search_links(pub, data) if options[:dependent].to_s != "ruby"
+      search_links(pub, data) if options[:dependent].to_s !~ /(^|.\/)ruby$/
       pub.save
     end
     
     return pub
-  rescue Exception => e
-    dump e
   end
   
   def close_page(options = {})
@@ -132,7 +130,7 @@ module Cms::Model::Base::Page::Publisher
     exlinks = []
     
     site_uri = site.full_uri.gsub(/^(.*?\/\/.*?\/).*/, '\\1')
-    base_uri = ::File.join(site_uri, pub.uri)
+    base_uri = pub.uri
     base_uri = "#{base_uri}index.html" if base_uri =~ /\/$/
     base_uri = ::File.dirname(base_uri) + "/"
     
@@ -145,7 +143,7 @@ module Cms::Model::Base::Page::Publisher
       uri = uri.gsub(/\/index\.html$/, '/')
       
       if uri =~ /^\//
-        inlinks << ::File.join(site_uri, uri)
+        inlinks << uri
       elsif uri.index(site_uri) == 0
         inlinks << uri
       elsif uri =~ /^https?:/

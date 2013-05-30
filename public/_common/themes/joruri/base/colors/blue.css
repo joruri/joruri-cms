@@ -94,6 +94,9 @@ input#search-button, .lowerMenu .chiiki, .lowerMenu .soshiki {
 #menu ul {
   background-color: #0000bb;
 }
+#bnMailmagazine .toroku:after {
+  display: none;
+}
 #menu #population caption {
   background-color: #0000bb;
   background-image: none;
@@ -299,10 +302,10 @@ table.city tr.cycle {
   color: #ffffff;
 }
 .attributeNyusatsu span,
-.attributeSaiyojoho span,
-.attributeKakusyushikakushiken span,
+.attributeSaiyo span,
+.attributeShikakushiken span,
 .attributeBosyu span,
-.attributeEventjoho span,
+.attributeEvent span,
 .attributeKyoka span {
   border: 1px solid #ffffff;
   background-color: #0000bb;
@@ -330,6 +333,15 @@ table.city tr.cycle {
 #menu li .year,
 #menu li .month {
   background-color: #0000bb;
+}
+
+#calendar .calendar .days .sun,
+#calendar .calendar .days .holiday,
+#calendarDailyLinks .calendar .days .sun,
+#calendarDailyLinks .days .holiday,
+#calendar .calendar .days .sat,
+#calendarDailyLinks .calendar .days .sat {
+    color: #ffffff;
 }
 /* doc
 ----------------------------------------------- */
@@ -392,9 +404,13 @@ table.city tr.cycle {
   background-color: #0000bb;
 }
 .enqueteForm .errorExplanation {
+  background: #0000bb;
   color: #ffffff !important;
 }
-
+.enqueteSent .back a {
+  border: 1px solid #fff;
+  background: #0000bb;
+}
 /* sitemap
 ----------------------------------------------- */
 .level1 li, ul.level3, ul.level2, .level2 li {
@@ -660,6 +676,7 @@ ul.sitemap ul.level2 {
   border-color: #ffffff;
   border-style: none solid solid;
   border-right: 1px solid #ffffff;
+  background: #0000bb;
   color: #ffffff;
 }
 .errorExplanation h2 {
@@ -671,6 +688,12 @@ ul.sitemap ul.level2 {
 }
 .contentBbsThreads .back a {
   background-color: #0000bb;
+}
+.field_with_errors input, .field_with_errors textarea, .field_with_errors select {
+  border: none;
+}
+.field_with_errors input[type="radio"] {
+  outline: none;
 }
 
 /* faq
@@ -695,7 +718,8 @@ ul.sitemap ul.level2 {
   background-color: #0000bb;
 }
 #recentFaqTitle .pieceHeader h2,
-#faqRecentDocs .pieceHeader h2 {
+#faqRecentDocs .pieceHeader h2,
+#faqSearch .pieceHeader h2 {
   border: 1px solid #ffffff;
   background: none;
 }

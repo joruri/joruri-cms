@@ -1,3 +1,5 @@
+## Joruri CMS / DB更新履歴
+
 2.0.0
   CREATE TABLE `sessions` (
     `id` int(11) NOT NULL AUTO_INCREMENT,

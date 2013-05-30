@@ -1,9 +1,9 @@
 <%= link_to "ファイル管理", sys_storage_files_path, :class => (current == :storage ? 'current' : '') %>
+<%= link_to "プロセス", sys_processes_path, :class => (current == :process  ? 'current' : '') %>
 <% if Joruri.config[:cms_use_kana] %>
 <%= link_to "辞書", cms_kana_dictionaries_path, :class => (current == :dictionary ? 'current' : '') %>
 <% end %>
 <%= link_to "言語", sys_languages_path, :class => (current == :language ? 'current' : '') %>
-<%= link_to "プロセス", sys_processes_path, :class => (current == :process  ? 'current' : '') %>
 <%= link_to "操作ログ", sys_operation_logs_path, :class => (current == :log ? 'current' : '') %>
 <%= link_to "動作確認", sys_tests_path, :class => (current == :test ? 'current' : '') %>
 <%= link_to "設定", sys_settings_path, :class => (current == :setting ? 'current' : '') %>

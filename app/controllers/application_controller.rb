@@ -78,7 +78,7 @@ private
         file  = "#{Page.site.public_path}#{Core.request_uri}"
         file += "index.html" if file =~ /\/$/
         if ::Storage.exists?(file)
-          mime = ::Storage.mime_type(file)
+          mime = ::Storage.mime_type(file) || "text/html"
           return send_data(::Storage.binread(file),  :type => mime, :filename => ::File.basename(file), :disposition => :inline)
         end
       end

@@ -234,7 +234,6 @@ private
       c.or :admin_full_uri, "IS", nil
       c.or :admin_full_uri, ""
     end
-    s = site.find(:first, :order => :id)
     return site.find(:first, :order => :id)
   end
   

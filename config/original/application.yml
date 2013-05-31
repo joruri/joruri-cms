@@ -1,29 +1,29 @@
 sys:
-  # LDAPの使用
+  # LDAP
   use_ldap: true
   
-  # 暗号化パスワード
+  # Encryption pass
   crypt_pass: pass
   
-  # ファイル保存(file or db)
+  # Storage mode (file or db)
   storage: file
   
-  # 管理画面パス
+  # Management URL
   admin_uri: /_admin
 
 cms:
 
-  # ページ数付きページ書き出し数
+  # Pagination limit
   publish_more_pages: 999
   
-  # ふりがな・読み上げの使用
+  # Kana, Talk
   use_kana: true
   
-  # ふりがな
+  # Kana settings
   mecab_index: "/usr/local/libexec/mecab/mecab-dict-index"
   mecab_dic: "/usr/local/lib/mecab/dic/ipadic"
   
-  # 読み上げ
+  # Talk settings
   sox_bin: "/usr/local/bin/sox"
   lame_bin: "/usr/bin/lame"
   talk_bin: "/usr/local/bin/open_jtalk"

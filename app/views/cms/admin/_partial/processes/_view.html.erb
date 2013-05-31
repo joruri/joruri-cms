@@ -56,7 +56,7 @@
       <th class="name">ステータス</th>
       <td class="name"><%= proc.status %> <span id="reloadTimer"></span></td>
       <th class="date">更新日時</th>
-      <td class="date"><%= safe{proc.closed_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
+      <td class="date"><%= safe{proc.updated_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
       <th class="num">成功</th>
       <td class="num"><%= proc.success.to_i %></td>
     </tr><tr>

@@ -7,7 +7,7 @@ site_name = "ジョールリ市"
 
 def load_demo(name)
   puts "import #{name}..."
-  require "#{Rails.root}/db/seed/demo/#{name}.rb"
+  load "#{Rails.root}/db/seed/demo/#{name}.rb"
 end
 
 def read_data(path)

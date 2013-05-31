@@ -68,7 +68,8 @@ class Core
   
   ## URI
   def self.full_uri
-    @@env["SCRIPT_URI"].gsub(/^([a-z]+:\/\/[^\/]+\/).*/, '\\1')
+    #@@env["SCRIPT_URI"].gsub(/^([a-z]+:\/\/[^\/]+\/).*/, '\\1')
+    "#{@@env['rack.url_scheme']}://#{@@env['HTTP_HOST']}/"
   end
   
   ## LDAP.

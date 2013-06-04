@@ -20,7 +20,7 @@
     <th>タイトル</th>
   </tr>
   <% group[1].each do |c| %>
-  <tr>
+  <tr class="<%= cycle '', 'cycle', :name => group[0] %>">
     <td style="text-align: right;"><%= c[0] %></td>
     <td><%= c[1] %></td>
   </tr>

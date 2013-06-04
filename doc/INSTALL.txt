@@ -1,4 +1,4 @@
-## Joruri CMS 2.0.0 インストールマニュアル                  2013.5.29
+## Joruri CMS 2.0.0 インストールマニュアル                  2013.6.3
 
 **********************************************************************
  1 想定環境
@@ -69,6 +69,7 @@ Joruriソースコードを設置します。
 
   # mkdir /var/share
   # tar xvzf joruri-2.0.0.tar.gz -C /var/share
+  # cp /var/share/joruri/config/original/* /var/share/joruri/config/
   # chown -R joruri:joruri /var/share/joruri
 
 **********************************************************************
@@ -161,7 +162,7 @@ Apacheは[6.1]を、Thinは[6.2]の手順を進めてください。
 
 Phusion Passengerをインストールします。
 
-  # gem innstall passenger --no-ri --no-rdoc -v 3.0.19
+  # gem install passenger --no-ri --no-rdoc -v 3.0.19
   # passenger-install-apache2-module
   ## 画面の内容を確認して Enterキーを押してください。
 
@@ -229,10 +230,6 @@ Joruriユーザに変更します。
 
 環境に応じて設定ファイルを編集します。
 Production(本番)モードでの動作を想定しています。
-
-オリジナルファイルをコピーします。
-
-  $ cp config/original/* config/
 
 Joruriの基本設定
 

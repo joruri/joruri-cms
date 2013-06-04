@@ -12,11 +12,7 @@ log/*
 public_0*/*/*
 public_0*/[a-z]*.html*
 tmp/cache/assets/*
-tmp/lock/*
-tmp/mails/*
-tmp/pids/*
-tmp/sockets/*
-tmp/restart.txt
+tmp/*
 upload/*
 app/controllers/test_controller.rb
 

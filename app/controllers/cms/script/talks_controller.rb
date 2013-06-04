@@ -42,15 +42,11 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
       raise "No such file - #{src}"
     end
     
-    if dst_exists = ::Storage.exists?(dst)
-      return false if task.published_at && task.published_at > @kana_mtime
-    end
-    
     content = ::Storage.read(src).to_s
     raise "Content is empty - #{src}" if content.blank?
     
-    if dst_exists && task.content_hash == Digest::MD5.new.update(content).to_s
-      return false
+    if ::Storage.exists?(dst) && task.content_hash == Digest::MD5.new.update(content).to_s
+      return false if task.published_at && task.published_at > @kana_mtime
     end
     
     talk = Cms::Lib::Navi::Jtalk.new

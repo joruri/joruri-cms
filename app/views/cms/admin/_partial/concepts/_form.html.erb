@@ -21,7 +21,8 @@ root   = Cms::Concept.find(:all, :conditions => cond, :order => :sort_no)
 if defined?(layout) && layout == true
 
   layouts = []
-  if concept = safe{@item.inherited_concept} || safe{@parent.inherited_concept} || safe{@item.concept}
+  #if concept = safe{@item.inherited_concept} || safe{@parent.inherited_concept} || safe{@item.concept}
+  if concept = safe{@item.inherited_concept} || Core.concept
     concept.parents_tree.each{|c| layouts += c.layouts}
     layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
   else

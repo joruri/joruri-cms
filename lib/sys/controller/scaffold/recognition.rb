@@ -9,9 +9,9 @@ protected
     if item.recognizable?(Core.user) && item.recognize(Core.user)
       location       = options[:location] || url_for(:action => :index)
       flash[:notice] = options[:notice] || '承認処理が完了しました。'
+      Sys::OperationLog.log(request, :item => item)
       yield if block_given?
       
-      Sys::OperationLog.log(request, :item => item)
       respond_to do |format|
         format.html { redirect_to(location) }
         format.xml  { head :ok }

@@ -25,9 +25,9 @@ protected
       status         = params[:_created_status] || :created
       location       = options[:location] || url_for(:action => :index)
       flash[:notice] = options[:notice] || '登録処理が完了しました。'
+      Sys::OperationLog.log(request, :item => item)
       yield if block_given?
       
-      Sys::OperationLog.log(request, :item => item)
       respond_to do |format|
         format.html { redirect_to(location) }
         format.xml  { render(:xml => item.to_xml(:dasherize => false), :status => status, :location => location) }
@@ -45,9 +45,9 @@ protected
     if item.editable? && item.save
       location       = options[:location] || url_for(:action => :index)
       flash[:notice] = '更新処理が完了しました。'
+      Sys::OperationLog.log(request, :item => item)
       yield if block_given?
       
-      Sys::OperationLog.log(request, :item => item)
       respond_to do |format|
         format.html { redirect_to(location) }
         format.xml  { head :ok }
@@ -65,9 +65,9 @@ protected
     if item.deletable? && item.destroy
       location       = options[:location] || url_for(:action => :index)
       flash[:notice] = options[:notice] || '削除処理が完了しました。'
+      Sys::OperationLog.log(request, :item => item)
       yield if block_given?
       
-      Sys::OperationLog.log(request, :item => item)
       respond_to do |format|
         format.html { redirect_to(location) }
         format.xml  { head :ok }

@@ -70,6 +70,27 @@ ja:
         area_uri: "地域URL"
         tag_uri: "タグ検索URL"
       
+      ## node
+      article/node/doc:
+        show_concept_id: "詳細画面コンセプト"
+        show_layout_id: "詳細画面レイアウト"
+      article/node/recent_doc:
+        list_type: "表示形式"
+      article/node/event_doc:
+        list_type: "表示形式"
+      article/node/unit:
+        list_type: "新着表示形式"
+        list_count: "新着表示件数"
+      article/node/category:
+        list_type: "新着表示形式"
+        list_count: "新着表示件数"
+      article/node/attribute:
+        list_type: "新着表示形式"
+        list_count: "新着表示件数"
+      article/node/area:
+        list_type: "新着表示形式"
+        list_count: "新着表示件数"
+      
       ## piece
       article/piece/recent_doc:
         list_count: "表示件数"

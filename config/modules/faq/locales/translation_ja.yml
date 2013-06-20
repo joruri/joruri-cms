@@ -41,6 +41,11 @@ ja:
         area_uri: "地域URL"
         tag_uri: "タグ検索URL"
       
+      ## node
+      faq/node/doc:
+        show_concept_id: "詳細画面コンセプト"
+        show_layout_id: "詳細画面レイアウト"
+      
       ## piece
       faq/piece/recent_doc:
         list_count: "表示件数"

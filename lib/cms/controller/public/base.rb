@@ -26,9 +26,10 @@ class Cms::Controller::Public::Base < Sys::Controller::Public::Base
     
     ## response by storage
     if ::Storage.env == :db && Core.user.id == 0
+      pc_view = (!request.mobile? && !request.smart_phone?) || cookies[:pc_view] == "on"
       
       ## valid redirect_uri
-      if Core.request_uri =~ /\d{8}/
+      if Core.request_uri =~ /\d{8}/ && pc_view
         uri =  Core.request_uri =~ /\/$/ ? "#{Core.request_uri}index.html" : Core.request_uri 
         Cms::Content.rewrite_regex(:site_id => Page.site.id).each do |src, dst|
           if uri =~ /#{src.gsub('/', '\\/')}/
@@ -39,9 +40,7 @@ class Cms::Controller::Public::Base < Sys::Controller::Public::Base
       end
       
       path = "#{Page.site.public_path}" + Core.request_uri.gsub(/\/$/, "/index.html")
-      if ::Storage.exists?(path)
-        return send_storage_file(path) if (!request.mobile? && !request.smart_phone?) || cookies[:pc_view] == "on"
-      end
+      return send_storage_file(path) if ::Storage.exists?(path) && pc_view
     end
   end
   

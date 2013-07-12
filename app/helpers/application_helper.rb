@@ -59,7 +59,9 @@ module ApplicationHelper
         uri.gsub!(/\/(\?|$)/, "/index.html\\1")
         uri.gsub!(/\.p[0-9]+\.html/, ".html")
         uri.gsub!(/\.html/, ".p#{page}.html") if page > 1
-        %Q(href="#{uri})
+        
+        qs = qp.size > 0 ? "?" + qp.map{|k,v| "#{k}=#{v}"}.join("&") : ""
+        %Q(href="#{uri}#{qs})
       end
     end
     if request.mobile?

@@ -9,6 +9,7 @@ config/ldap.yml
 config/smtp.yml
 config/mecab/joruri.dic
 log/*
+public/_common/themes/joruri/
 public_0*/*/*
 public_0*/[a-z]*.html*
 tmp/cache/assets/*

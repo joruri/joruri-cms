@@ -37,7 +37,7 @@ class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
             @site_uri[pub.site_id] = site.full_uri.gsub(/^(.*?\/\/.*?\/).*/, '\\1')
           end
           
-          uri = ::File.join(@site_uri[pub.site_id], uri)
+          uri = ::File.join(@site_uri[pub.site_id], uri) if uri !~ /^https?:\/\//
           
           logs[uri] ||= { :count => 0 }
           

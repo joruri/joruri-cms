@@ -57,7 +57,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
-    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, article_preview_doc_file_path(:parent => unid)), '.')
+    #@item.body = @item.body.gsub(::File.join(Core.site.full_uri, article_preview_doc_file_path(:parent => unid)), '.')
     
     ## link check
     @checker = Sys::Lib::Form::Checker.new
@@ -72,6 +72,9 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
+      @item.body = @item.body.gsub(article_preview_doc_file_path(:parent => unid) + '/', @item.public_uri)
+      @item.save(:validate => false) if @item.changed?
+      
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
     end
@@ -86,7 +89,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
 
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
-    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, article_preview_doc_file_path(:parent => unid)), '.')
+    @item.body = @item.body.gsub(article_preview_doc_file_path(:parent => unid) + '/', @item.public_uri)
     
     ## link check
     @checker = Sys::Lib::Form::Checker.new

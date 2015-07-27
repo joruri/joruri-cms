@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Article::Script::AreasController < Cms::Controller::Script::Publication
   def publish
-    attrs = Article::Attribute.new.public.find(:all, :order => :sort_no)
+    attrs = Article::Attribute.new.public.find(:all, :conditions => "content_id = #{@node.content_id}", :order => :sort_no)
     
     cond = {:state => 'public', :content_id => @node.content_id}
     Article::Area.root_items(cond).each do |item|

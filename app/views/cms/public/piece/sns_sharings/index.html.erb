@@ -10,7 +10,7 @@
   
 <% if @fb_like %>
   <!-- facebook/like -->
-  <iframe class="fbLike" src="//www.facebook.com/plugins/like.php?href=<%= ::CGI.escape(@uri) %>&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21"
+  <iframe class="fbLike" src="//www.facebook.com/v2.0/plugins/like.php?href=<%= ::CGI.escape(@uri) %>&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21"
    scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>
 <% end %>
   

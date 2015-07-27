@@ -5,7 +5,7 @@
   
   <% if @docs.size > 0 %><ul>
     <% @docs.each do |doc| %><li>
-      <%= link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %>
+      <%= link_to h(doc.title), doc.public_uri %><% if doc.new_mark %><span class="new">New</span><% end %><%= doc.date_and_unit %>
     </li><% end %>
   </ul><% end %>
   

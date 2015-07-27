@@ -68,6 +68,14 @@ class ActionView::Helpers::FormBuilder
     return error_wrapping(method, tag)
   end
   
+  def array_text_area(method, options = {})
+    value  = array_value(method)
+    method = array_name(method)
+
+    tag = @template.text_area_tag(method, value, options)
+    return error_wrapping(method, tag)
+  end
+
   def array_select(method, choices, options = {}, html_options = {})
     options[:selected] ||= array_value(method)
     method = array_name(method)

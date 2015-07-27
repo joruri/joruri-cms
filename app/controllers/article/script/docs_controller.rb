@@ -13,7 +13,7 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
     Script.total items.size
     
     items.each_with_index do |v, idx|
-      item = v.class.find(v.id)
+      item = v.class.find_by_id(v.id)
       next unless item
       
       Script.current
@@ -57,9 +57,13 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
       if !item.publish(render_public_as_string(uri, :site => item.content.site))
         raise item.errors.full_messages.join(' ')
       end
-      if item.published? || !::Storage.exists?("#{path}.r")
-        item.publish_page(render_public_as_string("#{uri}index.html.r", :site => item.content.site),
-          :path => "#{path}.r", :uri => "#{uri}index.html.r", :dependent => :ruby)
+
+      ruby_uri  = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
+      ruby_path = "#{path}.r"
+
+      if item.published? || !::Storage.exists?(ruby_path)
+        item.publish_page(render_public_as_string(ruby_uri, :site => item.content.site),
+          :path => ruby_path, :uri => ruby_uri, :dependent => :ruby)
       end
       params[:task].destroy
       

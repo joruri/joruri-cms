@@ -25,7 +25,7 @@
     <h3><%= c.title %></h3>
     <% if docs.size > 0 %><ul>
       <% docs.each do |doc| %><li>
-        <%=link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li><% end %>
+        <%=link_to h(doc.title), doc.public_uri %><% if doc.new_mark %><span class="new">New</span><% end %><%= doc.date_and_unit %></li><% end %>
     </ul><% end %>
     <% if docs.size > 0 %><div class="more">
       <%= link_to '>>記事一覧', "../#{c.name}/" %>

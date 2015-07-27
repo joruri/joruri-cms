@@ -44,7 +44,7 @@ p = create_cms_node :concept_id => concept.id, :layout_id => nil, :model => 'Cms
       :parent_id => p.id
     create_cms_node :concept_id => concept.id, :content_id => content.id, :layout_id => l_rec.id, :model => 'Faq::RecentDoc', :name => 'shinchaku', :title => '新着記事',
       :parent_id => p.id
-    create_cms_node :concept_id => concept.id, :content_id => content.id, :layout_id => l_rec.id, :model => 'Faq::SearchDoc', :name => 'search', :title => '新着記事',
+    create_cms_node :concept_id => concept.id, :content_id => content.id, :layout_id => l_rec.id, :model => 'Faq::SearchDoc', :name => 'search', :title => '記事検索',
       :parent_id => p.id
     create_cms_node :concept_id => concept.id, :content_id => content.id, :layout_id => l_tag.id, :model => 'Faq::TagDoc', :name => 'tag', :title => 'タグ検索',
       :parent_id => p.id

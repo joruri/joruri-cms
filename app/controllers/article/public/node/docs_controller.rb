@@ -114,7 +114,9 @@ class Article::Public::Node::DocsController < Cms::Controller::Public::Base
     
     if Core.mode == 'preview' && !Core.publish
       if params[:doc_id]
-        @body = @body.gsub(/(<img[^>]+src=".\/files\/.*?)(".*?>)/i, '\\1' + "?doc_id=#{params[:doc_id]}" + '\\2')
+        [/(<img[^>]+src="[\.\/]*?files\/.*?)(".*?>)/i, /(<a[^>]+href="[\.\/]*?files\/.*?)(".*?>)/i].each do |_regexp|
+          @body = @body.gsub(_regexp, '\\1' + "?doc_id=#{params[:doc_id]}" + '\\2')
+        end
       end
     end
   end

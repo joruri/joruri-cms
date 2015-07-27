@@ -4,7 +4,7 @@
 @h = []
 
 def set_concept(concept)
-  return h if @exists[concept.id]
+  return @h if @exists[concept.id]
   @exists[concept.id] = true
   
   children = concept.readable_children

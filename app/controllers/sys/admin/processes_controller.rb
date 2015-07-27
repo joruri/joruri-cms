@@ -19,7 +19,7 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
       ["音声書き出し"      , "cms/talks#publish"],
       ["フィード取り込み"  , "cms/feeds#read"],
       ["メルマガ読者登録"  , "newsletter/requests#read"],
-      ["記事再構築"        , "article/docs#rebuild"],
+      ["自治体記事再構築"  , "article/docs#rebuild"],
       ["FAQ再構築"         , "faq/docs#rebuild"],
       ["アンケート取り込み", "enquete/answers#pull"],
     ]

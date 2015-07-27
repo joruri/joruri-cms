@@ -175,7 +175,7 @@ module Sys::Model::Base::File
           
           if size = thumbnail_size
             size = @@_thumbnail_size if size[:width] > 640 || size[:height] > 480
-            @thumbnail_image  = image.resize_to_fill(size[:width], size[:height], ::Magick::CenterGravity)
+            @thumbnail_image  = image.resize_to_fit(size[:width], size[:height])
             self.thumb_width  = size[:width]
             self.thumb_height = size[:height]
             self.thumb_size   = @thumbnail_image.to_blob.size
@@ -288,31 +288,25 @@ module Sys::Model::Base::File
     
     src_w  = image_width.to_f
     src_h  = image_height.to_f
-    
-    if options[:thumbnail] && thumb_width && thumb_height
-      src_w  = thumb_width.to_f
-      src_h  = thumb_height.to_f
-    end
-    
     dst_w  = options[:width].to_f
     dst_h  = options[:height].to_f
-    src_r  = (src_w / src_h)
-    dst_r  = (dst_w / dst_h)
-    
-    wide  = dst_r > src_r
-    dst_w = (dst_h * src_r) if wide
-    dst_h = (dst_w / src_r) if !wide
-    
+    src_r    = (src_w / src_h)
+    dst_r    = (dst_w / dst_h)
+    if dst_r > src_r
+      dst_w = (dst_h * src_r);
+    else
+      dst_h = (dst_w / src_r);
+    end
+
     if options[:css]
-      css  = "width: #{dst_w.ceil}px;"
-      css += " height: #{dst_h.ceil}px;" if !dst_h.nan?
-      return css
+      return "width: #{dst_w.ceil}px; height:#{dst_h.ceil}px;"
     end
     return {:width => dst_w.ceil, :height => dst_h.ceil}
   end
   
   def mobile_image(mobile, params = {})
     return nil unless mobile
+    return nil if mobile.smart_phone?
     return nil if image_is != 1
     return nil if image_width <= 300 && image_height <= 400
     

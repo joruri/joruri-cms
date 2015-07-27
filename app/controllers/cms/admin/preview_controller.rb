@@ -5,7 +5,7 @@ class Cms::Admin::PreviewController < Cms::Controller::Admin::Base
   def index
     path = Core.request_uri.gsub(/^#{Regexp.escape(cms_preview_path)}/, "")
     
-    render_preview(path, :mobile => Page.mobile?, :preview => true)
+    render_preview(path, :mobile => Page.mobile?, :smart_phone => request.smart_phone?, :preview => true)
   end
 
   def render_preview(path, options = {})
@@ -25,7 +25,7 @@ class Cms::Admin::PreviewController < Cms::Controller::Admin::Base
     
     opt.each {|k,v| params[k] = v }
     
-    res = render_component :controller => ctl, :action => act, :params => params
+    res = render_component :controller => ctl, :action => act, :params => params, :jpmobile => (options[:smart_phone] ? envs_to_request_as_smart_phone : nil)
     response.content_type = res.content_type
   end
 

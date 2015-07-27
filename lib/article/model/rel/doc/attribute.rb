@@ -38,5 +38,6 @@ module Article::Model::Rel::Doc::Attribute
       cond.or :attribute_ids, 'REGEXP', "(^| )#{c.id}( |$)"
     end
     self.and cond
+    self
   end
 end

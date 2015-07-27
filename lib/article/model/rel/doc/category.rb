@@ -37,6 +37,7 @@ module Article::Model::Rel::Doc::Category
     
     searcher = lambda do |_cate|
       _cate.each do |_c|
+        next if _c.blank?
         next if _c.level_no > 4
         next if ids.index(_c.id)
         ids << _c.id

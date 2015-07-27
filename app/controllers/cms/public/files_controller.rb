@@ -12,7 +12,6 @@ class Cms::Public::FilesController < Cms::Controller::Public::Base
     
     item = Cms::DataFile.new.public
     item.and :id, paths[0].gsub(/.$/, '') 
-    item.and :site_id, Page.site.id 
     item.and :name, name
     return http_error(404) unless item = item.find(:first, :order => :id)
     

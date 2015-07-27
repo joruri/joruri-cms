@@ -55,7 +55,11 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     
     ## 日別
     events = (events + event_docs)
-    events.sort! {|a, b| a.event_date <=> b.event_date }
+    events.sort! {|a, b|
+      str1 = "#{a.event_date.strftime("%Y%m%d")}#{a.event_close_date ? a.event_close_date.strftime("%Y%m%d") : "00000000"}#{format('%08d', a.id)}"
+      str2 = "#{b.event_date.strftime("%Y%m%d")}#{b.event_close_date ? b.event_close_date.strftime("%Y%m%d") : "00000000"}#{format('%08d', b.id)}"
+      str1 <=> str2
+    }
     events.each do |ev|
       next if !@items[ev.event_date.to_s]
       @items[ev.event_date.to_s] << ev
@@ -95,7 +99,11 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     
     ## 日別
     events = (events + event_docs)
-    events.sort! {|a, b| a.event_date <=> b.event_date }
+    events.sort! {|a, b|
+      str1 = "#{a.event_date.strftime("%Y%m%d")}#{a.event_close_date ? a.event_close_date.strftime("%Y%m%d") : "00000000"}#{format('%08d', a.id)}"
+      str2 = "#{b.event_date.strftime("%Y%m%d")}#{b.event_close_date ? b.event_close_date.strftime("%Y%m%d") : "00000000"}#{format('%08d', b.id)}"
+      str1 <=> str2
+    }
     events.each do |ev|
       unless @items.key?(ev.event_date.to_s)
         date = ev.event_date
@@ -163,6 +171,7 @@ protected
     
     events.each do |ev|
       @items << preset.merge({
+        :id    => ev.id,
         :title => ev.title,
         :body  => ev.body.to_s.gsub(/<("[^"]*"|'[^']*'|[^'">])*>/, "").gsub(/\r\n|\r|\n/, '<br />'),
         :uri => ev.event_uri,
@@ -175,6 +184,7 @@ protected
     
     event_docs.each do |ev|
       @items << preset.merge({
+        :id    => ev.id,
         :title => ev.title,
         :body  => truncate(ev.summary_body, :length => 50),
         :uri => ev.public_uri,
@@ -186,6 +196,10 @@ protected
       })
     end
     
-    @items.sort! {|a, b| a[:event_date] <=> b[:event_date] }
+    @items.sort! {|a, b|
+      str1 = "#{a[:event_date].strftime("%Y%m%d")}#{!a[:close_date].blank? ? a[:close_date].strftime("%Y%m%d") : "00000000"}#{format('%08d', a[:id])}"
+      str2 = "#{b[:event_date].strftime("%Y%m%d")}#{!b[:close_date].blank? ? b[:close_date].strftime("%Y%m%d") : "00000000"}#{format('%08d', b[:id])}"
+      str1 <=> str2
+    }
   end
 end

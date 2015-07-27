@@ -10,6 +10,7 @@ class Cms::Admin::Data::TextsController < Cms::Controller::Admin::Base
   def index
     item = Cms::DataText.new
     item.readable if params[:s_target] != "all"
+    item.and :site_id, Core.site.id
     item.search params
     item.page  params[:page], params[:limit]
     item.order params[:sort], 'name, id'

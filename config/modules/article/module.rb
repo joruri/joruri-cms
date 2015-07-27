@@ -1,7 +1,7 @@
 # encoding: utf-8
-Cms::Lib::Modules::ModuleSet.draw :article, '記事' do |mod|
+Cms::Lib::Modules::ModuleSet.draw :article, '自治体記事' do |mod|
   ## contents
-  mod.content :docs, '記事'
+  mod.content :docs, '自治体記事'
   
   ## directory
   mod.directory :docs, '記事一覧，記事ページ'

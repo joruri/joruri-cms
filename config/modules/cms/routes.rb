@@ -16,9 +16,9 @@ Joruri::Application.routes.draw do
     
     match "tests_kana" => "admin/tests/kana#index",
       :as => :tests_kana
-    match "embedded_file/:id/:name.:format" => "admin/embedded_files#index",
+    match "embedded_file/:id/:name" => "admin/embedded_files#index",
       :as => :embedded_file
-    match "embedded_file/:id/thumb/:name.:format" => "admin/embedded_files#index",
+    match "embedded_file/:id/thumb/:name" => "admin/embedded_files#index",
       :as => :embedded_thumbnail, :thumbnail   => true
     
     resources :tool_link_checks,

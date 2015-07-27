@@ -48,8 +48,9 @@ module Sys::Model::Rel::Recognition
   end
 
   def recognizable?(user = nil)
-    return false unless recognition
     return false unless state == "recognize"
+    return false unless recognition
+    return false unless editable?
     recognition.recognizable?(user)
   end
 

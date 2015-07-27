@@ -73,7 +73,9 @@ protected
       end
       return true
     end
-    
+
+    concept = Cms::Concept.find_by_site_id(item.id)
+
     node = Cms::Node.new({
       :site_id      => item.id,
       :state        => 'public',
@@ -93,6 +95,7 @@ protected
       :published_at => Core.now,
       :parent_id    => node.id,
       :route_id     => node.id,
+      :concept_id   => concept.id,
       :model        => 'Cms::Page',
       :directory    => 0,
       :name         => 'index.html',

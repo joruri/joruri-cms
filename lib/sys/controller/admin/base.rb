@@ -34,8 +34,8 @@ class Sys::Controller::Admin::Base < ApplicationController
 private
   def authenticate
     return true  if logged_in?
-    return false if request.env['PATH_INFO'] =~ /^#{Regexp.escape(Joruri.admin_uri)}\/login/
-    uri  = request.env['PATH_INFO']
+    return false if request.env['REQUEST_URI'] =~ /^#{Regexp.escape(Joruri.admin_uri)}\/login/
+    uri  = request.env['REQUEST_URI']
     uri += "?#{request.env['QUERY_STRING']}" if !request.env['QUERY_STRING'].blank?
     cookies[:sys_login_referrer] = uri
     return respond_to do |format|

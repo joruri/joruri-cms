@@ -207,6 +207,29 @@
   margin-right: 10px;
 }
 
+.contentArticleRecentDocs .docs li span.new,
+.contentPortalEntries .entries li span.new,
+.contentPortalCategory .entries li span.new {
+  display: inline-block;
+  width: 30px;
+  height: 0;
+  margin: -3px 3px 2px;
+  padding-top: 13px;
+  background-image: url("./images/ic-new.gif");
+  background-position: left top;
+  backgroun-repeat: no-repeat;
+  overflow: hidden;
+  vertical-align: middle;
+}
+* html #docTabPortal .content li span.new,
+* html #docTab .content li span.new {
+  margin: -1px 3px 1px;
+}
+*:first-child+html #docTabPortal .content li span.new,
+*:first-child+html #docTab .content li span.new {
+  margin: -1px 3px 1px;
+}
+
 /* recent Docs Title
 ----------------------------------------------- */
 #recentDocsTitle .pieceHeader {

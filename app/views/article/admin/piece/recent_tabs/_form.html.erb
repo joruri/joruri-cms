@@ -8,6 +8,9 @@
 
 <table class="show">
   <tr>
+    <th><%= @item.locale :list_type %></th>
+    <td><%= f.array_select 'in_settings[list_type]', @item.list_types, :include_blank => '' %></td>
+  </tr><tr>
     <th><%= @item.locale :list_count %></th>
     <td><%= f.array_text_field 'in_settings[list_count]', :class => 'number' %></td>
   </tr><tr>

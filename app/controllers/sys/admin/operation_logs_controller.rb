@@ -24,7 +24,7 @@ class Sys::Admin::OperationLogsController < Cms::Controller::Admin::Base
     
     return destroy_items(item.condition.where) if !params[:destroy].blank?
     
-    item.page  params[:page], params[:limit]
+    item.page  params[:page], params[:limit] if params[:csv].blank?
     item.order params[:sort], "id DESC"
     @items = item.find(:all)
     

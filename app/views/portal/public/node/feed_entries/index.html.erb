@@ -9,7 +9,7 @@
   <% @items.each_with_index do |item, idx| %>
   <% if item[:date] %><%== "</ul>" if idx != 0  %>
   <%== %Q(<h2 class="date">#{item[:date]}</h2><ul>).html_safe if item[:date] %>
-  <% end %><li><%=link_to h(item[:entry].title), item[:entry].public_uri, :target => item[:entry].link_target %><%= item[:entry].date_and_site(:date => false) %></li><% end %>
+  <% end %><li><%=link_to h(item[:entry].title), item[:entry].public_uri, :target => item[:entry].link_target %><% if item[:entry].new_mark %><span class="new">New</span><% end %><%= item[:entry].date_and_site(:date => false) %></li><% end %>
   <%== "</ul>" if @entries.size > 0 %>
 </div>
 

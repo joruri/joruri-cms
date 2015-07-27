@@ -93,6 +93,7 @@ class Article::Public::Node::UnitsController < Cms::Controller::Public::Base
     @page  = params[:page]
     
     attr = Article::Attribute.new.public
+    attr.and :content_id, @content.id
     attr.and :name, params[:attr]
     return http_error(404) unless @attr = attr.find(:first, :order => :sort_no)
     

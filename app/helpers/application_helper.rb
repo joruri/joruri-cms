@@ -49,19 +49,19 @@ module ApplicationHelper
     return links if links.blank?
     
     if Core.request_uri != Core.internal_uri
-      links.gsub!(/href="(#{URI.encode(Core.internal_uri)}[^"]+)/m) do |m|
+      links.gsub!(/href="(#{Core.internal_uri}[^"]+)/im) do |m|
         
         qp   = (m =~ /\?/) ? Rack::Utils.parse_query(m.gsub(/.*\?/, '').gsub(/&amp;/, '&')) : {}
         page = qp['page'].to_s =~ /^\d+$/ ? qp['page'].to_i : 1
         
         uri = m.gsub(/\?.*/, '')
-        uri.gsub!(/^href="#{URI.encode(Core.internal_uri)}/, URI.encode(Page.uri))
+        uri.gsub!(/^href="#{Core.internal_uri}/i, Page.uri)
         uri.gsub!(/\/(\?|$)/, "/index.html\\1")
         uri.gsub!(/\.p[0-9]+\.html/, ".html")
         uri.gsub!(/\.html/, ".p#{page}.html") if page > 1
         
         qs = qp.size > 0 ? "?" + qp.map{|k,v| "#{k}=#{v}"}.join("&") : ""
-        %Q(href="#{uri}#{qs})
+        %Q(href="#{uri.force_encoding("UTF-8")}#{qs.force_encoding("UTF-8")})
       end
     end
     if request.mobile?

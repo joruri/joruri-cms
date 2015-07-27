@@ -29,7 +29,7 @@ protected
         value = @item.published_at ? @item.published_at.strftime("%Y年%-m月%-d日") : ""
       end
       
-      response.body.gsub!("#{name}", value) if name != value
+      response.body = response.body.gsub("#{name}", value) if name != value
     end
   end
 end

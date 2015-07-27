@@ -20,3 +20,6 @@ tree = tree.collect{|c| link_to(c.name, sys_groups_path(c)) }
 <%= action_menu :edit    if safe{@item.editable?} %>
 <%= action_menu :destroy if safe{@item.deletable?} %>
 </div>
+<%- if params[:action] == 'show' -%>
+<%== '<span>グループ・下位グループに管理者が所属している場合は削除できません</span>' unless safe{@item.deletable?} %>
+<%- end -%>

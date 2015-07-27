@@ -8,6 +8,9 @@
 
 <table class="show">
   <tr>
+    <th><%= @item.locale :list_type %></th>
+    <td><%= @item.setting_label(:list_type) %></td>
+  </tr><tr>
     <th><%= @item.locale :list_count %></th>
     <td><%= @item.setting_value(:list_count) %></td>
   </tr><tr>

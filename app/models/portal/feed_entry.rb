@@ -43,6 +43,22 @@ class Portal::FeedEntry < Cms::FeedEntry
     separator = %Q(<span class="separator">　</span>)
     %Q(<span class="attributes">（#{values.join(separator)}）</span>).html_safe
   end
+
+  def new_mark
+    term = portal_content.setting_value(:new_term)
+    return false if term =~ /^0(\s|$)/i
+
+    if (term == nil || term =~ /^[\s|]*$/) && content_id != portal_content_id
+      if doc_content = portal_content.doc_content
+        term = doc_content.setting_value(:new_term)
+      end
+    end
+    term = term.to_f * 60
+    return false if term <= 0
+
+    published_at = term.minutes.since self.entry_updated
+    return ( published_at.to_i >= Time.now.to_i )
+  end
   
   def public_uri
     if name

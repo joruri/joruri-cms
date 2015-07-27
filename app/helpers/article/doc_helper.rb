@@ -6,6 +6,7 @@ module Article::DocHelper
     thumbnail = item.thumbnail_uri
     uri       = item.public_uri
     attr      = options[:attr] || item.date_and_unit
+    new_mark  = item.new_mark ? '<span class="new">New</span>' : ''
     
     if options[:list_type].to_s == "blog"
       h = ""
@@ -16,6 +17,6 @@ module Article::DocHelper
       return h.html_safe
     end
     
-    %Q(#{link_to(item.title, item.public_uri)}#{item.date_and_unit}).html_safe
+    %Q(#{link_to(item.title, item.public_uri)}#{new_mark}#{item.date_and_unit}).html_safe
   end
 end

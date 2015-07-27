@@ -18,7 +18,7 @@ var feedTabs<%= Page.current_piece.id %> = new ArticleDocTabs('<%= Page.current_
     <% if tab[:docs].size > 0 %>
     <ul class="<%= tab[:name] %>" <%== 'style="display: none;"' unless tab[:current] %>>
       <% tab[:docs].each do |doc| %>
-      <li class="<%= doc_attr_css_class(doc) %>"><%= link_to h(doc.title), doc.public_uri, :target => doc.link_target %><%= doc.date_and_site %></li>
+      <li class="<%= doc_attr_css_class(doc) %>"><%= link_to h(doc.title), doc.public_uri, :target => doc.link_target %><% if doc.new_mark %><span class="new">New</span><% end %><%= doc.date_and_site %></li>
       <% end %>
     </ul>
     <% end %>

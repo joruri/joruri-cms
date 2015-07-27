@@ -84,7 +84,7 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       
       ruby_uri  = (uri =~ /\?/) ? uri.gsub(/(.*\.html)\?/, '\\1.r?') : "#{uri}.r"
       ruby_path = "#{path}.r"
-      if item.published? || !::Storage.exists?(ruby_uri)
+      if item.published? || !::Storage.exists?(ruby_path)
         item.publish_page(render_public_as_string(ruby_uri, :site => item.site),
           :path => ruby_path, :dependent => :ruby)
       end

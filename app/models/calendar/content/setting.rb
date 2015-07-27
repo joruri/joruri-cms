@@ -1,6 +1,6 @@
 # encoding: utf-8
 class Calendar::Content::Setting < Cms::ContentSetting
-  set_config :doc_content_id, :name => "記事コンテンツ"
+  set_config :doc_content_id, :name => "自治体記事コンテンツ"
   
   def config_options
     case name

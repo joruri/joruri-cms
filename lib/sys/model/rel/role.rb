@@ -6,9 +6,11 @@ module Sys::Model::Rel::Role
     return self if user.has_auth?(:manager)
     
     gids = user.group.parents_tree.collect{|g| g.id }
-    
-    sql = "SELECT role_id FROM #{Sys::UsersRole.table_name} WHERE user_id = #{user.id} OR group_id IN (#{gids.join(',')})"
-    sql = "SELECT item_unid FROM sys_object_privileges WHERE action = '#{name}' AND role_id IN (#{sql}) "
+    _conds = "user_id = #{user.id} OR group_id IN (#{gids.join(',')})"
+    rids = Sys::UsersRole.find(:all, :select => 'role_id', :conditions => _conds).collect{|r| r.role_id }
+    rids = rids.size > 0 ? rids * "," : '-1';
+
+    sql = "SELECT item_unid FROM sys_object_privileges WHERE action = '#{name}' AND role_id IN (#{rids}) "
     sql = "INNER JOIN (#{sql}) AS sys_object_privileges ON sys_object_privileges.item_unid = #{self.class.table_name}.unid"
     
     join sql

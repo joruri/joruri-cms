@@ -34,6 +34,8 @@ class Article::Doc < ActiveRecord::Base
   attr_accessor :concept_id, :layout_id
   attr_accessor :link_checker
   
+  before_validation :set_inquiry_email_presence
+
   validates_presence_of :title
   validates_uniqueness_of :name, :scope => :content_id,
     :if => %Q(!replace_page?)
@@ -317,6 +319,15 @@ class Article::Doc < ActiveRecord::Base
     self.agent_state = nil if agent_state == ''
     return true
   end
+
+  def new_mark
+    term = content.setting_value(:new_term).to_f * 60
+    return false if term <= 0
+
+    published_at = term.minutes.since self.published_at
+    return ( published_at.to_i >= Time.now.to_i )
+  end
+
   
   def check_digit
     return true if name.to_s != ''
@@ -492,6 +503,7 @@ class Article::Doc < ActiveRecord::Base
     
     files.each do |f|
       file = Sys::File.new(f.attributes)
+      file.use_resize(false)
       file.file        = Sys::Lib::File::NoUploadedFile.new(f.upload_path, :mime_type => file.mime_type)
       file.unid        = nil
       file.parent_unid = item.unid
@@ -517,6 +529,14 @@ class Article::Doc < ActiveRecord::Base
   def inquiry_email_setting
     v = content.setting_value(:inquiry_email_display)
     v.blank? ? super : v
+  end
+
+  def set_inquiry_email_presence
+    self.unset_inquiry_email_presence if self.unset_inquiry_email_presence?
+  end
+
+  def unset_inquiry_email_presence?
+    inquiry_email_setting != 'visible' ? true : false
   end
   
   # group chenge

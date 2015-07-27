@@ -48,7 +48,15 @@ class Sys::Group < ActiveRecord::Base
   end
   
   def deletable?
+    return false if has_admin_user?
+    return false if children.select {|c| !c.deletable? }.size > 0
+
     Core.user.has_auth?(:manager)
+  end
+
+  def has_admin_user?
+    return true if users.select{|user| user.groups.size == 1 && user.auth_no == 5 && user.state == 'enabled' }.size > 0
+    false
   end
   
   def ldap_states
@@ -95,6 +103,10 @@ class Sys::Group < ActiveRecord::Base
   
 private
   def before_destroy
+    if has_admin_user?
+      raise "can't be deleted."
+    end
+
     users.each do |user|
       if user.groups.size == 1
         u = Sys::User.find_by_id(user.id)

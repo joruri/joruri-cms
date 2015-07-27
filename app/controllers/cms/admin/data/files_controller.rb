@@ -20,6 +20,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     
     item = Cms::DataFile.new
     item.readable if params[:s_target] != "all"
+    item.and :site_id, Core.site.id
     #item.and 'node_id', @parent.id if @parent.id != 0
     item.search params
     item.page  params[:page], params[:limit]

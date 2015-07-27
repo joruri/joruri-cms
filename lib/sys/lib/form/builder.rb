@@ -63,7 +63,8 @@ class Sys::Lib::Form::Builder
   def valid?
     elements.each do |e|
       if e.required == true && e.blank_value?
-        errors.add :base, "#{e.label} を入力してください。"
+        act = e.class.to_s =~ /(select|check|radio)/i ? "選択" : "入力"
+        errors.add :base, "#{e.label} を#{act}してください。"
       end
     end
     return errors.size == 0

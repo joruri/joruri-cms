@@ -11,6 +11,8 @@ class Article::Public::Piece::RecentTabsController < Sys::Controller::Public::Ba
     @more_label = @piece.setting_value(:more_label)
     @more_label = ">>新着記事一覧" if @more_label.blank?
     
+    @list_type = @piece.setting_value(:list_type)
+
     @tabs = []
     
     limit = Page.current_piece.setting_value(:list_count)

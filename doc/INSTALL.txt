@@ -1,4 +1,4 @@
-## Joruri CMS 2.0.1 インストールマニュアル                  2013.7.12
+## Joruri CMS 2.2.0 インストールマニュアル                  2015.4.24
 
 **********************************************************************
  1 想定環境
@@ -8,7 +8,7 @@
 OS         : CentOS 6.4
 Webサーバ  : Apache 2.2
 DBシステム : MySQL 5
-Ruby       : 1.9.3
+Ruby       : 2.1.5
 Rails      : 3.2.13
 
 [設定]
@@ -48,10 +48,10 @@ rootユーザに変更します。
 必要なパッケージをダウンロードします。
 
   # cd /usr/local/src/
-  # wget http://joruri.org/download/joruri-2.0.1.tar.gz \
+  # wget http://joruri.org/download/joruri-2.2.0.tar.gz \
       http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz \
-      ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p392.tar.gz \
-      http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1.tar.gz/download \
+      http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz \
+      http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1.tar.gz \
       http://downloads.sourceforge.net/lame/lame-398-2.tar.gz \
       http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.07.tar.gz \
       http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.06.tar.gz \
@@ -68,7 +68,7 @@ Joruriユーザを作成します。
 Joruriソースコードを設置します。
 
   # mkdir /var/share
-  # tar xvzf joruri-2.0.1.tar.gz -C /var/share && cd /var/share/joruri
+  # tar xvzf joruri-2.2.0.tar.gz -C /var/share && cd /var/share/joruri
   # cp config/original/* config/
   # cp -r public/_common/themes/joruri.original public/_common/themes/joruri
   # chown -R joruri:joruri ./
@@ -90,7 +90,7 @@ LibYAMLをインストールします。
 Rubyをインストールします。
 
   # cd /usr/local/src
-  # tar xvzf ruby-1.9.3-p392.tar.gz && cd ruby-1.9.3-p392
+  # tar xvzf ruby-2.1.5.tar.gz && cd ruby-2.1.5
   # ./configure && make && make install
 
 ======================================================================
@@ -163,7 +163,7 @@ Apacheは[6.1]を、Thinは[6.2]の手順を進めてください。
 
 Phusion Passengerをインストールします。
 
-  # gem install passenger --no-ri --no-rdoc -v 3.0.19
+  # gem install passenger --no-ri --no-rdoc -v 4.0.53
   # passenger-install-apache2-module
   ## 画面の内容を確認して Enterキーを押してください。
 
@@ -259,15 +259,15 @@ Joruriの基本設定
 
 テーブルを作成します。
 
-  $ rake db:schema:load RAILS_ENV=production
+  $ bundle exec rake db:schema:load RAILS_ENV=production
 
 初期データを登録します。
 
-  $ rake db:seed RAILS_ENV=production
+  $ bundle exec rake db:seed RAILS_ENV=production
 
 サンプルデータを登録します。
 
-  $ rake db:seed:demo RAILS_ENV=production
+  $ bundle exec rake db:seed:demo RAILS_ENV=production
 
 ======================================================================
  7.3 動作の確認
@@ -356,17 +356,17 @@ MeCab-Ruby
   
   $ crontab -e
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  RAKE="/usr/local/bin/ruby /usr/local/bin/rake -f /var/share/joruri/Rakefile RAILS_ENV=production"
-  
-  10,25,40,55 * * * * $RAKE sys:tasks:exec    # 日時指定処理
-  */15 * * * * $RAKE cms:nodes:publish        # ページ書き出し
-  */15 * * * * $RAKE cms:talks:publish        # 音声書き出し
-  */30 * * * * $RAKE cms:feeds:read           # フィード取り込み
-  */10 * * * * $RAKE newsletter:requests:read # メルマガ読者登録
-  # 00 * * * * $RAKE article:docs:rebuild     # 記事再構築(ページ)
-  # 00 * * * * $RAKE faq:docs:rebuild         # FAQ再構築(ページ)
-  # 00 * * * * $RAKE enquete:answers:pull     # アンケート取り込み ※[9.1]
-  # 00 * * * * $RAKE db:session:sweep         # DBセッション削除
+  PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin
+
+  10,25,40,55 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake sys:tasks:exec'    # 日時指定処理
+  */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish'        # ページ書き出し
+  */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:talks:publish'        # 音声書き出し
+  */30 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:feeds:read'           # フィード取り込み
+  */10 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake newsletter:requests:read' # メルマガ読者登録
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake article:docs:rebuild'     # 記事再構築(ページ)
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake faq:docs:rebuild'         # FAQ再構築(ページ)
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake enquete:answers:pull'     # アンケート取り込み ※[9.1]
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake db:session:sweep'         # DBセッション削除
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ======================================================================

@@ -5,7 +5,7 @@ module Cms::Model::Base::Page::Publisher
     mod.has_many :publishers, :foreign_key => 'unid', :primary_key => 'unid', :class_name => 'Sys::Publisher',
       :dependent => :destroy
     mod.has_many :rel_publishers, :foreign_key => 'rel_unid', :primary_key => 'unid', :class_name => 'Sys::Publisher',
-      :dependent => :destroy
+      :conditions=>"#{Sys::Publisher.table_name}.rel_unid is not null", :dependent => :destroy
     mod.after_save :close_page
   end
   
@@ -28,7 +28,7 @@ module Cms::Model::Base::Page::Publisher
     params = []
     options[:params].each {|k, v| params << "#{k}=#{v}" } if options[:params]
     params = params.size > 0 ? "?#{params.join('&')}" : ""
-    "#{Core.site.admin_uri}_preview/#{format('%08d', site.id)}#{mobile}#{public_uri}#{params}" 
+    "#{Core.site.admin_uri}_preview/#{format('%08d', site.id)}#{mobile}#{public_uri}#{params}"
   end
 
   def publishable
@@ -76,7 +76,9 @@ module Cms::Model::Base::Page::Publisher
     path = (options[:path] || public_path).gsub(/\/$/, "/index.html")
     hash = data ? Digest::MD5.new.update(data).to_s : nil
     
-    cond = options[:dependent] ? ['dependent = ?', options[:dependent].to_s] : ['dependent IS NULL']
+    cond = {}
+    cond[:site_id]      = options[:site].id if options[:site]
+    cond[:dependent] = options[:dependent] ? options[:dependent].to_s : nil;
     pub  = publishers.find(:first, :conditions => cond)
     
     return false if mobile_page?
@@ -99,6 +101,7 @@ module Cms::Model::Base::Page::Publisher
     pub.rel_unid       = options[:rel_unid]
     pub.site_id        = site_id if respond_to?(:site_id)
     pub.site_id        = content.site_id if respond_to?(:content) && content
+    pub.site_id        = options[:site].id if !pub.site_id && options[:site]
     pub.dependent      = options[:dependent] ? options[:dependent].to_s : nil
     pub.path           = path
     pub.uri            = options[:uri].gsub(/\?.*/, '')

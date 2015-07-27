@@ -56,6 +56,7 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
     
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
+      @item = Faq::Doc.find_by_id(@item.id)
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
     end

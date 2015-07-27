@@ -35,6 +35,10 @@ module Cms::Model::Rel::Inquiry
     end
     {:state => 'visible', :group_id => g.id, :tel => g.tel, :email => g.email}.merge(params)
   end
+
+  def unset_inquiry_email_presence
+    @@inquiry_presence_of.delete(:email)
+  end
   
   def inquiry_presence?(name)
     @@inquiry_presence_of.index(name) != nil

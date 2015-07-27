@@ -8,7 +8,7 @@ var docTabs<%= Page.current_piece.id %> = new ArticleDocTabs('<%= Page.current_p
 <div class="tabs">
   <% @tabs.each do |tab| %>
   <span><a href="javascript: Tab/<%= tab[:name] %>" onkeypress="" class="<%= tab[:class] %>"
-    onclick="return docTabs<%= Page.current_piece.id %>.show('<%= tab[:name] %>')"><%= tab[:title] %></a></span><% end %>
+    onclick="return docTabs<%= Page.current_piece.id %>.show('<%= tab[:name] %>')"><%== tab[:title] %></a></span><% end %>
 </div>
 
 <div class="wrapper">
@@ -16,12 +16,17 @@ var docTabs<%= Page.current_piece.id %> = new ArticleDocTabs('<%= Page.current_p
   <div class="content">
     <% @tabs.each do |tab| %>
     <% if tab[:docs].size > 0 %>
+    <% if @list_type == 'published_at' %>
+    <dl class="<%=h tab[:name] %>" <%== 'style="display: none;"' unless tab[:current] %>>
+      <% tab[:docs].each do |doc| %>
+      <dt><%= doc.published_at.strftime('%Y年%-m月%-d日') if doc.published_at %></dt><dd><%= link_to h(doc.title), doc.public_uri %><% if doc.new_mark %><span class="new">New</span><% end %><%= doc.unit_title %></dd><% end %>
+    </dl><% else %>
     <ul class="<%= tab[:name] %>" <%== 'style="display: none;"' unless tab[:current] %>>
       <% tab[:docs].each do |doc| %>
       <% li_class = (attr = doc.attribute_items[0]) ? "attr#{safe{attr.name.camelize}}" : nil %>
       <li class="<%= li_class %>"><%= link_to h(doc.title), doc.public_uri %><%= doc.date_and_unit %></li>
       <% end %>
-    </ul>
+    </ul><% end %>
     <% end %>
     <% end %>
   </div>

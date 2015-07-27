@@ -21,7 +21,7 @@ class Cms::Controller::Script::Publication < ApplicationController
     
     site = params[:site] || @site
     pub = item.publish_page(render_public_as_string(params[:uri], :site => site),
-      :rel_unid => params[:rel_unid], :path => params[:path], :uri => params[:uri], :dependent => params[:dependent])
+      :rel_unid => params[:rel_unid], :path => params[:path], :uri => params[:uri], :site => site, :dependent => params[:dependent])
     return false unless pub
     #return true if params[:path] !~ /(\/|\.html)$/
 
@@ -58,7 +58,7 @@ class Cms::Controller::Script::Publication < ApplicationController
       begin
         timeout(80) do
           item.publish_page(render_public_as_string(uri, :site => site),
-            :rel_unid => params[:rel_unid], :path => path, :uri => uri, :dependent => dep)
+            :rel_unid => params[:rel_unid], :path => path, :uri => uri, :site => site, :dependent => dep)
         end
       rescue TimeoutError => e
         Script.error "#{uri} #{e}"
@@ -81,8 +81,9 @@ class Cms::Controller::Script::Publication < ApplicationController
     file  = params[:file] || 'index'
     first = params[:first] || 1
     first.upto(limit) do |p|
-      page = (p == 1 ? "" : ".p#{p}") 
-      uri  = "#{params[:uri]}#{file}#{page}.html"
+      page = (p == 1 ? "" : ".p#{p}")
+      qs   = (p == 1 ? "" : "?page=#{p}")
+      uri  = "#{params[:uri]}#{file}#{page}.html#{qs}"
       path = "#{params[:path]}#{file}#{page}.html"
       dep  = "#{params[:dependent]}#{page}"
       rs   = publish_page(item, :rel_unid => params[:rel_unid], :uri => uri, :site => params[:site], :path => path, :dependent => dep)
@@ -97,10 +98,18 @@ class Cms::Controller::Script::Publication < ApplicationController
     first = stopp ? stopp : (limit + 1)
     first.upto(9999) do |p|
       dep = "#{params[:dependent]}.p#{p}"
-      pub = Sys::Publisher.find(:first, :conditions => {:unid => item.unid, :dependent => dep})
+
+      cond      = {:unid => item.unid, :dependent => dep }
+      cond_ruby = {:unid => item.unid, :dependent => "#{dep}/ruby" }
+      if params[:site]
+        cond[:site_id]      = params[:site].id
+        cond_ruby[:site_id] = params[:site].id
+      end
+
+      pub = Sys::Publisher.find(:first, :conditions => cond)
       break unless pub
       pub.destroy
-      pub = Sys::Publisher.find(:first, :conditions => {:unid => item.unid, :dependent => "#{dep}/ruby"})
+      pub = Sys::Publisher.find(:first, :conditions => cond_ruby)
       pub.destroy if pub
     end
   end

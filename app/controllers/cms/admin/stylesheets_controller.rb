@@ -52,6 +52,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
       params[:do] = "show"
       return show
     elsif request.post? && location = create
+      return error_auth unless @item.creatable?
       return redirect_to(location)
     end
     
@@ -68,14 +69,13 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
   
   def edit
     return error_auth unless @item.editable?
-    
+
     @item.read_body
     render :action => :edit
   end
   
   def create
-    return error_auth unless @item.creatable?
-      
+
     if params[:create_directory]
       if @item.create_directory(params[:item][:new_directory])
         flash[:notice] = 'ディレクトリを作成しました。'
@@ -97,7 +97,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
   
   def update
     return error_auth unless @item.editable?
-    
+
     old_path = @item.upload_path
     
     if @item.directory?

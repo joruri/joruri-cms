@@ -23,6 +23,7 @@ module Sys::Model::Auth::EditableGroup
   
   def editable?
     return true if Core.user.has_auth?(:manager)
+    return false unless Core.user.has_auth?(:creator)
     return false unless creator
     return true if creator.group_id == Core.user_group.id
     return false unless editable_group

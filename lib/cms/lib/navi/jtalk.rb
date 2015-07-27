@@ -17,7 +17,7 @@ class Cms::Lib::Navi::Jtalk
       html.gsub!(/.*<body.*?>(.*)<\/body.*/i, '\\1')
     end
     if html =~ /<!-- skip.reading -->/
-      html.gsub!(/.*<!-- skip.reading -->(.*?)<!-- \/skip.reading -->.*/i, '\\1')
+      html.gsub!(/<!-- skip.reading -->.*?<!-- \/skip.reading -->/i, '')
     end
     ["style", "script", "noscript", "iframe", "rb", "rp"].each do |name|
       html.gsub!(/<#{name}.*?>.*?<\/#{name}>/i, '') if html =~ /<#{name}/

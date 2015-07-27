@@ -30,7 +30,7 @@ class Cms::Admin::Tool::SearchController < Cms::Controller::Admin::Base
     
     cond = ["site_id = ? AND model = ?", Core.site.id, 'Article::Doc'] 
     Cms::Content.find(:all, :conditions => cond, :order => :id).each do |content|
-      group = [ "記事：#{content.name}", [] ]
+      group = [ "自治体記事：#{content.name}", [] ]
       item = Article::Doc.new
       item.and :content_id, content.id
       item.and Condition.new do |c|

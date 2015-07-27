@@ -725,6 +725,32 @@ h1 {
   background-repeat: no-repeat;
   background-position: left 7px;
 }
+#docTab .content dt {
+  clear: both;
+  float: left;
+  padding: 0 5px 10px 10px;
+  width: 125px;
+}
+#docTab .content dd {
+  display: block;
+  overflow: hidden;
+  padding: 0 10px 10px;
+}
+
+#docTabPortal .content li span.new,
+#docTab .content dd span.new,
+#docsPortal .pieceBody li span.new {
+  display: inline-block;
+  width: 30px;
+  height: 0;
+  margin: -3px 3px 2px;
+  padding-top: 13px;
+  background-image: url("./images/ic-new.gif");
+  background-position: left top;
+  backgroun-repeat: no-repeat;
+  overflow: hidden;
+  vertical-align: middle;
+}
 
 /* links
 ------------------------------------- */

@@ -1,6 +1,6 @@
 <h2>新着情報</h2>
 <ul><% @entries.each do |entry| %>
-  <li><%=link_to h(entry.title), entry.public_uri, :target => entry.link_target %><%= entry.date_and_site %>
+  <li><%=link_to h(entry.title), entry.public_uri, :target => entry.link_target %><% if entry.new_mark %><span class="new">New</span><% end %><%= entry.date_and_site %>
   </li><% end %>
 </ul>
 

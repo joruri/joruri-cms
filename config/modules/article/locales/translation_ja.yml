@@ -101,5 +101,6 @@ ja:
         more: "一覧リンク"
         condition: "結合条件"
         sort_no: "並び順"
+        list_type: "表示形式"
         list_count: "表示件数"
         more_label: "一覧リンク文字"

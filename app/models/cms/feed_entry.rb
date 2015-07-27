@@ -16,6 +16,10 @@ class Cms::FeedEntry < ActiveRecord::Base
     self
   end
 
+  def published_at
+    entry_updated
+  end
+
   def search(params)
     params.each do |n, v|
       next if v.to_s == ''

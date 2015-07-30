@@ -1,5 +1,6 @@
 *.project
 *.thumb
+*.DS_Store
 Gemfile.lock
 
 config/application.yml

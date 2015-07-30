@@ -13,7 +13,7 @@ ubuntu() {
 centos() {
   echo "It's CentOS!"
 
-  su - joruri -c '/usr/bin/crontab /var/share/joruri/install_scripts/crontab_joruri'
+  su - joruri -c '/usr/bin/crontab /var/share/joruri/doc/install_scripts/crontab_joruri'
 
 }
 

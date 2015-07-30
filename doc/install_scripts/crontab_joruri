@@ -1,0 +1,11 @@
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin
+
+10,25,40,55 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake sys:tasks:exec'    # 日時指定処理
+*/15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish'        # ページ書き出し
+*/15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:talks:publish'        # 音声書き出し
+*/30 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:feeds:read'           # フィード取り込み
+*/10 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake newsletter:requests:read' # メルマガ読者登録
+# 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake article:docs:rebuild'     # 記事再構築(ページ)
+# 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake faq:docs:rebuild'         # FAQ再構築(ページ)
+# 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake enquete:answers:pull'     # アンケート取り込み ※[9.1]
+# 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake db:session:sweep'         # DBセッション削除

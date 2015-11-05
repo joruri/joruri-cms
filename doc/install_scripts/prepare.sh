@@ -37,8 +37,6 @@ centos() {
   done
 cat <<'EOF' >> install_all.sh
 
-wget -i "$INSTALL_SCRIPT_URL/crontab_joruri"
-
 echo "
 -- インストールを完了しました。 --
 

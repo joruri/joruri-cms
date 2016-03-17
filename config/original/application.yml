@@ -31,7 +31,7 @@ cms:
   talk_bin: "/usr/local/bin/open_jtalk"
   talk_dic: "/usr/local/share/open_jtalk/dic"
   talk_voice: "config/voices/mei_normal/mei_normal.htsvoice"
-  #talk_opts: "-s 48000 -p 200 -u 0.5 -jm 0.5 -jf 0.5" # HQ
-  talk_opts: "-s 48000 -p 200 -u 0.5 -jm 0.5 -jf 0.5" # LQ
+  #talk_opts: "-s 48000 -p 240 -r 1.1" # HQ
+  talk_opts: "-s 40000 -p 200 -a 0.47 -r 1.1" # LQ
   talk_strlen: 100
   talk_thread_num: 2

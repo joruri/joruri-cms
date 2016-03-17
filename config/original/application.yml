@@ -25,7 +25,7 @@ cms:
 
   # Talk settings
   sox_bin: "/usr/local/bin/sox"
-  lame_bin: "/usr/bin/lame"
+  lame_bin: "/usr/local/bin/lame"
   #lame_opts: "-q 5 -V 4 --silent" # HQ
   lame_opts: "-q 7 -V 9 --silent" # LQ
   talk_bin: "/usr/local/bin/open_jtalk"

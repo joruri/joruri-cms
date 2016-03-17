@@ -12,7 +12,7 @@ class Cms::Lib::Navi::Kana
       pos   = 0
 
       require 'MeCab'
-      mecab_rc = Cms::KanaDictionary.mecab_rc(site_id)
+      mecab_rc = Cms::KanaDictionary.mecab_rc
       mc = MeCab::Tagger.new('--node-format=%ps,%pe,%m,%f[7]\n --unk-format= --eos-format= -r ' + mecab_rc)
       mc.parse(tmp).split("\n").each do |line|
         s, e, word, kana = line.split(",")
@@ -40,10 +40,12 @@ class Cms::Lib::Navi::Kana
       mask = lambda {|s| '*' * s.bytesize }
 
       tmp = html.gsub(/[\r\n]/, &mask)
+
       ["head", "style", "script", "ruby"].each do |name|
         tmp.gsub!(/<#{name}[^>]*>.*?<\/#{name}>/im, &mask)
       end
-      tmp.gsub!(/<[^>]+>/, &mask)
+
+      tmp.gsub!(/<[^>]+>/, &mask) || tmp
     end
   end
 end

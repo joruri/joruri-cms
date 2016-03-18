@@ -1,10 +1,10 @@
 # encoding: utf-8
 module Joruri
-  
+
   def self.version
-    "2.2.0"
+    "2.2.1"
   end
-  
+
   def self.config
     if !defined?($joruri_config)
       $joruri_config = {}
@@ -14,9 +14,9 @@ module Joruri
     end
     $joruri_config
   end
-  
+
   def self.admin_uri
     Joruri.config[:sys_admin_uri]
   end
-  
+
 end

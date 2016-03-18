@@ -19,6 +19,8 @@ gem 'therubyracer', '0.11.4', :platforms => :ruby
 gem 'galetahub-simple_captcha', '0.1.5', :require => 'simple_captcha'
 gem 'multi_db', '0.3.1'
 gem 'thin','1.5.1'
+gem 'nokogiri', '~> 1.5.9'
+gem 'parallel', '~> 1.6.1'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

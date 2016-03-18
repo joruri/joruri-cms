@@ -9,7 +9,8 @@ module Util::Http
     ok_code = '200 OK'
     options = {
       :proxy => Core.proxy(uri),
-      :progress_proc => lambda {|size| raise ok_code }
+#      :progress_proc => lambda {|size| raise ok_code },
+      'User-Agent' => "CMS/#{Joruri.version}"
     }
     
     begin

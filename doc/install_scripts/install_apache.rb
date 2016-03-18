@@ -43,7 +43,7 @@ def centos
   unless File.exist?(passenger_conf)
     system 'yum install -y curl-devel'
     system "gem install passenger -v #{PASSENGER_VERSION}"
-    system 'passenger-install-apache2-module'
+    system 'passenger-install-apache2-module -a'
 
     File.open(passenger_conf, File::RDWR|File::CREAT, 0644) do |f|
       f.flock(File::LOCK_EX)

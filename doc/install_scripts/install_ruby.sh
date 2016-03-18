@@ -23,6 +23,8 @@ centos() {
   wget $RUBY_SOURCE_URL
   tar jxf $RUBY_VERSION.tar.bz2 && cd $RUBY_VERSION && ./configure && make && make install
 
+  gem update --system
+
   gem install bundler
 }
 

@@ -1,6 +1,7 @@
 PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin
 
 10,25,40,55 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake sys:tasks:exec'    # 日時指定処理
+#*/5 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish_top' # トップページのみ書き出し
 */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish'        # ページ書き出し
 */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:talks:publish'        # 音声書き出し
 */30 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:feeds:read'           # フィード取り込み

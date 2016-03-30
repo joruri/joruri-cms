@@ -1,5 +1,5 @@
 <% inline_id = @item.unid %>
-<%= init_tiny_mce :readonly => true, :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') %>
+<%= init_tiny_mce :readonly => true, :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
 
 <% if rep = @item.replace_page %>
 <div class="noticeBox">更新用の記事が作成されています : <%= link_to h(rep.title), {:id => rep.id} %></div>

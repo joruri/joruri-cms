@@ -302,11 +302,11 @@ create_cms_node :parent_id => 1, :layout_id => l_page.id, :model => 'Cms::Page',
 
 p = create_cms_node :layout_id => l_map.id, :model => 'Cms::Directory', :name => 'sitemap'   , :title => 'サイトマップ'
     create_cms_node :layout_id => l_map.id, :model => 'Cms::Sitemap'  , :name => 'index.html', :title => 'サイトマップ',
-      :parent_id => p.id 
+      :parent_id => p.id
 
 m = create_cms_node :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'mayor'     , :title => '市長室'
     create_cms_node :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Page'     , :name => 'index.html', :title => '市長のご挨拶', :body => read_data("nodes/mayor/index/body"),
-      :parent_id => m.id 
+      :parent_id => m.id
 p = create_cms_node :parent_id => m.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'profile'   , :title => 'プロフィール'
     create_cms_node :parent_id => p.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Page'     , :name => 'index.html', :title => 'プロフィール', :body => read_data("nodes/mayor/dummy/body")
 p = create_cms_node :parent_id => m.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'activity'  , :title => '市長へのメール'

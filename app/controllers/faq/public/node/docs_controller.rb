@@ -1,13 +1,13 @@
 # encoding: utf-8
 class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
   include Faq::Controller::Feed
-  
+
   def pre_dispatch
     @node = Page.current_node
     return http_error(404) unless @content = @node.content
-    #@docs_uri = @content.public_uri('Faq::Doc')
+    # @docs_uri = @content.public_uri('Faq::Doc')
   end
-  
+
   def index
     doc = Faq::Doc.new.public
     doc.agent_filter(request.mobile)
@@ -16,20 +16,20 @@ class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
     doc.visible_in_list
     doc.search params
     doc.page params[:page], (request.mobile? ? 20 : 50)
-    @docs = doc.find(:all, :order => 'published_at DESC')
+    @docs = doc.find(:all, order: 'published_at DESC')
     return true if render_feed(@docs)
-    
+
     return http_error(404) if @docs.current_page > 1 && @docs.current_page > @docs.total_pages
-    
+
     prev   = nil
     @items = []
     @docs.each do |doc|
       date = doc.published_at.strftime('%y%m%d')
       @items << {
-        :date => (date != prev ? doc.published_at.strftime('%Y年%-m月%-d日') : nil),
-        :doc  => doc
+        date: (date != prev ? doc.published_at.strftime('%Y年%-m月%-d日') : nil),
+        doc: doc
       }
-      prev = date    
+      prev = date
     end
   end
 
@@ -41,28 +41,26 @@ class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
     return http_error(404) unless @item = doc.find(:first)
 
     if Core.mode == 'preview' && params[:doc_id]
-      cond = {:id => params[:doc_id], :content_id => @item.content_id, :name => @item.name}
-      return http_error(404) unless @item = Faq::Doc.find(:first, :conditions => cond)
+      cond = { id: params[:doc_id], content_id: @item.content_id, name: @item.name }
+      return http_error(404) unless @item = Faq::Doc.find(:first, conditions: cond)
     end
-    
+
     Page.current_item = @item
     Page.title        = @item.title
-    
+
     @item.concept_id = @node.setting_value(:show_concept_id) if @node.setting_value(:show_concept_id)
     @item.layout_id  = @node.setting_value(:show_layout_id) if @node.setting_value(:show_layout_id)
-    
+
     @body = @item.body
-    
+
     if request.mobile?
-      if !@item.mobile_body.blank?
+      unless @item.mobile_body.blank?
         @body = @item.mobile_body
         @body = ApplicationController.helpers.br(@body)
-      else
-        ;
       end
-      
-      related_sites = Page.site.related_sites(:include_self => true)
-      
+
+      related_sites = Page.site.related_sites(include_self: true)
+
       ## Converts the links.
       @body.gsub!(/<a .*?href=".*?".*?>.*?<\/a>/im) do |m|
         uri   = m.gsub(/<a .*?href="(.*?)".*?>.*?<\/a>/im, '\1')
@@ -95,7 +93,7 @@ class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
         "<a href='tel:#{m.gsub(/\D/, '\1')}'>#{m}</a>"
       end
     end
-    
+
     if Core.mode == 'preview' && !Core.publish
       if params[:doc_id]
         @body = @body.gsub(/(<img[^>]+src=".\/files\/.*?)(".*?>)/i, '\\1' + "?doc_id=#{params[:doc_id]}" + '\\2')

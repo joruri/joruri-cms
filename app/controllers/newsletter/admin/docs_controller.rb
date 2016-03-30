@@ -6,7 +6,7 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
     return error_auth unless @content = Newsletter::Content::Base.find_by_id(params[:content])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
@@ -26,9 +26,7 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Newsletter::Doc.new({
-      :state => 'disabled',
-    })
+    @item = Newsletter::Doc.new(state: 'disabled')
     if @content.template_state == 'enabled'
       @item.body        = @content.template if @content.template
       @item.mobile_body = @content.template_mobile if @content.template_mobile

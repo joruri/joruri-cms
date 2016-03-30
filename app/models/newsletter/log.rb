@@ -10,10 +10,10 @@ class Newsletter::Log < ActiveRecord::Base
       when 's_id'
         self.and :id, v
       when 's_email'
-        self.and_keywords v, :email
+        and_keywords v, :email
       end
     end if params.size != 0
 
-    return self
+    self
   end
 end

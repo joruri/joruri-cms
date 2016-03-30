@@ -79,7 +79,7 @@ function importUri() {
     type: 'POST',
     data: { uri: uri },
     success: function(data) {
-    tinyMCE.activeEditor.setContent(data);  
+    tinyMCE.activeEditor.setContent(data);
     },
     error: function(data)  {
       alert("エラーが発生しました。");
@@ -89,7 +89,7 @@ function importUri() {
 <% end %>
 
 <% inline_id = @item.unid || params[:_tmp] %>
-<%= init_tiny_mce :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') %>
+<%= init_tiny_mce :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
 
 <span class="note">※は必須項目です。</span>
 
@@ -104,7 +104,7 @@ function importUri() {
     <th>タイトル <span class="note">※</span></th>
     <td><%= f.text_field :title, :class => 'title', :style => 'width: 500px;' %></td>
     <th style="width: 60px;">言語 <span class="note">※</span></th>
-    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.find(:all).collect{|i| [i.title + "　", i.id]}) %></td>
+    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.all.collect{|i| [i.title + "　", i.id]}) %></td>
   </tr>
   <tr>
     <th colspan="4">内容</th></tr><tr>

@@ -4,31 +4,31 @@ module Cms::Lib::Layout
     concept = defined?(Page.current_item.concept) ? Page.current_item.concept : nil
     concept ||= Page.current_node.inherited_concept
   end
-  
+
   def self.inhertited_concepts
     return [] unless current_concept
     current_concept.parents_tree.reverse
   end
-  
+
   def self.inhertited_layout
     layout = defined?(Page.current_item.layout) ? Page.current_item.layout : nil
     layout ||= Page.current_node.inherited_layout
   end
-  
+
   def self.concepts_order(concepts, options = {})
     return 'concept_id' if concepts.blank?
-    
-    table = options.has_key?(:table_name) ? options[:table_name] + '.' : ''
+
+    table = options.key?(:table_name) ? options[:table_name] + '.' : ''
     order = "CASE #{table}concept_id"
-    concepts.each_with_index {|c, i| order << " WHEN #{c.id} THEN #{i}"}
+    concepts.each_with_index { |c, i| order << " WHEN #{c.id} THEN #{i}" }
     order << ' ELSE 100 END, id'
   end
-  
+
   def self.find_design_pieces(html, concepts, params)
     names = []
-    #html.scan(/\[\[piece\/([0-9a-zA-Z\._-]+)\]\]/) {|name| names << name[0]}
-    html.scan(/\[\[piece\/([^\]]+)\]\]/) {|name| names << name[0]}
-    
+    # html.scan(/\[\[piece\/([0-9a-zA-Z\._-]+)\]\]/) {|name| names << name[0]}
+    html.scan(/\[\[piece\/([^\]]+)\]\]/) { |name| names << name[0] }
+
     items = {}
     names.uniq.each do |name|
       item = Cms::Piece.new
@@ -44,21 +44,21 @@ module Cms::Lib::Layout
         end
         item.and cond
       end
-      items[name] = item if item = item.find(:first, :order => concepts_order(concepts))
+      items[name] = item if item = item.find(:first, order: concepts_order(concepts))
     end
-    
-    if Core.mode == "preview" && params[:piece_id]
+
+    if Core.mode == 'preview' && params[:piece_id]
       item = Cms::Piece.find_by_id(params[:piece_id])
       items[item.name] = item if item
     end
-    
-    return items
+
+    items
   end
-  
+
   def self.find_data_texts(html, concepts)
     names = []
-    html.scan(/\[\[text\/([0-9a-zA-Z\._-]+)\]\]/) {|name| names << name[0]}
-    
+    html.scan(/\[\[text\/([0-9a-zA-Z\._-]+)\]\]/) { |name| names << name[0] }
+
     items = {}
     names.uniq.each do |name|
       item = Cms::DataText.new
@@ -69,20 +69,20 @@ module Cms::Lib::Layout
         c.or :concept_id, 'IN', concepts
       end
       item.and cond
-      items[name] = item if item = item.find(:first, :order => concepts_order(concepts))
+      items[name] = item if item = item.find(:first, order: concepts_order(concepts))
     end
-    return items
+    items
   end
-  
+
   def self.find_data_files(html, concepts)
     names = []
-    html.scan(/\[\[file\/([^\]]+)\]\]/) {|name| names << name[0]}
-    
+    html.scan(/\[\[file\/([^\]]+)\]\]/) { |name| names << name[0] }
+
     items = {}
     names.uniq.each do |name|
       dirname  = ::File.dirname(name)
       basename = dirname == '.' ? name : ::File.basename(name)
-      
+
       tab  = Cms::DataFile.table_name
       item = Cms::DataFile.new.public
       item.and "#{tab}.name", basename
@@ -91,17 +91,17 @@ module Cms::Lib::Layout
         c.or "#{tab}.concept_id", 'IN', concepts
       end
       item.and cond
-      
+
       if dirname == '.'
-        item.and "#{tab}.node_id", "IS", nil
+        item.and "#{tab}.node_id", 'IS', nil
       else
         node_tab = Cms::DataFileNode.table_name
         item.join "LEFT OUTER JOIN #{node_tab} ON #{node_tab}.id = #{Cms::DataFile.table_name}.node_id"
         item.and "#{node_tab}.name", dirname
       end
-      
-      items[name] = item if item = item.find(:first, :order => concepts_order(concepts, :table_name => tab))
+
+      items[name] = item if item = item.find(:first, order: concepts_order(concepts, table_name: tab))
     end
-    return items
+    items
   end
 end

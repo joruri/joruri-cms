@@ -4,12 +4,10 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless @content = Cms::Content.find(params[:content])
-    #default_url_options[:content] = @content
+    # default_url_options[:content] = @content
 
     if params[:parent] == '0'
-      @parent = Portal::Category.new({
-        :level_no => 0
-      })
+      @parent = Portal::Category.new(level_no: 0)
       @parent.id = 0
     else
       @parent = Portal::Category.new.find(params[:parent])
@@ -17,7 +15,7 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Portal::Category.new#.readable
+    item = Portal::Category.new # .readable
     item.and :parent_id, @parent
     item.and :content_id, @content
     item.page  params[:page], params[:limit]
@@ -32,10 +30,8 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Portal::Category.new({
-      :state      => 'public',
-      :sort_no    => 1,
-    })
+    @item = Portal::Category.new(state: 'public',
+                                 sort_no: 1)
   end
 
   def create

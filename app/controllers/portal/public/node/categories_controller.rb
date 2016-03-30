@@ -20,14 +20,14 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
   end
 
   def index
-    @items = Portal::Category.root_items(:content_id => @content.id, :state => 'public')
+    @items = Portal::Category.root_items(content_id: @content.id, state: 'public')
   end
 
   def show
     return http_error(404) unless params[:file] =~ /^index$/
 
-    @page  = params[:page]
-    
+    @page = params[:page]
+
     entry = Portal::FeedEntry.new.public
     entry.content_id = @content.id
     entry.agent_filter(request.mobile)
@@ -35,7 +35,7 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
     entry.category_is @item
     entry.page @page, @limit
     entry.page @page, @limit
-    @entries = entry.find_with_own_docs(@content.doc_content, :groups, {:item => @item})
+    @entries = entry.find_with_own_docs(@content.doc_content, :groups, item: @item)
     return true if render_feed(@entries)
 
     return http_error(404) if @entries.current_page > 1 && @entries.current_page > @entries.total_pages
@@ -45,8 +45,8 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
     @entries.each do |entry|
       date = entry.entry_updated.strftime('%y%m%d')
       @items << {
-        :date => (date != prev ? entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
-        :entry  => entry
+        date: (date != prev ? entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
+        entry: entry
       }
       prev = date
     end

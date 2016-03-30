@@ -1,12 +1,11 @@
 # encoding: utf-8
 class Portal::Content::FeedEntry < Cms::Content
-
   def entry_node
     return @entry_node if @entry_node
     item = Cms::Node.new.public
     item.and :content_id, id
     item.and :model, 'Portal::FeedEntry'
-    @doc_node = item.find(:first, :order => :id)
+    @doc_node = item.find(:first, order: :id)
   end
 
   def category_node
@@ -14,7 +13,7 @@ class Portal::Content::FeedEntry < Cms::Content
     item = Cms::Node.new.public
     item.and :content_id, id
     item.and :model, 'Portal::Category'
-    @category_node = item.find(:first, :order => :id)
+    @category_node = item.find(:first, order: :id)
   end
 
   def event_node
@@ -22,7 +21,7 @@ class Portal::Content::FeedEntry < Cms::Content
     item = Cms::Node.new.public
     item.and :content_id, id
     item.and :model, 'Portal::EventEntry'
-    @event_node = item.find(:first, :order => :id)
+    @event_node = item.find(:first, order: :id)
   end
 
   def doc_node
@@ -30,6 +29,6 @@ class Portal::Content::FeedEntry < Cms::Content
     item = Cms::Node.new.public
     item.and :content_id, id
     item.and :model, 'Article::Doc'
-    @doc_node = item.find(:first, :order => :id)
+    @doc_node = item.find(:first, order: :id)
   end
 end

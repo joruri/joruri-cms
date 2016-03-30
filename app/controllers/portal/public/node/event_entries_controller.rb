@@ -45,14 +45,14 @@ class Portal::Public::Node::EventEntriesController < Cms::Controller::Public::Ba
     item = Portal::FeedEntry.new.public
     item.agent_filter(request.mobile)
     item.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
-    item.event_date_is(:year => @calendar.year, :month => @calendar.month)
+    item.event_date_is(year: @calendar.year, month: @calendar.month)
     item.page 0, 1000
-    entries = item.find_with_own_docs(@content.doc_content, :events, :year => @calendar.year, :month => @calendar.month)
+    entries = item.find_with_own_docs(@content.doc_content, :events, year: @calendar.year, month: @calendar.month)
 
     return true if render_feed(entries)
 
     entries.each do |entry|
-      key  = entry.event_date.strftime('%m%d')
+      key = entry.event_date.strftime('%m%d')
       next unless day = @days[key]
 
       date   = nil
@@ -61,17 +61,17 @@ class Portal::Public::Node::EventEntriesController < Cms::Controller::Public::Ba
         date   = request.mobile? ?
           "#{day[:month]}月#{day[:day]}日(#{day[:wday_label]})" :
           "#{day[:month]}月#{day[:day]}日（#{day[:wday_label]}）"
-        anchor = %Q(<a id="day#{day[:day]}" name="day#{day[:day]}"></a>).html_safe
+        anchor = %(<a id="day#{day[:day]}" name="day#{day[:day]}"></a>).html_safe
       end
 
-      feed_class = entry.feed ? " source#{entry.feed.name.camelize}" : ""
+      feed_class = entry.feed ? " source#{entry.feed.name.camelize}" : ''
       @items << {
-        :date       => date,
-        :anchor     => anchor,
-        :date_class => day[:class],
-        :source_class => "source#{feed_class}",
-        :source_title => entry.source_title,
-        :entry        => entry
+        date: date,
+        anchor: anchor,
+        date_class: day[:class],
+        source_class: "source#{feed_class}",
+        source_title: entry.source_title,
+        entry: entry
       }
       prev = key
     end

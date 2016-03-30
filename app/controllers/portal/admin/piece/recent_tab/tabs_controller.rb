@@ -1,17 +1,17 @@
 # encoding: utf-8
 class Portal::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
-  #simple_layout
+  # simple_layout
 
   def pre_dispatch
     return error_auth unless @piece = Cms::Piece.find(params[:piece])
     return error_auth unless @piece.editable?
     return error_auth unless @content = @piece.content
-    #default_url_options[:piece] = @piece
+    # default_url_options[:piece] = @piece
   end
 
   def index
-    @items = Portal::Piece::RecentTabXml.find(:all, @piece, :order => :sort_no)
+    @items = Portal::Piece::RecentTabXml.find(:all, @piece, order: :sort_no)
     _index @items
   end
 
@@ -22,9 +22,7 @@ class Portal::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin::
   end
 
   def new
-    @item = Portal::Piece::RecentTabXml.new(@piece, {
-      :sort_no => 0
-    })
+    @item = Portal::Piece::RecentTabXml.new(@piece, sort_no: 0)
   end
 
   def create

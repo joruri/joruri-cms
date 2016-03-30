@@ -5,8 +5,8 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return redirect_to :action => 'index' if params[:reset]
-    
+    return redirect_to action: 'index' if params[:reset]
+
     if params[:parent] && params[:parent] != '0'
       @parent = Cms::DataFileNode.find(params[:parent])
     else
@@ -16,16 +16,14 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   end
 
   def index
-    @nodes = Cms::DataFileNode.find(:all, :conditions => {:concept_id => Core.concept(:id)}, :order => :name)
-    
-    item = Cms::DataFile.new
-    item.readable if params[:s_target] != "all"
-    item.and :site_id, Core.site.id
-    #item.and 'node_id', @parent.id if @parent.id != 0
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
-    @items = item.find(:all)
+    @nodes = Cms::DataFileNode.where(concept_id: Core.concept(:id)).order(:name)
+
+    @items = Cms::DataFile.where(site_id: Core.site.id)
+    @items = @items.readable if params[:s_target] != 'all'
+    @items = @items.search(params)
+                   .paginate(page: params[:page], per_page: params[:limit])
+                   .order(params[:sort], :name, :id)
+
     _index @items
   end
 
@@ -38,10 +36,8 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Cms::DataFile.new({
-      :concept_id => Core.concept(:id),
-      :state      => 'public'
-    })
+    @item = Cms::DataFile.new(concept_id: Core.concept(:id),
+                              state: 'public')
   end
 
   def create
@@ -49,7 +45,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     @item.site_id = Core.site.id
     @item.state   = 'public'
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
-    
+
     _create @item
   end
 
@@ -58,7 +54,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     @item.attributes = params[:item]
     @item.node_id    = nil if @item.concept_id_changed?
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
-    
+
     @item.skip_upload if @item.file.blank?
     _update @item
   end
@@ -72,19 +68,19 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     item = Cms::DataFile.new.readable
     item.and :id, params[:id]
     return error_auth unless @file = item.find(:first)
-    
-    send_storage_file @file.upload_path, :type => @file.mime_type, :filename => @file.name
+
+    send_storage_file @file.upload_path, type: @file.mime_type, filename: @file.name
   end
-  
+
   def thumbnail
     item = Cms::DataFile.new.readable
     item.and :id, params[:id]
     return error_auth unless @file = item.find(:first)
-    
+
     upload_path = @file.upload_path
-    thumb_path  = ::File.dirname(@file.upload_path) + "/thumb.dat"
+    thumb_path  = ::File.dirname(@file.upload_path) + '/thumb.dat'
     upload_path = thumb_path if ::Storage.exists?(thumb_path)
-    
-    send_storage_file upload_path, :type => @file.mime_type, :filename => @file.name
+
+    send_storage_file upload_path, type: @file.mime_type, filename: @file.name
   end
 end

@@ -1,16 +1,16 @@
 # encoding: utf-8
 class Sys::OperationLog < ActiveRecord::Base
   include Sys::Model::Base
-  
+
   def self.log(request, options = {})
     params = request.params
-    
-    log = self.new
+
+    log = new
     log.uri       = Core.request_uri
     log.action    = params[:do]
     log.action    = params[:action] if params[:do].blank?
     log.ipaddr    = request.remote_addr
-    
+
     if user = options[:user]
       log.user_id   = user.id
       log.user_name = user.name
@@ -18,20 +18,40 @@ class Sys::OperationLog < ActiveRecord::Base
       log.user_id   = user.id
       log.user_name = user.name
     end
-    
+
     if item = options[:item]
       log.item_model  = item.class.to_s
-      log.item_id     = item.id rescue nil
-      log.item_unid   = item.unid rescue nil
-      log.item_name   = item.title rescue nil
-      log.item_name ||= item.name rescue nil
-      log.item_name ||= "##{item.id}" rescue nil
-      log.item_name   = log.item_name.to_s.split(//u).slice(0, 80).join if !log.item_name.blank?
+      log.item_id     = begin
+                          item.id
+                        rescue
+                          nil
+                        end
+      log.item_unid   = begin
+                          item.unid
+                        rescue
+                          nil
+                        end
+      log.item_name   = begin
+                          item.title
+                        rescue
+                          nil
+                        end
+      begin
+        log.item_name ||= item.name
+      rescue
+        nil
+      end
+      begin
+        log.item_name ||= "##{item.id}"
+      rescue
+        nil
+      end
+      log.item_name   = log.item_name.to_s.split(//u).slice(0, 80).join unless log.item_name.blank?
     end
-    
+
     log.save
   end
-  
+
   def search(params)
     params.each do |n, v|
       next if v.to_s == ''
@@ -43,11 +63,10 @@ class Sys::OperationLog < ActiveRecord::Base
         self.and :user_id, v
       when 's_action'
         self.and :action, v
-        #self.and_keywords v, :action
+        # self.and_keywords v, :action
       end
     end if params.size != 0
 
-    return self
+    self
   end
-  
 end

@@ -2,7 +2,7 @@
 class Sys::Lib::Form::Checker
   @links   = nil
   @alts    = nil
-  
+
   def check_link(text)
     @links ||= {}
     begin
@@ -12,42 +12,42 @@ class Sys::Lib::Form::Checker
           uri = ::File.join(Core.site.full_uri, uri) if uri =~ /^\//
           next if uri =~ /^(#|mailto:|javascript:)/i
           next if uri !~ /^https?:/i
-          uri = CGI::unescapeHTML(uri)
+          uri = CGI.unescapeHTML(uri)
           @links[uri] = ::Util::Http.exists?(uri) unless @links.key?(uri)
         end
       end
     rescue TimeoutError
       @links['Timeout(20sec)'] = false
     end
-    return @links.index(false) ? false : true
+    @links.index(false) ? false : true
   end
-  
+
   def errors
     return false if @links && @links.index(false)
     return false if @alts && @alts.index(false)
-    return true
+    true
   end
-  
+
   def notice_messages(options = {})
     return nil if @links.blank? && @alts.blank?
-    
-    html  = %Q(<div class="noticeExplanation" id="noticeExplanation">)
-    html += %Q(<h2>リンクチェック結果</h2>)
-    
+
+    html  = %(<div class="noticeExplanation" id="noticeExplanation">)
+    html += %(<h2>リンクチェック結果</h2>)
+
     if @links.size > 0
-      html += %Q(<p>次のURLを確認しました。</p><ul>)
+      html += %(<p>次のURLを確認しました。</p><ul>)
       @links.each do |uri, res|
-        res = res ? %Q(<span class="success">成功</span>) : %Q(<span class="failed">失敗</span>)
-        html += %Q(<li>#{uri}　#{res}</li>)
+        res = res ? %(<span class="success">成功</span>) : %(<span class="failed">失敗</span>)
+        html += %(<li>#{uri}　#{res}</li>)
       end
-      html += %Q(</ul>)
+      html += %(</ul>)
     end
-    
+
     if options[:checkbox].is_a?(String) && @links.index(false)
-      html += %Q(<div class="checkbox">#{options[:checkbox]}</div>)
+      html += %(<div class="checkbox">#{options[:checkbox]}</div>)
     end
-    
-    html += %Q(</div>)
+
+    html += %(</div>)
     html.html_safe
   end
 end

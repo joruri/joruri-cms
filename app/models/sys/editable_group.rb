@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Sys::EditableGroup < ActiveRecord::Base
   include Sys::Model::Base
-  
+
   def groups
     groups = []
     ids = group_ids.to_s.split(' ').uniq

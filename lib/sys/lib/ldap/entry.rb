@@ -3,7 +3,7 @@ class Sys::Lib::Ldap::Entry
   def initialize(connection, attributes = {})
     attributes.each do |key, val|
       val.each_with_index do |v, k|
-        attributes[key][k] = v.force_encoding("utf-8")
+        attributes[key][k] = v.force_encoding('utf-8')
       end
     end
 
@@ -12,24 +12,22 @@ class Sys::Lib::Ldap::Entry
     @primary     = nil
     @filter      = nil
   end
-  
+
   def search(filter, options = {})
     filter = "(#{filter.join(')(')})" if filter.class == Array
     filter = "#{filter}(&#{@filter})"
     options[:class] ||= self.class
-    return @connection.search(filter, options)
+    @connection.search(filter, options)
   end
-  
+
   def find(id, options = {})
     filter = "(#{@primary}=#{id})(&#{@filter})"
     options[:class] ||= self.class
-    return @connection.search(filter, options)[0]
+    @connection.search(filter, options)[0]
   end
-  
-  def attributes
-    return @attributes
-  end
-  
+
+  attr_reader :attributes
+
   def get(name, position = 0)
     name = name.to_s
     if position == :all
@@ -40,7 +38,7 @@ class Sys::Lib::Ldap::Entry
       return nil
     end
   end
-  
+
   def dn
     get(:dn)
   end

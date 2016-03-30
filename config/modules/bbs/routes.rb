@@ -41,9 +41,9 @@ Joruri::Application.routes.draw do
   
   scope "_public/#{mod}", :module => mod, :as => "" do
     
-    match "node_threads/index.:format"         => "public/node/threads#index"
-    match "node_threads/new.:format"           => "public/node/threads#new"
-    match "node_threads/delete.:format"        => "public/node/threads#delete"
-    match "node_threads/:thread/index.:format" => "public/node/threads#show"
+    get "node_threads/index.:format"         => "public/node/threads#index"
+    get "node_threads/new.:format"           => "public/node/threads#new"
+    get "node_threads/delete.:format"        => "public/node/threads#delete"
+    get "node_threads/:thread/index.:format" => "public/node/threads#show"
   end
 end

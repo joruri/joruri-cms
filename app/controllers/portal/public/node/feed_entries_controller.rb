@@ -27,8 +27,8 @@ class Portal::Public::Node::FeedEntriesController < Cms::Controller::Public::Bas
       next unless entry.entry_updated
       date = entry.entry_updated.strftime('%y%m%d')
       @items << {
-        :date => (date != prev ? entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
-        :entry  => entry
+        date: (date != prev ? entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
+        entry: entry
       }
       prev = date
     end

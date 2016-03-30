@@ -7,10 +7,10 @@ class Newsletter::Doc < ActiveRecord::Base
   include Cms::Model::Rel::Content
   include Cms::Model::Auth::Concept
 
-  belongs_to :status,  :foreign_key => :state,      :class_name => 'Sys::Base::Status'
-  belongs_to :content, :foreign_key => :content_id, :class_name => 'Newsletter::Content::Base'
-  has_many   :logs,    :foreign_key => :doc_id,     :class_name => 'Newsletter::Log',
-    :dependent => :destroy
+  belongs_to :status,  foreign_key: :state,      class_name: 'Sys::Base::Status'
+  belongs_to :content, foreign_key: :content_id, class_name: 'Newsletter::Content::Base'
+  has_many   :logs,    foreign_key: :doc_id,     class_name: 'Newsletter::Log',
+                       dependent: :destroy
 
   validates_presence_of :state, :title, :body
 
@@ -22,18 +22,18 @@ class Newsletter::Doc < ActiveRecord::Base
   end
 
   def delivery_states
-    [['未配信','yet'], ['配信中','delivering'], ['配信済み','delivered'], ['配信失敗','error']]
+    [%w(未配信 yet), %w(配信中 delivering), %w(配信済み delivered), %w(配信失敗 error)]
   end
 
   def delivery_status
-    delivery_states.each {|val, key| return val if delivery_state.to_s == key }
+    delivery_states.each { |val, key| return val if delivery_state.to_s == key }
     nil
   end
-  
+
   def testers
     return @testers if @testers
     test = Newsletter::Tester.new.enabled
-    test.and :content_id, self.content_id
+    test.and :content_id, content_id
     test.order 'agent_state DESC, id DESC'
     @testers = test.find(:all)
   end
@@ -41,22 +41,19 @@ class Newsletter::Doc < ActiveRecord::Base
   def members
     return @members if @members
     member = Newsletter::Member.new.enabled
-    member.and :content_id, self.content_id
+    member.and :content_id, content_id
     member.order 'letter_type DESC, id'
     @members = member.find(:all)
   end
-  
+
   def mail_from
-    addr = item.setting_value("sender_address")
-    @mail_from[content_id] = !addr.blank? ? addr : "webmaster@" + item.site.full_uri.gsub(/^.*?\/\/(.*?)(:|\/).*/, '\\1')
-    
+    addr = item.setting_value('sender_address')
+    @mail_from[content_id] = !addr.blank? ? addr : 'webmaster@' + item.site.full_uri.gsub(/^.*?\/\/(.*?)(:|\/).*/, '\\1')
   end
-  
+
   def mail_title(mobile = false)
-    if mobile
-      return mobile_title.blank? ? title : mobile_title if mobile
-    end
-    return title
+    return mobile_title.blank? ? title : mobile_title if mobile && mobile
+    title
   end
 
   def mail_body(mobile = false)
@@ -65,10 +62,10 @@ class Newsletter::Doc < ActiveRecord::Base
       _body += "\n\n#{content.signature_mobile}" if content.signature_state == 'enabled'
       return _body
     end
-    
+
     _body  = body.to_s
     _body += "\n\n#{content.signature}" if content.signature_state == 'enabled'
-    return _body
+    _body
   end
 
   def search(params)
@@ -79,11 +76,10 @@ class Newsletter::Doc < ActiveRecord::Base
       when 's_id'
         self.and "#{self.class.table_name}.id", v
       when 's_title'
-        self.and_keywords v, :title
+        and_keywords v, :title
       end
     end if params.size != 0
 
-    return self
+    self
   end
-
 end

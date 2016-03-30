@@ -1,6 +1,6 @@
 <%
 
-layouts = Cms::Layout.find(:all, :conditions => {:site_id => Core.site.id}, :order => "concept_id, name")
+layouts = Cms::Layout.where(site_id: Core.site.id).order(:concept_id, :name)
 layouts = layouts.collect{|i| ["#{i.concept.name} : #{i.title}", i.id]}
 
 %><% if defined?(container) && container != :tr %>

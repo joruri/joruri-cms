@@ -5,8 +5,8 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
     return error_auth unless @content = Cms::Content.find(params[:content])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
-    #default_url_options[:content] = @content
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
+    # default_url_options[:content] = @content
   end
 
   def index
@@ -24,10 +24,8 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Newsletter::Tester.new({
-      :state        => 'enabled',
-      :agent_state  => 'pc',
-    })
+    @item = Newsletter::Tester.new(state: 'enabled',
+                                   agent_state: 'pc')
   end
 
   def create
@@ -49,5 +47,5 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
     _destroy @item
   end
 
-protected
+  protected
 end

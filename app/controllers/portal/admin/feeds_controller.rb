@@ -7,8 +7,8 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
     return error_auth unless @content = Cms::Content.find(params[:content])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
-    #default_url_options[:content] = @content
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
+    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
@@ -27,10 +27,8 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Cms::Feed.new({
-      :state        => 'public',
-      :entry_count  => 20
-    })
+    @item = Cms::Feed.new(state: 'public',
+                          entry_count: 20)
   end
 
   def create
@@ -52,5 +50,5 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
     _destroy @item
   end
 
-protected
+  protected
 end

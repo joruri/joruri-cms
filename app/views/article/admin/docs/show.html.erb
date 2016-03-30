@@ -1,5 +1,6 @@
 <% inline_id = @item.unid %>
-<%= init_tiny_mce :readonly => true, :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') %>
+<%= init_tiny_mce :readonly => true, :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/'
+ %>
 
 <% if rep = @item.replace_page %>
 <div class="noticeBox">更新用の記事が作成されています : <%= link_to h(rep.title), {:id => rep.id} %></div>
@@ -59,23 +60,23 @@
   <tr>
     <th>新着情報表示</th>
     <td colspan="3">
-      <%= safe{@item.recent_status.name} %>
+      <%= safe{@item.recent_state_text} %>
     </td>
   </tr><tr>
     <th>記事一覧表示</th>
     <td colspan="3">
-      <%= safe{@item.list_status.name} %>
+      <%= safe{@item.list_state_text} %>
     </td>
   </tr><tr>
     <th>イベントカレンダー表示</th>
     <td colspan="3">
-      <%= safe{@item.event_status.name} %>
+      <%= safe{@item.event_state_text} %>
       <% if @item.event_date %>&nbsp; イベント日付 : <%= @item.event_date.strftime("%Y-%m-%d") %><% end %>
     </td>
   </tr><tr>
     <th><%= @item.locale(:sns_link_state) %></th>
     <td colspan="3">
-      <%= safe{@item.sns_link_status.name} %>
+      <%= safe{@item.sns_link_state_text} %>
     </td>
   </tr>
 </table>

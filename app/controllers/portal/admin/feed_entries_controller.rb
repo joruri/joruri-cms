@@ -8,15 +8,15 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
     return error_auth unless Core.user.has_auth?(:designer)
     return error_auth unless @content = Cms::Content.find(params[:content])
     return error_auth unless @feed = Cms::Feed.find(params[:feed])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
-    #default_url_options[:content] = @content
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
+    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    return update_entries if params[:do] == "update_entries"
-    return delete_entries if params[:do] == "delete_entries"
-    
+    return update_entries if params[:do] == 'update_entries'
+    return delete_entries if params[:do] == 'delete_entries'
+
     item = Portal::FeedEntry.new
     item.and :feed_id, @feed.id
     item.search params
@@ -32,11 +32,11 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
   end
 
   def new
-    return error_auth
+    error_auth
   end
 
   def create
-    return error_auth
+    error_auth
   end
 
   def update
@@ -46,26 +46,26 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    return error_auth
+    error_auth
   end
 
-protected
+  protected
 
   def update_entries
-    if @feed.update_feed(:destroy => true)
-      flash[:notice] = "エントリを更新しました。"
-    else
-      flash[:notice] = "エントリの更新に失敗しました。"
-    end
+    flash[:notice] = if @feed.update_feed(destroy: true)
+                       "エントリを更新しました。"
+                     else
+                       "エントリの更新に失敗しました。"
+                     end
     redirect_to portal_feed_entries_path
   end
 
   def delete_entries
-    if @feed.entries.destroy_all
-      flash[:notice] = "エントリを削除しました。"
-    else
-      flash[:notice] = "エントリの削除に失敗しました。"
-    end
+    flash[:notice] = if @feed.entries.destroy_all
+                       "エントリを削除しました。"
+                     else
+                       "エントリの削除に失敗しました。"
+                     end
     redirect_to portal_feed_entries_path
   end
 end

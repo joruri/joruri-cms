@@ -5,6 +5,4 @@ class Cms::SiteSetting < ActiveRecord::Base
   include Cms::Model::Rel::Site
 
   validates_presence_of :site_id, :name
-  
-  
 end

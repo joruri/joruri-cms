@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "rexml/document"
+require 'rexml/document'
 
 class Sys::Model::XmlRecord::Base
   @@_model_name   = {}
@@ -10,75 +10,75 @@ class Sys::Model::XmlRecord::Base
   @@_node_xpath   = {}
   @_record        = nil
   @_primary_value = nil
-  
+
   def initialize(record, attributes = {})
     @_record = record
     self.attributes = attributes
   end
-  
+
   def self.attributes
     @@_attributes[self] = [] unless @@_attributes[self]
     @@_attributes[self]
   end
-  
+
   def self.attr_accessor(*names)
     super(*names)
-    names.each {|name| attributes << name unless attributes.index(name) }
+    names.each { |name| attributes << name unless attributes.index(name) }
   end
-  
+
   def self.elements
     @@_elements[self] = [] unless @@_elements[self]
     @@_elements[self]
   end
-  
+
   def self.elem_accessor(*names)
     attr_accessor(*names)
-    names.each {|name| elements << "#{name}" unless elements.index(name) }
+    names.each { |name| elements << name.to_s unless elements.index(name) }
   end
-  
+
   def self.model_name
     @@_model_name[self] ? @@_model_name[self] : ActiveModel::Name.new(self)
   end
-  
+
   def self.set_model_name(name)
-    @@_model_name[self] = ActiveModel::Name.new(name.camelize.split(/::/).inject(Object) {|c,name| c.const_get(name) })
+    @@_model_name[self] = ActiveModel::Name.new(name.camelize.split(/::/).inject(Object) { |c, name| c.const_get(name) })
   end
-  
+
   def self.primary_key
     @@_primary_key[self]
   end
-  
+
   def self.set_primary_key(name)
     attr_accessor(name) unless attributes.index(name)
     @@_primary_key[self] = name
   end
-  
+
   def self.column_name
     @@_column_name[self]
   end
-  
+
   def self.set_column_name(name)
     @@_column_name[self] = name
   end
-  
+
   def self.node_xpath
     @@_node_xpath[self] ||= ''
   end
-  
+
   def self.set_node_xpath(xpath)
     @@_node_xpath[self] = xpath
   end
-  
+
   def attributes=(_attributes)
     if _attributes.class != REXML::Element
-      _attributes.each do |name, val|
+      _attributes.each do |name, _val|
         next unless self.class.method_defined?("#{name}=")
-        eval("self.#{name} = val")
+        eval("self.#{name} = _val")
       end
     else
-      _attributes.attributes.each do |name, val|
+      _attributes.attributes.each do |name, _val|
         next unless self.class.method_defined?("#{name}=")
-        eval("self.#{name} = val")
+        eval("self.#{name} = _val")
       end
       _attributes.each do |elem|
         next unless elem.class == REXML::Element
@@ -92,148 +92,144 @@ class Sys::Model::XmlRecord::Base
       eval("self.#{name} = []") unless send(name)
     end
   end
-  
+
   def self.human_name
-    
   end
-  
-  def self.human_attribute_name(name, options = {})
-    label = I18n.t name, :scope => [:activerecord, :attributes, model_name.to_s.underscore]
+
+  def self.human_attribute_name(name, _options = {})
+    label = I18n.t name, scope: [:activerecord, :attributes, model_name.to_s.underscore]
     label =~ /^translation missing:/ ? name.to_s.humanize : label
   end
-  
+
   def self.self_and_descendants_from_active_record
     []
   end
-  
+
   def self.find(key, record, options = {})
-    xml = eval("record.#{self.column_name}")
+    xml = eval("record.#{column_name}")
     doc = REXML::Document.new(xml)
     doc.add_element 'xml' unless doc.root
     nodes = doc.root.get_elements(node_xpath)
     return key == :all ? [] : nil if nodes.blank?
-    
+
     if key == :all
       items = []
       nodes.each do |node|
-        item = self.new(record, node)
+        item = new(record, node)
         item.set_primary_value
         items << item
       end
       if options[:order] && items.size > 0
         begin
-          return items.sort{|a, b| a.send(options[:order]) <=> b.send(options[:order])}
+          return items.sort { |a, b| a.send(options[:order]) <=> b.send(options[:order]) }
         rescue
           return items
         end
       end
       return items
     elsif key == :first
-      item = self.new(record, nodes[0])
+      item = new(record, nodes[0])
       item.set_primary_value
       return item
     end
-    
+
     nodes.each do |node|
-      if "#{node.attribute(primary_key)}" == key.to_s
-        item = self.new(record, node)
-        item.set_primary_value
-        return item
-      end
+      next unless node.attribute(primary_key).to_s == key.to_s
+      item = new(record, node)
+      item.set_primary_value
+      return item
     end
-    return nil
+    nil
   end
-  
+
   def new_record?
-    @_primary_value == nil
+    @_primary_value.nil?
   end
-  
+
   def locale(name)
-    label = I18n.t name, :scope => [:activerecord, :attributes, self.class.model_name.to_s.underscore]
+    label = I18n.t name, scope: [:activerecord, :attributes, self.class.model_name.to_s.underscore]
     label =~ /^translation missing:/ ? name.to_s.humanize : label
   end
-  
+
   def set_primary_value
     @_primary_value = send(self.class.primary_key) if self.class.primary_key
   end
-  
+
   def attributes
     attr = {}
-    self.class.attributes.each {|name| attr[name] = send(name) }
+    self.class.attributes.each { |name| attr[name] = send(name) }
     attr
   end
-  
+
   def errors
     return @_errors if @_errors
     @_errors = ActiveModel::Errors.new(self)
   end
-  
+
   def before_save
     true
   end
-  
+
   def save(validation = true)
-    if validation
-      return false unless valid?
-    end
+    return false if validation && !valid?
     return false unless before_save
     eval("@_record.#{self.class.column_name} = build_xml.to_s")
-    return false unless @_record.save(:validate => false)
+    return false unless @_record.save(validate: false)
     after_save
-    return true
+    true
   end
-  
+
   def save!
     false
   end
-  
+
   def after_save
     true
   end
-  
+
   def before_destroy
     true
   end
-  
+
   def destroy
     return false unless before_destroy
     eval("@_record.#{self.class.column_name} = build_xml(:destroy).to_s")
-    return false unless @_record.save(:validate => false)
+    return false unless @_record.save(validate: false)
     after_destroy
-    return true
+    true
   end
-  
+
   def after_destroy
     true
   end
-  
+
   def to_xml_element
     node = REXML::Element.new ::File.basename(self.class.node_xpath)
     attributes.each do |name, val|
-      if self.class.elements.index("#{name}")
+      if self.class.elements.index(name.to_s)
         arr = val
         if val.class != Array
           arr = []
-          val.each {|k,v| arr << v unless v.blank?}
+          val.each { |_k, v| arr << v unless v.blank? }
         end
-        arr.delete("")
+        arr.delete('')
         arr.uniq.each do |v|
-          e = REXML::Element.new("#{name}");
-          e.add_text(v);
+          e = REXML::Element.new(name.to_s)
+          e.add_text(v)
           node << e
         end
       else
-        node.add_attributes({"#{name}" => val})
+        node.add_attributes(name.to_s => val)
       end
     end
     node
   end
-  
+
   def build_xml(mode = :save)
     xml = eval("@_record.#{self.class.column_name}")
     doc = REXML::Document.new(xml)
     doc.add_element('xml') unless doc.root
-    
+
     xpath = ::File.dirname(self.class.node_xpath)
     unless parent = doc.root.elements[xpath]
       parent = doc.root
@@ -242,7 +238,7 @@ class Sys::Model::XmlRecord::Base
         parent = node
       end
     end
-    
+
     parent.each_element(::File.basename(self.class.node_xpath)) do |e|
       if @_primary_value
         parent.delete_element(e) if e.attribute(self.class.primary_key).to_s == @_primary_value
@@ -250,14 +246,12 @@ class Sys::Model::XmlRecord::Base
         parent.delete_element(e)
       end
     end
-    
-    if mode != :destroy
-      parent << to_xml_element
-    end
-    
+
+    parent << to_xml_element if mode != :destroy
+
     doc
   end
-  
+
   include ActiveRecord::Validations
   include ActiveRecord::Validations::ClassMethods
 end

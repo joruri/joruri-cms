@@ -4,21 +4,25 @@ class Cms::Admin::Content::SettingsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless @content.editable?
-    #default_url_options[:content] = @content
+
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def model
     return @model_class if @model_class
-    mclass = self.class.to_s.gsub(/^(\w+)::Admin/, '\1').gsub(/Controller$/, '').singularize
-    eval(mclass)
-    @model_class = eval(mclass)
+    mclass = self.class.to_s
+                 .gsub(/^(\w+)::Admin/, '\1')
+                 .gsub(/Controller$/, '')
+                 .singularize
+    Object.const_get(mclass)
+    @model_class = Object.const_get(mclass)
   rescue
     @model_class = Cms::Content
   end
-  
+
   def index
     @items = model.configs(@content)
     _index @items
@@ -32,19 +36,24 @@ class Cms::Admin::Content::SettingsController < Cms::Controller::Admin::Base
   def new
     error_auth
   end
-  
+
   def create
     error_auth
   end
 
   def update
     @item = model.config(@content, params[:id])
-    @item.value = params[:item][:value]
-    
+    @item.attributes = settings_params
     _update @item
   end
 
   def destroy
     error_auth
+  end
+
+  private
+
+  def settings_params
+    params.require(:item).permit(:value)
   end
 end

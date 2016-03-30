@@ -1,26 +1,26 @@
 Joruri::Application.routes.draw do
   mod = "cms"
-  
-  match "/_preview/:site/(*path)" => "cms/admin/preview#index",
+
+  get "/_preview/:site/(*path)" => "cms/admin/preview#index",
     :as => :cms_preview, :defaults => { :concept => nil }, :format => false
-  
+
   ## -------------------------------------------------------
   ## admin
-  
+
   scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
-    
-    match "tool_rebuild" => "admin/tool/rebuild#index"
-    match "tool_search"  => "admin/tool/search#index"
-    match "tool_export"  => "admin/tool/export#index"
-    match "tool_import"  => "admin/tool/import#index"
-    
-    match "tests_kana" => "admin/tests/kana#index",
+
+    get "tool_rebuild" => "admin/tool/rebuild#index"
+    get "tool_search"  => "admin/tool/search#index"
+    get "tool_export"  => "admin/tool/export#index"
+    get "tool_import"  => "admin/tool/import#index"
+
+    get "tests_kana" => "admin/tests/kana#index",
       :as => :tests_kana
-    match "embedded_file/:id/:name" => "admin/embedded_files#index",
+    get "embedded_file/:id/:name" => "admin/embedded_files#index",
       :as => :embedded_file
-    match "embedded_file/:id/thumb/:name" => "admin/embedded_files#index",
+    get "embedded_file/:id/thumb/:name" => "admin/embedded_files#index",
       :as => :embedded_thumbnail, :thumbnail   => true
-    
+
     resources :tool_link_checks,
       :controller  => "admin/tool/link_checks"
     resources :navi_sites,
@@ -54,14 +54,12 @@ Joruri::Application.routes.draw do
         end
     end
   end
-  
+
   scope "#{Joruri.admin_uri}/#{mod}/c:concept", :module => mod, :as => mod do
-    
-    match "stylesheets/" => "admin/stylesheets#index",
-      :as => :stylesheets, :format => false
+
     match "stylesheets/(*path)" => "admin/stylesheets#index",
-      :as => :stylesheets, :format => false
-    
+      :as => :stylesheets, :format => false, via: [:get, :post, :put]
+
     resources :contents,
       :controller => "admin/contents"
     resource :contents_rewrite,
@@ -108,10 +106,10 @@ Joruri::Application.routes.draw do
     resources :inline_data_file_nodes,
       :controller => "admin/inline/data_file_nodes",
       :path       => ":parent/inline_data_file_nodes"
-    
+
     ## -----------------------------------------------------
     ## node
-    
+
     resources :node_directories,
       :controller => "admin/node/directories",
       :path       => ":parent/node_directories"
@@ -121,10 +119,10 @@ Joruri::Application.routes.draw do
     resources :node_sitemaps,
       :controller => "admin/node/sitemaps",
       :path       => ":parent/node_sitemaps"
-    
+
     ## -----------------------------------------------------
     ## piece
-    
+
     resources :piece_frees,
       :controller => "admin/piece/frees"
     resources :piece_page_titles,
@@ -139,14 +137,14 @@ Joruri::Application.routes.draw do
     resources :piece_sns_sharings,
       :controller => "admin/piece/sns_sharings"
   end
-  
+
   ## -------------------------------------------------------
   ## public
-  
+
   scope "_public/#{mod}", :module => mod, :as => "" do
-    
-    match "node_preview/"  => "public/node/preview#index"
-    match "node_pages/"    => "public/node/pages#index"
-    match "node_sitemaps/" => "public/node/sitemaps#index"
+
+    get "node_preview/"  => "public/node/preview#index"
+    get "node_pages/"    => "public/node/pages#index"
+    get "node_sitemaps/" => "public/node/sitemaps#index"
   end
 end

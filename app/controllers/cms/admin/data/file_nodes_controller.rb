@@ -5,19 +5,18 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return redirect_to :action => 'index' if params[:reset]
-    
+    return redirect_to action: 'index' if params[:reset]
+
     @parent = params[:parent] || '0'
   end
 
   def index
-    item = Cms::DataFileNode.new
-    item.readable if params[:s_target] != "all"
-    item.and :site_id, Core.site.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
-    @items = item.find(:all)
+    @items = Cms::DataFileNode.where(site_id: Core.site.id)
+    @items = @items.readable if params[:s_target] != 'all'
+    @items = @items.search(params)
+                   .paginate(page: params[:page], per_page: params[:limit])
+                   .order(params[:sort], :name, :id)
+
     _index @items
   end
 
@@ -30,9 +29,7 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
   end
 
   def new
-    @item = Cms::DataFileNode.new({
-      :concept_id => Core.concept(:id)
-    })
+    @item = Cms::DataFileNode.new(concept_id: Core.concept(:id))
   end
 
   def create
@@ -45,11 +42,11 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
     @item = Cms::DataFileNode.new.find(params[:id])
     @item.attributes = params[:item]
     @old_concept_id  = @item.concept_id_was
-    
+
     _update(@item) do
       if @old_concept_id != @item.concept_id
-        cond = {:concept_id => @old_concept_id, :node_id => @item.id}
-        Cms::DataFile.update_all({:concept_id => @item.concept_id}, cond)
+        cond = { concept_id: @old_concept_id, node_id: @item.id }
+        Cms::DataFile.update_all({ concept_id: @item.concept_id }, cond)
       end
     end
   end

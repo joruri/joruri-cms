@@ -17,11 +17,11 @@
 
 <%= render :partial => 'cms/public/_partial/maps/view', :locals => {:item => @item} %>
 
-<% if @item.rel_docs(:conditions => {:state => 'public'}).size > 0 %>
+<% if @item.rel_docs(state: 'public').size > 0 %>
 <div class="rels">
   <h2>関連記事</h2>
   <ul>
-    <% @item.rel_docs(:conditions => {:state => 'public'}).each do |doc| %>
+    <% @item.rel_docs(state: 'public').each do |doc| %>
     <li><%= link_to h(doc.title), doc.public_uri %></li>
     <% end %>
   </ul>
@@ -33,7 +33,7 @@
   <h2>関連ワード</h2>
   <div>
     <% for tag in @item.tags
-    %><%=link_to h(tag.word), node.public_uri + CGI::escape(tag.word) %> 
+    %><%=link_to h(tag.word), node.public_uri + CGI::escape(tag.word) %>
     <% end %>
   </div>
 </div>

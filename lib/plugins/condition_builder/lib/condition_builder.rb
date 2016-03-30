@@ -22,31 +22,31 @@ class Condition
   def self.block(&block)
     new(&block).where
   end
-  
+
   def initialize
     @args = []
     yield self if block_given?
   end
 
   def and(*args, &block)
-    @logic = " AND "
+    @logic = ' AND '
     if block_given?
       block(&block)
     else
       @args << args
     end
   end
-  alias :add :and
-  
+  alias add and
+
   def or(*args, &block)
-    @logic = " OR "
+    @logic = ' OR '
     if block_given?
       block(&block)
     else
       @args << args
     end
   end
-  
+
   def block(&block)
     @args << self.class.new(&block)
   end
@@ -55,43 +55,44 @@ class Condition
     return nil if conditions.empty?
     # Build the condition string with ?s using the 'left' array, and
     # build the value string using the 'right' array:
-    left, right = [], []
+    left = []
+    right = []
     conditions.each do |column, *values|
       values = [values] unless values.is_a? Array
-      
+
       if (sub_condition = column).is_a? Condition
         # Integrate the sub-condition
         sub_sql, *sub_values = sub_condition.where
-        left << "(" + sub_sql + ")"
+        left << '(' + sub_sql + ')'
         right += sub_values
         next
-      elsif column.to_s.downcase == "sql"
+      elsif column.to_s.casecmp('sql').zero?
         # Treat the first 'value' as pure SQL
         left << values.shift
         next
       end
-      
+
       case values.size
       when 0
-        raise "No value specified for Condition"
+        raise 'No value specified for Condition'
       when 1
-        if values.last.is_a?(Array)
-          left << "#{column} IN (?)"
-        else
-          left << "#{column} = ?"
-        end
+        left << if values.last.is_a?(Array)
+                  "#{column} IN (?)"
+                else
+                  "#{column} = ?"
+                end
         right << values.last
       when 2
         operator = values.shift
-        if values.last.is_a?(Array)
-          left << "#{column} IN (?)"
-        else
-          left << "#{column} #{operator} ?"
-        end
+        left << if values.last.is_a?(Array)
+                  "#{column} IN (?)"
+                else
+                  "#{column} #{operator} ?"
+                end
         right << values.last
       else
         operator = values.first
-        if operator.upcase == "BETWEEN"
+        if operator.casecmp('BETWEEN').zero?
           left << "#{column} #{operator} ? AND ?"
           right << values[-2] << values[-1]
         else
@@ -99,6 +100,6 @@ class Condition
         end
       end
     end
-    return [left.join(@logic)].concat(right)
+    [left.join(@logic)].concat(right)
   end
 end

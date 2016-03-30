@@ -42,8 +42,8 @@ Joruri::Application.routes.draw do
   
   scope "_public/#{mod}", :module => mod, :as => "" do
     
-    match "node_forms/index.:format"       => "public/node/forms#index"
-    match "node_forms/:form/index.:format" => "public/node/forms#show"
-    match "node_forms/:form/sent.:format"  => "public/node/forms#sent"
+    get "node_forms/index.:format"       => "public/node/forms#index"
+    get "node_forms/:form/index.:format" => "public/node/forms#show"
+    get "node_forms/:form/sent.:format"  => "public/node/forms#sent"
   end
 end

@@ -6,9 +6,9 @@ Joruri::Application.routes.draw do
   
   scope "#{Joruri.admin_uri}/#{mod}/c:concept", :module => mod, :as => mod do
     
-    match ":content/doc_files/:parent/(*path)" => "admin/doc/files#preview",
+    get ":content/doc_files/:parent/(*path)" => "admin/doc/files#preview",
       :as => :preview_doc_file
-    match "rebuild" => "admin/rebuild#index",
+    get "rebuild" => "admin/rebuild#index",
       :path => ":content/rebuild", :format => false
     
     resources :categories,
@@ -81,16 +81,16 @@ Joruri::Application.routes.draw do
   
   scope "_public/#{mod}", :module => mod, :as => "" do
     
-    match "node_docs/:name/index.html"                => "public/node/docs#show"
-    match "node_docs/:name/files/:type/:file.:format" => "public/node/doc/files#show"
-    match "node_docs/:name/files/:file.:format"       => "public/node/doc/files#show"
-    match "node_docs/index.:format"                   => "public/node/docs#index"
-    match "node_recent_docs/index.:format"            => "public/node/recent_docs#index"
-    match "node_search_docs/index.:format"            => "public/node/search_docs#index"
-    match "node_tag_docs/index.:format"               => "public/node/tag_docs#index"
-    match "node_tag_docs/:tag"                        => "public/node/tag_docs#index"
-    match "node_categories/:name/:attr/index.:format" => "public/node/categories#show_attr"
-    match "node_categories/:name/:file.:format"       => "public/node/categories#show"
-    match "node_categories/index.html"                => "public/node/categories#index"
+    get "node_docs/:name/index.html"                => "public/node/docs#show"
+    get "node_docs/:name/files/:type/:file.:format" => "public/node/doc/files#show"
+    get "node_docs/:name/files/:file.:format"       => "public/node/doc/files#show"
+    get "node_docs/index.:format"                   => "public/node/docs#index"
+    get "node_recent_docs/index.:format"            => "public/node/recent_docs#index"
+    get "node_search_docs/index.:format"            => "public/node/search_docs#index"
+    get "node_tag_docs/index.:format"               => "public/node/tag_docs#index"
+    get "node_tag_docs/:tag"                        => "public/node/tag_docs#index"
+    get "node_categories/:name/:attr/index.:format" => "public/node/categories#show_attr"
+    get "node_categories/:name/:file.:format"       => "public/node/categories#show"
+    get "node_categories/index.html"                => "public/node/categories#index"
   end
 end

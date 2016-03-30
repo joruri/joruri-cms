@@ -6,7 +6,7 @@ Joruri::Application.routes.draw do
   
   scope "_script/#{mod}", :module => mod, :as => mod do
     
-    match "run/*path" => "script/runner#run", :format => false
+    get "run/*path" => "script/runner#run", :format => false
   end
   
   ## -------------------------------------------------------
@@ -14,11 +14,11 @@ Joruri::Application.routes.draw do
     
   scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
     
-    match "tests" => "admin/tests#index",
+    get "tests" => "admin/tests#index",
       :as => :tests
-    match "tests_mail" => "admin/tests/mail#index",
+    get "tests_mail" => "admin/tests/mail#index",
       :as => :tests_mail
-    match "tests_link_check" => "admin/tests/link_check#index",
+    get "tests_link_check" => "admin/tests/link_check#index",
       :as => :tests_link_check
     
     resource :my_account,

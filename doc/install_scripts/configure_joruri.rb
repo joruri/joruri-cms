@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-DONE_FLAG = "/tmp/#{$0}_done"
+DONE_FLAG = '/tmp/{$PROGRAM_NAME}_done'.freeze
 
 puts '#### Configure Joruri ####'
 exit if File.exist?(DONE_FLAG)
@@ -31,7 +31,7 @@ def centos
     conf = f.read
 
     f.rewind
-    f.write conf.gsub('joruri.example.com') {|m| `hostname`.chomp }
+    f.write conf.gsub('joruri.example.com') { |_m| `hostname`.chomp }
     f.flush
     f.truncate(f.pos)
 
@@ -52,14 +52,14 @@ def others
   exit
 end
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'
-    unless `grep -s Ubuntu /etc/lsb-release`.empty?
-      ubuntu
-    else
+    if `grep -s Ubuntu /etc/lsb-release`.empty?
       others
+    else
+      ubuntu
     end
   else
     others

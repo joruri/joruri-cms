@@ -3,14 +3,14 @@ Joruri::Application.configure do
 
   config.logger = Logger.new(config.paths["log"].first)
   config.logger.level = Logger::WARN
-  
+
   config.cache_classes = true
   # config.cache_store = :mem_cache_store
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  
-  config.serve_static_assets = true
-  config.assets.compress = true
+
+  config.serve_static_files = true
+  config.eager_load = false
   config.assets.compile = false
   config.assets.digest = true
   # config.assets.manifest = YOUR_PATH

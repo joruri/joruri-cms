@@ -10,11 +10,11 @@ end
 
 class String
   def to_utf8
-    require "nkf"
-    NKF.nkf('-wxm0', self.to_s)
+    require 'nkf'
+    NKF.nkf('-wxm0', to_s)
   end
 end
 
-if Joruri.config[:sys_storage].to_s == "db"
+if Joruri.config[:sys_storage].to_s == 'db'
   require 'plugins/joruri_plugin/lib/extend_storage_db'
 end

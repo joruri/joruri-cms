@@ -4,24 +4,27 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
   include SimpleCaptcha::ControllerHelpers
 
   def pre_dispatch
-    return http_error(404) unless @content = Page.current_node.content
+    @content = Page.current_node.content
+    return http_error(404) unless @content
 
     @use_captcha = @content.setting_value(:use_captcha) == '1'
   end
 
   def index
-    item = Enquete::Form.new.public
-    item.and :content_id, @content.id
-    # doc.search params
-    item.page params[:page], (request.mobile? ? 10 : 20)
-    @items = item.find(:all, order: 'sort_no ASC, id DESC')
+    @items = Enquete::Form
+             .published
+             .where(content_id: @content.id)
+             .order(:sort_no, id: :desc)
+             .paginate(page: params[:page],
+                       per_page: (request.mobile? ? 10 : 20))
   end
 
   def show
-    item = Enquete::Form.new.public
-    item.and :content_id, @content.id
-    item.and :id, params[:form]
-    @item = item.find(:first)
+    @item = Enquete::Form
+            .published
+            .where(content_id: @content.id)
+            .where(id: params[:form])
+            .first
     return http_error(404) unless @item
 
     @form = form(@item)
@@ -44,18 +47,6 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
       end
     end
     return false if @form.errors.size > 0
-
-    ## captcha
-    # if params[:confirm].blank? && @use_captcha
-    # item = Enquete::Form.new
-    # item.name        = 'dummy'
-    # item.captcha     = params[:item][:captcha]
-    # item.captcha_key = params[:item][:captcha_key]
-    # unless item.valid_with_captcha?
-    # @form.errors.add :base, item.errors.to_a[0]
-    # return false
-    # end
-    # end
 
     ## confirm
     if params[:confirm].blank?
@@ -90,6 +81,7 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
         break
       end
     end
+
     begin
       if @content.setting_value(:auto_reply) == 'send'
         send_answer_mail(@item, answer, answer_email) unless answer_email.blank?
@@ -102,10 +94,11 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
   end
 
   def sent
-    item = Enquete::Form.new.public
-    item.and :content_id, @content.id
-    item.and :id, params[:form]
-    @item = item.find(:first)
+    @item = Enquete::Form
+            .published
+            .where(content_id: @content.id)
+            .where(id: params[:form])
+            .first
   end
 
   protected

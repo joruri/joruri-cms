@@ -3,28 +3,26 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    # return error_auth unless Core.user.has_auth?(:manager)
     return error_auth unless Core.user.has_auth?(:designer) # observe_field
 
-    unless @parent = Cms::Concept.find_by_id(params[:parent])
-      @parent = Cms::Concept.new(name: 'コンセプト',
-                                 level_no: 0)
+    @parent = Cms::Concept.find_by_id(params[:parent])
+
+    unless @parent
+      @parent = Cms::Concept.new(name: 'コンセプト', level_no: 0)
       @parent.id = 0
     end
-    # default_url_options[:parent] = @parent.id
   end
 
   def index
-    item = Cms::Concept.new
-    item.and :parent_id, @parent.id
-    item.and :site_id, Core.site.id
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Cms::Concept
+             .where(parent_id: @parent.id)
+             .where(site_id: Core.site.id)
+             .order(params[:sort], :sort_no)
     _index @items
   end
 
   def show
-    @item = Cms::Concept.new.find(params[:id])
+    @item = Cms::Concept.find(params[:id])
     return error_auth unless @item.readable?
     _show @item
   end
@@ -49,14 +47,14 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
     @item.parent_id  = 0 unless @item.parent_id
     @item.level_no   = @parent.level_no + 1
 
-    parent = Cms::Concept.find_by_id(@item.parent_id)
+    parent = Cms::Concept.find_by(id: @item.parent_id)
     @item.level_no = (parent ? parent.level_no + 1 : 1)
 
     _update @item
   end
 
   def destroy
-    @item = Cms::Concept.new.find(params[:id])
+    @item = Cms::Concept.find(params[:id])
     _destroy @item do
       respond_to do |format|
         format.html { return redirect_to cms_concepts_path(@parent) }
@@ -69,9 +67,9 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
     concept = nil
 
     if params[:concept_id].to_i > 0
-      concept = Cms::Concept.find_by_id(params[:concept_id])
+      concept = Cms::Concept.find_by(id: params[:concept_id])
     elsif params[:parent].to_i > 0
-      if node = Cms::Node.find_by_id(params[:parent])
+      if node = Cms::Node.find_by(id: params[:parent])
         concept = node.inherited_concept
       end
     else

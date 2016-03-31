@@ -7,33 +7,29 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    item = Enquete::Form.new # .public#.readable
-    # item.public unless Core.user.has_auth?(:manager)
-    item.and :content_id, @content.id
-    # item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'sort_no ASC, id DESC'
-    @items = item.find(:all)
+    @items = Enquete::Form
+             .where(content_id: @content.id)
+             .order(params[:sort], :sort_no, id: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Enquete::Form.new.find(params[:id])
-    # return error_auth unless @item.readable?
+    @item = Enquete::Form.find(params[:id])
 
     _show @item
   end
 
   def new
-    @item = Enquete::Form.new(state: 'public',
-                              sort_no: 0)
+    @item = Enquete::Form.new(state: 'public', sort_no: 0)
   end
 
   def create
@@ -44,14 +40,14 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Enquete::Form.new.find(params[:id])
+    @item = Enquete::Form.find(params[:id])
     @item.attributes = params[:item]
 
     _update(@item)
   end
 
   def destroy
-    @item = Enquete::Form.new.find(params[:id])
+    @item = Enquete::Form.find(params[:id])
     _destroy @item
   end
 end

@@ -25,7 +25,7 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
   end
 
   def preview
-    @item = Cms::Piece.new.find(params[:id])
+    @item = Cms::Piece.find(params[:id])
     return error_auth unless @item.readable?
 
     render :preview
@@ -56,7 +56,7 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Cms::Piece.new.find(params[:id])
+    @item = Cms::Piece.find(params[:id])
     _destroy @item
   end
 
@@ -66,11 +66,11 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
     concept_id = params[:concept_id]
     concept_id = @item.concept_id if @item && @item.concept_id
     concept_id ||= Core.concept.id
-    if concept = Cms::Concept.find_by_id(concept_id)
+    concept = Cms::Concept.find_by(id: concept_id)
+
+    if concept
       concept.parents_tree.each do |c|
-        item = Cms::Content.new
-        item.and :concept_id, c.id
-        contents += item.find(:all, order: 'name, id')
+        contents += Cms::Content.where(concept_id: c.id).order(:name, :id)
       end
     end
 
@@ -95,7 +95,7 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
     content_id = @item.content.id if @item && @item.content
 
     model = 'cms'
-    if content = Cms::Content.find_by_id(content_id)
+    if content = Cms::Content.find_by(id: content_id)
       model = content.model
     end
     models = Cms::Lib::Modules.pieces(model)

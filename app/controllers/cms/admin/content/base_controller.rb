@@ -5,7 +5,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
   before_filter :pre_dispatch_content
 
   def pre_dispatch_content
-    @content = Cms::Content.new.find(params[:id])
+    @content = Cms::Content.find(params[:id])
     return error_auth if params[:action] != 'show' && !Core.user.has_auth?(:designer)
   end
 
@@ -34,7 +34,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
       @pieces << {
         name: data[0].gsub(/.*\//, ''),
         model: data[1],
-        items: Cms::Piece.find(:all, conditions: { content_id: @item.id, model: data[1] })
+        items: Cms::Piece..where(content_id: @item.id, model: data[1])
       }
     end
 
@@ -42,7 +42,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
       @directories << {
         name: data[0].gsub(/.*\//, ''),
         model: data[1],
-        items: Cms::Node.find(:all, conditions: { content_id: @item.id, model: data[1] })
+        items: Cms::Node.where(content_id: @item.id, model: data[1])
       }
     end
 
@@ -50,7 +50,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
       @pages << {
         name: data[0].gsub(/.*\//, ''),
         model: data[1],
-        items: Cms::Node.find(:all, conditions: { content_id: @item.id, model: data[1] })
+        items: Cms::Node.where(content_id: @item.id, model: data[1])
       }
     end
 

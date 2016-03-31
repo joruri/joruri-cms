@@ -15,15 +15,17 @@ class Faq::Public::Node::TagDocsController < Cms::Controller::Public::Base
     end
 
     if @tag
-      doc = Faq::Doc.new.public
-      doc.agent_filter(request.mobile)
-      doc.and :content_id, Page.current_node.content.id
-      doc.and 'language_id', 1
-      doc.tag_is @tag
-      doc.page params[:page], (request.mobile? ? 20 : 50)
-      @docs = doc.find(:all, order: 'published_at DESC')
+      @docs = Faq::Doc
+              .published
+              .agent_filter(request.mobile)
+              .where(content_id: Page.current_node.content.id)
+              .where(language_id: 1)
+              .tag_is(@tag)
+              .order(published_at: :desc)
+              .paginate(page: params[:page],
+                        per_page: (request.mobile? ? 20 : 50))
     else
-      @docs = Article::Doc.find(:all, conditions: ['0 = 1'])
+      @docs = Article::Doc.none
     end
 
     return true if render_feed(@docs)

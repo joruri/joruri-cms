@@ -6,7 +6,10 @@ class Newsletter::Admin::DeliverDocsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Newsletter::Content::Base.find_by_id(params[:content])
+
+    @content = Newsletter::Content::Base.find_by_id(params[:content])
+    return error_auth unless @content
+
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
 
@@ -14,7 +17,7 @@ class Newsletter::Admin::DeliverDocsController < Cms::Controller::Admin::Base
     return error_auth unless @doc.editable?
 
     @process_name = 'newsletter/docs#deliver'
-    @process      = Sys::Process.find_by_name(@process_name)
+    @process = Sys::Process.find_by(name: @process_name)
   end
 
   def index
@@ -34,7 +37,6 @@ class Newsletter::Admin::DeliverDocsController < Cms::Controller::Admin::Base
     redirect_to url_for(action: :index)
   end
 
-  ## テスト配信
   def deliver_test
     success = 0
 
@@ -79,7 +81,8 @@ class Newsletter::Admin::DeliverDocsController < Cms::Controller::Admin::Base
 
     csv = CSV.generate do |csv|
       csv << %w(ログID 送信日時 メールアドレス メール種別 結果 備考)
-      @doc.logs.find(:all, order: 'id').each do |data|
+
+      @doc.logs.all.order(:id).each do |data|
         row = []
         row << data.id
         row << data.created_at.to_s(:db)

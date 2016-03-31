@@ -4,8 +4,12 @@ class Bbs::Admin::ResponsesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    return error_auth unless @content = Bbs::Content::Base.find(params[:content])
-    return error_auth unless @parent = Bbs::Item.find(params[:parent])
+    @content = Bbs::Content::Base.find(params[:content])
+    return error_auth unless @content
+
+    @parent = Bbs::Item.find(params[:parent])
+    return error_auth unless @parent
+
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
 
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
@@ -15,18 +19,17 @@ class Bbs::Admin::ResponsesController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Bbs::Item.new.readable
-    item.and :content_id, @content.id
-    item.and :parent_id, @parent.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
-    @items = item.find(:all)
+    @items = Bbs::Item
+             .readable
+             .where(content_id: @content.id)
+             .where(parent_id: @parent.id)
+             .order(params[:sort], updated_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end
 
   def show
-    @item = Bbs::Item.new.find(params[:id])
+    @item = Bbs::Item.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item

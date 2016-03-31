@@ -25,13 +25,14 @@ class Article::Public::Piece::RecentTabsController < Sys::Controller::Public::Ba
       tab_class = tab.name
       tab_class = "#{tab.name} current" if current
 
-      doc = Article::Doc.new.public
-      doc.agent_filter(request.mobile)
-      doc.and :content_id, @content.id
-      doc.visible_in_recent
-      doc.group_is(tab)
-      doc.page 1, limit
-      docs = doc.find(:all, order: 'published_at DESC')
+      docs = Article::Doc
+             .published
+             .agent_filter(request.mobile)
+             .where(content_id: @content.id)
+             .visible_in_recent
+             .group_is(tab)
+             .order(published_at: :desc)
+             .paginate(page: 1, per_page: limit)
 
       @tabs << {
         name: tab.name,

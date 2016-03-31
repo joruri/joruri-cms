@@ -21,8 +21,6 @@ class Cms::Admin::Tool::LinkChecksController < Cms::Controller::Admin::Base
     options = { site_id: Core.site.id }
     options[:external] = true if params[:external]
 
-    #::Script.run(@process_name, options); exit
-
     super(@process_name, options)
   end
 
@@ -33,7 +31,7 @@ class Cms::Admin::Tool::LinkChecksController < Cms::Controller::Admin::Base
     csv = CSV.generate do |csv|
       csv << %w(ログID チェック日時 リンク先URL 結果 リンク元URL リンク元数)
 
-      @logs = Cms::LinkCheck.find(:all)
+      @logs = Cms::LinkCheck.all
       @logs.each do |data|
         row = []
         row << data.id

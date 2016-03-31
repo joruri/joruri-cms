@@ -4,7 +4,8 @@ class Article::Public::Node::EventDocsController < Cms::Controller::Public::Base
 
   def pre_dispatch
     @node = Page.current_node
-    return http_error(404) unless @content = @node.content
+    @content = @node.content
+    return http_error(404) unless @content
 
     @list_type = @node.setting_value(:list_type)
   end
@@ -47,12 +48,12 @@ class Article::Public::Node::EventDocsController < Cms::Controller::Public::Base
     ## docs
     @items = []
     prev   = nil
-    item = Article::Doc.new.public
-    item.agent_filter(request.mobile)
-    item.and :content_id, Page.current_node.content.id
-    # item.event_date_is(:year => @calendar.year, :month => @calendar.month)
-    item.event_date_in(@sdate, @edate)
-    docs = item.find(:all, order: 'event_date')
+    docs = Article::Doc
+           .published
+           .agent_filter(request.mobile)
+           .where(content_id: Page.current_node.content.id)
+           .event_date_in(@sdate, @edate)
+           .order(:event_date)
     return true if render_feed(docs)
 
     docs.each do |doc|
@@ -73,11 +74,12 @@ class Article::Public::Node::EventDocsController < Cms::Controller::Public::Base
   end
 
   def schedule
-    item = Article::Doc.new.public
-    item.agent_filter(request.mobile)
-    item.and :content_id, @content.id
-    item.and :event_date, '>=', Core.now
-    docs = item.find(:all, order: 'event_date')
+    docs = Article::Doc
+           .published
+           .agent_filter(request.mobile)
+           .where(content_id: @content.id)
+           .where(Article::Doc.arel_table[:event_date].gteq(Core.now))
+           .order(:event_date)
     return true if render_feed(docs)
 
     http_error(404)

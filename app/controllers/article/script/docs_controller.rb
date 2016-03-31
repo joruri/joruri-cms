@@ -5,9 +5,9 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
     publish_files = Script.options[:file]
     content_id    = Script.options[:content_id]
 
-    item = Article::Doc.new.public
-    item.and :content_id, content_id if content_id
-    items = item.find(:all, select: 'id', order: 'published_at DESC')
+    items = Article::Doc.published
+    items = items.where(content_id: content_id) if content_id
+    items = items.order(:published_at: :desc).project(:id)
 
     Script.total items.size
 

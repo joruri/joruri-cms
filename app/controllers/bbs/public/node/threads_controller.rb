@@ -34,11 +34,12 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
     limit = request.mobile? ? 10 : 10
     limit = params[:limit] if params[:limit] && params[:limit].to_i < 100
 
-    item = Bbs::Item.new.public
-    item.and :content_id, @content.id
-    item.and :parent_id, 0
-    item.page params[:page], limit
-    @threads = item.find(:all, order: 'id DESC')
+    @threads = Bbs::Item
+               .published
+               .where(content_id: @content.id)
+               .where(parent_id: 0)
+               .order(id: :desc)
+               .paginate(page: params[:page], per_apge: limit)
   end
 
   def new
@@ -49,11 +50,13 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   def show
     @item = Bbs::Item.new
 
-    item = Bbs::Item.new.public
-    item.and :content_id, @content.id
-    item.and :parent_id, 0
-    item.and :thread_id, params[:thread]
-    @thread = item.find(:first, order: 'id DESC')
+    @thread = Bbs::Item
+              .published
+              .where(content_id: @content.id)
+              .where(parent_id: 0)
+              .where(thread_id: params[:thread])
+              .order(id: :desc)
+              .first
     return http_error(404) unless @thread
 
     if request.post?
@@ -117,15 +120,20 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   end
 
   def destroy
-    item = Bbs::Item.new.public
-    item.and :content_id, @content.id
-    item.and :id, params[:no]
+    items = Bbs::Item
+            .published
+            .where(content_id: @content.id)
+            .where(id: params[:no])
+
     if @admin_password.blank? || @admin_password != params[:password]
-      item.and :password, params[:password]
-      item.and :password, 'IS NOT', nil
-      item.and :password, '!=', ''
+      items = items.where(password: params[:password])
+                   .where.not(pssword: nil)
+                   .where.not('')
     end
-    unless @entry = item.find(:first)
+
+    @entry = items.first
+
+    unless @entry
       @delete_error = true
       return false
     end

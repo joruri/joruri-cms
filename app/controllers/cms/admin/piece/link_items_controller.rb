@@ -4,20 +4,20 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @piece = Cms::Piece.new.readable.find(params[:piece])
-    # default_url_options[:piece] = @piece
+
+    @piece = Cms::Piece.new.readable.find(params[:piece])
+    return error_auth unless @piece
   end
 
   def index
-    item = Cms::PieceLinkItem.new
-    item.and :piece_id, @piece.id
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Cms::PieceLinkItem
+             .where(piece_id: @piece.id)
+             .order(params[:sort], :sort_no)
     _index @items
   end
 
   def show
-    @item = Cms::PieceLinkItem.new.find(params[:id])
+    @item = Cms::PieceLinkItem.find(params[:id])
     return error_auth unless @item.readable?
     _show @item
   end
@@ -35,13 +35,13 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::PieceLinkItem.new.find(params[:id])
+    @item = Cms::PieceLinkItem.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Cms::PieceLinkItem.new.find(params[:id])
+    @item = Cms::PieceLinkItem.find(params[:id])
     _destroy @item
   end
 end

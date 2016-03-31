@@ -3,22 +3,22 @@ class Faq::Admin::AttributesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    # default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     @parent = 0
   end
 
   def index
-    item = Faq::Attribute.new # .readable
-    item.and :content_id, @content
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Faq::Attribute
+             .where(content_id: @content)
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Faq::Attribute.new.find(params[:id])
+    @item = Faq::Attribute.find(params[:id])
     _show @item
   end
 
@@ -34,13 +34,13 @@ class Faq::Admin::AttributesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Faq::Attribute.new.find(params[:id])
+    @item = Faq::Attribute.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Faq::Attribute.new.find(params[:id])
+    @item = Faq::Attribute.find(params[:id])
     _destroy @item
   end
 end

@@ -9,7 +9,7 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
 
     @kana_mtime = Cms::KanaDictionary.dic_mtime
 
-    tasks = Cms::TalkTask.find(:all, select: :id, order: :id)
+    tasks = Cms::TalkTask.all.project(:id).order(:id)
 
     Script.total tasks.size
 

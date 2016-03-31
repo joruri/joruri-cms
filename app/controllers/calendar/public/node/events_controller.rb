@@ -6,7 +6,9 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
   def pre_dispatch
     @node     = Page.current_node
     @node_uri = @node.public_uri
-    return http_error(404) unless @content = @node.content
+
+    @content = @node.content
+    return http_error(404) unless @content
 
     @list_type = @node.setting_value(:list_type)
 
@@ -41,11 +43,12 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     @items = {}
     @calendar.days.each { |d| @items[d[:date]] = [] if d[:month].to_i == @month }
 
-    item = Calendar::Event.new.public
-    item.and :content_id, @content.id
-    item.and :event_date, 'IS NOT', nil
-    item.event_date_in(@sdate, @edate)
-    events = item.find(:all, order: 'event_date, event_close_date, id')
+    events = Calendar::Event
+             .published
+             .where(content_id: @content.id)
+             .where.not(event_date: nil)
+             .event_date_in(@sdate, @edate)
+             .order(:event_date, :event_close_date, :id)
 
     ## イベント別
     if @list_type == 'each_event'
@@ -86,10 +89,11 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     @pagination.prev_uri   = "#{@node_uri}#{@year - 1}/" if (@year - 1) >= @min_date.year
     @pagination.next_uri   = "#{@node_uri}#{@year + 1}/" if (@year + 1) <= @max_date.year
 
-    item = Calendar::Event.new.public
-    item.and :content_id, @content.id
-    item.event_date_in(@sdate, @edate)
-    events = item.find(:all, order: 'event_date, event_close_date, id')
+    events = Calendar::Event
+             .published
+             .where(content_id: @content.id)
+             .event_date_in(@sdate, @edate)
+             .order(:event_date, :event_close_date, :id)
 
     ## イベント別
     if @list_type == 'each_event'
@@ -129,11 +133,14 @@ class Calendar::Public::Node::EventsController < Cms::Controller::Public::Base
     content_id = @content.setting_value(:doc_content_id)
     return [] if content_id.blank?
 
-    doc = Article::Doc.new.public
-    doc.agent_filter(request.mobile)
-    doc.and :content_id, content_id
-    doc.event_date_in(@sdate, @edate)
-    doc.find(:all, order: 'event_date, event_close_date')
+    docs = Article::Doc
+           .published
+           .agent_filter(request.mobile)
+           .where(content_id: content_id)
+           .event_date_in(@sdate, @edate)
+           .order(:event_date, :event_close_date)
+
+    docs
   end
 
   def validate_date

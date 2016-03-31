@@ -4,19 +4,21 @@ class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
 
   def pre_dispatch
     @node = Page.current_node
-    return http_error(404) unless @content = @node.content
-    # @docs_uri = @content.public_uri('Faq::Doc')
+    @content = @node.content
+    return http_error(404) unless @content
   end
 
   def index
-    doc = Faq::Doc.new.public
-    doc.agent_filter(request.mobile)
-    doc.and :content_id, @content.id
-    doc.and :language_id, 1
-    doc.visible_in_list
-    doc.search params
-    doc.page params[:page], (request.mobile? ? 20 : 50)
-    @docs = doc.find(:all, order: 'published_at DESC')
+    @docs = Faq::Doc
+            .published
+            .agent_filter(request.mobile)
+            .where(content_id: @content.id)
+            .where(language_id: 1)
+            .visible_in_list
+            .search(params)
+            .order(published_at: :desc)
+            .paginate(page: params[:page],
+                      per_page: (request.mobile? ? 20 : 50))
     return true if render_feed(@docs)
 
     return http_error(404) if @docs.current_page > 1 && @docs.current_page > @docs.total_pages
@@ -34,15 +36,20 @@ class Faq::Public::Node::DocsController < Cms::Controller::Public::Base
   end
 
   def show
-    doc = Faq::Doc.new.public_or_preview
-    doc.agent_filter(request.mobile) if Core.mode != 'preview'
-    doc.and :content_id, Page.current_node.content.id
-    doc.and :name, params[:name]
-    return http_error(404) unless @item = doc.find(:first)
+    docs = Faq::Doc.public_or_preview
+    docs = docs.agent_filter(request.mobile) if Core.mode != 'preview'
+    @item = docs.where(content_id: Page.current_node.content.id)
+                .where(name: params[:name])
+                .first
+    return http_error(404) unless @item
 
     if Core.mode == 'preview' && params[:doc_id]
-      cond = { id: params[:doc_id], content_id: @item.content_id, name: @item.name }
-      return http_error(404) unless @item = Faq::Doc.find(:first, conditions: cond)
+      @item = Faq::Doc.find_by(
+        id: params[:doc_id],
+        content_id: @item.content_id,
+        name: @item.name
+      )
+      return http_error(404) unless @item
     end
 
     Page.current_item = @item

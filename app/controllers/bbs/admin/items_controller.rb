@@ -14,18 +14,19 @@ class Bbs::Admin::ItemsController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Bbs::Item.new.readable
-    item.and :content_id, @content.id
-    item.and :parent_id, 0
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
-    @items = item.find(:all)
+    @items = Bbs::Item
+             .readable
+             .where(content_id: @content.id)
+             .where(parent_id: 0)
+             .search(params)
+             .order(params[:sort], updated_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Bbs::Item.new.find(params[:id])
+    @item = Bbs::Item.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item

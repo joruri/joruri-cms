@@ -13,12 +13,13 @@ class Article::Public::Piece::RecentDocsController < Sys::Controller::Public::Ba
     limit = Page.current_piece.setting_value(:list_count)
     limit = (limit.to_s =~ /^[1-9][0-9]*$/) ? limit.to_i : 10
 
-    doc = Article::Doc.new.public
-    doc.agent_filter(request.mobile)
-    doc.and :content_id, @content.id
-    doc.visible_in_recent
-    doc.page 1, limit
-    @docs = doc.find(:all, order: 'published_at DESC')
+    @docs = Article::Doc
+            .published
+            .agent_filter(request.mobile)
+            .where(content_id: @content.id)
+            .visible_in_recent
+            .order(published_at: :desc)
+            .paginate(page: 1, per_page: limit)
 
     prev   = nil
     @items = []

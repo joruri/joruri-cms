@@ -23,13 +23,13 @@ class Article::Public::Piece::CalendarsController < Sys::Controller::Public::Bas
     dates = []
 
     if @node
-      doc = Article::Doc.new.public
-      doc.agent_filter(request.mobile)
-      doc.and :content_id, @content.id
-      # doc.event_date_is(:year => @calendar.year, :month => @calendar.month)
-      # docs = doc.find(:all, :select => 'event_date', :group => :event_date)
-      doc.event_date_in(@sdate, @edate)
-      docs = doc.find(:all, select: 'event_date, event_close_date')
+      docs = Article::Doc
+             .published
+             .agent_filter(request.mobile)
+             .where(content_id: @content.id)
+             .event_date_in(@sdate, @edate)
+             .project(:event_date, :event_colose_date)
+
       docs.each do |doc|
         dates << doc.event_date
         next if doc.event_close_date.blank?

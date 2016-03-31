@@ -1,12 +1,13 @@
 # encoding: utf-8
 class Faq::Admin::Docs::PublishController < Faq::Admin::DocsController
   def index
-    item = Faq::Doc.new.publishable
-    item.and :content_id, @content.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
-    @items = item.find(:all)
+    @items = Faq::Doc
+             .publishable
+             .where(content_id: @content.id)
+             .search(params)
+             .order(params[:sort], updated_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 end

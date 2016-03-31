@@ -7,15 +7,16 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Cms::Site.new
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :id
-    @items = item.find(:all)
+    @items = Cms::Site
+             .all
+             .order(params[:sort], :id)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Cms::Site.new.find(params[:id])
+    @item = Cms::Site.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
@@ -36,7 +37,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::Site.new.find(params[:id])
+    @item = Cms::Site.find(params[:id])
     @item.attributes = params[:item]
     _update @item do
       make_node(@item)
@@ -44,7 +45,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Cms::Site.new.find(params[:id])
+    @item = Cms::Site.find(params[:id])
     _destroy(@item) do
       cookies.delete(:cms_site)
     end
@@ -71,7 +72,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
       return true
     end
 
-    concept = Cms::Concept.find_by_site_id(item.id)
+    concept = Cms::Concept.find_by(site_id: item.id)
 
     node = Cms::Node.new(site_id: item.id,
                          state: 'public',

@@ -23,26 +23,36 @@ class Cms::Admin::Tool::SearchController < Cms::Controller::Admin::Base
     @item.keyword = params[:item][:keyword]
 
     group = ["ページ", []]
-    item = Cms::Node.new
-    item.and :site_id, Core.site.id
-    item.and :model, 'Cms::Page'
-    item.and Condition.new do |c|
-      c.or :body, 'LIKE', "%#{@item.keyword}%"
-      c.or :mobile_body, 'LIKE', "%#{@item.keyword}%"
-    end
-    item.find(:all, order: :id).each { |c| group[1] << [c.id, "#{c.title} #{c.public_uri}"] }
+
+    arel_nodes = Cms::Node.arel_table
+
+    items = Cms::Node
+            .where(site_id: Core.site.id)
+            .where(model: 'Cms::Page')
+            .where(arel_nodes[:body].matches("%#{@item.keyword}%")
+                   .or(arel_nodes[:mobile_body].matches("%#{@item.keyword}%")))
+            .order(:id)
+
+    items.each { |c| group[1] << [c.id, "#{c.title} #{c.public_uri}"] }
     @items << group
 
-    cond = ['site_id = ? AND model = ?', Core.site.id, 'Article::Doc']
-    Cms::Content.find(:all, conditions: cond, order: :id).each do |content|
+    contents = Cms::Content
+               .where(site_id: core.site.id)
+               .where(model: 'Article::Doc')
+               .order(:id)
+
+    arel_docs = Article::Doc.arel_table
+
+    contents.each do |content|
       group = ["自治体記事：#{content.name}", []]
-      item = Article::Doc.new
-      item.and :content_id, content.id
-      item.and Condition.new do |c|
-        c.or :body, 'LIKE', "%#{@item.keyword}%"
-        c.or :mobile_body, 'LIKE', "%#{@item.keyword}%"
-      end
-      item.find(:all, order: :id).each { |c| group[1] << [c.id, c.title] }
+
+      items = Article::Doc
+              .where(content_id: content.id)
+              .where(arel_docs[:body].matches("%#{@item.keyword}%")
+                     .or(arel_docs[:mobile_body].matches("%#{@item.keyword}%")))
+              .order(:id)
+
+      items.each { |c| group[1] << [c.id, c.title] }
       @items << group
     end
   end

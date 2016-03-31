@@ -4,8 +4,10 @@ class Cms::Public::Node::PagesController < Cms::Controller::Public::Base
     @item = Cms::Node::Page.find(Page.current_node.id)
 
     if Core.mode == 'preview' && params[:node_id]
-      cond = { id: params[:node_id], parent_id: @item.parent_id, name: @item.name }
-      return http_error(404) unless @item = Cms::Node::Page.find(:first, conditions: cond)
+      @item = Cms::Node::Page.find_by(
+        id: params[:node_id], parent_id: @item.parent_id, name: @item.name
+      )
+      return http_error(404) unless @item
     end
 
     Page.current_node = @item

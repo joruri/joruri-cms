@@ -8,16 +8,19 @@ class Bbs::Public::Piece::RecentItemsController < Sys::Controller::Public::Base
     limit = Page.current_piece.setting_value(:list_count)
     limit = (limit.to_s =~ /^[1-9][0-9]*$/) ? limit.to_i : 10
 
-    item = Bbs::Item.new.public
-    item.and :content_id, @content.id
+    @items = Bbs::Item
+             .published
+             .where(content_id: @content.id)
+
     case Page.current_piece.setting_value(:list_type).to_s
     when '1'
-      item.and :parent_id, 0
+      @items = @items.where(parent_id: 0)
     when '2'
-      item.and :parent_id, '!=', 0
+      @items = @items.where.not(parent_id: 0)
     end
-    item.page 1, limit
-    @items = item.find(:all, order: 'id DESC')
+
+    @items = @items.order(id: :desc)
+                   .paginate(page: 1, per_page: limit)
 
     ## for mobile
     @dates = []

@@ -3,7 +3,7 @@ class Cms::Script::FeedsController < ApplicationController
   include Cms::Controller::Layout
 
   def read
-    feeds = Cms::Feed.find(:all, conditions: { state: 'public' })
+    feeds = Cms::Feed.where(state: 'public')
 
     Script.total feeds.size
 

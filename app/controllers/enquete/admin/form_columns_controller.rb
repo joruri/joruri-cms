@@ -10,35 +10,31 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
     return error_auth unless @content = Cms::Content.find(params[:content])
     return error_auth unless @form = Enquete::Form.find(params[:form])
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    item = Enquete::FormColumn.new # .public#.readable
-    # item.public unless Core.user.has_auth?(:manager)
-    item.and :form_id, @form.id
-    # item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'sort_no ASC'
-    @items = item.find(:all)
+    @items = Enquete::FormColumn
+             .where(form_id: @form.id)
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Enquete::FormColumn.new.find(params[:id])
-    # return error_auth unless @item.readable?
-
+    @item = Enquete::FormColumn.find(params[:id])
     _show @item
   end
 
   def new
     sort_no = 1
 
-    select  = 'MAX(sort_no) AS sort_no'
-    cond    = { form_id: @form.id }
-    max_col = Enquete::FormColumn.find(:first, select: select, conditions: cond)
-    sort_no = (max_col.sort_no || 0) + 1 if max_col
+    max_sort_no = Enquete::FormColumn
+              .where(form_id: @form.id)
+              .maximum(:sort_no)
+
+    sort_no = (max_sort_no || 0) + 1 if max_sort_no
 
     @item = Enquete::FormColumn.new(state: 'public',
                                     required: '1',
@@ -53,14 +49,14 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Enquete::FormColumn.new.find(params[:id])
+    @item = Enquete::FormColumn.find(params[:id])
     @item.attributes = params[:item]
 
     _update(@item)
   end
 
   def destroy
-    @item = Enquete::FormColumn.new.find(params[:id])
+    @item = Enquete::FormColumn.find(params[:id])
     _destroy @item
   end
 

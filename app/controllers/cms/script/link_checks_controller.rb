@@ -5,21 +5,21 @@ class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
 
     @site_uri = {}
 
-    pub = Sys::Publisher.new
-    pub.and :site_id, options[:site_id] if options[:site_id]
-    pub.and :uri, 'IS NOT', nil
-    pub.and do |c|
-      c.or :internal_links, 'IS NOT', nil
-      c.or :external_links, 'IS NOT', nil
-    end
-    pubs = pub.find(:all, select: :id)
+    pubs = Sys::Publisher.where.not(uri: nil)
+    pubs = pubs.where(site_id: options[:site_id]) if options[:site_id]
+
+    arel_publishers = Sys::Publisher.arel_table
+    pubs = pubs.where(arel_publishers[:internal_links].not_eq(nil)
+                      .or(arel_publishers[:external_links].not_eq(nil)))
+
+    pubs = pubs.project(:id)
 
     Script.total pubs.size
 
     logs = {}
 
     pubs.each_with_index do |v, _idx|
-      pub = Sys::Publisher.find_by_id(v[:id])
+      pub = Sys::Publisher.find_by(id: v[:id])
       next unless pub
 
       Script.current

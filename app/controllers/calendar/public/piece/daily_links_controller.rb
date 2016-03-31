@@ -26,10 +26,11 @@ class Calendar::Public::Piece::DailyLinksController < Sys::Controller::Public::B
     @calendar.month_uri = "#{@node_uri}:year/:month/"
     @calendar.day_uri   = "#{@node_uri}:year/:month/#day:day"
 
-    item = Calendar::Event.new.public
-    item.and :content_id, @content.id
-    item.event_date_in(@sdate, @edate)
-    events = item.find(:all, order: 'event_date ASC, id ASC')
+    events = Calendar::Event
+             .published
+             .where(content_id: @content.id)
+             .event_date_in(@sdate, @edate)
+             .order(:event_date, :id)
 
     sdate = Date.strptime(@sdate, '%Y-%m-%d')
     edate = Date.strptime(@edate, '%Y-%m-%d')
@@ -62,10 +63,13 @@ class Calendar::Public::Piece::DailyLinksController < Sys::Controller::Public::B
     content_id = @content.setting_value(:doc_content_id)
     return [] if content_id.blank?
 
-    doc = Article::Doc.new.public
-    doc.agent_filter(request.mobile)
-    doc.and :content_id, content_id
-    doc.event_date_in(@sdate, @edate)
-    doc.find(:all, order: 'event_date')
+    docs = Article::Doc
+           .published
+           .agent_filter(request.mobile)
+           .where(content_id: content_id)
+           .event_date_in(@sdate, @edate)
+           .order(:event_date)
+
+    docs
   end
 end

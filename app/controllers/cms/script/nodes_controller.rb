@@ -3,7 +3,9 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
   def publish
     @ids = {}
 
-    Cms::Node.new.public.find(:all, conditions: { parent_id: 0 }, order: 'directory DESC, name, id').each do |node|
+    Cms::Node.published
+             .where(parent_id: 0)
+             .order(directory: :desc, :name, :id).each do |node|
       publish_node(node)
     end
 
@@ -17,9 +19,15 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
     return unless node.site
     last_name = nil
 
-    cond = ["parent_id = ? AND name IS NOT NULL AND name != ''", node.id]
-    nodes = Cms::Node.new.find(:all, select: :id, conditions: cond, order: 'directory, name, id').each do |v|
-      item = Cms::Node.find_by_id(v[:id])
+    nodes = Cms::Node
+            .where(parent_id: node.id)
+            .where.not(name: nil)
+            .where.not(name: '')
+            .project(:id)
+            .order(:directory, :name, :id)
+
+    nodes.each do |v|
+      item = Cms::Node.find_by(id: v[:id])
       next unless item
       next if item.name.blank? || item.name == last_name
       last_name = item.name

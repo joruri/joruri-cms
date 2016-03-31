@@ -6,50 +6,46 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     return error_auth unless Core.user.has_auth?(:designer)
     return redirect_to(cms_nodes_path(0)) if params[:reset]
 
-    id      = params[:parent] == '0' ? Core.site.node_id : params[:parent]
-    @parent = Cms::Node.new.find(id)
+    id = params[:parent] == '0' ? Core.site.node_id : params[:parent]
+    @parent = Cms::Node.find(id)
   end
 
   def index
-    item = Cms::Node.new # .readable
-    item.and :site_id, Core.site.id
-    item.and :parent_id, @parent.id
-    item.and :directory, 1
-    item.order params[:sort], 'name, id'
-    @dirs = item.find(:all)
+    @dirs = Cms::Node
+            .where(site_id: Core.site.id)
+            .where(parent_id: @parent.id)
+            .where(directory: 1)
+            .order(params[:sort], :name, :id)
 
-    item = Cms::Node.new # .readable
-    item.and :site_id, Core.site.id
-    item.and :parent_id, @parent.id
-    item.and :directory, 0
-    item.order params[:sort], 'name, id'
-    @pages = item.find(:all)
+    @pages = Cms::Node
+             .where(site_id: Core.site.id)
+             .where(parent_id: @parent.id)
+             .where(directory: 0)
+             .order(params[:sort], :name, :id)
 
     _index @pages
   end
 
   def search
-    item = Cms::Node.new # .readable
-    item.and :site_id, Core.site.id
-    # item.and :directory, 0
-    item.search params
-    item.page params[:page], params[:limit]
-    item.order params[:sort], 'parent_id, directory DESC, name, id'
-    @items = item.find(:all)
+    @items = Cms::Node
+             .where(site_id: Core.site.id)
+             .search(params)
+             .order(params[:sort], :parent_id, directroy: :desc, :name, :id)
+             .paginate(page: params[:page], per_page: params[:limit])
 
     @skip_navi = true
     render action: :search
   end
 
   def show
-    @item = Cms::Node.new.find(params[:id])
+    @item = Cms::Node.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
   end
 
   def new
-    @item = Cms::Node.new( #:concept_id => @parent.inherited_concept(:id),
+    @item = Cms::Node.new(
       concept_id: Core.concept(:id),
       site_id: Core.site.id,
       state: 'public',
@@ -63,7 +59,6 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
   def create
     @item = Cms::Node.new(params[:item])
     @item.site_id      = Core.site.id
-    # @item.parent_id    = @parent.id
     @item.state        = 'closed'
     @item.published_at = Core.now
     @item.directory    = (@item.model_type == :directory)
@@ -96,11 +91,11 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     concept_id = params[:concept_id]
     concept_id = @item.concept_id if @item && @item.concept_id
     concept_id ||= Core.concept.id
-    if concept = Cms::Concept.find_by_id(concept_id)
+    concept = Cms::Concept.find_by(id: concept_id)
+
+    if concept
       concept.parents_tree.each do |c|
-        item = Cms::Content.new
-        item.and :concept_id, c.id
-        contents += item.find(:all, order: 'name, id')
+        contents += Cms::Content..where(concept_id: c.id).order(:name, :id)
       end
     end
 
@@ -125,7 +120,8 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     content_id = @item.content.id if @item && @item.content
 
     model = 'cms'
-    if content = Cms::Content.find_by_id(content_id)
+    content = Cms::Content.find_by(id: content_id)
+    if content
       model = content.model
     end
     models  = Cms::Lib::Modules.directories(model)

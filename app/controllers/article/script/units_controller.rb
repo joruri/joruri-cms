@@ -2,9 +2,11 @@
 class Article::Script::UnitsController < Cms::Controller::Script::Publication
   def publish
     _site = @node.site
-    cond = { state: 'public', content_id: @node.content_id }
 
-    attrs = Article::Attribute.new.public.find(:all, conditions: cond, order: :sort_no)
+    attrs = Article::Attribute
+            .published
+            .where(state: 'public', content_id: @node.content_id)
+            .order(:sort_no)
 
     Article::Unit.root_item.public_children.each do |item|
       uri  = "#{@node.public_uri}#{item.name}/"

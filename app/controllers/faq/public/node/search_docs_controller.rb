@@ -4,14 +4,11 @@ class Faq::Public::Node::SearchDocsController < Cms::Controller::Public::Base
 
   def pre_dispatch
     @node = Page.current_node
-    return http_error(404) unless @content = @node.content
+    @content = @node.content
+    return http_error(404) unless @content
   end
 
   def index
-    # @s_cate1 = Faq::Category.find_by_id(params[:s_category1_id]) if params[:s_category1_id]
-    # @s_cate2 = Faq::Category.find_by_id(params[:s_category2_id]) if params[:s_category2_id]
-    # @s_cate3 = Faq::Category.find_by_id(params[:s_category3_id]) if params[:s_category3_id]
-
     @s_cate = params[:s_category1_id].blank? ? nil : params[:s_category1_id]
     @s_cate = params[:s_category2_id] unless params[:s_category2_id].blank?
     @s_cate = params[:s_category3_id] unless params[:s_category3_id].blank?

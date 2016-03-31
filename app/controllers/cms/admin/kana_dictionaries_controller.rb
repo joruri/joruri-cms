@@ -11,15 +11,15 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
     return test if params[:do] == 'test'
     return make_dictionary if params[:do] == 'make_dictionary'
 
-    item = Cms::KanaDictionary.new # .readable
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
-    @items = item.find(:all)
+    @items = Cms::KanaDictionary
+             .all
+             .order(params[:sort], :name, :id)
+             .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end
 
   def show
-    @item = Cms::KanaDictionary.new.find(params[:id])
+    @item = Cms::KanaDictionary.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
@@ -43,13 +43,13 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::KanaDictionary.new.find(params[:id])
+    @item = Cms::KanaDictionary.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Cms::KanaDictionary.new.find(params[:id])
+    @item = Cms::KanaDictionary.find(params[:id])
     _destroy @item
   end
 

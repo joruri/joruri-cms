@@ -11,17 +11,16 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Newsletter::Doc.new
-    item.and :content_id, @content.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'id DESC'
-    @items = item.find(:all)
+    @items = Newsletter::Doc
+             .where(content_id: @content.id)
+             .search(params)
+             .order(params[:sort], id: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end
 
   def show
-    @item = Newsletter::Doc.new.find(params[:id])
+    @item = Newsletter::Doc.find(params[:id])
     _show @item
   end
 
@@ -42,14 +41,14 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Newsletter::Doc.new.find(params[:id])
+    @item = Newsletter::Doc.find(params[:id])
     @item.attributes = params[:item]
 
     _update(@item)
   end
 
   def destroy
-    @item = Newsletter::Doc.new.find(params[:id])
+    @item = Newsletter::Doc.find(params[:id])
     _destroy @item
   end
 end

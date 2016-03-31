@@ -12,30 +12,26 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
     return error_auth unless @content = Cms::Content.find(params[:content])
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return error_auth unless @form = Enquete::Form.find(params[:form])
-    # default_url_options :content => @content.id, :form => @form.id
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
     return download_csv if params[:output] == 'csv'
 
-    item = Enquete::Answer.new # .public#.readable
-    # item.public unless Core.user.has_auth?(:manager)
-    item.and :content_id, @content.id
-    item.and :form_id, @form.id
-    # item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'id DESC'
-    @items = item.find(:all)
+    @items = Enquete::Answer
+             .where(content_id: @content.id)
+             .where(form_id: @form.id)
+             .order(params[:sort], id: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def download_csv
-    item = Enquete::Answer.new # .public#.readable
-    item.and :content_id, @content.id
-    item.and :form_id, @form.id
-    item.order params[:sort], 'id DESC'
-    @items = item.find(:all)
+    @items = Enquete::Answer
+             .where(content_id: @content.id)
+             .where(form_id: @form.id)
+             .order(params[:sort], id: :desc)
 
     columns = @form.public_columns.collect { |col| [col.id, col.name] }
 
@@ -45,7 +41,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
       row << 'ID'
       row << "回答日時"
       row << "IPアドレス"
-      # row << "ユーザエージェント"
+
       row += columns.collect { |_k, v| v }
       csv << row
 
@@ -59,7 +55,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
                   nil
                 end)
         row << item.ipaddr
-        # row << item.user_agent
+
         columns.each { |id, _name| row << item.column_value(id) }
         csv << row
       end
@@ -94,10 +90,6 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
   end
 
   def update
-    #    @item = Enquete::Answer.new.find(params[:id])
-    #    @item.attributes = params[:item]
-    #
-    #    _update(@item)
   end
 
   def destroy

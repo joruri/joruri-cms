@@ -3,7 +3,8 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
 
     return redirect_to action: 'index' if params[:reset]
@@ -12,31 +13,29 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   def index
     @item = EntityConversion::Unit.new
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'new'
-    @new_items = item.find(:all, order: :sort_no)
+    @new_items = EntityConversion::Unit
+                 .where(content_id: @content.id)
+                 .where(state: 'new')
+                 .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'edit'
-    @edit_items = item.find(:all, order: :sort_no)
+    @edit_items = EntityConversion::Unit
+                  .where(content_id: @content.id)
+                  .where(state: 'edit')
+                  .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'move'
-    @move_items = item.find(:all, order: :sort_no)
+    @move_items = EntityConversion::Unit
+                  .where(content_id: @content.id)
+                  .where(state: 'move')
+                  .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'end'
-    @end_items = item.find(:all, order: 'old_parent_id, old_id')
-
-    # _index @items
+    @end_items = EntityConversion::Unit
+                 .where(content_id: @content.id)
+                 .where(state: 'end')
+                 .order(:old_parent_id, :old_id)
   end
 
   def show
-    @item = EntityConversion::Unit.new.find(params[:id])
+    @item = EntityConversion::Unit.find(params[:id])
     _show @item
   end
 
@@ -59,7 +58,7 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = EntityConversion::Unit.new.find(params[:id])
+    @item = EntityConversion::Unit.find(params[:id])
     @item.attributes = params[:item]
 
     if params[:sync]
@@ -81,7 +80,7 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   def sync(item)
     return false if item.old_id.blank?
 
-    group = Sys::Group.find_by_id(item.old_id)
+    group = Sys::Group.find_by(id: item.old_id)
     return false unless group
 
     item.code        = group.code

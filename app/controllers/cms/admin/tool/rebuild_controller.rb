@@ -10,14 +10,16 @@ class Cms::Admin::Tool::RebuildController < Cms::Controller::Admin::Base
     @item = Cms::Node.new(params[:item])
 
     if params[:do] == 'styleseet'
-      # Core.messages << "再構築： スタイルシート"
       Core.messages << '--'
 
       results = [0, 0]
-      item = Cms::Layout.new
-      item.and :site_id, Core.site.id
-      item.and :concept_id, @item.concept_id unless @item.concept_id.blank?
-      items = item.find(:all)
+
+      items = Cms::Layout.where(site_id: Core.site.id)
+
+      if @item.concept_id
+        items = items.where(concept_id: @item.concept_id)
+      end
+
       items.each do |item|
         begin
           results[0] += 1 if item.put_css_files

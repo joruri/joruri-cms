@@ -6,24 +6,27 @@ class Enquete::FormColumn < ActiveRecord::Base
   include Sys::Model::Rel::Creator
   include Sys::Model::Auth::Free
 
-  cattr_accessor :column_types
+  include StateText
 
-  belongs_to :content,        foreign_key: :content_id,        class_name: 'Article::Content::Doc'
-  belongs_to :status,         foreign_key: :state,             class_name: 'Sys::Base::Status'
+  belongs_to :content, foreign_key: :content_id,
+                       class_name: 'Article::Content::Doc'
 
-  validates_presence_of :name, :sort_no, :column_type, :required
-  validates_numericality_of :sort_no
-
-  @@column_types = [
-    { name: 'text_field', options: false, label: "入力/１行（テキストフィールド）" },
-    { name: 'text_area', options: false, label: "入力/複数行（テキストエリア）" },
-    { name: 'select', options: true, label: "選択/単数回答（プルダウン）" },
-    { name: 'radio_button', options: true, label: "選択/単数回答（ラジオボタン）" },
-    { name: 'check_box', options: true, label: "選択/複数回答（チェックボックス）" }
-  ]
+  validates :name, :sort_no, :column_type, :required, presence: true
+  validates :sort_no, numericality: { only_integer: true }
 
   def column_types
-    @@column_types
+    [
+      { name: 'text_field', options: false,
+        label: "入力/１行（テキストフィールド）" },
+      { name: 'text_area', options: false,
+        label: "入力/複数行（テキストエリア）" },
+      { name: 'select', options: true,
+        label: "選択/単数回答（プルダウン）" },
+      { name: 'radio_button', options: true,
+        label: "選択/単数回答（ラジオボタン）" },
+      { name: 'check_box', options: true,
+        label: "選択/複数回答（チェックボックス）" }
+    ]
   end
 
   def column_spec

@@ -61,8 +61,6 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
   end
 
   def show
-    # return error_auth unless @item.readable?
-
     @item.read_body
     render action: :show
   end

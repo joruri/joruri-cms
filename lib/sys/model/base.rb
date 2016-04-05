@@ -2,7 +2,6 @@
 module Sys::Model::Base
   extend ActiveSupport::Concern
   include Sys::Model::Scope
-  include Sys::Model::ConditionBuilder
 
   included do
     self.table_name = to_s.underscore.tr('/', '_').downcase.pluralize

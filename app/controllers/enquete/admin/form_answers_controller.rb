@@ -9,9 +9,14 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    return error_auth unless @form = Enquete::Form.find(params[:form])
+
+    @form = Enquete::Form.find(params[:form])
+    return error_auth unless @form
+
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
@@ -68,8 +73,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = Enquete::Answer.new.find(params[:id])
-    # return error_auth unless @item.readable?
+    @item = Enquete::Answer.find(params[:id])
 
     _show @item
   end
@@ -93,7 +97,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Enquete::Answer.new.find(params[:id])
+    @item = Enquete::Answer.find(params[:id])
     _destroy @item
   end
 

@@ -19,7 +19,7 @@ class Article::Attribute < ActiveRecord::Base
 
   def self.root_items(conditions = {})
     conditions = conditions.merge({})
-    find(:all, conditions: conditions, order: :sort_no)
+    where(conditions).order(:sort_no)
   end
 
   def public_path

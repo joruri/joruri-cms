@@ -5,25 +5,32 @@ class Tourism::Public::Node::SearchMoviesController < Cms::Controller::Public::B
 
   def pre_dispatch
     @node = Page.current_node
-    return http_error(404) unless @content = @node.content
+    @content = @node.content
+    return http_error(404) unless @content
   end
 
   def index
-    @s_genre   = Tourism::Genre.find_by_id(params[:s_genre_id]) if params[:s_genre_id]
+    if params[:s_genre_id]
+      @s_genre = Tourism::Genre.find_by(id: params[:s_genre_id])
+    end
     @s_keyword = params[:s_keyword]
 
-    item = Tourism::Movie.new.public
-    item.and :content_id, @content.id
+    @items = Tourism::Movie
+             .published
+             .where(content_id: @content.id)
 
-    size = item.condition.where.size
-    item.search params
-    if size == item.condition.where.size
+    size = @items.count
+
+    @items = @items.search(params)
+
+    if size == @items.count
       @nosearch = true
       @items    = []
       return
     end
 
-    item.page params[:page], (request.mobile? ? 10 : 60)
-    @items = item.find(:all, order: 'published_at DESC')
+    @items = @items.order(published_at: :desc)
+                   .paginate(page: params[:page],
+                             per_page: (request.mobile? ? 10 : 60))
   end
 end

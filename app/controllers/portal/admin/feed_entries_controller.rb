@@ -6,10 +6,10 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless @feed = Cms::Feed.find(params[:feed])
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
@@ -17,17 +17,17 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
     return update_entries if params[:do] == 'update_entries'
     return delete_entries if params[:do] == 'delete_entries'
 
-    item = Portal::FeedEntry.new
-    item.and :feed_id, @feed.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'entry_updated DESC, id DESC'
-    @items = item.find(:all)
+    @items = Portal::FeedEntry
+             .where(feed_id: @feed.id)
+             .search(params)
+             .order(params[:sort], entry_updated: :desc, id: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Portal::FeedEntry.new.find(params[:id])
+    @item = Portal::FeedEntry.find(params[:id])
     _show @item
   end
 
@@ -40,7 +40,7 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Portal::FeedEntry.new.find(params[:id])
+    @item = Portal::FeedEntry.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end

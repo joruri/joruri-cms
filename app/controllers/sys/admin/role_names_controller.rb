@@ -7,22 +7,21 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Sys::RoleName.new # .readable
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :name
-    @items = item.find(:all)
+    @items = Sys::RoleName
+             .all
+             .order(params[:sort], :name)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
     @item = Sys::RoleName.new.find(params[:id])
-    # return error_auth unless @item.readable?
     _show @item
   end
 
   def new
-    @item = Sys::RoleName.new({
-                              })
+    @item = Sys::RoleName.new({})
   end
 
   def create
@@ -31,13 +30,13 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Sys::RoleName.new.find(params[:id])
+    @item = Sys::RoleName.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Sys::RoleName.new.find(params[:id])
+    @item = Sys::RoleName.find(params[:id])
     _destroy @item
   end
 end

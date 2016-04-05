@@ -28,7 +28,7 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
   def index
     @items = []
     processes.each do |title, name|
-      item = Sys::Process.find_by_name(name) || Sys::Process.new
+      item = Sys::Process.find_by(name: name) || Sys::Process.new
       item.title  = title
       item.name ||= name
       @items << item
@@ -38,7 +38,7 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
   def show
     # res = ::Script.run(@process_name); raise "process: #{@process_name}"
 
-    @process = Sys::Process.find_by_name(@process_name) || Sys::Process.new(name: @process_name)
+    @process = Sys::Process.find_by(name: @process_name) || Sys::Process.new(name: @process_name)
     processes.each { |title, name| @process.title = title if name == @process_name }
 
     return send(params[:do]) if params[:do] =~ /^(start|stop)_process/

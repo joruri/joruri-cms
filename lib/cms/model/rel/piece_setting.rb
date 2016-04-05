@@ -31,7 +31,7 @@ module Cms::Model::Rel::PieceSetting
   end
 
   def setting_value(name, default_value = nil)
-    st = settings.find(:first, conditions: { name: name.to_s })
+    st = settings.find_by(name: name.to_s)
     return default_value unless st
     st.value.blank? ? default_value : st.value
   end
@@ -41,14 +41,14 @@ module Cms::Model::Rel::PieceSetting
       name = name.to_s
 
       unless value.is_a?(Hash)
-        st = settings.find(:first, conditions: ['name = ?', name]) || new_setting(name)
+        st = settings.find_by(name: name) || new_setting(name)
         st.value   = value
         st.sort_no = nil
         st.save if st.changed?
         next
       end
 
-      _settings = settings.find(:all, conditions: ['name = ?', name])
+      _settings = settings.find_by(name: name)
       value.each_with_index do |data, idx|
         st = _settings[idx] || new_setting(name)
         st.sort_no = data[0]

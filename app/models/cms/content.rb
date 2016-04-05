@@ -99,7 +99,7 @@ class Cms::Content < ActiveRecord::Base
         model = nil
       end
       next unless model
-      content = model.find_by_id(item.id)
+      content = model.find_by(id: item.id)
       next unless content
       content.rewrite_configs.each do |line|
         val = line.split(/ /)

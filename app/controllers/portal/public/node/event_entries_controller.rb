@@ -4,7 +4,7 @@ class Portal::Public::Node::EventEntriesController < Cms::Controller::Public::Ba
 
   def pre_dispatch
     return http_error(404) unless content = Page.current_node.content
-    @content = Portal::Content::Base.find_by_id(content.id)
+    @content = Portal::Content::Base.find_by(id: content.id)
   end
 
   def month

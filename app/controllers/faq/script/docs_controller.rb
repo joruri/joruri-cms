@@ -5,9 +5,9 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
     publish_files = Script.options[:file]
     content_id    = Script.options[:content_id]
 
-    item = Faq::Doc.new.public
-    item.and :content_id, content_id if content_id
-    items = item.find(:all, select: 'id', order: 'published_at DESC')
+    items = Faq::Doc.published
+    items = items.where(content_id: content_id) if content_id
+    items = items.project(:id).order(published_at: :desc)
 
     Script.total items.size
 
@@ -61,8 +61,10 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
       ruby_path = "#{path}.r"
 
       if item.published? || !::Storage.exists?(ruby_path)
-        item.publish_page(render_public_as_string(ruby_uri, site: item.content.site),
-                          path: ruby_path, uri: ruby_uri, dependent: :ruby)
+        item.publish_page(
+          render_public_as_string(ruby_uri, site: item.content.site),
+          path: ruby_path, uri: ruby_uri, dependent: :ruby
+        )
       end
       params[:task].destroy
 

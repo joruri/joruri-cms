@@ -46,7 +46,7 @@ module Sys::Model::Recognition::WithAdmin
   def to_a
     list = super
     admin_info(:all).each do |u|
-      next unless user = Sys::User.find_by_id(u.id)
+      next unless user = Sys::User.find_by(id: u.id)
       next if user.id.blank?
       date = u.recognized_at
       list << { user: user, recognized_at: (date.blank? ? nil : date) }

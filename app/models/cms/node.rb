@@ -20,15 +20,50 @@ class Cms::Node < ActiveRecord::Base
   belongs_to :parent,   foreign_key: :parent_id,  class_name: 'Cms::Node'
   belongs_to :layout,   foreign_key: :layout_id,  class_name: 'Cms::Layout'
 
-  has_many   :children, -> { order(:name) }, foreign_key: :parent_id, class_name: 'Cms::Node', dependent: :destroy
+  has_many   :children, -> { order(:name) }, foreign_key: :parent_id,
+             class_name: 'Cms::Node', dependent: :destroy
 
-  validates_presence_of :concept_id,
-                        if: %(parent_id == 0)
-  validates_presence_of :parent_id, :state, :model, :name, :title
-  validates :name, presence: true, uniqueness: { scope: [:site_id, :parent_id], if: %(!replace_page?) },
-                   format: { with: /\A[0-9A-Za-z@\.\-_\+\s]+\z/, message: :not_a_filename, if: %(parent_id != 0) }
+
+ validates :concept_id, presence: true, if: %(parent_id == 0)
+ validates :parent_id, :state, :model, :name, :title, presence: true
+ validates :name, presence: true,
+           uniqueness: { scope: [:site_id, :parent_id], if: %(!replace_page?) },
+           format: { with: /\A[0-9A-Za-z@\.\-_\+\s]+\z/,
+                     message: :not_a_filename, if: %(parent_id != 0) }
 
   after_destroy :remove_file
+
+  scope :search, ->(params) {
+    rel = all
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_state'
+        rel = rel.where(state: v)
+      when 's_title'
+        rel = rel.where(arel_table[:title].matches("%#{v}%"))
+      when 's_body'
+        rel = rel.where(arel_table[:body].matches("%#{v}%"))
+      when 's_directory'
+        rel = rel.where(directory: v)
+      when 's_name_or_title'
+        rel = rel.where(arel_table[:name].matches("%#{v}%")
+                        .or(arel_table[:title].matches("%#{v}%")))
+      when 's_keyword'
+        rel = rel.where(
+          arel_table[:title].matches("%#{v}%")
+          .or(arel_table[:body].matches("%#{v}%"))
+          .or(arel_table[:mobile_title,].matches("%#{v}%"))
+          .or(arel_table[:mobile_body].matches("%#{v}%"))
+          .or(arel_table[:title].matches("%#{v}%"))
+        )
+      end
+    end if params.size != 0
+
+    rel
+  }
 
   def validate
     errors.add :parent_id, :invalid if !id.nil? && id == parent_id
@@ -39,19 +74,27 @@ class Cms::Node < ActiveRecord::Base
     [%w(公開保存 public), %w(非公開保存 closed)]
   end
 
+  def tree_title(opts = {})
+    level_no = ancestors.size
+    opts.reverse_merge!(prefix: '　　', depth: 0)
+    opts[:prefix] * [level_no - 1 + opts[:depth], 0].max + title
+  end
+
   def self.find_by_uri(path, site_id)
     return nil if path.to_s == ''
 
-    cond = { site_id: site_id, parent_id: 0, name: '/' }
-    unless item = find(:first, conditions: cond, order: :id)
+    item = where(site_id: site_id, parent_id: 0, name: '/').order(:id).first
+    unless item
       return nil
     end
     return item if path == '/'
 
     path.split('/').each do |p|
       next if p == ''
-      cond = { site_id: site_id, parent_id: item.id, name: p }
-      unless item = find(:first, conditions: cond, order: :id)
+
+      item = where(site_id: site_id, parent_id: item.id, name: p)
+             .order(:id).first
+      unless item
         return nil
       end
     end
@@ -146,39 +189,22 @@ class Cms::Node < ActiveRecord::Base
     'content content' + controller.singularize.camelize
   end
 
-  def make_candidates(args1, args2)
-    choiced = []
-    choices = []
-    down    = lambda do |p, i|
-      next unless choiced[p.id].nil?
-      choiced[p.id] = true
-
-      choices << [('　　' * i) + p.title, p.id]
-      self.class.find(:all, eval("{#{args2}}")).each do |c|
-        down.call(c, i + 1)
-      end
-    end
-
-    self.class.find(:all, eval("{#{args1}}")).each { |item| down.call(item, 0) }
-    choices
-  end
-
   def candidate_parents
-    args1  = %( :conditions => ["id = ?", Core.site.root_node], )
-    args1 += %( :order => :name)
-    args2  = %( :conditions => ["id != ? AND parent_id = ? AND directory = 1", id, p.id], )
-    args2  = %( :conditions => ["parent_id = ? AND directory = 1", p.id], ) if new_record?
-    args2 += %( :order => :name)
-    make_candidates(args1, args2)
+    nodes = Core.site.root_node.descendants do |child|
+      rel = child.where(directory: 1)
+      rel = rel.where.not(id: id) if new_record?
+      rel
+    end
+    nodes.map{|n| [n.tree_title, n.id]}
   end
 
   def candidate_routes
-    args1  = %( :conditions => ["id = ?", Core.site.root_node], )
-    args1 += %( :order => :name)
-    args2  = %( :conditions => ["id != ? AND parent_id = ? AND directory = 1", id, p.id], )
-    args2  = %( :conditions => ["parent_id = ? AND directory = 1", p.id], ) if new_record?
-    args2 += %( :order => :name)
-    make_candidates(args1, args2)
+    nodes = Core.site.root_node.descendants do |child|
+      rel = child.where(directory: 1)
+      rel = rel.where.not(id: id) if new_record?
+      rel
+    end
+    nodes.map{|n| [n.tree_title, n.id]}
   end
 
   def locale(name)
@@ -190,29 +216,6 @@ class Cms::Node < ActiveRecord::Base
     end
     label = I18n.t name, scope: [:activerecord, :attributes, 'cms/node']
     label =~ /^translation missing:/ ? name.to_s.humanize : label
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_state'
-        self.and :state, v
-      when 's_title'
-        and_keywords v, :title
-      when 's_body'
-        and_keywords v, :body
-      when 's_directory'
-        self.and :directory, v
-      when 's_name_or_title'
-        and_keywords v, :name, :title
-      when 's_keyword'
-        and_keywords v, :title, :body, :mobile_title, :mobile_body
-      end
-    end if params.size != 0
-
-    self
   end
 
   # group chenge

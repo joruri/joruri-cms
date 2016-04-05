@@ -30,7 +30,7 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::Layout.new(params[:item])
+    @item = Cms::Layout.new(layouts_params)
     @item.site_id = Core.site.id
     @item.state   = 'public'
     _create @item do
@@ -40,7 +40,7 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
 
   def update
     @item = Cms::Layout.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = layouts_params
     _update(@item) do
       @item.put_css_files
     end
@@ -65,5 +65,16 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
         format.xml  { render xml: item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def layouts_params
+    params.require(:item).permit(
+      :concept_id, :name, :title, :body, :head, :stylesheet,
+      :mobile_body, :mobile_head, :mobile_stylesheet, :smart_phone_body,
+      :smart_phone_head, :smart_phone_stylesheet,
+      in_creator: [:group_id, :user_id]
+    )
   end
 end

@@ -6,14 +6,15 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
 
   def pre_dispatch_piece
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @piece = Cms::Piece.readable.find(params[:id])
+    @piece = Cms::Piece.readable.find(params[:id])
+    return error_auth unless @piece
   end
 
   def model
     return @model_class if @model_class
-    mclass = self.class.to_s.gsub(/^(\w+)::Admin/, '\1').gsub(/Controller$/, '').singularize
-    eval(mclass)
-    @model_class = eval(mclass)
+    mclass = self.class.to_s.gsub(/^(\w+)::Admin/, '\1')
+                            .gsub(/Controller$/, '').singularize
+    @model_class = mclass.constantize
   rescue => e
     @model_class = Cms::Piece
   end
@@ -23,7 +24,7 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = model.new.find(params[:id])
+    @item = model.find(params[:id])
     return error_auth unless @item.readable?
     _show @item
   end
@@ -37,8 +38,8 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = model.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = model.find(params[:id])
+    @item.attributes = base_params
 
     _update @item do
       respond_to do |format|
@@ -48,7 +49,7 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = model.new.find(params[:id])
+    @item = model.find(params[:id])
     _destroy @item do
       respond_to do |format|
         format.html { return redirect_to(cms_pieces_path) }
@@ -86,5 +87,25 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
         format.xml  { render xml: item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+
+  def base_params
+    nested = {in_creator: base_params_item_in_creator,
+              in_settings: base_params_item_in_settings}
+    params.require(:item).permit(*base_params_item, nested)
+  end
+
+  def base_params_item
+    [:concept_id, :name, :state, :title, :view_title]
+  end
+
+  def base_params_item_in_creator
+    [:group_id, :user_id]
+  end
+
+  def base_params_item_in_settings
+    []
   end
 end

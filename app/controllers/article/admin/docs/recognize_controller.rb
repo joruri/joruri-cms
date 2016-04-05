@@ -3,11 +3,11 @@ class Article::Admin::Docs::RecognizeController < Article::Admin::DocsController
   def index
     @items = Article::Doc.where(content_id: @content.id)
 
-    @items = if @recognition_type == 'with_admin' && Core.user.has_auth?(:manager)
-               @items.recognizable_with_admin
-             else
-               @items.recognizable
-             end
+    if @recognition_type == 'with_admin' && Core.user.has_auth?(:manager)
+      @items = @items.recognizable_with_admin
+    else
+      @items = @items.recognizable
+    end
 
     @items = @items.search(params)
                    .order(params[:sort], updated_at: :desc)

@@ -4,29 +4,29 @@ class Tourism::Admin::GenresController < Cms::Controller::Admin::Base
   helper Cms::EmbeddedFileHelper
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    # default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
 
     if params[:parent] == '0'
       @parent = Tourism::Genre.new(level_no: 0)
       @parent.id = 0
     else
-      @parent = Tourism::Genre.new.find(params[:parent])
+      @parent = Tourism::Genre.find(params[:parent])
     end
   end
 
   def index
-    item = Tourism::Genre.new # .readable
-    item.and :parent_id, @parent
-    item.and :content_id, @content
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Tourism::Genre
+             .where(parent_id: @parent)
+             .where(content_id: @content)
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Tourism::Genre.new.find(params[:id])
+    @item = Tourism::Genre.find(params[:id])
     _show @item
   end
 
@@ -50,7 +50,7 @@ class Tourism::Admin::GenresController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Tourism::Genre.new.find(params[:id])
+    @item = Tourism::Genre.find(params[:id])
     @item.attributes = params[:item]
 
     @item.set_embedded_file_option :image_file_id,
@@ -62,19 +62,21 @@ class Tourism::Admin::GenresController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Tourism::Genre.new.find(params[:id])
+    @item = Tourism::Genre.find(params[:id])
     _destroy @item
   end
 
   def spots(_rendering = true)
-    item = Tourism::Genre.new.public
-    item.and :id, params[:genre_id]
-    genre = item.find(:first)
+    genre = Tourism::Genre
+            .published
+            .where(id: params[:genre_id])
+            .first
 
-    item = Tourism::Spot.new.public
-    item.genre_is genre
-    item.and :genre_ids, 0 unless genre
-    spots = item.find(:all, order: :title_kana)
+    spots = Tourism::Spot
+            .published
+            .genre_is(genre)
+    spots = spots.where(genre_ids: 0) unless genre
+    spots = spots.order(:title_kana)
     spots = spots.collect { |i| [i.title, i.id] }
 
     title = genre ? "#{genre.title}:" : nil

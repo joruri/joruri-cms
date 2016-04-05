@@ -17,7 +17,7 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
     limit = (limit.to_s =~ /^[1-9][0-9]*$/) ? limit.to_i : 10
 
     @tabs = []
-    base_content = Portal::Content::Base.find_by_id(@content.id)
+    base_content = Portal::Content::Base.find_by(id: @content.id)
 
     feed = Portal::Piece::FeedEntry.find(@piece.id)
     Portal::Piece::RecentTabXml.find(:all, feed, order: :sort_no).each do |tab|

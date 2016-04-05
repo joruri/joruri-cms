@@ -1,16 +1,17 @@
 # encoding: utf-8
 module Cms::Model::Base::Node
-  def self.included(mod)
-    mod.belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+  extend ActiveSupport::Concern
+
+  included do
+    belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+
+    scope :published, -> {
+        where(state: 'public')
+    }
   end
 
   def states
     [%w(公開 public), %w(非公開 closed)]
-  end
-
-  def public
-    self.and "#{self.class.table_name}.state", 'public'
-    self
   end
 
   def public?
@@ -22,7 +23,7 @@ module Cms::Model::Base::Node
     Cms::Lib::Modules.module_name(:cms)
   end
 
-  def model_name(option = nil)
+  def module_name(option = nil)
     name = Cms::Lib::Modules.model_name(:node, model)
     return name.to_s.gsub(/^(.*?\/).*?\//, '\\1') if option == :short
     name
@@ -47,7 +48,7 @@ module Cms::Model::Base::Node
     exists    = [id]
     routes    = [self]
     parent_id = route_id
-    while (current = self.class.find_by_id(parent_id))
+    while (current = self.class.find_by(id: parent_id))
       break if exists.index(current.id)
       exists << current.id
 

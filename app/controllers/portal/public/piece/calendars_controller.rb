@@ -18,21 +18,27 @@ class Portal::Public::Piece::CalendarsController < Sys::Controller::Public::Base
     dates = []
     if @node
       # feeds
-      entry = Portal::FeedEntry.new.public
-      entry.agent_filter(request.mobile)
-      entry.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
-      entry.event_date_is(year: @calendar.year, month: @calendar.month)
-      entries = entry.find(:all, select: 'event_date', group: :event_date)
+      entries = Portal::FeedEntry
+                .published
+                .agent_filter(request.mobile)
+                .where(Cms::FeedEntry.arel_table[:content_id]: @content.id)
+                .event_date_is(year: @calendar.year, month: @calendar.month)
+                .project(:event_date)
+                .group(:event_date)
+
       entries.each { |entry| dates << entry.event_date }
 
       # docs
-      base_content = Portal::Content::Base.find_by_id(@content.id)
+      base_content = Portal::Content::Base.find_by(id: @content.id)
       if doc_content = base_content.doc_content
-        doc = Article::Doc.new.public
-        doc.agent_filter(request.mobile)
-        doc.and :content_id, doc_content.id
-        doc.event_date_is(year: @calendar.year, month: @calendar.month)
-        docs = doc.find(:all, select: 'event_date', group: :event_date)
+        docs = Article::Doc
+               .published
+               .agent_filter(request.mobile)
+               .where(content_id: doc_content.id)
+               .event_date_is(year: @calendar.year, month: @calendar.month)
+               .project(:event_date)
+               .group(:event_date)
+
         docs.each { |doc| dates << doc.event_date }
       end
     end

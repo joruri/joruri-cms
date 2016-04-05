@@ -5,30 +5,30 @@ class Tourism::Admin::MouthsController < Cms::Controller::Admin::Base
   helper Tourism::FormHelper
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    # default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    @item = Tourism::Mouth.new(params.reject { |k, _v| k.to_s !~ /^s_/ }) # search
+    @item = Tourism::Mouth.new(params.reject { |k, _v| k.to_s !~ /^s_/ })
 
-    item = Tourism::Mouth.new # .readable
-    item.and :content_id, @content
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order (params[:sort] || 'updated_at DESC')
-    @items = item.find(:all)
+    @items = Tourism::Mouth
+             .where(content_id: @content)
+             .search(params)
+             .order(params[:sort] || updated_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Tourism::Mouth.new.find(params[:id])
+    @item = Tourism::Mouth.find(params[:id])
     _show @item
   end
 
   def edit
-    @item = Tourism::Mouth.new.find(params[:id])
+    @item = Tourism::Mouth.find(params[:id])
     if @item.spot && @item.spot.genre_items.count > 0
       @item.genre    = @item.spot.genre_items[0]
       @item.genre_id = @item.genre.id
@@ -58,7 +58,7 @@ class Tourism::Admin::MouthsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Tourism::Mouth.new.find(params[:id])
+    @item = Tourism::Mouth.find(params[:id])
     @item.attributes = params[:item]
 
     @item.set_embedded_file_option :image1_file_id,
@@ -75,7 +75,7 @@ class Tourism::Admin::MouthsController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Tourism::Mouth.new.find(params[:id])
+    @item = Tourism::Mouth.find(params[:id])
     _destroy @item
   end
 end

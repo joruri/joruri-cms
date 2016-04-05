@@ -8,6 +8,6 @@ class Portal::Content::Base < Cms::Content
   def doc_content
     id = setting_value(:doc_content_id)
     return nil unless id
-    Cms::Content.find_by_id(id)
+    Cms::Content.find_by(id: id)
   end
 end

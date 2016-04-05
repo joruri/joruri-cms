@@ -4,7 +4,8 @@ class Newsletter::Admin::RequestsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
@@ -13,12 +14,12 @@ class Newsletter::Admin::RequestsController < Cms::Controller::Admin::Base
     @item = Newsletter::Request.new
     return export_csv if params[:do] == 'csv'
 
-    item = Newsletter::Request.new
-    item.and :content_id, @content.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'created_at DESC'
-    @items = item.find(:all)
+    @items = Newsletter::Request
+             .where(content_id: @content.id)
+             .search(params)
+             .order(params[:sort], created_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
@@ -28,9 +29,9 @@ class Newsletter::Admin::RequestsController < Cms::Controller::Admin::Base
     require 'nkf'
     require 'csv'
 
-    item = Newsletter::Request.new
-    item.and :content_id, @content.id
-    items = item.find(:all, order: :created_at)
+    items = Newsletter::Request
+            .where(content_id: @content.id)
+            .order(:created_at)
 
     csv = CSV.generate do |csv|
       csv << %w(送信日時 IPアドレス メールアドレス メール種別 要求 状態)

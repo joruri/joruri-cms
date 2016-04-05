@@ -10,6 +10,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
+
     @recognition_type = @content.setting_value(:recognition_type)
   end
 
@@ -82,7 +83,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Article::Doc.new.find(params[:id])
+    @item = Article::Doc.find(params[:id])
     @item.attributes = docs_params
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]

@@ -23,7 +23,7 @@ class Sys::Admin::Groups::ExportController < Cms::Controller::Admin::Base
 
   def all_groups(parent_id = 1)
     groups = []
-    Sys::Group.find(:all, conditions: { parent_id: parent_id }, order: :sort_no).each do |g|
+    Sys::Group.where(parent_id: parent_id).order(:sort_no).each do |g|
       groups << g
       groups += all_groups(g.id)
     end
@@ -34,6 +34,7 @@ class Sys::Admin::Groups::ExportController < Cms::Controller::Admin::Base
     csv = CSV.generate do |csv|
       csv << [:code, :parent_code, :state, :web_state, :level_no, :sort_no,
               :layout_id, :ldap, :ldap_version, :name, :name_en, :tel, :outline_uri, :email]
+
       all_groups.each do |group|
         row = []
         row << group.code
@@ -62,7 +63,8 @@ class Sys::Admin::Groups::ExportController < Cms::Controller::Admin::Base
     csv = CSV.generate do |csv|
       csv << [:account, :state, :name, :name_en, :email, :auth_no, :password, :ldap, :ldap_version,
               :group_code]
-      Sys::User.find(:all, order: :id).each do |user|
+
+      Sys::User.all.order(:id).each do |user|
         next unless user.groups[0]
         row = []
         row << user.account

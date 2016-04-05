@@ -5,7 +5,7 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer) # observe_field
 
-    @parent = Cms::Concept.find_by_id(params[:parent])
+    @parent = Cms::Concept.find_by(id: params[:parent])
 
     unless @parent
       @parent = Cms::Concept.new(name: 'コンセプト', level_no: 0)

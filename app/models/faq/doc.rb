@@ -20,28 +20,32 @@ class Faq::Doc < ActiveRecord::Base
   include Cms::Model::Auth::Concept
   include Sys::Model::Auth::EditableGroup
 
-  belongs_to :content,        foreign_key: :content_id,        class_name: 'Faq::Content::Doc'
-  belongs_to :status,         foreign_key: :state,             class_name: 'Sys::Base::Status'
-  belongs_to :notice_status,  foreign_key: :notice_state,      class_name: 'Sys::Base::Status'
-  belongs_to :recent_status,  foreign_key: :recent_state,      class_name: 'Sys::Base::Status'
-  belongs_to :language,       foreign_key: :language_id,       class_name: 'Sys::Language'
+  include StateText
+  include AgentStateText
+
+  belongs_to :content, foreign_key: :content_id,
+             class_name: 'Faq::Content::Doc'
+  belongs_to :notice_status, foreign_key: :notice_state,
+             class_name: 'Sys::Base::Status'
+  belongs_to :language, foreign_key: :language_id,
+             class_name: 'Sys::Language'
 
   attr_accessor :concept_id, :layout_id
 
-  validates_presence_of :title
-  validates_uniqueness_of :name, scope: :content_id,
-                                 if: %(!replace_page?)
+  validates :title, presence: true
+  validates :name, uniqueness: { scope: :content_id },
+            if: %(!replace_page?)
 
-  validates_presence_of :state, :recent_state, :language_id, :question, :body,
-                        if: %(state == "recognize")
-  validates_length_of :title, maximum: 200,
-                              if: %(state == "recognize")
-  validates_length_of :question, maximum: 100_000,
-                                 if: %(state == "recognize")
-  validates_length_of :body, maximum: 100_000,
-                             if: %(state == "recognize")
-  validates_length_of :mobile_body, maximum: 10_000,
-                                    if: %(state == "recognize")
+  validates :state, :recent_state, :language_id, :question, :body,
+            presence: true, if: %(state == "recognize")
+  validates :title, length: { maximum: 200 },
+            if: %(state == "recognize")
+  validates :question, length: { maximum: 100_000 },
+            if: %(state == "recognize")
+  validates :body, length: { maximum: 100_000 },
+            if: %(state == "recognize")
+  validates :mobile_body, length: { maximum: 10_000 },
+            if: %(state == "recognize")
   validate :validate_word_dictionary,
            if: %(state == "recognize")
   validate :validate_platform_dependent_characters,
@@ -54,12 +58,91 @@ class Faq::Doc < ActiveRecord::Base
   before_save :check_digit
   before_save :modify_attributes
 
+  scope :agent_filter, ->(agent) {
+    if agent
+      where(arel_table[:agent_state].eq(nil)
+                  .or(arel_table[:agent_state].eq('mobile')))
+    else
+      where(arel_table[:agent_state].eq(nil)
+                  .or(arel_table[:agent_state].eq('pc')))
+    end
+  }
+
+  scope :visible_in_notice, -> {
+    where(notice_state: 'visible')
+  }
+
+  scope :visible_in_recent, -> {
+    where(language_id: 1, recent_state: 'visible')
+  }
+
+  scope :visible_in_list, -> {
+    all
+  }
+
+  scope :tag_is, ->(tag) {
+    if tag.to_s.blank?
+      none
+    else
+      qw = connection.quote_string(tag).gsub(/([_%])/, '\\\\\1')
+      tags = Faq::Tag.arel_table
+      cond = Faq::Tag.where(arel_table[:unid].eq(tags[:unid])
+                            .and(tags[:word].matches("#{qw}%")))
+                     .project("'X'")
+                     .exists
+      where(cond)
+    end
+  }
+
+  scope :group_is, ->(group) {
+    rel = all
+
+    if group.category.size > 0
+      rel = rel.category_is(group.category_items)
+    end
+
+    rel
+  }
+
+  scope :search, -> (params){
+    rel = all
+
+    docs = arel_table
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(id: v)
+      when 's_category_id'
+        cate = Faq::Category.find_by(id: v)
+        return rel.where(0, 1) unless cate
+        rel = rel.category_is(cate)
+      when 's_title'
+        rel = rel.where(docs[:title].matches("%#{v}%"))
+      when 's_keyword'
+        rel = rel.where(docs[:title].matches("%#{v}%")
+                        .or(docs[:body].matches("%#{v}%"))
+                        .or(docs[:question].matches("%#{v}%")))
+      when 's_affiliation_name'
+        creators = Sys::Creator.arel_table
+        groups = Sys::Group.arel_table
+
+        rel = rel.joins(creator: [:group])
+                 .where(groups[:name].matches("%#{v}%"))
+      end
+    end if params.size != 0
+
+    return rel
+  }
+
   def concept
-    concept_id ? Cms::Concept.find_by_id(concept_id) : nil
+    concept_id ? Cms::Concept.find_by(id: concept_id) : nil
   end
 
   def layout
-    layout_id ? Cms::Layout.find_by_id(layout_id) : nil
+    layout_id ? Cms::Layout.find_by(id: layout_id) : nil
   end
 
   def validate_word_dictionary
@@ -100,13 +183,6 @@ class Faq::Doc < ActiveRecord::Base
     [['全てに表示', ''], %w(PCのみ表示 pc), %w(携帯のみ表示 mobile)]
   end
 
-  def agent_status
-    agent_states.each do |name, id|
-      return Sys::Base::Status.new(id: id, name: name) if agent_state.to_s == id
-    end
-    nil
-  end
-
   def notice_states
     [%w(表示 visible), %w(非表示 hidden)]
   end
@@ -141,64 +217,6 @@ class Faq::Doc < ActiveRecord::Base
     agent_state == 'mobile'
   end
 
-  def agent_filter(agent)
-    self.and do |c|
-      c.or :agent_state, 'IS', nil
-      if agent # TODO/mobile
-        c.or :agent_state, 'mobile'
-      else
-        c.or :agent_state, 'pc'
-      end
-    end
-    self
-  end
-
-  def visible_in_notice
-    self.and 'notice_state', 'visible'
-    self
-  end
-
-  def visible_in_recent
-    self.and 'language_id', 1
-    self.and 'recent_state', 'visible'
-    self
-  end
-
-  def visible_in_list
-    # self.and 'language_id', 1
-    self
-  end
-
-  def tag_is(tag)
-    if tag.to_s.blank?
-      self.and 0, 1
-    else
-      qw = connection.quote_string(tag).gsub(/([_%])/, '\\\\\1')
-      self.and 'sql', "EXISTS (SELECT * FROM faq_tags WHERE faq_docs.unid = faq_tags.unid AND word LIKE '#{qw}%') "
-    end
-    self
-  end
-
-  def group_is(group)
-    conditions = []
-
-    if group.category.size > 0
-      doc = self.class.new
-      doc.category_is(group.category_items)
-      conditions << doc.condition
-    end
-
-    condition = Condition.new
-    if group.condition == 'and'
-      conditions.each { |c| condition.and(c) if c.where }
-    else
-      conditions.each { |c| condition.or(c) if c.where }
-    end
-
-    self.and condition if condition.where
-    self
-  end
-
   def modify_attributes
     self.agent_state = nil if agent_state == ''
     true
@@ -217,7 +235,7 @@ class Faq::Doc < ActiveRecord::Base
   def bread_crumbs(doc_node)
     crumbs = []
 
-    if content = Faq::Content::Doc.find_by_id(content_id)
+    if content = Faq::Content::Doc.find_by(id: content_id)
       node  = content.category_node
       items = category_items
       if node && items.size > 0
@@ -235,30 +253,6 @@ class Faq::Doc < ActiveRecord::Base
       end
     end
     Cms::Lib::BreadCrumbs.new(crumbs)
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        self.and "#{Faq::Doc.table_name}.id", v
-      when 's_category_id'
-        return self.and(0, 1) unless cate = Faq::Category.find_by_id(v)
-        category_is(cate)
-      when 's_title'
-        and_keywords v, :title
-      when 's_keyword'
-        and_keywords v, :title, :body, :question
-      when 's_affiliation_name'
-        join :creator
-        join "INNER JOIN #{Sys::Group.table_name} ON #{Sys::Group.table_name}.id = #{Sys::Creator.table_name}.group_id"
-        self.and "#{Sys::Group.table_name}.name", 'LIKE', "%#{v}%"
-      end
-    end if params.size != 0
-
-    self
   end
 
   def publish(content, _options = {})

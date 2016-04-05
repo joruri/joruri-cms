@@ -39,7 +39,7 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::Piece.new(params[:item])
+    @item = Cms::Piece.new(pices_params)
     @item.site_id = Core.site.id
     @contents = content_options(false)
     @models = model_options(false)
@@ -95,7 +95,8 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
     content_id = @item.content.id if @item && @item.content
 
     model = 'cms'
-    if content = Cms::Content.find_by(id: content_id)
+    content = Cms::Content.find_by(id: content_id)
+    if content
       model = content.model
     end
     models = Cms::Lib::Modules.pieces(model)
@@ -110,5 +111,14 @@ class Cms::Admin::PiecesController < Cms::Controller::Admin::Base
     respond_to do |format|
       format.html { render layout: false }
     end
+  end
+
+  private
+
+  def pices_params
+    params.require(:item).permit(
+      :concept_id, :state, :model, :name, :title, :view_title,
+      in_creator: [:group_id, :user_id]
+    )
   end
 end

@@ -30,7 +30,7 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     @items = Cms::Node
              .where(site_id: Core.site.id)
              .search(params)
-             .order(params[:sort], :parent_id, directroy: :desc, :name, :id)
+             .order(params[:sort], :parent_id, directory: :desc, name: :asc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     @skip_navi = true
@@ -57,13 +57,13 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::Node.new(params[:item])
+    @item = Cms::Node.new(node_params)
     @item.site_id      = Core.site.id
     @item.state        = 'closed'
     @item.published_at = Core.now
     @item.directory    = (@item.model_type == :directory)
     @item.name         = 'tmp' # for validation
-    @item.title        = (@item.model_name || "新規").to_s.gsub(/.*\//, '')
+    @item.title        = (@item.module_name || "新規").to_s.gsub(/.*\//, '')
 
     @contents = content_options(false)
     @models   = model_options(false)
@@ -95,7 +95,7 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
 
     if concept
       concept.parents_tree.each do |c|
-        contents += Cms::Content..where(concept_id: c.id).order(:name, :id)
+        contents += Cms::Content.where(concept_id: c.id).order(:name, :id)
       end
     end
 
@@ -137,5 +137,15 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     respond_to do |format|
       format.html { render layout: false }
     end
+  end
+
+  private
+
+  def node_params
+    params.require(:item).permit(
+      :concept_id, :content_id, :layout_id, :model, :parent_id, :route_id,
+      :sitemap_sort_no, :sitemap_state,
+      in_creator: [:group_id, :user_id]
+    )
   end
 end

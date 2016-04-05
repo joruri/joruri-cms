@@ -33,7 +33,7 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Enquete::Form.new(params[:item])
+    @item = Enquete::Form.new(form_params)
     @item.content_id = @content.id
 
     _create @item
@@ -41,7 +41,7 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
 
   def update
     @item = Enquete::Form.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = form_params
 
     _update(@item)
   end
@@ -49,5 +49,14 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
   def destroy
     @item = Enquete::Form.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def form_params
+    params.require(:item).permit(
+      :state, :name, :summary, :body, :sent_body, :sort_no,
+      in_creator: [:group_id, :user_id]
+    )
   end
 end

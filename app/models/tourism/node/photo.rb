@@ -14,11 +14,11 @@ class Tourism::Node::Photo < Cms::Node
   end
 
   def show_concept
-    @show_concept = Cms::Concept.find_by_id(setting_value(:show_concept_id))
+    @show_concept = Cms::Concept.find_by(id: setting_value(:show_concept_id))
   end
 
   def show_layout
-    @show_layout = Cms::Layout.find_by_id(setting_value(:show_layout_id))
+    @show_layout = Cms::Layout.find_by(id: setting_value(:show_layout_id))
   end
 
   # def validate_settings

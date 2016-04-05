@@ -6,13 +6,18 @@ class Tourism::Public::Node::GenresController < Cms::Controller::Public::Base
   def pre_dispatch
     @node     = Page.current_node
     @base_uri = @node.public_uri
-    return http_error(404) unless @content = @node.content
+    @content = @node.content
+    return http_error(404) unless @content
 
     if params[:name]
-      item = Tourism::Genre.new.public
-      item.and :content_id, @content.id
-      item.and :name, params[:name]
-      return http_error(404) unless @item = item.find(:first)
+      @item = Tourism::Genre
+              .published
+              .where(content_id: @content.id)
+              .where(name: params[:name])
+              .first
+
+      return http_error(404) unless @item
+
       Page.current_item = @item
       Page.title        = @item.title
     end
@@ -25,15 +30,16 @@ class Tourism::Public::Node::GenresController < Cms::Controller::Public::Base
   def show
     @page  = params[:page]
 
-    item = Tourism::Genre.new.public
-    item.and :content_id, @content.id
-    item.and :parent_id, @item.id
-    @items = item.find(:all, order: :sort_no)
+    @items = Tourism::Genre
+             .published
+             .where(content_id: @content.id)
+             .where(parent_id: @item.id)
+             .order(:sort_no)
 
-    spot = Tourism::Spot.new.public
-    # spot.genre_is @item
-    spot.and_in_ssv :genre_ids, @item.id
-    spot.page @page, (request.mobile? ? 20 : 60)
-    @spots = spot.find(:all, order: :title_kana)
+    @spots = Tourism::Spot
+             .published
+             .and_in_ssv(:genre_ids, @item.id)
+             .order(:title_kana)
+             .paginate(page: @page, per_page: (request.mobile? ? 20 : 60))
   end
 end

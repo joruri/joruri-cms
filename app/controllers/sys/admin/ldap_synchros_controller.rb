@@ -8,21 +8,23 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Sys::LdapSynchro.new # .readable
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'version DESC'
-    @items = item.find(:all, group: :version)
+    @items = Sys::LdapSynchro
+             .all
+             .order(params[:sort], version: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+             .group(:version)
+
     _index @items
   end
 
   def show
     @version = params[:id]
 
-    item = Sys::LdapSynchro.new
-    item.and :version, @version
-    item.and :parent_id, 0
-    item.and :entry_type, 'group'
-    @items = item.find(:all, order: 'sort_no, code')
+    @items = Sys::LdapSynchro
+             .where(version: @version)
+             .where(parent_id: 0)
+             .where(entry_type: 'group')
+             .order(:sort_no, :code)
 
     _show @items
   end
@@ -69,18 +71,15 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
   def synchronize
     @version = params[:id]
 
-    item = Sys::LdapSynchro.new
-    item.and :version, @version
-    item.and :parent_id, 0
-    item.and :entry_type, 'group'
-    @items = item.find(:all, order: 'sort_no, code')
+    @items = Sys::LdapSynchro
+             .where(version: @version)
+             .where(parent_id: 0)
+             .where(entry_type: 'group')
+             .order(:sort_no, :code)
 
-    unless parent = Sys::Group.find_by_parent_id(0)
-      return render inline: "グループのRootが見つかりません。", layout: true
-    end
+    parent = Sys::Group.find_by(parent_id: 0)
 
-    # Sys::Group.update_all("ldap_version = NULL")
-    # Sys::User.update_all("ldap_version = NULL")
+    return render inline: "グループのRootが見つかりません。", layout: true unless parent
 
     @results = { group: 0, gerr: 0, user: 0, uerr: 0 }
     @items.each { |group| do_synchro(group, parent) }
@@ -106,7 +105,7 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
 
   def do_synchro(group, parent = nil)
     ## group
-    sg = Sys::Group.find_by_code(group.code) || Sys::Group.new
+    sg = Sys::Group.find_by(code: group.code) || Sys::Group.new
     sg.ldap ||= 1
 
     if sg.ldap == 1
@@ -134,7 +133,7 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
 
     ## users
     group.users.each do |user|
-      su = Sys::User.find_by_account(user.code) || Sys::User.new
+      su = Sys::User.find_by(account: user.code) || Sys::User.new
       su.ldap ||= 1
       next if su.ldap != 1
 

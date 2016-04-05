@@ -16,7 +16,7 @@ class Article::Piece::RecentTabXml < Cms::Model::Base::PieceExtension
   elem_accessor :attribute
   elem_accessor :area
 
-  validates_presence_of :name, :title, :sort_no
+  validates :name, :title, :sort_no, presence: true
 
   def condition_states
     [%w(すべてを含む and), %w(いずれかを含む or)]
@@ -29,25 +29,25 @@ class Article::Piece::RecentTabXml < Cms::Model::Base::PieceExtension
 
   def unit_items
     list = []
-    unit.each { |id| next unless i = Article::Unit.find_by_id(id); list << i }
+    unit.each { |id| next unless i = Article::Unit.find_by(id: id); list << i }
     list
   end
 
   def category_items
     list = []
-    category.each { |id| next unless i = Article::Category.find_by_id(id); list << i }
+    category.each { |id| next unless i = Article::Category.find_by(id: id); list << i }
     list
   end
 
   def attribute_items
     list = []
-    attribute.each { |id| next unless i = Article::Attribute.find_by_id(id); list << i }
+    attribute.each { |id| next unless i = Article::Attribute.find_by(id: id); list << i }
     list
   end
 
   def area_items
     list = []
-    area.each { |id| next unless i = Article::Area.find_by_id(id); list << i }
+    area.each { |id| next unless i = Article::Area.find_by(id: id); list << i }
     list
   end
 end

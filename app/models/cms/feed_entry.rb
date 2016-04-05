@@ -4,10 +4,11 @@ class Cms::FeedEntry < ActiveRecord::Base
   include Cms::Model::Base::Page
   include Sys::Model::Auth::Free
 
-  belongs_to :status,         foreign_key: :state,             class_name: 'Sys::Base::Status'
-  belongs_to :feed,           foreign_key: :feed_id,           class_name: 'Cms::Feed'
+  include StateText
 
-  validates_presence_of :link_alternate, :title
+  belongs_to :feed, foreign_key: :feed_id, class_name: 'Cms::Feed'
+
+  validates :link_alternate, :title, presence: true
 
   def public
     self.and "#{self.class.table_name}.state", 'public'

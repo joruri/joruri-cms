@@ -10,26 +10,22 @@ class Sys::RoleName < ActiveRecord::Base
   validates_presence_of :name, :title
 
   def groups
-    item = Sys::UsersRole.new
-    item.and :role_id, id
-    item.and :group_id, 'IS NOT', nil
-    ids = item.find(:all).collect(&:group_id)
+    ids = Sys::UsersRole
+          .where(role_id: id)
+          .where.not(group_id: nil)
+          .collect(&:group_id)
     return [] if ids.size == 0
 
-    item = Sys::Group.new
-    item.and :id, 'IN', ids
-    item.find(:all, order: 'sort_no, code, id')
+    Sys::Group.where(id: ids).order(:sort_no, :code, :id)
   end
 
   def users
-    item = Sys::UsersRole.new
-    item.and :role_id, id
-    item.and :user_id, 'IS NOT', nil
-    ids = item.find(:all).collect(&:user_id)
+    ids = Sys::UsersRole
+          .where(role_id: id)
+          .where.not(user_id, nil)
+          .collect(&:user_id)
     return [] if ids.size == 0
 
-    item = Sys::User.new
-    item.and :id, 'IN', ids
-    item.find(:all, order: :account)
+    Sys::User.where(id: ids).order(:account)
   end
 end

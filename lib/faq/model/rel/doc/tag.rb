@@ -1,10 +1,12 @@
 # encoding: utf-8
 module Faq::Model::Rel::Doc::Tag
-  def self.included(mod)
-    mod.has_many :tags, primary_key: 'unid', foreign_key: 'unid', class_name: 'Faq::Tag',
-                        order: :name, dependent: :destroy
+  extend ActiveSupport::Concern
 
-    mod.after_save :save_tags
+  included do
+    has_many :tags, -> { order(:name) }, primary_key: 'unid',
+             foreign_key: 'unid', class_name: 'Faq::Tag', dependent: :destroy
+
+    after_save :save_tags
   end
 
   def find_tag_by_name(name)
@@ -28,7 +30,7 @@ module Faq::Model::Rel::Doc::Tag
     _words = []
     if words.class == Array
       _words = words
-    elsif words.class == Hash || words.class == HashWithIndifferentAccess
+    elsif words.class == Hash || words.class == HashWithIndifferentAccess || words.class == ActionController::Parameters
       words.each { |_key, val| _words << val unless val.blank? }
     else
       _words = words.to_s.split(' ').uniq

@@ -9,7 +9,8 @@ class Portal::Category < ActiveRecord::Base
   include Sys::Model::Rel::Creator
   include Cms::Model::Auth::Content
 
-  belongs_to :status,  foreign_key: :state,      class_name: 'Sys::Base::Status'
+  include StateText
+
   belongs_to :parent,  foreign_key: :parent_id,  class_name: to_s
   belongs_to :content, foreign_key: :content_id, class_name: 'Cms::Content'
   belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
@@ -17,11 +18,11 @@ class Portal::Category < ActiveRecord::Base
   has_many   :children, foreign_key: :parent_id, class_name: to_s,
                         order: :sort_no, dependent: :destroy
 
-  validates_presence_of :state, :parent_id, :name, :title
+  validates :state, :parent_id, :name, :title, presence: true
 
   def self.root_items(conditions = {})
     conditions = conditions.merge(parent_id: 0, level_no: 1)
-    find(:all, conditions: conditions, order: :sort_no)
+    where(conditions).order(:sort_no)
   end
 
   def public_path
@@ -29,10 +30,10 @@ class Portal::Category < ActiveRecord::Base
   end
 
   def public_children
-    item = self.class.new.public
-    item.and :content_id, content_id
-    item.and :parent_id, id
-    item.find(:all, order: :sort_no)
+    self.class.published
+              .where(content_id: content_id)
+              .where(parent_id: id)
+              .order(:sort_no)
   end
 
   def node_label(_options = {})
@@ -86,33 +87,41 @@ class Portal::Category < ActiveRecord::Base
       end
       doc_cates.uniq!
       doc_cates.each do |t|
-        cate = Article::Category.new.public
-        cate.and :content_id, article_content
-        cate.and :title, t
-        result << { kind: 'cate', instance: cate.find(:first) }
+        cate = Article::Category
+               .published
+               .where(content_id: article_content)
+               .where(title: t)
+               .first
+        result << { kind: 'cate', instance: cate }
       end
 
       doc_attrs.uniq!
       doc_attrs.each do |t|
-        attr = Article::Attribute.new.public
-        attr.and :content_id, article_content
-        attr.and :title, t
-        result << { kind: 'attr', instance: attr.find(:first) }
+        attr = Article::Attribute
+               .published
+               .where(content_id: article_content)
+               .where(title: t)
+               .first
+        result << { kind: 'attr', instance: attr }
       end
 
       doc_units.uniq!
       doc_units.each do |t|
-        unit = Article::Unit.new.public
-        unit.and :name, t
-        result << { kind: 'unit', instance: unit.find(:first) }
+        unit = Article::Unit
+               .published
+               .where(name: t)
+               .first
+        result << { kind: 'unit', instance: unit }
       end
 
       doc_areas.uniq!
       doc_areas.each do |t|
-        area = Article::Area.new.public
-        area.and :content_id, article_content
-        area.and :title, t
-        result << { kind: 'area', instance: area.find(:first) }
+        area = Article::Area
+               .published
+               .where(content_id: article_content)
+               .where(title: t)
+               .first
+        result << { kind: 'area', instance: area }
       end
 
     end

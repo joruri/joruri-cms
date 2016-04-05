@@ -51,7 +51,7 @@ Sys::UsersGroup.create({
   :group_id => 1
 })
 
-Core.user       = Sys::User.find_by_account('admin')
+Core.user       = Sys::User.find_by(account: 'admin')
 Core.user_group = Core.user.groups[0]
 
 ## ---------------------------------------------------------

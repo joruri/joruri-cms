@@ -21,8 +21,6 @@ module Article::Model::Rel::Doc::Rel
 
   def in_rel_doc_ids=(ids)
     _ids = []
-    dump ids
-    dump ids.class
     if ids.class == Array
       ids.each { |val| _ids << val }
       self.rel_doc_ids = _ids.join(' ')

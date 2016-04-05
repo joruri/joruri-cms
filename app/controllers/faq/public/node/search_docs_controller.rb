@@ -18,19 +18,24 @@ class Faq::Public::Node::SearchDocsController < Cms::Controller::Public::Base
     search_params['s_category_id'] = @s_cate unless @s_cate.blank?
     search_params['s_keyword']     = params[:s_keyword] unless params[:s_keyword].blank?
 
-    doc = Faq::Doc.new.public
-    doc.agent_filter(request.mobile)
-    doc.and :content_id, @content.id
+    @docs = Faq::Doc
+            .published
+            .agent_filter(request.mobile)
+            .where(content_id: @content.id)
 
-    size = doc.condition.where.size
-    doc.search search_params
-    if size == doc.condition.where.size
+    count = @docs.count
+
+
+    @docs = @docs.search(search_params)
+
+    if count == @docs.count
       @nosearch = true
       @docs = []
       return
     end
 
-    doc.page params[:page], (request.mobile? ? 20 : 50)
-    @docs = doc.find(:all, order: 'published_at DESC')
+    @docs = @docs.order(published_at: :desc)
+                 .paginate(page: params[:page],
+                           per_page: (request.mobile? ? 20 : 50))
   end
 end

@@ -1,22 +1,24 @@
 # encoding: utf-8
 class Newsletter::Content::Base < Cms::Content
-  has_many :docs, foreign_key: :content_id, class_name: 'Newsletter::Doc',
-                  dependent: :destroy
-  has_many :members, foreign_key: :content_id, class_name: 'Newsletter::Member',
-                     dependent: :destroy
-  has_many :requests, foreign_key: :content_id, class_name: 'Newsletter::Request',
-                      dependent: :destroy
-  has_many :testers, foreign_key: :content_id, class_name: 'Newsletter::Tester',
-                     dependent: :destroy
-  has_many :logs, foreign_key: :content_id, class_name: 'Newsletter::Log',
-                  dependent: :destroy
+  has_many :docs, foreign_key: :content_id,
+           class_name: 'Newsletter::Doc', dependent: :destroy
+  has_many :members, foreign_key: :content_id,
+           class_name: 'Newsletter::Member', dependent: :destroy
+  has_many :requests, foreign_key: :content_id,
+           class_name: 'Newsletter::Request', dependent: :destroy
+  has_many :testers, foreign_key: :content_id,
+           class_name: 'Newsletter::Tester', dependent: :destroy
+  has_many :logs, foreign_key: :content_id,
+           class_name: 'Newsletter::Log', dependent: :destroy
 
   def form_node
     return @form_node if @form_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Newsletter::Form'
-    @form_node = item.find(:first, order: :id)
+    @form_node = Cms::Node
+                 .published
+                 .where(content_id: id)
+                 .where(model: 'Newsletter::Form')
+                 .order(:id)
+                 .first
   end
 
   def mail_from

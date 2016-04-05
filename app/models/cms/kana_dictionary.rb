@@ -68,7 +68,7 @@ class Cms::KanaDictionary < ActiveRecord::Base
     errors = []
     data   = []
 
-    find(:all, order: 'id').each do |item|
+    all.order(:id).each do |item|
       if item.mecab_csv.nil?
         data << item.mecab_csv if item.convert_csv == true
         next

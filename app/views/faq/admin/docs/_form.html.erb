@@ -29,7 +29,7 @@ $(function() {
     <th>タイトル <span class="note">※</span></th>
     <td><%= f.text_field :title, :class => 'title', :style => 'width: 500px;' %></td>
     <th style="width: 60px;">言語 <span class="note">※</span></th>
-    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.find(:all).collect{|i| [i.title + "　", i.id]}) %></td>
+    <td style="width: 150px;"><%= f.select(:language_id, Sys::Language.all.collect{|i| [i.title + "　", i.id]}) %></td>
   </tr>
   <tr>
     <th colspan="4">質問 <span class="note">※</span></th></tr><tr>

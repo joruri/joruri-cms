@@ -16,9 +16,7 @@ class Cms::Admin::Tool::RebuildController < Cms::Controller::Admin::Base
 
       items = Cms::Layout.where(site_id: Core.site.id)
 
-      if @item.concept_id
-        items = items.where(concept_id: @item.concept_id)
-      end
+      items = items.where(concept_id: @item.concept_id) if @item.concept_id
 
       items.each do |item|
         begin

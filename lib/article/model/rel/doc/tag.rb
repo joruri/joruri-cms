@@ -1,9 +1,13 @@
 # encoding: utf-8
 module Article::Model::Rel::Doc::Tag
-  def self.included(mod)
-    mod.has_many :tags, -> { order(:name) }, primary_key: 'unid', foreign_key: 'unid', class_name: 'Article::Tag', dependent: :destroy
+  extend ActiveSupport::Concern
 
-    mod.after_save :save_tags
+  included do
+    has_many :tags, -> { order(:name) }, primary_key: 'unid',
+             foreign_key: 'unid', class_name: 'Article::Tag',
+             dependent: :destroy
+
+    after_save :save_tags
   end
 
   def find_tag_by_name(name)

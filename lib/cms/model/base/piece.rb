@@ -17,7 +17,7 @@ module Cms::Model::Base::Piece
     Cms::Lib::Modules.module_name(:cms)
   end
 
-  def model_name(option = nil)
+  def module_name(option = nil)
     name = Cms::Lib::Modules.model_name(:piece, model)
     return name.to_s.gsub(/^.*?\//, '') if option == :short
     name

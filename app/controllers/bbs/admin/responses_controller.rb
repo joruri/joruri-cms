@@ -23,6 +23,7 @@ class Bbs::Admin::ResponsesController < Cms::Controller::Admin::Base
              .readable
              .where(content_id: @content.id)
              .where(parent_id: @parent.id)
+             .search(params)
              .order(params[:sort], updated_at: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
     _index @items
@@ -43,20 +44,26 @@ class Bbs::Admin::ResponsesController < Cms::Controller::Admin::Base
 
   def create
     return error_auth
-    @item = Bbs::Item.new(params[:item])
+    @item = Bbs::Item.new(res_params)
     @item.state   = 'public'
     @item.site_id = Core.site.id
     _create @item
   end
 
   def update
-    @item = Bbs::Item.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Bbs::Item.find(params[:id])
+    @item.attributes = res_params
     _update @item
   end
 
   def destroy
-    @item = Bbs::Item.new.find(params[:id])
+    @item = Bbs::Item.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def res_params
+    params.require(:item).permit(:state, :name, :title, :body, :email, :uri)
   end
 end

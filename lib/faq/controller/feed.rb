@@ -1,6 +1,6 @@
 # encoding: utf-8
 module Faq::Controller::Feed
-  def render_feed(_docs)
+  def render_feed(docs)
     if %w(rss atom).index(params[:format])
       @skip_layout = true
       @site_uri    = Page.site.full_uri

@@ -3,6 +3,7 @@ module AgentStateText
 
   class Responder
     def self.state_text(state)
+      state = '' if state.nil?
       case state
       when '' then '全てに表示'
       when 'pc' then 'PCのみ表示'

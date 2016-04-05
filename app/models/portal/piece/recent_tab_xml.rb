@@ -16,7 +16,7 @@ class Portal::Piece::RecentTabXml < Cms::Model::Base::PieceExtension
 
   def category_items
     list = []
-    category.each { |id| next unless i = Portal::Category.find_by_id(id); list << i }
+    category.each { |id| next unless i = Portal::Category.find_by(id: id); list << i }
     list
   end
 end

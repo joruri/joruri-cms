@@ -6,30 +6,32 @@ class Newsletter::Member < ActiveRecord::Base
   include Cms::Model::Auth::Concept
   include Newsletter::Model::Base::Letter
 
-  belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+  include StateText
 
-  validates_presence_of :state, :email, :letter_type
+  validates :state, :email, :letter_type, presence: true
 
-  def mobile?
-    letter_type.to_s =~ /mobile/
-  end
+  scope :search, ->(params) {
+    rel = all
 
-  def search(params)
     params.each do |n, v|
       next if v.to_s == ''
 
       case n
       when 's_id'
-        self.and "#{self.class.table_name}.id", v
+        rel = rel.where(id: v)
       when 's_email'
-        and_keywords v, :email
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
       when 's_letter_type'
-        self.and "#{self.class.table_name}.letter_type", v
+        rel = rel.where(letter_type: v)
       when 's_state'
-        self.and "#{self.class.table_name}.state", v
+        rel = rel.here(state: v)
       end
     end if params.size != 0
 
-    self
+    rel
+  }
+
+  def mobile?
+    letter_type.to_s =~ /mobile/
   end
 end

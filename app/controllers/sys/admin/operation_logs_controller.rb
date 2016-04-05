@@ -11,28 +11,32 @@ class Sys::Admin::OperationLogsController < Cms::Controller::Admin::Base
   def index
     @item = Sys::OperationLog.new
 
-    item = Sys::OperationLog.new
+    @items = Sys::OperationLog.search(params)
+
+    arel_table = Sys::OperationLog.arel_table
 
     unless params[:start_date].blank?
-      item.and :created_at, '>', params[:start_date]
+      @items = @items.where(arel_table[:created_at].gt(params[:start_date]))
     end
+
     unless params[:close_date].blank?
       date = begin
                Date.strptime(params[:close_date], '%Y-%m-%d') + 1
              rescue
                nil
              end
-      item.and :created_at, '<=', date if date
+      @items = @items.where(arel_table[:created_at].lteq(date) if date
     end
-    item.search params
 
-    return destroy_items(item.condition.where) unless params[:destroy].blank?
+    return destroy_items(item.condition.where) if params[:destroy]
 
-    item.page  params[:page], params[:limit] if params[:csv].blank?
-    item.order params[:sort], 'id DESC'
-    @items = item.find(:all)
+    @items = @items.order(params[:sort], id: :desc)
 
-    return export_csv(@items) unless params[:csv].blank?
+    if params[:csv].blank?
+      @items = @items.paginate(page: params[:page], per_page: params[:limit])
+    end
+
+    return export_csv(@items) if params[:csv]
 
     _index @items
   end

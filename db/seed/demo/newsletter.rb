@@ -23,7 +23,7 @@ Cms::ContentSetting.create(:content_id => content.id, :name => "sent_deletion_bo
 ## ---------------------------------------------------------
 ## cms/concept
 
-concept = Cms::Concept.find_by_name("トップページ")
+concept = Cms::Concept.find_by(name: "トップページ")
 
 ## ---------------------------------------------------------
 ## cms/layouts

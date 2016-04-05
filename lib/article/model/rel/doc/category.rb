@@ -25,10 +25,10 @@ module Article::Model::Rel::Doc::Category
         all
       else
         where(
-          arel_table[:category_ids].matches("#{ids.join('|')} %")
-            .or(arel_table[:category_ids].matches("% #{ids.join('|')} %")
-              .or(arel_table[:category_ids].matches("% #{ids.join('|')}"))
-               )
+          arel_table[:category_ids].in(ids)
+          .or(arel_table[:category_ids].matches("#{ids.join('|')} %"))
+          .or(arel_table[:category_ids].matches("% #{ids.join('|')} %"))
+          .or(arel_table[:category_ids].matches("% #{ids.join('|')}"))
         )
       end
     }

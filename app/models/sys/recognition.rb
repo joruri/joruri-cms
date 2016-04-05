@@ -32,7 +32,7 @@ class Sys::Recognition < ActiveRecord::Base
     return @_recognizers if @_recognizers
     users = []
     recognizer_ids.to_s.split(' ').uniq.each do |id|
-      if u = Sys::User.find_by_id(id)
+      if u = Sys::User.find_by(id: id)
         users << u
       end
     end

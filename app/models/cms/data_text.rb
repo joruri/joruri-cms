@@ -30,11 +30,11 @@ class Cms::DataText < ActiveRecord::Base
         rel = rel.where(data_texts[:title].matches("%#{v}%")
           .or(data_texts[:name].matches("%#{v}%")))
       when 's_keyword'
-        rel = rel.where(data_texts[:title].matches("%#{v}%")
+        rel = rel.where(
+          data_texts[:title].matches("%#{v}%")
           .or(data_texts[:name].matches("%#{v}%")
-            .or(data_texts[:body].matches("%#{v}%"))
-             )
-                       )
+            .or(data_texts[:body].matches("%#{v}%")))
+        )
       end
     end if params.size != 0
 

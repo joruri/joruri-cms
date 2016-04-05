@@ -68,7 +68,7 @@ class Tourism::Content::Setting < Cms::ContentSetting
     unless value.blank?
       case name
       when 'doc_content_id'
-        content = Cms::Content.find_by_id(value)
+        content = Cms::Content.find_by(id: value)
         return content.name if content
       end
     end

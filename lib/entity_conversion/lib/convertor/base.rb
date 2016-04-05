@@ -87,7 +87,7 @@ class EntityConversion::Lib::Convertor::Base
       replace_group_id(unit, clone)
       replace_texts(texts)
       convert_move(unit, group)
-      @changed << [Sys::Group.uncached { Sys::Group.find_by_code(unit.code) }, clone]
+      @changed << [Sys::Group.uncached { Sys::Group.find_by(code: unit.code) }, clone]
     end
 
     @logs << "\n# 廃止"
@@ -130,7 +130,7 @@ class EntityConversion::Lib::Convertor::Base
     if unit.move
       new_id = unit.move.id
     elsif unit.new_move
-      move = Sys::Group.uncached { Sys::Group.find_by_code(unit.new_move.code) }
+      move = Sys::Group.uncached { Sys::Group.find_by(code: unit.new_move.code) }
       new_id = begin
                  move.id
                rescue

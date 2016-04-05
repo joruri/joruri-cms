@@ -4,22 +4,22 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
   end
 
   def index
-    item = Newsletter::Tester.new
-    item.and :content_id, @content.id
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'email ASC'
-    @items = item.find(:all)
+    @items = Newsletter::Tester
+             .where(content_id: @content.id)
+             .order(params[:sort], :email)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Newsletter::Tester.new.find(params[:id])
+    @item = Newsletter::Tester.find(params[:id])
     _show @item
   end
 
@@ -36,16 +36,14 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Newsletter::Tester.new.find(params[:id])
+    @item = Newsletter::Tester.find(params[:id])
     @item.attributes = params[:item]
 
     _update(@item)
   end
 
   def destroy
-    @item = Newsletter::Tester.new.find(params[:id])
+    @item = Newsletter::Tester.find(params[:id])
     _destroy @item
   end
-
-  protected
 end

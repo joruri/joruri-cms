@@ -10,7 +10,7 @@ module Cms::Model::Base::Content
     [%w(公開 public), %w(非公開 closed)]
   end
 
-  def model_name(option = nil)
+  def module_name(option = nil)
     name = Cms::Lib::Modules.model_name(:content, model)
     return name.to_s.gsub(/.*\//, '') if option == :short
     name

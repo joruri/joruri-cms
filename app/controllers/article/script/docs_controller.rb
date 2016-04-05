@@ -12,7 +12,7 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
     Script.total items.size
 
     items.each_with_index do |v, _idx|
-      item = v.class.find_by_id(v.id)
+      item = v.class.find_by(id: v.id)
       next unless item
 
       Script.current

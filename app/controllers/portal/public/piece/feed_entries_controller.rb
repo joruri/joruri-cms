@@ -66,7 +66,7 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
     end
 
     entry.page page, limit
-    content = Portal::Content::Base.find_by_id(@content.id)
+    content = Portal::Content::Base.find_by(id: @content.id)
     @entries = entry.find_with_own_docs(content.doc_content, list_type, item: category)
 
     prev   = nil

@@ -6,9 +6,9 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   helper Faq::FormHelper
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
 
     @recognition_type = @content.setting_value(:recognition_type)
@@ -19,8 +19,7 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = Faq::Doc.new.find(params[:id])
-    # return error_auth unless @item.readable?
+    @item = Faq::Doc.find(params[:id])
 
     @item.recognition.type = @recognition_type if @item.recognition
 
@@ -42,7 +41,7 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Faq::Doc.new(params[:item])
+    @item = Faq::Doc.new(docs_params)
     @item.content_id = @content.id
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
@@ -54,15 +53,15 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
 
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
-      @item = Faq::Doc.find_by_id(@item.id)
+      @item = Faq::Doc.find_by(id: @item.id)
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
     end
   end
 
   def update
-    @item = Faq::Doc.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Faq::Doc.find(params[:id])
+    @item.attributes = docs_params
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
     @item.state      = 'public'    if params[:commit_public]
@@ -79,7 +78,7 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Faq::Doc.new.find(params[:id])
+    @item = Faq::Doc.find(params[:id])
     _destroy @item
   end
 
@@ -184,5 +183,19 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
               to: item.recognition.user.email,
               subject: "#{item.content.name} 最終承認完了メール | #{item.content.site.name}",
               body: body.join)
+  end
+
+  private
+
+  def docs_params
+    params.require(:item).permit(
+      :title, :language_id, :question, :body, :recent_state, :agent_state,
+      :mobile_body, :published_at, :in_recognizer_ids,
+      in_tags: %w(0 1 2),
+      in_rel_doc_ids: %w(0 1 2),
+      in_category_ids: %w(0 1 2),
+      in_inquiry: [:state, :group_id, :charge, :tel, :fax, :email],
+      in_editable_groups: %w(0 1 2),
+      in_creator: [:group_id, :user_id])
   end
 end

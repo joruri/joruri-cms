@@ -7,7 +7,7 @@ module EntityConversion::Lib::Convertor::Production
     if unit.parent
       parent_id = unit.parent.id
     elsif parent = unit.new_parent
-      parent_id = Sys::Group.uncached { Sys::Group.find_by_code(parent.code).id }
+      parent_id = Sys::Group.uncached { Sys::Group.find_by(code: parent.code).id }
     end
 
     group = Sys::Group.new(state: 'enabled',
@@ -47,7 +47,7 @@ module EntityConversion::Lib::Convertor::Production
     if move = unit.move
       new_id = move.id
     elsif move = unit.new_move
-      new_id = Sys::Group.uncached { Sys::Group.find_by_code(move.code).id }
+      new_id = Sys::Group.uncached { Sys::Group.find_by(code: move.code).id }
     end
     group.destroy if group.id != new_id
   end

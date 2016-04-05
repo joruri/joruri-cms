@@ -46,9 +46,9 @@ module Article::Model::Rel::Doc::Attribute
   def attribute_items(options = {})
     ids = attribute_ids.to_s.split(' ').uniq
     return [] if ids.size == 0
-    item = Article::Attribute.new
-    item.and :id, 'IN', ids
-    item.and :state, options[:state] if options[:state]
-    item.find(:all)
+
+    items = Article::Attribute.where(id: ids)
+    items = items.where(state: options[:state]) if options[:state]
+    items
   end
 end

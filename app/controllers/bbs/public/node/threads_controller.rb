@@ -7,7 +7,8 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   def pre_dispatch
     @node     = Page.current_node
     @node_uri = @node.public_uri
-    return http_error(404) unless @content = @node.content
+    @content = @node.content
+    return http_error(404) unless @content
     return http_error(404) if params[:thread] && params[:thread] !~ /^[0-9]+$/
 
     @admin_password  = @content.setting_value(:admin_password)
@@ -39,7 +40,7 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
                .where(content_id: @content.id)
                .where(parent_id: 0)
                .order(id: :desc)
-               .paginate(page: params[:page], per_apge: limit)
+               .paginate(page: params[:page], per_page: limit)
   end
 
   def new
@@ -75,7 +76,7 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   protected
 
   def create
-    @item.attributes   = params[:item]
+    @item.attributes   = thread_params
     @item.content_id   = @content.id
     @item.parent_id    = 0
     @item.state        = 'public'
@@ -97,7 +98,7 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   end
 
   def create_res
-    @item.attributes   = params[:item]
+    @item.attributes   = res_params
     @item.content_id   = @content.id
     @item.parent_id    = @thread.id
     @item.thread_id    = @thread.id
@@ -147,5 +148,15 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
     end
 
     true
+  end
+
+  private
+
+  def thread_params
+    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body)
+  end
+
+  def res_params
+    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body)
   end
 end

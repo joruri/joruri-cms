@@ -79,7 +79,7 @@ u4 = create 2, '吉野　三郎'    , 'user3', 'user3'
 ## ---------------------------------------------------------
 ## sys/users_groups
 
-g = Sys::Group.find_by_name_en('hisyokohoka')
+g = Sys::Group.find_by(name_en: 'hisyokohoka')
 Sys::UsersGroup.update_all({:group_id => g.id}, {:user_id => 1})
 Sys::UsersGroup.create :user_id => 2, :group_id => g.id
 Sys::UsersGroup.create :user_id => 3, :group_id => g.id
@@ -88,7 +88,7 @@ Sys::UsersGroup.create :user_id => 4, :group_id => g.id
 ## ---------------------------------------------------------
 ## current_user
 
-Core.user       = Sys::User.find_by_account('admin')
+Core.user       = Sys::User.find_by(account: 'admin')
 Core.user_group = Core.user.groups[0]
 
 ## ---------------------------------------------------------
@@ -108,7 +108,7 @@ def create_cms_concept(params)
   if params[:parent_id] == 0
     params[:level_no] = 1
   else
-    parent = Cms::Concept.find_by_id(params[:parent_id])
+    parent = Cms::Concept.find_by(id: params[:parent_id])
     params[:level_no] = parent.level_no + 1
   end
   Cms::Concept.create(params)
@@ -274,12 +274,12 @@ end
 
 puts "import cms_nodes..."
 
-if node = Cms::Node.find(:first, :conditions => {:id => 1, :parent_id => 0})
+if node = Cms::Node.find_by(:id => 1, :parent_id => 0)
   node.title = site_name
   node.save(:validate => false)
 end
 
-if node = Cms::Node.find(:first, :conditions => {:id => 2, :name => "index.html"})
+if node = Cms::Node.find_by(:id => 2, :name => "index.html")
   node.title = site_name
   node.save(:validate => false)
 end

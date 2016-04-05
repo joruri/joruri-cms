@@ -14,7 +14,7 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
     Script.total tasks.size
 
     tasks.each_with_index do |v, _idx|
-      task = Cms::TalkTask.find_by_id(v[:id])
+      task = Cms::TalkTask.find_by(id: v[:id])
       next unless task
 
       begin

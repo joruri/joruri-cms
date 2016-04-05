@@ -4,7 +4,7 @@ class Newsletter::Script::DocsController < ApplicationController
     id = Script.options[:doc_id]
     raise "記事IDが入力されていません。" if id.blank?
 
-    @doc = Newsletter::Doc.find_by_id(id)
+    @doc = Newsletter::Doc.find_by(id: id)
     raise "記事が入力されていません。##{id}" unless @doc
     raise "コンテンツが見つかりません。##{id}" unless @content = @doc.content
 
@@ -33,8 +33,9 @@ class Newsletter::Script::DocsController < ApplicationController
     mb_body  = @doc.mail_body(true)
 
     ## members
-    cond    = { content_id: @doc.content_id, state: 'enabled' }
-    members = Newsletter::Member.find(:all, select: 'id, email, letter_type', conditions: cond)
+    members = Newsletter::Member
+              .where(content_id: @doc.content_id, state: 'enabled')
+              .project(:id, :email, :letter_type)
 
     Script.total members.size
 

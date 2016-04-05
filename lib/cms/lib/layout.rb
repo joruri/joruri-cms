@@ -30,25 +30,27 @@ module Cms::Lib::Layout
     html.scan(/\[\[piece\/([^\]]+)\]\]/) { |name| names << name[0] }
 
     items = {}
+    arel_table = Cms::Piece.arel_table
+
     names.uniq.each do |name|
-      item = Cms::Piece.new
-      item.and :state, 'public'
+      item = Cms::Piece.where(state: 'public')
+
       if name =~ /#[0-9]+$/ ## [[piece/name#id]]
-        item.and :id, name.gsub(/.*#/, '')
-        item.and :name, name.gsub(/#.*/, '')
+        item = item.where(id: name.gsub(/.*#/, ''))
+                   .where(name: name.gsub(/#.*/, ''))
       else ## [[piece/name]]
-        item.and :name, name
-        cond = Condition.new do |c|
-          c.or :concept_id, 'IS', nil
-          c.or :concept_id, 'IN', concepts
-        end
-        item.and cond
+        item = item.where(name: name)
+                   .where(arel_table[:concept_id].eq(nil)
+                          .or(arel_table[:concept_id].in(concepts)))
       end
-      items[name] = item if item = item.find(:first, order: concepts_order(concepts))
+
+      item = item.order(concepts_order(concepts)).first
+
+      items[name] = item if item
     end
 
     if Core.mode == 'preview' && params[:piece_id]
-      item = Cms::Piece.find_by_id(params[:piece_id])
+      item = Cms::Piece.find_by(id: params[:piece_id])
       items[item.name] = item if item
     end
 
@@ -60,16 +62,18 @@ module Cms::Lib::Layout
     html.scan(/\[\[text\/([0-9a-zA-Z\._-]+)\]\]/) { |name| names << name[0] }
 
     items = {}
+    arel_table = Cms::DataText.arel_table
+
     names.uniq.each do |name|
-      item = Cms::DataText.new
-      item.and :state, 'public'
-      item.and :name, name
-      cond = Condition.new do |c|
-        c.or :concept_id, 'IS', nil
-        c.or :concept_id, 'IN', concepts
-      end
-      item.and cond
-      items[name] = item if item = item.find(:first, order: concepts_order(concepts))
+      item = Cms::DataText
+             .where(state: 'public')
+             .where(name: name)
+             .where(arel_table[:concept_id].eq(nil)
+                    .or(arel_table[:concept_id].in(concepts)))
+
+      item = item.order(concepts_order(concepts)).first
+
+      items[name] = item if item
     end
     items
   end
@@ -83,24 +87,26 @@ module Cms::Lib::Layout
       dirname  = ::File.dirname(name)
       basename = dirname == '.' ? name : ::File.basename(name)
 
-      tab  = Cms::DataFile.table_name
-      item = Cms::DataFile.new.public
-      item.and "#{tab}.name", basename
-      cond = Condition.new do |c|
-        c.or "#{tab}.concept_id", 'IS', nil
-        c.or "#{tab}.concept_id", 'IN', concepts
-      end
-      item.and cond
+      arel_table = Cms::DataFile.arel_table
+
+      item = Cms::DataFile
+             .published
+             .where(arel_table[:name].eq(basename))
+             .where(arel_table[:concept_id].eq(nil)
+                    .or(arel_table[:concept_id].in(concepts)))
 
       if dirname == '.'
-        item.and "#{tab}.node_id", 'IS', nil
+        item = item.where(arel_table[:node_id].eq(nil))
       else
-        node_tab = Cms::DataFileNode.table_name
-        item.join "LEFT OUTER JOIN #{node_tab} ON #{node_tab}.id = #{Cms::DataFile.table_name}.node_id"
-        item.and "#{node_tab}.name", dirname
+        arel_node = Cms::DataFileNode.arel_table
+        item = item.joins(:node)
+                   .where(arel_node[:name].eq(dirname))
       end
 
-      items[name] = item if item = item.find(:first, order: concepts_order(concepts, table_name: tab))
+      tab  = Cms::DataFile.table_name
+      item = item.order(concepts_order(concepts, table_name: tab)).first
+
+      items[name] = item if item
     end
     items
   end

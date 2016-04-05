@@ -7,12 +7,31 @@ class Newsletter::Doc < ActiveRecord::Base
   include Cms::Model::Rel::Content
   include Cms::Model::Auth::Concept
 
-  belongs_to :status,  foreign_key: :state,      class_name: 'Sys::Base::Status'
-  belongs_to :content, foreign_key: :content_id, class_name: 'Newsletter::Content::Base'
-  has_many   :logs,    foreign_key: :doc_id,     class_name: 'Newsletter::Log',
-                       dependent: :destroy
+  include StateText
 
-  validates_presence_of :state, :title, :body
+  belongs_to :content, foreign_key: :content_id,
+             class_name: 'Newsletter::Content::Base'
+  has_many :logs, foreign_key: :doc_id,
+           class_name: 'Newsletter::Log', dependent: :destroy
+
+  validates :state, :title, :body, presence: true
+
+  scope :search, ->(params) {
+    rel = all
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(id: v)
+      when 's_title'
+        rel = rel.where(arel_table[:title].maches("%#{v}%"))
+      end
+    end if params.size != 0
+
+    rel
+  }
 
   def validate
     if content.template_state == 'enabled'
@@ -32,18 +51,18 @@ class Newsletter::Doc < ActiveRecord::Base
 
   def testers
     return @testers if @testers
-    test = Newsletter::Tester.new.enabled
-    test.and :content_id, content_id
-    test.order 'agent_state DESC, id DESC'
-    @testers = test.find(:all)
+    @testers = Newsletter::Tester
+               .enabled
+               .where(content_id: content_id)
+               .order(agent_state: :desc, id: :desc)
   end
 
   def members
     return @members if @members
-    member = Newsletter::Member.new.enabled
-    member.and :content_id, content_id
-    member.order 'letter_type DESC, id'
-    @members = member.find(:all)
+    @members = Newsletter::Member
+               .enabled
+               .where(content_id: content_id)
+               .order(letter_type: :desc, id: :asc)
   end
 
   def mail_from
@@ -59,27 +78,14 @@ class Newsletter::Doc < ActiveRecord::Base
   def mail_body(mobile = false)
     if mobile
       _body  = mobile_body.blank? ? body : mobile_body
-      _body += "\n\n#{content.signature_mobile}" if content.signature_state == 'enabled'
+      if content.signature_state == 'enabled'
+        _body += "\n\n#{content.signature_mobile}"
+      end
       return _body
     end
 
     _body  = body.to_s
     _body += "\n\n#{content.signature}" if content.signature_state == 'enabled'
     _body
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        self.and "#{self.class.table_name}.id", v
-      when 's_title'
-        and_keywords v, :title
-      end
-    end if params.size != 0
-
-    self
   end
 end

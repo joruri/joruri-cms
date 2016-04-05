@@ -32,11 +32,11 @@ class Tourism::Photo < ActiveRecord::Base
               if: %(state == "public")
 
   def concept
-    concept_id ? Cms::Concept.find_by_id(concept_id) : nil
+    concept_id ? Cms::Concept.find_by(id: concept_id) : nil
   end
 
   def layout
-    layout_id ? Cms::Layout.find_by_id(layout_id) : nil
+    layout_id ? Cms::Layout.find_by(id: layout_id) : nil
   end
 
   def public_path
@@ -89,7 +89,7 @@ class Tourism::Photo < ActiveRecord::Base
       when 's_id'
         self.and "#{self.class.table_name}.id", v
       when 's_genre_id'
-        return self.and(0, 1) unless cate = Tourism::Genre.find_by_id(v)
+        return self.and(0, 1) unless cate = Tourism::Genre.find_by(id: v)
         genre_is(cate)
       when 's_title'
         and_keywords v, :title

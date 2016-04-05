@@ -4,25 +4,33 @@ class Tourism::Public::Node::MouthsController < Cms::Controller::Public::Base
   helper Cms::EmbeddedFileHelper
 
   def pre_dispatch
-    return http_error(404) unless @content = Page.current_node.content
+    @content = Page.current_node.content
+    return http_error(404) unless @content
   end
 
   def index
-    item = Tourism::Mouth.new.public
-    item.and :content_id, @content.id
-    # item.search params
-    item.page params[:page], (request.mobile? ? 10 : 20)
-    @items = item.find(:all, order: 'published_at DESC')
+    @items = Tourism::Mouth
+             .published
+             .where(content_id: @content.id)
+             .order(published_at: :desc)
+             .paginate(page: params[:page],
+                       per_page: (request.mobile? ? 10 : 20))
+
     return true if render_feed(@items)
 
-    return http_error(404) if @items.current_page > 1 && @items.current_page > @items.total_pages
+    if @items.current_page > 1 && @items.current_page > @items.total_pages
+      return http_error(404)
+    end
   end
 
   def show
-    item = Tourism::Mouth.new.public_or_preview
-    item.and :content_id, Page.current_node.content.id
-    item.and :name, params[:name]
-    return http_error(404) unless @item = item.find(:first)
+    @item = Tourism::Mouth
+            .public_or_preview
+            .where(content_id: Page.current_node.content.id)
+            .where(name: params[:name])
+            .first
+
+    return http_error(404) unless @item
 
     Page.current_item = @item
     Page.title        = @item.title

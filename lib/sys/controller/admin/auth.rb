@@ -11,7 +11,8 @@ module Sys::Controller::Admin::Auth
   end
 
   def new_login(_account, _password)
-    return false unless user = Sys::User.authenticate(_account, _password)
+    user = Sys::User.authenticate(_account, _password)
+    return false unless user
     session[ACCOUNT_KEY] = user.account
     session[PASSWD_KEY] = user.encrypt_password
     @@current_user = user
@@ -109,7 +110,7 @@ module Sys::Controller::Admin::Auth
   # cookie and log the user back in if apropriate
   def login_from_cookie
     return unless cookies[:auth_token] && !logged_in?
-    user = Sys::User.find_by_remember_token(cookies[:auth_token])
+    user = Sys::User.find_by(remember_token: cookies[:auth_token])
     if user && user.remember_token?
       user.remember_me
       self.current_user = user

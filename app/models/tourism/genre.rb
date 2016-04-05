@@ -11,7 +11,8 @@ class Tourism::Genre < ActiveRecord::Base
   include Cms::Model::Rel::EmbeddedFile
   include Cms::Model::Auth::Content
 
-  belongs_to :status,  foreign_key: :state,      class_name: 'Sys::Base::Status'
+  include StateText
+
   belongs_to :parent,  foreign_key: :parent_id,  class_name: to_s
   belongs_to :content, foreign_key: :content_id, class_name: 'Cms::Content'
   belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
@@ -21,14 +22,14 @@ class Tourism::Genre < ActiveRecord::Base
 
   embed_file_of :image_file_id, :list_image_file_id
 
-  validates_presence_of :state, :parent_id, :name, :title
-  validates_uniqueness_of :name, scope: [:content_id]
-  validates_length_of :title, maximum: 50
-  validates_length_of :body, maximum: 100_000
+  validates :state, :parent_id, :name, :title, presence: true
+  validates :name, uniqueness: { scope: [:content_id] }
+  validates :title, length: { maximum: 50 }
+  validates :body, length: { maximum: 100_000 }
 
   def self.root_items(conditions = {})
     conditions = conditions.merge(parent_id: 0, level_no: 1)
-    find(:all, conditions: conditions, order: :sort_no)
+    where(conditions).order(:sort_no)
   end
 
   def public_path
@@ -36,10 +37,10 @@ class Tourism::Genre < ActiveRecord::Base
   end
 
   def public_children
-    item = self.class.new.public
-    item.and :content_id, content_id
-    item.and :parent_id, id
-    item.find(:all, order: :sort_no)
+    self.class.published
+              .where(content_id: content_id)
+              .where(parent_id: id)
+              .order(:sort_no)
   end
 
   def node_label(_options = {})

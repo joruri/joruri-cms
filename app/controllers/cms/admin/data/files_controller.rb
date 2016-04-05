@@ -28,8 +28,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   end
 
   def show
-    item = Cms::DataFile.new.readable
-    @item = item.find(params[:id])
+    @item = Cms::DataFile.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
@@ -41,18 +40,18 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::DataFile.new(params[:item])
+    @item = Cms::DataFile.new(files_params)
     @item.site_id = Core.site.id
-    @item.state   = 'public'
+    @item.state = 'public'
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
 
     _create @item
   end
 
   def update
-    @item = Cms::DataFile.new.find(params[:id])
-    @item.attributes = params[:item]
-    @item.node_id    = nil if @item.concept_id_changed?
+    @item = Cms::DataFile.find(params[:id])
+    @item.attributes = files_params
+    @item.node_id = nil if @item.concept_id_changed?
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
 
     @item.skip_upload if @item.file.blank?
@@ -60,27 +59,40 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Cms::DataFile.new.find(params[:id])
+    @item = Cms::DataFile.find(params[:id])
     _destroy @item
   end
 
   def download
-    item = Cms::DataFile.new.readable
-    item.and :id, params[:id]
-    return error_auth unless @file = item.find(:first)
+    @file = Cms::DataFile
+            .readable
+            .where(id: params[:id])
+            .first
+    return error_auth unless @file
 
     send_storage_file @file.upload_path, type: @file.mime_type, filename: @file.name
   end
 
   def thumbnail
-    item = Cms::DataFile.new.readable
-    item.and :id, params[:id]
-    return error_auth unless @file = item.find(:first)
+    @file = Cms::DataFile
+            .readable
+            .where(id: params[:id])
+            .first
+    return error_auth unless @file
 
     upload_path = @file.upload_path
     thumb_path  = ::File.dirname(@file.upload_path) + '/thumb.dat'
     upload_path = thumb_path if ::Storage.exists?(thumb_path)
 
     send_storage_file upload_path, type: @file.mime_type, filename: @file.name
+  end
+
+  private
+
+  def files_params
+    params.require(:item).permit(
+      :concept_id, :state, :name, :node_id, :title, :body, :file,
+      :in_resize_size, :parent
+    )
   end
 end

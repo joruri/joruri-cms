@@ -136,7 +136,7 @@ module Cms::Model::Base::Page::Publisher
     return false if pub.site_id.blank?
     return false if pub.uri.blank?
 
-    site = Cms::Site.find_by_id(pub.site_id)
+    site = Cms::Site.find_by(id: pub.site_id)
     return false unless site
 
     inlinks = []

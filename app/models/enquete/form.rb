@@ -7,26 +7,28 @@ class Enquete::Form < ActiveRecord::Base
   include Cms::Model::Rel::Content
   include Cms::Model::Auth::Concept
 
-  belongs_to :status,         foreign_key: :state, class_name: 'Sys::Base::Status'
-  has_many   :columns,        foreign_key: :form_id,         class_name: 'Enquete::FormColumn',
-                              dependent: :destroy
-  has_many   :answers,        foreign_key: :form_id,         class_name: 'Enquete::Answer',
-                              dependent: :destroy
+  include StateText
 
-  validates_presence_of :name
+  has_many :columns, foreign_key: :form_id,
+                     class_name: 'Enquete::FormColumn',
+                     dependent: :destroy
+
+  has_many :answers, foreign_key: :form_id,
+                     class_name: 'Enquete::Answer',
+                     dependent: :destroy
+
+  validates :name, presence: true
 
   apply_simple_captcha message: "の画像と文字が一致しません。"
 
-  def public
-    self.and "#{self.class.table_name}.state", 'public'
-    self
-  end
+  scope :published, -> {
+    where(state: 'public')
+  }
 
   def public_columns
-    item = Enquete::FormColumn.new
-    item.and :state, 'public'
-    item.and :form_id, id
-    item.find(:all, order: :sort_no)
+    Enquete::FormColumn.where(state: 'public')
+                       .where(form_id: id)
+                       .order(:sort_no)
   end
 
   def save_answer(values, client = {})

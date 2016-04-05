@@ -35,7 +35,7 @@ class Faq::Admin::CategoriesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Faq::Category.new(params[:item])
+    @item = Faq::Category.new(categories_params)
     @item.content_id = @content.id
     @item.parent_id = @parent.id
     @item.level_no  = @parent.level_no + 1
@@ -44,12 +44,20 @@ class Faq::Admin::CategoriesController < Cms::Controller::Admin::Base
 
   def update
     @item = Faq::Category.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = categories_params
     _update @item
   end
 
   def destroy
     @item = Faq::Category.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def categories_params
+    params.require(:item).permit(
+      :state, :concept_id, :layout_id, :name, :title, :sort_no,
+      in_creator: [:group_id, :user_id])
   end
 end

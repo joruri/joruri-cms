@@ -25,7 +25,7 @@ class Cms::Stylesheet < ActiveRecord::Base
 
   def concept(reload = nil)
     return @_concept if @_concept && !reload
-    return @_concept = Cms::Concept.find_by_id(concept_id) if concept_id
+    return @_concept = Cms::Concept.find_by(id: concept_id) if concept_id
 
     dir = ::File.dirname(path)
     return @_concept = nil if !dir.blank? && dir =~ /^(\.+|\/)$/

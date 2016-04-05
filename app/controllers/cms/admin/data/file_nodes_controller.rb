@@ -21,8 +21,7 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
   end
 
   def show
-    item = Cms::DataFileNode.new.readable
-    @item = item.find(params[:id])
+    @item = Cms::DataFileNode.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
@@ -33,14 +32,14 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::DataFileNode.new(params[:item])
+    @item = Cms::DataFileNode.new(nodes_params)
     @item.site_id = Core.site.id
     _create @item
   end
 
   def update
-    @item = Cms::DataFileNode.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Cms::DataFileNode.find(params[:id])
+    @item.attributes = nodes_params
     @old_concept_id  = @item.concept_id_was
 
     _update(@item) do
@@ -52,7 +51,15 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Cms::DataFileNode.new.find(params[:id])
+    @item = Cms::DataFileNode.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def nodes_params
+    params.require(:item).permit(
+      :concept_id, :name, :title, :parent
+    )
   end
 end

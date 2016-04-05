@@ -30,7 +30,7 @@ class Faq::Content::Setting < Cms::ContentSetting
   def config_options
     case name
     when 'default_recognizers'
-      users = Sys::User.new.enabled.find(:all, order: :account)
+      users = Sys::User.enabled.order(:account)
       return users.collect { |c| [c.name_with_account, c.id.to_s] }
     end
     super
@@ -40,7 +40,7 @@ class Faq::Content::Setting < Cms::ContentSetting
     unless value.blank?
       case name
       when 'default_recognizers'
-        user = Sys::User.find_by_id(value)
+        user = Sys::User.find_by(id: value)
         return user.name_with_account if user
       end
     end

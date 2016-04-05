@@ -58,20 +58,21 @@ class Cms::Concept < ActiveRecord::Base
   end
 
   def parent
-    self.class.find_by_id(parent_id)
+    self.class.find_by(id: parent_id)
   end
 
   def self.find_by_path(path)
     return nil if path.to_s == ''
     parent_id = 0
     item = nil
+
     path.split('/').each do |name|
-      cond = { parent_id: parent_id, name: name }
-      unless item = find(:first, conditions: cond, order: :id)
-        return nil
-      end
+      item = where(parent_id: parent_id, name: name).order(:id).first
+      return nil unless item
+
       parent_id = item.id
     end
+
     item
   end
 
@@ -79,7 +80,7 @@ class Cms::Concept < ActiveRecord::Base
     path = name
     id = parent_id
     lo = 0
-    while item = Cms::Concept.find_by_id(id)
+    while item = Cms::Concept.find_by(id: id)
       id = item.parent_id
       path = item.name + '/' + path
       lo += 1

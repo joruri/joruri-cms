@@ -94,9 +94,9 @@ class EntityConversion::Unit < ActiveRecord::Base
         list << [src.delete("　"), dst.delete("　")]
         list << [src.tr("　", ' '), dst.tr("　", ' ')]
       elsif key == :name
-        next if Sys::Group.find(:all, conditions: { name: src }).size > 1
+        next if Sys::Group.where(name: src).count > 1
       elsif key == :name_en
-        next if Sys::Group.find(:all, conditions: { name_en: src }).size > 1
+        next if Sys::Group.where(name_en: src).count > 1
       end
       list << [src, dst]
     end
@@ -105,7 +105,7 @@ class EntityConversion::Unit < ActiveRecord::Base
 
   def validates_all
     unless old_id.blank?
-      old = Sys::Group.find_by_id(old_id)
+      old = Sys::Group.find_by(id: old_id)
       self.old_parent_id = old.parent_id if old
       errors.add :old_id, :invalid unless old
     end

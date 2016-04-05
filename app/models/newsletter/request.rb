@@ -7,12 +7,13 @@ class Newsletter::Request < ActiveRecord::Base
   include Cms::Model::Auth::Concept
   include Newsletter::Model::Base::Letter
 
-  belongs_to :status,      foreign_key: :state,        class_name: 'Sys::Base::Status'
-  belongs_to :content,     foreign_key: :content_id,   class_name: 'Newsletter::Content::Base'
+  include StateText
 
-  validates_presence_of :state, :request_type, :email
-  validates_presence_of :letter_type,
-                        if: %(request_type == "subscribe")
+  belongs_to :content, foreign_key: :content_id,
+             class_name: 'Newsletter::Content::Base'
+
+  validates :state, :request_type, :email, presence: true
+  validates :letter_type, presence: true, if: %(request_type == "subscribe")
 
   validate :validate_email
 

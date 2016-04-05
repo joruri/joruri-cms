@@ -55,7 +55,7 @@ class Sys::Process < ActiveRecord::Base
 
   def interrupted?
     self.class.uncached do
-      item = self.class.find_by_id(id, select: 'interrupt')
+      item = self.class.find_by(id: id, select: 'interrupt')
       self.interrupt = item.interrupt
       return item.interrupt.blank? ? nil : item.interrupt
     end

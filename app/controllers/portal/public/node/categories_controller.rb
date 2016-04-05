@@ -4,7 +4,7 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
 
   def pre_dispatch
     return http_error(404) unless content = Page.current_node.content
-    return http_error(404) unless @content = Portal::Content::Base.find_by_id(content.id)
+    return http_error(404) unless @content = Portal::Content::Base.find_by(id: content.id)
     @entries_uri = @content.public_uri('Portal::FeedEntry')
 
     @limit = 50

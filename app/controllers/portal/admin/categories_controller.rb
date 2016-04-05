@@ -3,29 +3,28 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    # default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
 
     if params[:parent] == '0'
       @parent = Portal::Category.new(level_no: 0)
       @parent.id = 0
     else
-      @parent = Portal::Category.new.find(params[:parent])
+      @parent = Portal::Category.find(params[:parent])
     end
   end
 
   def index
-    item = Portal::Category.new # .readable
-    item.and :parent_id, @parent
-    item.and :content_id, @content
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Portal::Category
+             .where(parent_id: @parent)
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Portal::Category.new.find(params[:id])
+    @item = Portal::Category.find(params[:id])
     _show @item
   end
 
@@ -43,13 +42,13 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Portal::Category.new.find(params[:id])
+    @item = Portal::Category.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Portal::Category.new.find(params[:id])
+    @item = Portal::Category.find(params[:id])
     _destroy @item
   end
 end

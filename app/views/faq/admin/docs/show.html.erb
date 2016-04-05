@@ -59,7 +59,7 @@
   <tr>
     <th>新着情報表示</th>
     <td colspan="3">
-      <%= safe{@item.recent_status.name} %>
+      <%= safe{@item.recent_state_text} %>
     </td>
   </tr>
 </table>
@@ -81,7 +81,7 @@
 <table class="show">
   <tr>
     <th><%= @item.locale(:agent_state) %></th>
-    <td><%= @item.agent_status.name %></td>
+    <td><%= @item.agent_state_text %></td>
   </tr>
 </table>
 

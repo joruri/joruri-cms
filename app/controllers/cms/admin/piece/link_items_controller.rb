@@ -44,4 +44,10 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
     @item = Cms::PieceLinkItem.find(params[:id])
     _destroy @item
   end
+  
+  private
+
+  def link_item_params
+    params.require(:item).permit(:state, :name, :uri, :target, :sort_no)
+  end
 end

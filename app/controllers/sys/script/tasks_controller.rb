@@ -4,7 +4,7 @@ class Sys::Script::TasksController < ApplicationController
     task = Sys::Task.new
     task.and :process_at, '<=', Time.now + (60 * 5) # before 5 min
     task.and :process_at, '>', (Date.today << 1)
-    tasks = task.find(:all, order: :process_at)
+    tasks = task.all.order(:process_at)
 
     Script.total tasks.size
 
@@ -18,7 +18,7 @@ class Sys::Script::TasksController < ApplicationController
         end
 
         model = unid.model.underscore.pluralize
-        item  = eval(unid.model).find_by_unid(unid.id)
+        item  = eval(unid.model).find_by(unid: unid.id)
 
         model = 'cms/nodes' if model == 'cms/model/node/pages' # for v1.1.7
 

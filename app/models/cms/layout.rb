@@ -53,13 +53,12 @@ class Cms::Layout < ActiveRecord::Base
   }
 
   def self.find_contains_piece_name(name)
-    item = new
-    item.and Condition.new do |cond|
-      cond.or :body, 'LIKE', "%[[piece/#{name}]]%"
-      cond.or :mobile_body, 'LIKE', "%[[piece/#{name}]]%"
-      cond.or :smart_phone_body, 'LIKE', "%[[piece/#{name}]]%"
-    end
-    item.find(:all, order: 'concept_id, name')
+    where(
+      self.arel_table[:body].matches("%[[piece/#{name}]]%")
+      .or(self.arel_table[:mobile_body].matches("%[[piece/#{name}]]%"))
+      .or(self.arel_table[:smart_phone_body].matches("%[[piece/#{name}]]%"))
+    )
+    .order(:concept_id, :name)
   end
 
   def states
@@ -71,7 +70,7 @@ class Cms::Layout < ActiveRecord::Base
   end
 
   def node_is(node)
-    node = Cms::Node.find(:first, conditions: { id: node }) if node.class != Cms::Node
+    node = Cms::Node.find_by(id: node) if node.class != Cms::Node
     self.and :id, node.inherited_layout.id if node
   end
 

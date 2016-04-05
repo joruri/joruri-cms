@@ -11,7 +11,7 @@
     <td><%= safe{@item.content_name} %></td>
   </tr><tr>
     <th><%= @item.locale(:model) %></th>
-    <td><%= @item.model_name(:short) %></td>
+    <td><%= @item.module_name(:short) %></td>
   </tr><tr>
     <th><%= @item.locale(:name) %></th>
     <td><%= f.text_field :name, :class => 'id' %></td>

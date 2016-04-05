@@ -8,7 +8,8 @@ class Cms::DataFile < ActiveRecord::Base
   include Cms::Model::Rel::Concept
   include Cms::Model::Auth::Concept
 
-  belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+  include StateText
+
   belongs_to :concept, foreign_key: :concept_id, class_name: 'Cms::Concept'
   belongs_to :site, foreign_key: :site_id, class_name: 'Cms::Site'
   belongs_to :node, foreign_key: :node_id, class_name: 'Cms::DataFileNode'
@@ -34,8 +35,7 @@ class Cms::DataFile < ActiveRecord::Base
         rel = rel.where(data_files[:node_id].eq(v))
       when 's_name_or_title'
         rel = rel.where(data_files[:title].matches("%#{v}%")
-          .or(data_files[:name].matches("%#{v}%"))
-                       )
+                        .or(data_files[:name].matches("%#{v}%")))
       end
     end if params.size != 0
 
@@ -70,11 +70,6 @@ class Cms::DataFile < ActiveRecord::Base
     "#{site.full_uri}#{public_thumbnail_uri.sub(/^\//, '')}"
   end
 
-  def public
-    self.and :state, 'public'
-    self
-  end
-
   def publishable?
     return false unless editable?
     !public?
@@ -94,16 +89,18 @@ class Cms::DataFile < ActiveRecord::Base
   end
 
   def duplicated?
-    file = self.class.new
-    file.and :id, '!=', id if id
-    file.and :concept_id, concept_id
-    file.and :name, name
+    files = self.class.where(concept_id: concept_id)
+                      .where(name: name)
+
+    files = files.where.not(id: id) if id
+
     if node_id
-      file.and :node_id, node_id
+      files = files.where(node_id: node_id)
     else
-      file.and :node_id, 'IS', nil
+      files = files.where(node_id: nil)
     end
-    !file.find(:first).nil?
+
+    !files.empty?
   end
 
   private

@@ -5,26 +5,24 @@ class Tourism::Admin::SpotsController < Cms::Controller::Admin::Base
   helper Tourism::FormHelper
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
-    # default_url_options[:content] = @content
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    item = Tourism::Spot.new # .public#.readable
-    # item.public unless Core.user.has_auth?(:manager)
-    item.and :content_id, @content.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
-    @items = item.find(:all)
+    @items = Tourism::Spot
+             .where(content_id: @content.id)
+             .search(params)
+             .order(params[:sort], updated_at: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Tourism::Spot.new.find(params[:id])
-    # return error_auth unless @item.readable?
+    @item = Tourism::Spot.find(params[:id])
 
     _show @item
   end
@@ -52,7 +50,7 @@ class Tourism::Admin::SpotsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Tourism::Spot.new.find(params[:id])
+    @item = Tourism::Spot.find(params[:id])
     @item.attributes = params[:item]
 
     @item.set_embedded_file_option :image_file_id,
@@ -69,7 +67,7 @@ class Tourism::Admin::SpotsController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Tourism::Spot.new.find(params[:id])
+    @item = Tourism::Spot.find(params[:id])
     _destroy @item
   end
 end

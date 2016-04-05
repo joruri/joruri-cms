@@ -33,7 +33,11 @@ module Sys::Model::Rel::Creator
   def save_creator
     return false unless unid
 
-    return true unless @creator_ids || !creator && !creator.user_id.blank?
+    unless @creator_ids
+      if creator && !creator.user_id.blank?
+        return true
+      end
+    end
 
     @creator_ids ||= {}
     group_id = @creator_ids['group_id'] || Core.user_group.id

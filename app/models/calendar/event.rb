@@ -8,49 +8,45 @@ class Calendar::Event < ActiveRecord::Base
   include Cms::Model::Rel::EmbeddedFile
   include Cms::Model::Auth::Concept
 
-  belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+  include StateText
 
-  # embed_file_of :image_file_id
-
-  validates_presence_of :state, :event_date, :title
+  validates :state, :event_date, :title, presence: true
 
   validate :validates_event_date,
            if: %(!event_date.blank? && !event_close_date.blank?)
+
+   scope :event_date_in, ->(sdate, edate) {
+     where(
+       arel_table[:event_date].lt(edate.to_s)
+       .and(arel_table[:event_close_date].gteq(sdate.to_s))
+       .or(arel_table[:event_close_date].eq(nil)
+           .and(arel_table[:event_date].gteq(sdate.to_s))
+           .and(arel_table[:event_date].lt(edate.to_s)))
+     )
+   }
+
+   scope :search, -> (params){
+     rel = all
+     docs = arel_table
+
+     params.each do |n, v|
+       next if v.to_s == ''
+
+       case n
+       when 's_title'
+         rel = rel.where(docs[:title].matches("%#{v}%"))
+       when 's_event_date'
+         rel = rel.where(docs[:event_date].eq(v))
+       end
+     end if params.size != 0
+
+     return rel
+   }
 
   def validates_event_date
     if event_date >= event_close_date
       errors.add :event_close_date, :greater_than, count: locale(:event_date)
       return false
     end
-  end
-
-  def event_date_in(sdate, edate)
-    self.and Condition.new do |c|
-      c.or Condition.new do |c2|
-        c2.and :event_date, '<', edate.to_s
-        c2.and :event_close_date, '>=', sdate.to_s
-      end
-      c.or Condition.new do |c2|
-        c2.and :event_close_date, 'IS', nil
-        c2.and :event_date, '>=', sdate.to_s
-        c2.and :event_date, '<', edate.to_s
-      end
-    end
-    self
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_event_date'
-        self.and :event_date, v
-      when 's_title'
-        and_keywords v, :title
-      end
-    end if params.size != 0
-
-    self
   end
 end

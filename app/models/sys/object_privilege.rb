@@ -37,8 +37,7 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
   end
 
   def privileges
-    cond = { role_id: role_id, item_unid: item_unid }
-    self.class.find(:all, conditions: cond, order: :action)
+    self.class.where(role_id: role_id, item_unid: item_unid).order(:action)
   end
 
   def actions
@@ -75,7 +74,8 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
     values = in_actions.clone
 
     cond = { role_id: role_id, item_unid: (item_unid_was || item_unid) }
-    old_privileges = self.class.find(:all, conditions: cond, order: :action)
+    old_privileges = self.class.find.where(cond).order(:action)
+
     old_privileges.each do |priv|
       if values.index(priv.action)
         if item_unid != priv.item_unid

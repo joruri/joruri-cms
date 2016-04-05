@@ -5,7 +5,7 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Newsletter::Content::Base.find_by_id(params[:content])
+    return error_auth unless @content = Newsletter::Content::Base.find_by(id: params[:content])
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end

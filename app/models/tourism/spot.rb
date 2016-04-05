@@ -68,7 +68,7 @@ class Tourism::Spot < ActiveRecord::Base
 
     crumbs = []
 
-    if content = Tourism::Content::Spot.find_by_id(content_id)
+    if content = Tourism::Content::Spot.find_by(id: content_id)
       node  = content.genre_node
       items = genre_items(state: 'public')
       if node && items.size > 0
@@ -133,7 +133,7 @@ class Tourism::Spot < ActiveRecord::Base
       when 's_id'
         self.and "#{Tourism::Spot.table_name}.id", v
       when 's_genre_id'
-        return self.and(0, 1) unless cate = Tourism::Genre.find_by_id(v)
+        return self.and(0, 1) unless cate = Tourism::Genre.find_by(id: v)
         # return self.genre_in(cate.public_children) if cate.level_no == 1
         genre_is(cate)
         # when 's_genres'
@@ -141,7 +141,7 @@ class Tourism::Spot < ActiveRecord::Base
         # if v.is_a?(Hash)
         # ids = ''
         # v.keys.each do |id|
-        # item = Tourism::Genre.find_by_id(id) || 'x'
+        # item = Tourism::Genre.find_by(id: id) || 'x'
         # ids += self.class.new.genre_is(item).condition.where[1] if item
         # end
         # ids = ids.split(/[^0-9]+/).uniq
@@ -149,7 +149,7 @@ class Tourism::Spot < ActiveRecord::Base
         # end
         # self.and :genre_ids, 'REGEXP', "(^| )(#{ids.join('|')})( |$)"
       when 's_area_id'
-        return self.and(0, 1) unless area = Tourism::Area.find_by_id(v)
+        return self.and(0, 1) unless area = Tourism::Area.find_by(id: v)
         # return self.area_is(area.public_children) if area.level_no == 1
         area_is(area)
         # when 's_areas'
@@ -157,7 +157,7 @@ class Tourism::Spot < ActiveRecord::Base
         # if v.is_a?(Hash)
         # ids = ''
         # v.keys.each do |id|
-        # item = Tourism::Area.find_by_id(id) || 'x'
+        # item = Tourism::Area.find_by(id: id) || 'x'
         # ids += self.class.new.area_is(item).condition.where[1] if item
         # end
         # ids = ids.split(/[^0-9]+/).uniq

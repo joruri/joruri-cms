@@ -9,11 +9,12 @@ class Cms::Site < ActiveRecord::Base
   include StateText
 
   has_many :concepts, -> { order(:name, :id) }, foreign_key: :site_id,
-                                                class_name: 'Cms::Concept', dependent: :destroy
-  has_many   :contents, -> { order(:name, :id) }, foreign_key: :site_id,
-                                                  class_name: 'Cms::Content'
-  has_many   :settings, -> { order(:name, :sort_no) }, foreign_key: :site_id,
-                                                       class_name: 'Cms::SiteSetting'
+           class_name: 'Cms::Concept', dependent: :destroy
+  has_many :contents, -> { order(:name, :id) }, foreign_key: :site_id,
+           class_name: 'Cms::Content'
+  has_many :settings, -> { order(:name, :sort_no) }, foreign_key: :site_id,
+           class_name: 'Cms::SiteSetting'
+  belongs_to :root_node, foreign_key: :node_id, class_name: 'Cms::Node'
 
   validates :state, :name, :full_uri, presence: true
   validate :validate_attributes
@@ -54,10 +55,6 @@ class Cms::Site < ActiveRecord::Base
     !mobile_full_uri.blank?
   end
 
-  def root_node
-    Cms::Node.find_by(id: node_id)
-  end
-
   def related_sites(options = {})
     sites = []
     related_site.to_s.split(/(\r\n|\n)/).each do |line|
@@ -72,7 +69,7 @@ class Cms::Site < ActiveRecord::Base
   end
 
   def self.find_by_script_uri(script_uri)
-    find = proc do |_base|
+    find = Proc.new do |_base|
       items = Cms::Site.published
 
       items = items.where(
@@ -81,7 +78,7 @@ class Cms::Site < ActiveRecord::Base
         .or(arel_table[:mobile_full_uri].matches("http://#{_base}%"))
       )
 
-      return items.order(:id).first
+      items.order(:id).first
     end
 
     ## dir

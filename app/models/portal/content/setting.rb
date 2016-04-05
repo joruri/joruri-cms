@@ -20,7 +20,7 @@ class Portal::Content::Setting < Cms::ContentSetting
   def config_options
     case name
     when 'doc_content_id'
-      contents = Core.site.contents.find(:all, conditions: { model: 'Article::Doc' })
+      contents = Core.site.contents.where(model: 'Article::Doc')
       return contents.collect { |c| [c.name, c.id.to_s] }
     end
     super
@@ -30,7 +30,7 @@ class Portal::Content::Setting < Cms::ContentSetting
     unless value.blank?
       case name
       when 'doc_content_id'
-        content = Cms::Content.find_by_id(value)
+        content = Cms::Content.find_by(id: value)
         return content.name if content
       end
     end

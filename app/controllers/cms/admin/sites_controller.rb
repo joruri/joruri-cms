@@ -27,7 +27,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::Site.new(params[:item])
+    @item = Cms::Site.new(site_params)
     @item.state = 'public'
     _create @item do
       make_concept(@item)
@@ -38,7 +38,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
 
   def update
     @item = Cms::Site.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = site_params
     _update @item do
       make_node(@item)
     end
@@ -99,5 +99,13 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
 
     item.node_id = node.id
     item.save
+  end
+
+  private
+
+  def site_params
+    params.require(:item).permit(
+      :name, :full_uri, :alias_full_uri, :mobile_full_uri, :admin_full_uri,
+      :related_site, in_creator: [:group_id, :user_id])
   end
 end

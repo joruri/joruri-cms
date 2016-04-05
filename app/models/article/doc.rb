@@ -37,18 +37,17 @@ class Article::Doc < ActiveRecord::Base
 
   before_validation :set_inquiry_email_presence
 
-  validates_presence_of :title
-  validates_uniqueness_of :name, scope: :content_id,
-                                 if: %(!replace_page?)
-
-  validates_presence_of :state, :recent_state, :list_state, :language_id,
-                        if: %(state == "recognize")
-  validates_length_of :title, maximum: 200,
-                              if: %(state == "recognize")
-  validates_length_of :body, maximum: 100_000,
-                             if: %(state == "recognize")
-  validates_length_of :mobile_body, maximum: 10_000,
-                                    if: %(state == "recognize")
+  validates :title, presence: true
+  validates :name, uniqueness: { scope: :content_id },
+            if: %(!replace_page?)
+  validates :state, :recent_state, :list_state, :language_id, presence: true,
+            if: %(state == "recognize")
+  validates :title, length: { maximum: 200 },
+            if: %(state == "recognize")
+  validates :body, length: { maximum: 100_000 },
+            if: %(state == "recognize")
+  validates :mobile_body, length: { maximum: 10_000 },
+            if: %(state == "recognize")
   validate :validate_word_dictionary,
            if: %(state == "recognize")
   validate :validate_platform_dependent_characters,
@@ -80,7 +79,7 @@ class Article::Doc < ActiveRecord::Base
   }
 
   scope :visible_in_recent, -> {
-    where(language_id: 1).where(recent_state: 'visible')
+    where(language_id: 1, recent_state: 'visible')
   }
 
   scope :visible_in_list, -> {
@@ -94,35 +93,37 @@ class Article::Doc < ActiveRecord::Base
 
     rel = rel.where(
       arel_table[:event_date].lt(edate.to_s)
-        .and(arel_table[:event_close_date].gteq(sdate.to_s))
-      .or(
-        arel_table[:event_close_date].eq(nil)
+      .and(arel_table[:event_close_date].gteq(sdate.to_s))
+      .or(arel_table[:event_close_date].eq(nil)
           .and(arel_table[:event_date].gteq(sdate.to_s))
-          .and(arel_table[:event_date].lt(edate.to_s))
-      )
+          .and(arel_table[:event_date].lt(edate.to_s)))
     )
 
     rel
   }
 
   scope :event_date_is, ->(options = {}) {
-    self.and :language_id, 1
-    self.and :event_state, 'visible'
-    self.and :event_date, 'IS NOT', nil
+    rel = where(language_id: 1)
+          .where(event_state: 'visible')
+          .where(event_date: nil)
 
     if options[:year] && options[:month]
       sdate = Date.new(options[:year], options[:month], 1)
       edate = sdate >> 1
-      self.and :event_date, '>=', sdate
-      self.and :event_date, '<', edate
+      rel = rel.where(
+        arel_table[:event_date].gteq(sdate.to_s)
+        .and(arel_table[:event_date].lt(edate.to_s))
+      )
     elsif options[:year]
       sdate = Date.new(options[:year], 1, 1)
       edate = sdate >> 12
-      self.and :event_date, '>=', sdate
-      self.and :event_date, '<', edate
+      rel = rel.where(
+        arel_table[:event_date].gteq(sdate.to_s)
+        .and(arel_table[:event_date].lt(edate.to_s))
+      )
     end
 
-    self
+    rel
   }
 
   scope :tag_is, ->(tag) {
@@ -140,47 +141,78 @@ class Article::Doc < ActiveRecord::Base
   }
 
   scope :group_is, ->(group) {
-    conditions = []
+    rel = all
 
     if group.unit.size > 0
-      join :creator
-      doc = self.class.new
-      doc.unit_is(group.unit_items)
-      conditions << doc.condition
+      joins(:creator)
+      rel = rel.unit_is(group.unit_items)
     end
+
     if group.category.size > 0
-      doc = self.class.new
-      doc.category_is(group.category_items)
-      conditions << doc.condition
+      rel = rel.category_is(group.category_items)
     end
+
     if group.attribute.size > 0
-      doc = self.class.new
-      doc.attribute_is(group.attribute_items)
-      conditions << doc.condition
+      rel = rel.attribute_is(group.attribute_items)
     end
+
     if group.area.size > 0
-      doc = self.class.new
-      doc.area_is(group.area_items)
-      conditions << doc.condition
+      rel = rel.area_is(group.area_items)
     end
 
-    condition = Condition.new
-    if group.condition == 'and'
-      conditions.each { |c| condition.and(c) if c.where }
-    else
-      conditions.each { |c| condition.or(c) if c.where }
-    end
+    rel
+  }
 
-    self.and condition if condition.where
-    self
+  scope :search, -> (params){
+    rel = all
+
+    docs = arel_table
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(id: v)
+      when 's_section_id'
+        sec = Article::Unit.find_by(id: v)
+        return rel.where(0, 1) unless sec
+        return rel.department_is(sec) if sec.level_no == 2
+        rel = rel.unit_is(sec)
+      when 's_category_id'
+        cate = Article::Category.find_by(id: v)
+        return rel.where(0, 1) unless cate
+        rel = rel.category_is(cate)
+      when 's_attribute_id'
+        rel = rel.attribute_is(v)
+      when 's_area_id'
+        area = Article::Area.find_by(id: v)
+        return rel.where(0, 1) unless area
+        return rel.area_is(area.public_children) if area.level_no == 1
+        rel = rel.area_is(area)
+      when 's_title'
+        rel = rel.where(docs[:title].matches("%#{v}%"))
+      when 's_keyword'
+        rel = rel.where(docs[:title].matches("%#{v}%")
+                        .or(docs[:body].matches("%#{v}%")))
+      when 's_affiliation_name'
+        creators = Sys::Creator.arel_table
+        groups = Sys::Group.arel_table
+
+        rel = rel.joins(creator: [:group])
+                 .where(groups[:name].matches("%#{v}%"))
+      end
+    end if params.size != 0
+
+    return rel
   }
 
   def concept
-    concept_id ? Cms::Concept.find_by_id(concept_id) : nil
+    concept_id ? Cms::Concept.find_by(id: concept_id) : nil
   end
 
   def layout
-    layout_id ? Cms::Layout.find_by_id(layout_id) : nil
+    layout_id ? Cms::Layout.find_by(id: layout_id) : nil
   end
 
   def validates_event_date
@@ -327,7 +359,7 @@ class Article::Doc < ActiveRecord::Base
   def bread_crumbs(doc_node)
     crumbs = []
 
-    if content = Article::Content::Doc.find_by_id(content_id)
+    if content = Article::Content::Doc.find_by(id: content_id)
       node = content.unit_node
       item = unit
       if node && item && item.web_state == 'public'
@@ -370,50 +402,6 @@ class Article::Doc < ActiveRecord::Base
     end
     Cms::Lib::BreadCrumbs.new(crumbs)
   end
-
-  scope :search, -> (params){
-    rel = all
-
-    docs = arel_table
-
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        rel = rel.where(id: v)
-      when 's_section_id'
-        sec = Article::Unit.find_by(id: v)
-        return rel.where(0, 1) unless sec
-        return rel.department_is(sec) if sec.level_no == 2
-        rel = rel.unit_is(sec)
-      when 's_category_id'
-        cate = Article::Category.find_by(id: v)
-        return rel.where(0, 1) unless cate
-        rel = rel.category_is(cate)
-      when 's_attribute_id'
-        rel = rel.attribute_is(v)
-      when 's_area_id'
-        area = Article::Area.find_by(id: v)
-        return rel.where(0, 1) unless area
-        return rel.area_is(area.public_children) if area.level_no == 1
-        rel = rel.area_is(area)
-      when 's_title'
-        rel = rel.where(docs[:title].matches("%#{v}%"))
-      when 's_keyword'
-        rel = rel.where(docs[:title].matches("%#{v}%")
-                        .or(docs[:body].matches("%#{v}%")))
-      when 's_affiliation_name'
-        creators = Sys::Creator.arel_table
-        groups = Sys::Group.arel_table
-
-        rel = rel.joins(creator: [:group])
-                 .where(groups[:name].matches("%#{v}%"))
-      end
-    end if params.size != 0
-
-    return rel
-  }
 
   def publish(content, _options = {})
     @save_mode = :publish

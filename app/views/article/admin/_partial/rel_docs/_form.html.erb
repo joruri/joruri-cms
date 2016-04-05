@@ -2,9 +2,8 @@
 
 docs = Article::Doc.published.where(content_id: @content.id)
 docs = docs.where.not(id: item.id) if item.id
-docs = docs.order(published_at: :desc).collect do |c|
-        [ truncate(c.title, :length => 50), c.id ]
-       end
+docs = docs.order(published_at: :desc)
+docs = docs.collect{|c| [ truncate(c.title, :length => 50), c.id] }
 
 %><table class="show">
   <tr>

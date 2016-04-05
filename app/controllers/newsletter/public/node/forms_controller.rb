@@ -3,7 +3,7 @@ class Newsletter::Public::Node::FormsController < Cms::Controller::Public::Base
   def pre_dispatch
     return http_error(404) unless content = Page.current_node.content
 
-    @content     = Newsletter::Content::Base.find_by_id(content.id)
+    @content     = Newsletter::Content::Base.find_by(id: content.id)
     @node        = Page.current_node
     @node_uri    = @node.public_uri
     @use_captcha = @content.setting_value(:use_captcha) == '1'

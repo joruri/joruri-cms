@@ -31,8 +31,8 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
     sort_no = 1
 
     max_sort_no = Enquete::FormColumn
-              .where(form_id: @form.id)
-              .maximum(:sort_no)
+                  .where(form_id: @form.id)
+                  .maximum(:sort_no)
 
     sort_no = (max_sort_no || 0) + 1 if max_sort_no
 
@@ -42,7 +42,7 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Enquete::FormColumn.new(params[:item])
+    @item = Enquete::FormColumn.new(form_column_params)
     @item.form_id = @form.id
 
     _create @item
@@ -50,7 +50,7 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
 
   def update
     @item = Enquete::FormColumn.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = form_column_params
 
     _update(@item)
   end
@@ -60,5 +60,12 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
     _destroy @item
   end
 
-  protected
+  private
+
+  def form_column_params
+    params.require(:item).permit(
+      :state, :name, :body, :column_type, :options, :required, :column_style,
+      :sort_no, in_creator: [:group_id, :user_id]
+    )
+  end
 end

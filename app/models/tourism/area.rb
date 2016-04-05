@@ -9,7 +9,8 @@ class Tourism::Area < ActiveRecord::Base
   include Cms::Model::Rel::Concept
   include Cms::Model::Auth::Content
 
-  belongs_to :status,  foreign_key: :state,      class_name: 'Sys::Base::Status'
+  include StateText
+
   belongs_to :parent,  foreign_key: :parent_id,  class_name: to_s
   belongs_to :content, foreign_key: :content_id, class_name: 'Cms::Content'
   belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
@@ -17,13 +18,13 @@ class Tourism::Area < ActiveRecord::Base
   has_many   :children, foreign_key: :parent_id, class_name: to_s,
                         order: :name, dependent: :destroy
 
-  validates_presence_of :state, :name, :title
-  validates_uniqueness_of :name, scope: [:content_id]
-  validates_length_of :title, maximum: 50
+  validates :state, :name, :title, presence: true
+  validates :name, uniqueness: { scope: [:content_id] }
+  validates :title, length: { maximum: 50 }
 
   def self.root_items(conditions = {})
     conditions = conditions.merge(parent_id: 0, level_no: 1)
-    find(:all, conditions: conditions, order: :sort_no)
+    where(conditions).order(:sort_no)
   end
 
   def public_path

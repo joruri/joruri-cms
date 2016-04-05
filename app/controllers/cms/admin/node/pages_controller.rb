@@ -1,10 +1,11 @@
 # encoding: utf-8
 class Cms::Admin::Node::PagesController < Cms::Admin::Node::BaseController
   def edit
-    @item = model.new.find(params[:id])
-    # return error_auth unless @item.readable?
+    @item = model.find(params[:id])
 
-    @item.in_inquiry = @item.default_inquiry(state: 'hidden') unless @item.inquiry
+    unless @item.inquiry
+      @item.in_inquiry = @item.default_inquiry(state: 'hidden')
+    end
 
     @item.name ||= 'index.html'
 
@@ -12,11 +13,14 @@ class Cms::Admin::Node::PagesController < Cms::Admin::Node::BaseController
   end
 
   def update
-    @item = model.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = model.find(params[:id])
+
+    @item.attributes = page_params
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
     @item.state      = 'public'    if params[:commit_public]
+
+dump @item
 
     _update @item do
       send_recognition_request_mail(@item) if @item.state == 'recognize'
@@ -130,5 +134,18 @@ class Cms::Admin::Node::PagesController < Cms::Admin::Node::BaseController
               to: item.recognition.user.email,
               subject: "ページ 最終承認完了メール | #{item.site.name}",
               body: body.join)
+  end
+
+  private
+
+  def page_params
+    params.require(:item).permit(
+      :concept_id, :content_id, :layout_id, :model, :parent_id, :route_id,
+      :name, :title, :body, :mobile_title, :mobile_body, :published_at,
+      :in_recognizer_ids,
+      in_tasks: [:publish, :close],
+      in_inquiry: [:state, :group_id, :charge, :tel, :fax, :email],
+      in_creator: [:group_id, :user_id]
+    )
   end
 end

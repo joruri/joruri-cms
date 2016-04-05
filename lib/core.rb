@@ -129,12 +129,12 @@ class Core
       if i == 0
         current = Cms::Node.find(Page.site.node_id)
       else
-        n = Cms::Node.new
-        n.and :site_id, Page.site.id
-        n.and :parent_id, node.id
-        n.and :name, paths[i]
-        n.public if @@mode != 'preview'
-        current = n.find(:first, order: 'id ASC') # at unique node name
+        n = Cms::Node
+            .where(site_id: Page.site.id)
+            .where(parent_id: node.id)
+            .where(name: paths[i])
+        n = n.published if @@mode != 'preview'
+        current = n.order(id: :desc).first
       end
       break unless current
 

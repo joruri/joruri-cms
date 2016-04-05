@@ -36,14 +36,14 @@ class Calendar::Admin::EventsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Calendar::Event.new(params[:item])
+    @item = Calendar::Event.new(events_params)
     @item.content_id = @content.id
     _create @item
   end
 
   def update
-    @item = Calendar::Event.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Calendar::Event.find(params[:id])
+    @item.attributes = events_params
     _update(@item)
   end
 
@@ -52,5 +52,11 @@ class Calendar::Admin::EventsController < Cms::Controller::Admin::Base
     _destroy @item
   end
 
-  protected
+  private
+
+  def events_params
+    params.require(:item).permit(
+      :state, :title, :body, :event_date, :event_close_date, :event_uri,
+      in_creator: [:group_id, :user_id])
+  end
 end

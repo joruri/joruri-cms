@@ -18,7 +18,7 @@ class Cms::Public::Node::PreviewController < Cms::Controller::Public::Base
     Page.layout       = layout
 
     if params[:piece_id]
-      piece = Cms::Piece.find_by_id(params[:piece_id])
+      piece = Cms::Piece.find_by(id: params[:piece_id])
       return http_error(404) if piece && !piece.readable?
     end
 

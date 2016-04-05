@@ -11,13 +11,16 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
   end
 
   def index
-    @items = Cms::SiteSetting::EmergencyLayout.current_site
-                                              .where(name: 'emergency_layout').order(:sort_no)
+    @items = Cms::SiteSetting::EmergencyLayout
+             .current_site
+             .where(name: 'emergency_layout')
+             .order(:sort_no)
   end
 
   def show
-    @item = Cms::SiteSetting::EmergencyLayout.current_site
-                                             .find_by(id: params[:id])
+    @item = Cms::SiteSetting::EmergencyLayout
+            .current_site
+            .find_by(id: params[:id])
     @item.value = @item.value.to_i if @item.value
 
     return error_auth unless @item.readable?
@@ -39,26 +42,31 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::SiteSetting::EmergencyLayout.current_site
-                                             .find_by(id: params[:id])
+    @item = Cms::SiteSetting::EmergencyLayout
+            .current_site
+            .find_by(id: params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Cms::SiteSetting::EmergencyLayout.current_site
-                                             .find_by(id: params[:id])
+    @item = Cms::SiteSetting::EmergencyLayout
+            .current_site
+            .find_by(id: params[:id])
     _destroy @item
   end
 
   def change
-    @item = Cms::SiteSetting::EmergencyLayout.current_site
-                                             .find_by(id: params[:id])
+    @item = Cms::SiteSetting::EmergencyLayout
+            .current_site
+            .find_by(id: params[:id])
 
     @item.errors.add :base, "レイアウトが登録されていません。" if @item.value.blank?
-    unless layout = Cms::Layout.find_by_id(@item.value)
+
+    unless layout = Cms::Layout.find_by(id: @item.value)
       @item.errors.add :base, "レイアウトが見つかりません。"
     end
+
     @item.errors.add :base, "トップページが見つかりません。" unless @node
 
     if @item.errors.size == 0

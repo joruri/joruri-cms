@@ -25,7 +25,7 @@ class Newsletter::Script::RequestsController < ApplicationController
 
   def mail_from(content_id)
     return @mail_from[content_id] if @mail_from[content_id]
-    item = Newsletter::Content::Base.find_by_id(content_id)
+    item = Newsletter::Content::Base.find_by(id: content_id)
     addr = item.setting_value('sender_address')
     @mail_from[content_id] = !addr.blank? ? addr : 'webmaster@' + item.site.full_uri.gsub(/^.*?\/\/(.*?)(:|\/).*/, '\\1')
   rescue

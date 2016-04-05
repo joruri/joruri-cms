@@ -7,17 +7,16 @@ class Sys::Admin::LanguagesController < Cms::Controller::Admin::Base
   end
 
   def index
-    item = Sys::Language.new # .readable
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Sys::Language
+             .all
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Sys::Language.new.find(params[:id])
-    # return error_auth unless @item.readable?
-
+    @item = Sys::Language.find(params[:id])
     _show @item
   end
 
@@ -31,13 +30,13 @@ class Sys::Admin::LanguagesController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Sys::Language.new.find(params[:id])
+    @item = Sys::Language.find(params[:id])
     @item.attributes = params[:item]
     _update @item
   end
 
   def destroy
-    @item = Sys::Language.new.find(params[:id])
+    @item = Sys::Language.find(params[:id])
     _destroy @item
   end
 end

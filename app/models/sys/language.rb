@@ -4,9 +4,9 @@ class Sys::Language < ActiveRecord::Base
   include Sys::Model::Base::Config
   include Sys::Model::Auth::Manager
 
-  belongs_to :status, foreign_key: :state, class_name: 'Sys::Base::Status'
+  include StateText
 
-  validates_presence_of :state, :name, :title
+  validates :state, :name, :title, presence: true
 
   def states
     [%w(有効 enabled), %w(無効 disabled)]

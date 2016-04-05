@@ -9,8 +9,8 @@ class Tourism::Public::Node::SearchSpotsController < Cms::Controller::Public::Ba
   end
 
   def index
-    @s_genre = Tourism::Genre.find_by_id(params[:s_genre_id]) if params[:s_genre_id]
-    @s_area  = Tourism::Area.find_by_id(params[:s_area_id]) if params[:s_area_id]
+    @s_genre = Tourism::Genre.find_by(id: params[:s_genre_id]) if params[:s_genre_id]
+    @s_area  = Tourism::Area.find_by(id: params[:s_area_id]) if params[:s_area_id]
 
     item = Tourism::Spot.new.public
     item.and :content_id, @content.id

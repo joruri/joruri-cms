@@ -8,16 +8,14 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
 
   def pre_dispatch_node
     return error_auth unless Core.user.has_auth?(:designer)
-    id      = params[:parent] == '0' ? Core.site.node_id : params[:parent]
-    @parent = Cms::Node.new.find(id)
+    id = params[:parent] == '0' ? Core.site.node_id : params[:parent]
+    @parent = Cms::Node.find(id)
   end
 
   def model
-    # @@_models[self.class] ? @@_models[self.class] : Cms::Node
     return @model_class if @model_class
     mclass = '::' + self.class.to_s.gsub(/^(\w+)::Admin/, '\1').gsub(/Controller$/, '').singularize
-    eval(mclass)
-    @model_class = eval(mclass)
+    @model_class = mclass.constantize
   rescue
     @model_class = Cms::Node
   end
@@ -27,7 +25,7 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = model.new.find(params[:id])
+    @item = model.find(params[:id])
     _show @item
   end
 
@@ -40,8 +38,8 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = model.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = model.find(params[:id])
+    @item.attributes = base_params
     @item.state      = params[:commit_public] ? 'public' : 'closed'
 
     _update @item do
@@ -53,11 +51,20 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = model.new.find(params[:id])
+    @item = model.find(params[:id])
     _destroy @item do
       respond_to do |format|
         format.html { return redirect_to(cms_nodes_path) }
       end
     end
+  end
+
+  private
+
+  def base_params
+    params.require(:item).permit(
+      :concept_id, :layout_id, :name, :parent_id, :route_id,
+      :sitemap_sort_no, :sitemap_state, :title,
+      in_creator: [:group_id, :user_id])
   end
 end

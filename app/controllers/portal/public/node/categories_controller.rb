@@ -3,17 +3,24 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
   include Portal::Controller::Feed
 
   def pre_dispatch
-    return http_error(404) unless content = Page.current_node.content
-    return http_error(404) unless @content = Portal::Content::Base.find_by(id: content.id)
+    content = Page.current_node.content
+    return http_error(404) unless content
+
+    @content = Portal::Content::Base.find_by(id: content.id)
+    return http_error(404) unless @content
+
     @entries_uri = @content.public_uri('Portal::FeedEntry')
 
     @limit = 50
 
     if params[:name]
-      item = Portal::Category.new.public
-      item.and :content_id, @content.id
-      item.and :name, params[:name]
-      return http_error(404) unless @item = item.find(:first)
+      @item = Portal::Category
+              .published
+              .where(content_id: @content.id)
+              .where(name: params[:name])
+              .first
+      return http_error(404) unless @item
+
       Page.current_item = @item
       Page.title        = @item.title
     end
@@ -28,17 +35,19 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
 
     @page = params[:page]
 
-    entry = Portal::FeedEntry.new.public
-    entry.content_id = @content.id
-    entry.agent_filter(request.mobile)
-    entry.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
-    entry.category_is @item
-    entry.page @page, @limit
-    entry.page @page, @limit
-    @entries = entry.find_with_own_docs(@content.doc_content, :groups, item: @item)
+    @entries = Portal::FeedEntry
+               .published
+               .where(content_id: @content.id)
+               .agent_filter(request.mobile)
+               .where(CMS::FeedEntry.arel_table[:content_id].eq(@content.id))
+               .category_is(@item)
+               .find_with_own_docs(@content.doc_content, :groups, item: @item)
+               .paginate(page: @page, per_page: @limit)
     return true if render_feed(@entries)
 
-    return http_error(404) if @entries.current_page > 1 && @entries.current_page > @entries.total_pages
+    if @entries.current_page > 1 && @entries.current_page > @entries.total_pages
+      return http_error(404)
+    end
 
     prev   = nil
     @items = []

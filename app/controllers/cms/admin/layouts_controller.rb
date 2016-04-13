@@ -39,7 +39,7 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::Layout.new.find(params[:id])
+    @item = Cms::Layout.find(params[:id])
     @item.attributes = layouts_params
     _update(@item) do
       @item.put_css_files
@@ -47,7 +47,7 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Cms::Layout.new.find(params[:id])
+    @item = Cms::Layout.find(params[:id])
     _destroy @item
   end
 

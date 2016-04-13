@@ -7,16 +7,13 @@ class Cms::Feed < ActiveRecord::Base
   include Cms::Model::Rel::Content
   include Cms::Model::Auth::Concept
 
-  belongs_to :status,         foreign_key: :state,           class_name: 'Sys::Base::Status'
-  has_many   :entries,        foreign_key: :feed_id,         class_name: 'Cms::FeedEntry',
-                              dependent: :destroy
+  include StateText
 
-  validates_presence_of :name, :title, :uri
+  has_many :entries, foreign_key: :feed_id,
+                     class_name: 'Cms::FeedEntry',
+                     dependent: :destroy
 
-  def public
-    self.and "#{self.class.table_name}.state", 'public'
-    self
-  end
+  validates :name, :title, :uri, presence: true
 
   def safe(alt = nil)
     yield
@@ -58,7 +55,6 @@ class Cms::Feed < ActiveRecord::Base
   end
 
   def update_feed_rss(root)
-    require 'date/format'
     latest = []
 
     channel = root.elements['channel']
@@ -77,8 +73,8 @@ class Cms::Feed < ActiveRecord::Base
         entry_id      = e.elements['link'].text
         entry_updated = (e.elements['pubDate'] || e.elements['dc:date']).text
 
-        cond = { feed_id: id, entry_id: entry_id }
-        if entry = Cms::FeedEntry.find(:first, conditions: cond)
+        entry = Cms::FeedEntry.find_by(feed_id: id, entry_id: entry_id)
+        if entry
           arr = Date._parse(entry_updated, false).values_at(:year, :mon, :mday, :hour, :min, :sec, :zone, :wday)
 
           newt = Time.local(*arr[0..-3]).strftime('%s').to_i
@@ -121,16 +117,14 @@ class Cms::Feed < ActiveRecord::Base
     end
 
     if latest.size > 0
-      cond = Condition.new
-      cond.and 'NOT id', 'IN', latest
-      cond.and :feed_id, id
-      Cms::FeedEntry.destroy_all(cond.where)
+      Cms::FeedEntry.where.not(id: latest)
+                    .where(feed_id: id)
+                    .destroy_all
     end
     errors.size == 0
   end
 
   def update_feed_atom(root)
-    require 'date/format'
     latest = []
 
     ## feed
@@ -152,8 +146,8 @@ class Cms::Feed < ActiveRecord::Base
         entry_id      = e.elements['id'].text
         entry_updated = e.elements['updated'].text
 
-        cond = { feed_id: id, entry_id: entry_id }
-        if entry = Cms::FeedEntry.find(:first, conditions: cond)
+        entry = Cms::FeedEntry.find_by(feed_id: id, entry_id: entry_id)
+        if entry
           arr  = Date._parse(entry_updated, false).values_at(:year, :mon, :mday, :hour, :min, :sec, :zone, :wday)
           newt = Time.local(*arr[0..-3]).strftime('%s').to_i
           oldt = entry.entry_updated.strftime('%s').to_i
@@ -207,10 +201,9 @@ class Cms::Feed < ActiveRecord::Base
     end
 
     if latest.size > 0
-      cond = Condition.new
-      cond.and 'NOT id', 'IN', latest
-      cond.and :feed_id, id
-      Cms::FeedEntry.destroy_all(cond.where)
+      Cms::FeedEntry.where.not(id: latest)
+                    .where(feed_id: id)
+                    .destroy_all
     end
     errors.size == 0
   end

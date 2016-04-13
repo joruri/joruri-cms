@@ -29,7 +29,6 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   def new
     @item = Article::Doc.new(content_id: @content.id,
                              state: 'recognize',
-                             notice_state: 'hidden',
                              recent_state: 'visible',
                              list_state: 'visible',
                              event_state: 'hidden',

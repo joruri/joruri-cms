@@ -1,6 +1,6 @@
 <%
 
-links = @piece.link_items.find(:all, :conditions => {:state => 'public'})
+links = @piece.link_items.where(state: 'public')
 return render(:text => "") if links.size == 0
 
 %><ul>

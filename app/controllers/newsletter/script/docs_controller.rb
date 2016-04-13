@@ -35,7 +35,7 @@ class Newsletter::Script::DocsController < ApplicationController
     ## members
     members = Newsletter::Member
               .where(content_id: @doc.content_id, state: 'enabled')
-              .project(:id, :email, :letter_type)
+              .select(:id, :email, :letter_type)
 
     Script.total members.size
 

@@ -6,7 +6,7 @@ class Sys::Lib::Form::Checker
   def check_link(text)
     @links ||= {}
     begin
-      timeout(20) do
+      Timeout.timeout(20) do
         text.scan(/href="([^"]+)"/i).each do |m|
           uri = m[0]
           uri = ::File.join(Core.site.full_uri, uri) if uri =~ /^\//
@@ -16,7 +16,7 @@ class Sys::Lib::Form::Checker
           @links[uri] = ::Util::Http.exists?(uri) unless @links.key?(uri)
         end
       end
-    rescue TimeoutError
+    rescue Timeout::Error
       @links['Timeout(20sec)'] = false
     end
     @links.index(false) ? false : true

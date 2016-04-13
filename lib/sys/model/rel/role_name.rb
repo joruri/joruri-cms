@@ -33,7 +33,7 @@ module Sys::Model::Rel::RoleName
     in_ids = []
     in_role_name_ids.split(' ').uniq.each { |id| in_ids << id.to_i unless id.blank? }
 
-    Sys::UsersRole.find(:all, conditions: { field => id }).each do |rel|
+    Sys::UsersRole.where(field => id).each do |rel|
       if in_ids.index(rel.role_id)
         in_ids.delete(rel.role_id)
       else

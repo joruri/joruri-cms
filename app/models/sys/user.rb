@@ -52,10 +52,10 @@ class Sys::User < ActiveRecord::Base
   }
 
   def validate_destroy_admin
-    item = self.class.new
-    item.and :auth_no, 5
-    item.and :id, '!=', id
-    return true if item.find(:first)
+    item = self.class.where(auth_no: 5)
+                     .where.not(id: id)
+                     .first
+    return true if item
     false
   end
 
@@ -154,10 +154,8 @@ class Sys::User < ActiveRecord::Base
 
     rids = priv.collect(&:role_id)
 
-    rel = Sys::UsersRole.new
-    rel.and :user_id, id
-    rel.and :role_id, 'IN', rids
-    return true if rel.find(:first)
+    rel = Sys::UsersRole.find_by(user_id: id, role_id: rids)
+    return true if rel
 
     group.has_priv?(action, options) ? true : false
   end
@@ -168,8 +166,7 @@ class Sys::User < ActiveRecord::Base
   end
 
   def self.find_managers
-    cond = { state: 'enabled', auth_no: 5 }
-    find(:all, conditions: cond, order: :account)
+    where(state: 'enabled', auth_no: 5).order(:account)
   end
 
   ## -----------------------------------

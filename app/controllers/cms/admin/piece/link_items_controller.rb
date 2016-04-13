@@ -5,7 +5,7 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
 
-    @piece = Cms::Piece.new.readable.find(params[:piece])
+    @piece = Cms::Piece.readable.find_by(params[:piece])
     return error_auth unless @piece
   end
 
@@ -29,14 +29,14 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::PieceLinkItem.new(params[:item])
+    @item = Cms::PieceLinkItem.new(link_item_params)
     @item.piece_id = @piece.id
     _create @item
   end
 
   def update
     @item = Cms::PieceLinkItem.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = link_item_params
     _update @item
   end
 
@@ -44,7 +44,7 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
     @item = Cms::PieceLinkItem.find(params[:id])
     _destroy @item
   end
-  
+
   private
 
   def link_item_params

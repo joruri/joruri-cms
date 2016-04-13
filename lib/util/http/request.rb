@@ -11,13 +11,13 @@ class Util::Http::Request
     settings = { proxy: Core.proxy(uri) }
 
     begin
-      timeout(limit) do
+      Timeout.timeout(limit) do
         open(uri, settings) do |f|
           status = f.status[0].to_i
           f.each_line { |line| body += line }
         end
       end
-    rescue TimeoutError
+    rescue Timeout::Error
       status = 404
     rescue Exception
       status = 404

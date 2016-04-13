@@ -2,7 +2,7 @@
 class Cms::TalkTask < ActiveRecord::Base
   include Sys::Model::Base
 
-  validates_presence_of :path
+  validates :path, presence: true
 
   before_destroy :remove_file
 

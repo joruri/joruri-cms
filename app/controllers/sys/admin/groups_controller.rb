@@ -6,7 +6,7 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
     return error_auth unless Core.user.has_auth?(:manager)
 
     id = params[:parent] == '0' ? 1 : params[:parent]
-    @parent = Sys::Group.new.find(id)
+    @parent = Sys::Group.find(id)
 
     @groups = Sys::Group
               .readable
@@ -44,7 +44,7 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Sys::Group.new(params[:item])
+    @item = Sys::Group.new(group_params)
     parent = Sys::Group.find_by(id: @item.parent_id)
     @item.level_no = parent ? parent.level_no + 1 : 1
     _create @item
@@ -52,7 +52,7 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
 
   def update
     @item = Sys::Group.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = group_params
     parent = Sys::Group.find_by(id: @item.parent_id)
     @item.level_no = parent ? parent.level_no + 1 : 1
     _update @item
@@ -61,5 +61,13 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
   def destroy
     @item = Sys::Group.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def group_params
+    params.require(:item).permit(
+      :state, :parent_id, :code, :name, :name_en, :ldap, :sort_no,
+      :in_role_name_ids, :web_state, :layout_id, :email, :tel, :outline_uri)
   end
 end

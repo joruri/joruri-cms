@@ -6,7 +6,7 @@
   <tr>
     <th><%= @item.locale(:old_id) %></th>
     <td>
-      <%= f.select_with_tree :old_id, Sys::Group.find(:all, :conditions => {:level_no => 1}, :order => :sort_no),
+      <%= f.select_with_tree :old_id, Sys::Group.where(level_no: 1).order(:sort_no),
         :include_blank => "// 現在の部局から選択" %>
       <input type="submit" name="sync" value="情報を取得" />
     </td>

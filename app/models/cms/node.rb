@@ -17,8 +17,8 @@ class Cms::Node < ActiveRecord::Base
 
   include StateText
 
-  belongs_to :parent,   foreign_key: :parent_id,  class_name: 'Cms::Node'
-  belongs_to :layout,   foreign_key: :layout_id,  class_name: 'Cms::Layout'
+  belongs_to :parent, foreign_key: :parent_id, class_name: 'Cms::Node'
+  belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
 
   has_many   :children, -> { order(:name) }, foreign_key: :parent_id,
              class_name: 'Cms::Node', dependent: :destroy
@@ -126,20 +126,27 @@ class Cms::Node < ActiveRecord::Base
   def inherited_concept(key = nil)
     unless @_inherited_concept
       concept_id = concept_id
+
       parents_tree.each do |r|
         concept_id = r.concept_id if r.concept_id
       end unless concept_id
+
       return nil unless concept_id
-      return nil unless @_inherited_concept = Cms::Concept.find_by(id: concept_id)
+
+      @_inherited_concept = Cms::Concept.find_by(id: concept_id)
+      return nil unless @_inherited_concept
     end
+
     key.nil? ? @_inherited_concept : @_inherited_concept.send(key)
   end
 
   def inherited_layout
     layout_id = layout_id
+
     parents_tree.each do |r|
       layout_id = r.layout_id if r.layout_id
     end unless layout_id
+
     Cms::Layout.find_by(id: layout_id)
   end
 
@@ -155,6 +162,7 @@ class Cms::Node < ActiveRecord::Base
         _tmp << _c
       end
       _nodes[:children] = _tmp
+
       return _nodes
     end
 
@@ -164,10 +172,12 @@ class Cms::Node < ActiveRecord::Base
   def all_nodes_collection(options = {})
     collection = lambda do |current, level|
       title = ''
+
       if level > 0
         (level - 0).times { |_i| title += options[:indent] || '  ' }
         title += options[:child] || ' ' if level > 0
       end
+
       title += current[:item].title
       list = [[title, current[:item].id]]
       return list unless current[:children]
@@ -175,6 +185,7 @@ class Cms::Node < ActiveRecord::Base
       current[:children].each do |child|
         list += collection.call(child, level + 1)
       end
+
       return list
     end
 

@@ -6,7 +6,8 @@ class EntityConversion::Admin::ConvertsController < EntityConversion::Admin::Tes
     return error_auth unless @content = Cms::Content.find(params[:content])
     return error_auth unless Core.user.has_auth?(:manager)
 
-    @log = EntityConversion::Log.find(:first, conditions: { content_id: @content.id, env: :production })
+    @log = EntityConversion::Log.find_by(content_id: @content.id,
+                                         env: :production)
 
     return redirect_to action: 'index' if params[:reset]
   end
@@ -14,7 +15,8 @@ class EntityConversion::Admin::ConvertsController < EntityConversion::Admin::Tes
   protected
 
   def test
-    conv = EntityConversion::Lib::Convertor.factory(:production, content: @content)
+    conv = EntityConversion::Lib::Convertor.factory(:production,
+                                                    content: @content)
     conv.convert
     redirect_to url_for(action: :index)
   end

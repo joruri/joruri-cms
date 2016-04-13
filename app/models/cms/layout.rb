@@ -86,13 +86,19 @@ class Cms::Layout < ActiveRecord::Base
     pieces = []
     piece_names.each do |name|
       if concept
-        piece = Cms::Piece.find(:first, conditions: { name: name, concept_id: concept }, order: :id)
+        piece = Cms::Piece.where(name: name, concept_id: concept)
+                          .order(:id)
+                          .first
       end
       unless piece
-        piece = Cms::Piece.find(:first, conditions: { name: name, concept_id: self.concept }, order: :id)
+        piece = Cms::Piece.where(name: name, concept_id: self.concept)
+                          .order(:id)
+                          .first
       end
       unless piece
-        piece = Cms::Piece.find(:first, conditions: { name: name, concept_id: nil }, order: :id)
+        piece = Cms::Piece.where(name: name, concept_id: nil)
+                          .order(:id)
+                          .first
       end
       pieces << piece if piece
     end

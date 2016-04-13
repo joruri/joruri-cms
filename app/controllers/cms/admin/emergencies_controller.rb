@@ -35,7 +35,7 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::SiteSetting::EmergencyLayout.new(params[:item])
+    @item = Cms::SiteSetting::EmergencyLayout.new(emergency_params)
     @item.site_id = Core.site.id
     @item.name    = 'emergency_layout'
     _create @item
@@ -45,7 +45,7 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
     @item = Cms::SiteSetting::EmergencyLayout
             .current_site
             .find_by(id: params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = emergency_params
     _update @item
   end
 
@@ -100,5 +100,11 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
     uri  = (uri =~ /\?/) ? uri.gsub(/(.*\.html)\?/, '\\1.r?') : "#{uri}.r"
     path = "#{item.public_path}.r"
     item.publish_page(render_public_as_string(uri, site: item.site), path: path, uri: uri, dependent: :ruby)
+  end
+
+  private
+
+  def emergency_params
+    params.require(:item).permit(:value, :sort_no)
   end
 end

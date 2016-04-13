@@ -7,7 +7,7 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
 
     items = Article::Doc.published
     items = items.where(content_id: content_id) if content_id
-    items = items.order(:published_at: :desc).project(:id)
+    items = items.order(published_at: :desc).select(:id)
 
     Script.total items.size
 
@@ -18,12 +18,12 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
       Script.current
 
       begin
-        uri     = "#{item.public_uri}?doc_id=#{item.id}"
-        path    = item.public_path
+        uri  = "#{item.public_uri}?doc_id=#{item.id}"
+        path = item.public_path
         content = render_public_as_string(uri, site: item.content.site)
         if item.rebuild(content, file: publish_files)
           Script.success if item.published?
-          uri     = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
+          uri = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
           content = render_public_as_string(uri, site: item.content.site)
           item.publish_page(content, path: "#{path}.r", uri: uri, dependent: :ruby)
         end

@@ -4,10 +4,11 @@ class Cms::Admin::EmbeddedFilesController < Cms::Controller::Admin::Base
     name  = params[:name]
     name += ".#{params[:format]}" if params[:format]
 
-    item = Cms::EmbeddedFile.new
-    item.and :id, params[:id]
-    item.and :name, name
-    return http_error(404) unless @file = item.find(:first)
+    @file = Cms::EmbeddedFile
+            .where(id: params[:id])
+            .where(name: name)
+            .first
+    return http_error(404) unless @file
 
     path = @file.upload_path
     path = File.dirname(path) + '/thumb.dat' if params[:thumbnail] == true

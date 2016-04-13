@@ -100,36 +100,48 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
       params[:controller] = 'article/public/node/categories'
       texts << "分野/#{@item.node_label}"
       unless params[:attr].blank?
-        attr = Article::Unit.new.public
-        attr.and :name_en, params[:attr]
-        return [] unless @attr = attr.find(:first, order: :sort_no)
+        @attr = Article::Unit
+                .published
+                .where(name_en: params[:attr])
+                .order(:sort_no)
+                .first
+        return [] unless @attr
         texts << "組織/#{@attr.node_label}"
       end
     elsif @item.instance_of?(Article::Unit)
       params[:controller] = 'article/public/node/units'
       texts << "組織/#{@item.node_label}"
       unless params[:attr].blank?
-        attr = Article::Attribute.new.public
-        attr.and :name, params[:attr]
-        return [] unless @attr = attr.find(:first, order: :sort_no)
+        @attr = Article::Attribute
+                .published
+                .where(name: params[:attr])
+                .order(:sort_no)
+                .first
+        return [] unless @attr
         texts << "属性/#{@attr.node_label}"
       end
     elsif @item.instance_of?(Article::Attribute)
       params[:controller] = 'article/public/node/attributes'
       texts << "属性/#{@item.node_label}"
       unless params[:attr].blank?
-        attr = Article::Unit.new.public
-        attr.and :name_en, params[:attr]
-        return [] unless @attr = attr.find(:first, order: :sort_no)
+        @attr = Article::Unit
+                .published
+                .where(name_en: params[:attr])
+                .order(:sort_no)
+                .first
+        return [] unless @attr
         texts << "組織/#{@attr.node_label}"
       end
     elsif @item.instance_of?(Article::Area)
       params[:controller] = 'article/public/node/areas'
       texts << "地域/#{@item.node_label}"
       unless params[:attr].blank?
-        attr = Article::Attribute.new.public
-        attr.and :name, params[:attr]
-        return [] unless @attr = attr.find(:first, order: :sort_no)
+        @attr = Article::Attribute
+                .published
+                .where(name: params[:attr])
+                .order(:sort_no)
+                .first
+        return [] unless @attr
         texts << "属性/#{@attr.node_label}"
       end
     end

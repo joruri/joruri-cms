@@ -54,11 +54,11 @@ class Cms::Controller::Script::Publication < ApplicationController
 
     if ruby
       begin
-        timeout(80) do
+        Timeout.timeout(80) do
           item.publish_page(render_public_as_string(uri, site: site),
                             rel_unid: params[:rel_unid], path: path, uri: uri, site: site, dependent: dep)
         end
-      rescue TimeoutError => e
+      rescue Timeout::Error => e
         Script.error "#{uri} #{e}"
       rescue => e
         Script.error "#{uri} #{e}"
@@ -108,10 +108,10 @@ class Cms::Controller::Script::Publication < ApplicationController
         cond_ruby[:site_id] = params[:site].id
       end
 
-      pub = Sys::Publisher.find(:first, conditions: cond)
+      pub = Sys::Publisher.find_by(cond)
       break unless pub
       pub.destroy
-      pub = Sys::Publisher.find(:first, conditions: cond_ruby)
+      pub = Sys::Publisher.find_by(cond_ruby)
       pub.destroy if pub
     end
   end

@@ -2,6 +2,25 @@
 class Sys::OperationLog < ActiveRecord::Base
   include Sys::Model::Base
 
+  scope :search, ->(params) {
+    rel = all
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(id: v)
+      when 's_user_id'
+        rel = rel.where(user_id: v)
+      when 's_action'
+        rel = rel.where(action: v)
+      end
+    end if params.size != 0
+
+    rel
+  }
+
   def self.log(request, options = {})
     params = request.params
 
@@ -50,23 +69,5 @@ class Sys::OperationLog < ActiveRecord::Base
     end
 
     log.save
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        self.and :id, v
-      when 's_user_id'
-        self.and :user_id, v
-      when 's_action'
-        self.and :action, v
-        # self.and_keywords v, :action
-      end
-    end if params.size != 0
-
-    self
   end
 end

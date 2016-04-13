@@ -17,8 +17,8 @@ class Cms::Admin::Content::SettingsController < Cms::Controller::Admin::Base
                  .gsub(/^(\w+)::Admin/, '\1')
                  .gsub(/Controller$/, '')
                  .singularize
-    Object.const_get(mclass)
-    @model_class = Object.const_get(mclass)
+    mclass.constantize
+    @model_class = mclass.constantize
   rescue
     @model_class = Cms::Content
   end

@@ -16,7 +16,7 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
     @items = Cms::Feed
              .where(content_id: @content.id)
              .order(params[:sort], id: :desc)
-             .paginate(page :params[:page], per_page: params[:limit])
+             .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items
   end
@@ -32,7 +32,7 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Cms::Feed.new(params[:item])
+    @item = Cms::Feed.new(feed_params)
     @item.content_id = @content.id
 
     _create @item
@@ -40,7 +40,7 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
 
   def update
     @item = Cms::Feed.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = feed_params
 
     _update(@item)
   end
@@ -48,5 +48,13 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
   def destroy
     @item = Cms::Feed.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def feed_params
+    params.require(:item).permit(
+      :state, :name, :title, :uri, :entry_count, :fixed_categories_xml,
+      in_creator: [:group_id, :user_id])
   end
 end

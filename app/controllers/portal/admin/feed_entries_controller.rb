@@ -8,7 +8,8 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
     return error_auth unless Core.user.has_auth?(:designer)
     @content = Cms::Content.find(params[:content])
     return error_auth unless @content
-    return error_auth unless @feed = Cms::Feed.find(params[:feed])
+    @feed = Cms::Feed.find(params[:feed])
+    return error_auth unless @feed
     return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
@@ -41,7 +42,7 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
 
   def update
     @item = Portal::FeedEntry.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = feed_entry_params
     _update @item
   end
 
@@ -67,5 +68,12 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
                        "エントリの削除に失敗しました。"
                      end
     redirect_to portal_feed_entries_path
+  end
+
+  private
+
+  def feed_entry_params
+    params.require(:item).permit(
+      :state, :link_alternate, :title, :summary)
   end
 end

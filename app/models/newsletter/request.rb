@@ -10,7 +10,7 @@ class Newsletter::Request < ActiveRecord::Base
   include StateText
 
   belongs_to :content, foreign_key: :content_id,
-             class_name: 'Newsletter::Content::Base'
+                       class_name: 'Newsletter::Content::Base'
 
   validates :state, :request_type, :email, presence: true
   validates :letter_type, presence: true, if: %(request_type == "subscribe")
@@ -18,6 +18,31 @@ class Newsletter::Request < ActiveRecord::Base
   validate :validate_email
 
   apply_simple_captcha message: "の画像と文字が一致しません。"
+
+  scope :search, ->(params) {
+    rel = all
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(arel_table[:id].eq(v))
+      when 's_email'
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
+      when 's_letter_type'
+        rel = rel.where(arel_table[:letter_type].eq(v))
+      when 's_request_type'
+        rel = rel.where(arel_table[:request_type].eq(v))
+      when 's_state'
+        rel = rel.where(arel_table[:state].eq(v))
+      when 's_keyword'
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
+      end
+    end if params.size != 0
+
+    rel
+  }
 
   def statuses
     [%w(待機 enabled), %w(完了 disabled)]
@@ -103,28 +128,5 @@ class Newsletter::Request < ActiveRecord::Base
     body << "これまでのご利用ありがとうございました。\n\n"
     body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
     body.join
-  end
-
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        self.and "#{self.class.table_name}.id", v
-      when 's_email'
-        and_keywords v, :email
-      when 's_letter_type'
-        self.and "#{self.class.table_name}.letter_type", v
-      when 's_request_type'
-        self.and "#{self.class.table_name}.request_type", v
-      when 's_state'
-        self.and "#{self.class.table_name}.state", v
-      when 's_keyword'
-        and_keywords v, :email
-      end
-    end if params.size != 0
-
-    self
   end
 end

@@ -4,7 +4,8 @@ class Script
 
   def self.run_from_web(path, options = {})
     ## reset
-    if proc = Sys::Process.find(:first, conditions: { name: path })
+    proc = Sys::Process.find_by(name: path)
+    if proc
       raise "プロセスが既に実行されています。" if proc.state == 'running'
       proc.attributes = {
         state: nil,
@@ -22,7 +23,7 @@ class Script
     end
 
     ## run
-    ruby   = "#{Config::CONFIG['bindir']}/ruby"
+    ruby   = "#{RbConfig::CONFIG['bindir']}/ruby"
     runner = "#{Rails.root}/script/rails runner"
     opts   = options.inspect
     cmd    = "#{ruby} #{runner} -e #{Rails.env} \"Script.run('#{path}', #{opts})\""
@@ -53,7 +54,7 @@ class Script
     log "[#{start.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... start"
 
     ## dispatch
-    app = ActionController::Integration::Session.new(Joruri::Application)
+    app = ActionDispatch::Integration::Session.new(Joruri::Application)
     app.get '/_script/sys/run/' + path.tr('#', '/').gsub(/^(.*?)\//, '\\1/script/')
     log 'success ' + @@proc.success.to_s + (@@proc.total ? "/#{@@proc.total}" : '')
 

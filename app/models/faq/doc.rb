@@ -24,11 +24,10 @@ class Faq::Doc < ActiveRecord::Base
   include AgentStateText
 
   belongs_to :content, foreign_key: :content_id,
-             class_name: 'Faq::Content::Doc'
-  belongs_to :notice_status, foreign_key: :notice_state,
-             class_name: 'Sys::Base::Status'
+                       class_name: 'Faq::Content::Doc'
+
   belongs_to :language, foreign_key: :language_id,
-             class_name: 'Sys::Language'
+                        class_name: 'Sys::Language'
 
   attr_accessor :concept_id, :layout_id
 
@@ -66,10 +65,6 @@ class Faq::Doc < ActiveRecord::Base
       where(arel_table[:agent_state].eq(nil)
                   .or(arel_table[:agent_state].eq('pc')))
     end
-  }
-
-  scope :visible_in_notice, -> {
-    where(notice_state: 'visible')
   }
 
   scope :visible_in_recent, -> {
@@ -181,10 +176,6 @@ class Faq::Doc < ActiveRecord::Base
 
   def agent_states
     [['全てに表示', ''], %w(PCのみ表示 pc), %w(携帯のみ表示 mobile)]
-  end
-
-  def notice_states
-    [%w(表示 visible), %w(非表示 hidden)]
   end
 
   def recent_states

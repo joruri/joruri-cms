@@ -46,7 +46,7 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = EntityConversion::Unit.new(params[:item])
+    @item = EntityConversion::Unit.new(unit_params)
     @item.content_id = @content.id
 
     if params[:sync]
@@ -59,7 +59,7 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
 
   def update
     @item = EntityConversion::Unit.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = unit_params
 
     if params[:sync]
       sync(@item)
@@ -70,7 +70,7 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = EntityConversion::Unit.new.find(params[:id])
+    @item = EntityConversion::Unit.find(params[:id])
 
     _destroy @item, location: entity_conversion_units_path
   end
@@ -95,5 +95,14 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
     item.outline_uri = group.outline_uri
 
     true
+  end
+
+  private
+
+  def unit_params
+    params.require(:item).permit(
+      :state, :parent_id, :new_parent_id, :code, :name, :name_en, :ldap,
+      :sort_no, :web_state, :layout_id, :email, :tel, :outline_uri
+    )
   end
 end

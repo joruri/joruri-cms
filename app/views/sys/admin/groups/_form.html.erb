@@ -6,7 +6,7 @@
     <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
   </tr><tr>
     <th><%= @item.locale(:parent_id) %></th>
-    <td><%= f.select_with_tree :parent_id, Sys::Group.find(:all, :conditions => {:level_no => 1}, :order => :sort_no), :include_blank => "　" %></td>
+    <td><%= f.select_with_tree :parent_id, Sys::Group.where(level_no: 1).order(:sort_no), :include_blank => "　" %></td>
   </tr><tr>
     <th><%= @item.locale(:code) %></th>
     <td><%= f.text_field :code, :class => 'id' %></td>
@@ -45,5 +45,5 @@
   </tr><tr>
     <th><%= @item.locale(:outline_uri) %></th>
     <td><%= f.text_field :outline_uri, :class => 'url' %></td>
-  </tr>  
+  </tr>
 </table>

@@ -14,15 +14,16 @@ module Cms::Controller::Scaffold::Process
       flash[:notice] = "プロセスを開始しました。"
       redirect_to start_process: Time.now.to_i
     rescue Exception => e
-      flash[:notice] = e.to_s
-      redirect_to {}
+      raise e
+#      flash[:notice] = e.to_s
+#      redirect_to {}
     end
   end
 
   def stop_process(process_name = @process_name)
     raise 'undefined process_name' if process_name.blank?
 
-    proc = Sys::Process.find_by_name(process_name)
+    proc = Sys::Process.find_by(name: process_name)
 
     if !proc
       flash[:notice] = "プロセスは実行されていません。"

@@ -6,8 +6,6 @@ class Cms::Inquiry < ActiveRecord::Base
 
   before_save :set_group
 
-  # validates_presence_of :unid
-
   def visible?
     state == 'visible'
   end

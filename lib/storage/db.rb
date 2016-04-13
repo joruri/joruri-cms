@@ -3,7 +3,7 @@ module Storage::Db
   @@storage = Storage::File
 
   def self.storage(path)
-    r = @@storage.find(:first, conditions: ['path = ?', path.to_s.gsub(/\/$/, '')])
+    r = @@storage.find_by(path: path.to_s.gsub(/\/$/, ''))
     yield(r) if r && block_given?
     r
   end

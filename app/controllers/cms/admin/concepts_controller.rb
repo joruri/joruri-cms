@@ -42,7 +42,7 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
   end
 
   def update
-    @item = Cms::Concept.new.find(params[:id])
+    @item = Cms::Concept.find(params[:id])
     @item.attributes = params[:item]
     @item.parent_id  = 0 unless @item.parent_id
     @item.level_no   = @parent.level_no + 1

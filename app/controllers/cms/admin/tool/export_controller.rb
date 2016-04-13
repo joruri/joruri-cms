@@ -11,7 +11,7 @@ class Cms::Admin::Tool::ExportController < Cms::Controller::Admin::Base
     @item = Cms::Model::Tool::Export.new
     return unless request.post?
 
-    @item.attributes = params[:item]
+    @item.attributes = export_params
     return unless @item.valid?
 
     ## concept
@@ -58,5 +58,11 @@ class Cms::Admin::Tool::ExportController < Cms::Controller::Admin::Base
     filename = filename.gsub(/[\/\<\>\|:"\?\*\\]/, '_')
     filename = URI.escape(filename) if request.env['HTTP_USER_AGENT'] =~ /MSIE/
     send_data export.to_json, type: 'application/json', filename: filename
+  end
+
+  private
+
+  def export_params
+    params.require(:item).permit(:concept_id, target: [:layout, :piece])
   end
 end

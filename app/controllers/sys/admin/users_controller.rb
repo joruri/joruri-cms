@@ -19,7 +19,7 @@ class Sys::Admin::UsersController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = Sys::User.new.find(params[:id])
+    @item = Sys::User.find(params[:id])
     return error_auth unless @item.readable?
 
     _show @item
@@ -32,13 +32,13 @@ class Sys::Admin::UsersController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Sys::User.new(params[:item])
+    @item = Sys::User.new(user_params)
     _create(@item)
   end
 
   def update
-    @item = Sys::User.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Sys::User.find(params[:id])
+    @item.attributes = user_params
     old_password = @item.password_was
 
     _update(@item) do
@@ -49,7 +49,15 @@ class Sys::Admin::UsersController < Cms::Controller::Admin::Base
   end
 
   def destroy
-    @item = Sys::User.new.find(params[:id])
+    @item = Sys::User.find(params[:id])
     _destroy(@item)
+  end
+
+  private
+
+  def user_params
+    params.require(:item).permit(
+      :in_group_id, :account, :name, :name_en, :email, :state, :auth_no,
+      :in_role_name_ids, :ldap, :password)
   end
 end

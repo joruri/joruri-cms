@@ -15,15 +15,29 @@ Core.user_group = Core.user.groups[0]
 ## -------
 ## article
 
-if base = Article::Doc.find(:first)
+if base = Article::Doc.all.first
   1.upto(test_num) do |i|
     flag = (i%3 > 0)
     view_state = flag ? "visible" : "hidden"
-    cond = { :content_id => base.content_id }
-    cate_ids = Article::Category.find(:all, :conditions => cond, :order => "rand()", :limit => 3).collect{|c| c.id }
-    area_ids = Article::Area.find(:all, :conditions => cond, :order => "rand()", :limit => 3).collect{|c| c.id }
-    attr_ids = Article::Attribute.find(:all, :conditions => cond, :order => "rand()", :limit => 1).collect{|c| c.id }
-    
+
+    cate_ids = Article::Category
+               .where(content_id: base.content_id)
+               .order("rand()")
+               .limit(3)
+               .collect{|c| c.id }
+
+    area_ids = Article::Area
+               .where(content_id: base.content_id)
+               .order("rand()")
+               .limit(3)
+               .collect{|c| c.id }
+
+    attr_ids = Article::Attribute
+               .where(content_id: base.content_id)
+               .order("rand()")
+               .limit(3)
+               .collect{|c| c.id }
+
     doc = base.duplicate
     doc.state          = 'public'
     doc.published_at   = Core.now
@@ -51,13 +65,16 @@ end
 ## -------
 ## faq
 
-if base = Faq::Doc.find(:first)
+if base = Faq::Doc.all.first
   1.upto(test_num) do |i|
     flag = (i%3 > 0)
     view_state = flag ? "visible" : "hidden"
-    cond = { :content_id => base.content_id }
-    cate_ids = Faq::Category.find(:all, :conditions => cond, :order => "rand()", :limit => 3).collect{|c| c.id }
-    
+
+    cate_ids = Faq::Category
+               .where(content_id: base.content_id)
+               .order("rand()")
+               .limit(3)
+
     doc = base.duplicate
     doc.state          = 'public'
     doc.published_at   = Core.now

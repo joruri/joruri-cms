@@ -67,7 +67,7 @@ class Cms::Piece < ActiveRecord::Base
 
   def node_is(node)
     layout = nil
-    node = Cms::Node.find(:first, conditions: { id: node }) if node.class != Cms::Node
+    node = Cms::Node.find_by(id: node) if node.class != Cms::Node
     layout = node.inherited_layout if node
     self.and :id, 'IN', layout.pieces if layout
   end

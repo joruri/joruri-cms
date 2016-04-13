@@ -23,9 +23,6 @@ module Util::Storage
 
     rescue => e
       dump("Util::Storage::store #{e.message}")
-
-    ensure
-
     end
 
     rc ? rc.id : nil
@@ -65,16 +62,12 @@ module Util::Storage
 
   rescue => e
     dump("Storage::Files::destroy #{e.message}")
-
-  ensure
   end
 
   # 指定のパス以下を再帰的に削除
   def self.remove_path(path)
     FileUtils.remove_entry(path)
   end
-
-  private
 
   # 指定のパスにDBのデータを展開する
   def self._restore(path, data)

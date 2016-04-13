@@ -10,57 +10,97 @@ class Cms::FeedEntry < ActiveRecord::Base
 
   validates :link_alternate, :title, presence: true
 
-  def public
-    self.and "#{self.class.table_name}.state", 'public'
-    join 'INNER JOIN `cms_feeds` ON `cms_feeds`.id = `cms_feed_entries`.feed_id'
-    self.and "#{Cms::Feed.table_name}.state", 'public'
-    self
-  end
+  scope :published, -> {
+    where(arel_table[:state].eq('public'))
+    .joins(:feed)
+    .where(feed.arel_table[:state].eq('public'))
+  }
 
-  def published_at
-    entry_updated
-  end
+  scope :search, ->(params) {
+    rel = all
 
-  def search(params)
     params.each do |n, v|
       next if v.to_s == ''
 
       case n
       when 's_id'
-        self.and "#{Cms::FeedEntry.table_name}.id", v
+        rel = rel.where(arel_table[:id].eq(v))
       when 's_title'
-        and_keywords v, :title
+        rel = rel.where(arel_table[:title].matches("#{v}%"))
       when 's_keyword'
-        and_keywords v, :title, :summary
+        rel = rel.where(arel_table[:title].matches("%#{v}%")
+                        .or(arel_table[:summary].matches("%#{v}%")))
       end
     end if params.size != 0
 
-    self
-  end
+    rel
+  }
 
-  def event_date_in(sdate, edate)
-    self.and Condition.new do |c|
-      c.or Condition.new do |c2|
-        c2.and :event_date, '<', edate.to_s
-        c2.and :event_close_date, '>=', sdate.to_s
-      end
-      c.or Condition.new do |c2|
-        c2.and :event_close_date, 'IS', nil
-        c2.and :event_date, '>=', sdate.to_s
-        c2.and :event_date, '<', edate.to_s
-      end
-    end
-    self
-  end
+  scope :event_date_in, ->(sdate, edate) {
+    where(
+      arel_table[:event_date].lt(edate.to_s)
+      .and(arel_table[:event_close_date].gteq(sdate.to_s))
+      .or(arel_table[:event_close_date].eq(nil)
+          .and(arel_table[:event_date].gteq(sdate.to_s))
+          .and(arel_table[:event_date].lt(edate.to_s)))
+    )
+  }
 
-  def event_date_is(options = {})
+  scope :event_date_is, ->(options = {}) {
+    rel = all
+
     if options[:year] && options[:month]
-      sd = Date.new(options[:year], options[:month], 1)
-      ed = sd >> 1
-      self.and :event_date, 'IS NOT', nil
-      self.and :event_date, '>=', sd
-      self.and :event_date, '<', ed
+      sdate = Date.new(options[:year], options[:month], 1)
+      edate = sdate >> 1
+      rel = rel.where(
+        arel_table[:event_date].not_eq(nil)
+        .and(arel_table[:event_date].gteq(sdate.to_s))
+        .and(arel_table[:event_date].lt(edate.to_s))
+      )
     end
+
+    rel
+  }
+
+  scope :agent_filter, ->(_agent) {
+    self
+  }
+
+  scope :category_is, ->(cate) {
+    return self if cate.blank?
+    cate = [cate] unless cate.class == Array
+    cate.each do |c|
+      cate += c.public_children if c.level_no == 1
+    end
+    cate = cate.uniq
+
+    rel = all
+
+    added = false
+    cate.each do |c|
+      next unless c.entry_categories
+      arr = c.entry_categories.split(/\r\n|\r|\n/)
+      arr.each do |label|
+        label = label.gsub(/\/$/, '')
+
+        rel = rel.where(arel_table[:categories].matches("#{label}%")
+                        .or(arel_table[:categories].matches("%\n#{label}%")))
+
+        added = true
+      end
+    end
+
+    rel = rel.none unless added
+    rel
+  }
+
+  scope :group_is, ->(group) {
+    return all unless group
+    category_is(group)
+  }
+
+  def published_at
+    entry_updated
   end
 
   def public_uri
@@ -71,51 +111,5 @@ class Cms::FeedEntry < ActiveRecord::Base
   def public_full_uri
     return nil unless link_alternate
     link_alternate
-  end
-
-  def agent_filter(_agent)
-    self
-  end
-
-  def category_is(cate)
-    return self if cate.blank?
-    cate = [cate] unless cate.class == Array
-    cate.each do |c|
-      cate += c.public_children if c.level_no == 1
-    end
-    cate = cate.uniq
-
-    cond = Condition.new
-    added = false
-    cate.each do |c|
-      next unless c.entry_categories
-      arr = c.entry_categories.split(/\r\n|\r|\n/)
-      arr.each do |label|
-        label = label.gsub(/\/$/, '')
-        cond.or :categories, 'REGEXP', "(^|\n)#{label}"
-        added = true
-      end
-    end
-    cond.and '1', '=', '0' unless added
-    self.and cond
-  end
-
-  def group_is(group)
-    return self unless group
-    conditions = []
-    #    if group.category.size > 0
-    #      entry = self.class.new
-    #      entry.category_is(group.category_items)
-    #      conditions << entry.condition
-    #    end
-    entry = self.class.new
-    entry.category_is(group)
-    conditions << entry.condition
-
-    condition = Condition.new
-    conditions.each { |c| condition.or(c) if c.where }
-
-    self.and condition if conditions.size > 0
-    self
   end
 end

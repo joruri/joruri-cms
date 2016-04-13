@@ -1,5 +1,5 @@
 <table class="index">
-  
+
   <tr>
     <th style="width: 60px; text-align: center;">詳細</th>
     <th style="width: ;"><%= Cms::PieceLinkItem.new.locale(:name) %></th>
@@ -8,7 +8,7 @@
     <th style="width: 120px; text-align: center;">更新日時</th>
     <th style="width: 60px; text-align: center;"><%= Article::Area.new.locale(:state) %></th>
   </tr>
-  
+
   <% for item in @items %>
   <tr class="<%= cycle '', 'cycle' %>">
     <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.id) %></td>
@@ -16,7 +16,7 @@
     <td><%= item.uri %></td>
     <td style="text-align: right;"><%= item.sort_no %></td>
     <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
-    <td style="text-align: center;"><%= safe{item.status.name} %></td>
+    <td style="text-align: center;"><%= item.state_text %></td>
   </tr>
   <% end %>
 

@@ -44,7 +44,7 @@ class Newsletter::Script::RequestsController < ApplicationController
   end
 
   def check_requests
-    requests = Newsletter::Request.find(:all, conditions: { state: 'enabled' }, order: 'created_at')
+    requests = Newsletter::Request.where(state: 'enabled').order(:created_at)
 
     Script.total requests.size
 
@@ -69,7 +69,11 @@ class Newsletter::Script::RequestsController < ApplicationController
   end
 
   def subscribe(req)
-    mem = Newsletter::Member.find(:first, conditions: { state: 'enabled', content_id: req.content_id, email: req.email })
+    mem = Newsletter::Member
+          .where(state: 'enabled',
+                 content_id: req.content_id,
+                 email: req.email)
+          .first
 
     ## already exists
     return true if mem
@@ -87,7 +91,11 @@ class Newsletter::Script::RequestsController < ApplicationController
   end
 
   def unsubscribe(req)
-    mem = Newsletter::Member.find(:first, conditions: { state: 'enabled', content_id: req.content_id, email: req.email })
+    mem = Newsletter::Member
+          .where(state: 'enabled',
+                 content_id: req.content_id,
+                 email: req.email)
+          .first
 
     ## not found
     return true unless mem

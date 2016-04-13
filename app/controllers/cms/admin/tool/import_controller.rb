@@ -13,7 +13,7 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     @item = Cms::Model::Tool::Import.new
     return unless request.post?
 
-    @item.attributes = params[:item]
+    @item.attributes = import_params
     return unless @item.valid?
 
     ## concept
@@ -84,7 +84,7 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     state  = data[:state]
 
     cond   = { name: name, concept_id: @concept.id }
-    piece  = Cms::Piece.find(:first, conditions: cond) || Cms::Piece.new
+    piece  = Cms::Piece.find_by(cond) || Cms::Piece.new
     exists = piece.id ? true : false
 
     data.delete('id')
@@ -106,14 +106,14 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
       parent = 0
       json['content_concepts'].each do |name|
         cond    = { parent_id: 0, name: name }
-        concept = Cms::Concept.find(:first, conditions: cond)
+        concept = Cms::Concept.find_by(cond)
         break unless concept
         parent  = concept.id
       end
       if concept
         name    = json['content']['content']['name']
         cond    = { name: name, concept_id: concept.id }
-        content = Cms::Content.find(:first, conditions: cond)
+        content = Cms::Content.find_by(cond)
       end
       piece.content_id = content.id if content
     end
@@ -130,7 +130,7 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     json['settings'].each do |data|
       data = data['piece_setting']
       cond = { piece_id: piece.id, name: data['name'] }
-      item = Cms::PieceSetting.find(:first, conditions: cond) || Cms::PieceSetting.new
+      item = Cms::PieceSetting.find_by(cond) || Cms::PieceSetting.new
       item.piece_id  = piece.id
       item.name      = data['name']
       item.value     = data['value']
@@ -145,7 +145,7 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     json['link_items'].each do |data|
       data = data['piece_link_item']
       cond = { piece_id: piece.id, name: data['name'] }
-      item = Cms::PieceLinkItem.find(:first, conditions: cond) || Cms::PieceLinkItem.new
+      item = Cms::PieceLinkItem.find_by(cond) || Cms::PieceLinkItem.new
       item.piece_id  = piece.id
       item.state     = data['state']
       item.name      = data['name']
@@ -162,7 +162,6 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     if changed
       key = exists ? :update : :create
       @count[key] += 1
-      # @results << "#{piece.name} #{action}"
     end
   end
 
@@ -173,5 +172,11 @@ class Cms::Admin::Tool::ImportController < Cms::Controller::Admin::Base
     changed = item.changed
     changed.delete('updated_at')
     changed.size > 0
+  end
+
+  private
+
+  def import_params
+    params.require(:item).permit(:concept_id, :file)
   end
 end

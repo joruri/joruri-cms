@@ -9,7 +9,6 @@ class Cms::EmbeddedFile < ActiveRecord::Base
   belongs_to :site, foreign_key: :site_id, class_name: 'Cms::Site'
 
   attr_accessor :in_resize_size, :in_thumbnail_size
-  # validates_presence_of :name
 
   before_save :set_published_at
   after_save :upload_public_file

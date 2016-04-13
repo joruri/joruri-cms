@@ -27,8 +27,7 @@ class Article::Doc < ActiveRecord::Base
 
   belongs_to :content, foreign_key: :content_id,
                        class_name: 'Article::Content::Doc'
-  belongs_to :notice_status, foreign_key: :notice_state,
-                             class_name: 'Sys::Base::Status'
+
   belongs_to :language, foreign_key: :language_id,
                         class_name: 'Sys::Language'
 
@@ -67,15 +66,11 @@ class Article::Doc < ActiveRecord::Base
   scope :agent_filter, ->(agent) {
     if agent
       where(arel_table[:agent_state].eq(nil)
-                  .or(arel_table[:agent_state].eq('mobile')))
+            .or(arel_table[:agent_state].eq('mobile')))
     else
       where(arel_table[:agent_state].eq(nil)
-                  .or(arel_table[:agent_state].eq('pc')))
+            .or(arel_table[:agent_state].eq('pc')))
     end
-  }
-
-  scope :visible_in_notice, -> {
-    where(notice_state: 'visible')
   }
 
   scope :visible_in_recent, -> {
@@ -89,7 +84,7 @@ class Article::Doc < ActiveRecord::Base
   scope :event_date_in, ->(sdate, edate) {
     rel = where(language_id: 1)
           .where(event_state: 'visible')
-          .where(event_date: nil)
+          .where.not(event_date: nil)
 
     rel = rel.where(
       arel_table[:event_date].lt(edate.to_s)
@@ -105,7 +100,7 @@ class Article::Doc < ActiveRecord::Base
   scope :event_date_is, ->(options = {}) {
     rel = where(language_id: 1)
           .where(event_state: 'visible')
-          .where(event_date: nil)
+          .where.not(event_date: nil)
 
     if options[:year] && options[:month]
       sdate = Date.new(options[:year], options[:month], 1)
@@ -176,18 +171,18 @@ class Article::Doc < ActiveRecord::Base
         rel = rel.where(id: v)
       when 's_section_id'
         sec = Article::Unit.find_by(id: v)
-        return rel.where(0, 1) unless sec
+        return rel.none unless sec
         return rel.department_is(sec) if sec.level_no == 2
         rel = rel.unit_is(sec)
       when 's_category_id'
         cate = Article::Category.find_by(id: v)
-        return rel.where(0, 1) unless cate
+        return rel.none unless cate
         rel = rel.category_is(cate)
       when 's_attribute_id'
         rel = rel.attribute_is(v)
       when 's_area_id'
         area = Article::Area.find_by(id: v)
-        return rel.where(0, 1) unless area
+        return rel.none unless area
         return rel.area_is(area.public_children) if area.level_no == 1
         rel = rel.area_is(area)
       when 's_title'
@@ -261,10 +256,6 @@ class Article::Doc < ActiveRecord::Base
 
   def agent_states
     [['全てに表示', ''], %w(PCのみ表示 pc), %w(携帯のみ表示 mobile)]
-  end
-
-  def notice_states
-    [%w(表示 visible), %w(非表示 hidden)]
   end
 
   def recent_states

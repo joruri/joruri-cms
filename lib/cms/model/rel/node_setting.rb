@@ -3,7 +3,10 @@ module Cms::Model::Rel::NodeSetting
   extend ActiveSupport::Concern
 
   included do
-    has_many :settings, -> { order(:sort_no) }, foreign_key: :node_id, class_name: 'Cms::NodeSetting', dependent: :destroy
+    has_many :settings, -> { order(:sort_no) },
+             foreign_key: :node_id,
+             class_name: 'Cms::NodeSetting',
+             dependent: :destroy
 
     after_save :save_settings
   end
@@ -43,14 +46,14 @@ module Cms::Model::Rel::NodeSetting
       name = name.to_s
 
       unless value.is_a?(Hash)
-        st = settings.find(:first, conditions: ['name = ?', name]) || new_setting(name)
+        st = settings.find_by(name name) || new_setting(name)
         st.value   = value
         st.sort_no = nil
         st.save if st.changed?
         next
       end
 
-      _settings = settings.find(:all, conditions: ['name = ?', name])
+      _settings = settings.where(name: name)
       value.each_with_index do |data, idx|
         st = _settings[idx] || new_setting(name)
         st.sort_no = data[0]

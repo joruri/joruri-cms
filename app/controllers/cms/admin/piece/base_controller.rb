@@ -14,6 +14,7 @@ class Cms::Admin::Piece::BaseController < Cms::Controller::Admin::Base
     return @model_class if @model_class
     mclass = self.class.to_s.gsub(/^(\w+)::Admin/, '\1')
                             .gsub(/Controller$/, '').singularize
+    mclass.constantize
     @model_class = mclass.constantize
   rescue => e
     @model_class = Cms::Piece

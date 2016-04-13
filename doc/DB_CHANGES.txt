@@ -70,7 +70,7 @@
   DROP TABLE sys_group_change_logs;
   DROP TABLE sys_group_change_groups;
   DROP TABLE sys_group_change_items;
-  
+
   CREATE TABLE `cms_link_checks` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `state` varchar(15) DEFAULT NULL,
@@ -90,7 +90,7 @@
     ADD COLUMN `admin_full_uri` VARCHAR(255) NULL AFTER `mobile_full_uri`;
   ALTER TABLE `cms_talk_tasks`
     ADD COLUMN `published_at` DATETIME DEFAULT NULL AFTER `updated_at` ;
-  
+
   CREATE TABLE `entity_conversion_units` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `unid` int(11) DEFAULT NULL,
@@ -126,7 +126,7 @@
     `body` longtext DEFAULT NULL,
     PRIMARY KEY (`id`)
   );
-  
+
   DROP TABLE `newsletter_delivery_logs`;
   CREATE TABLE `newsletter_logs` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -144,7 +144,7 @@
   ALTER TABLE `newsletter_docs`
     ADD COLUMN `started_at` DATETIME DEFAULT NULL AFTER `delivery_state`,
     ADD COLUMN `total_count` INT(11) DEFAULT NULL AFTER `mobile_body` ,
-    ADD COLUMN `success_count` INT(11) DEFAULT NULL AFTER `total_count` , 
+    ADD COLUMN `success_count` INT(11) DEFAULT NULL AFTER `total_count` ,
     ADD COLUMN `error_count` INT(11) DEFAULT NULL AFTER `success_count` ;
   ALTER TABLE `newsletter_requests`
     DROP COLUMN `unsubscribe_email` ,
@@ -346,7 +346,7 @@
 1.2.0
   ALTER TABLE cms_layouts ADD smart_phone_head TEXT NULL;
   ALTER TABLE cms_layouts ADD smart_phone_body LONGTEXT NULL;
-  ALTER TABLE cms_layouts ADD smart_phone_stylesheet LONGTEXT NULL; 
+  ALTER TABLE cms_layouts ADD smart_phone_stylesheet LONGTEXT NULL;
 
 1.1.9
   CREATE TABLE bbs_items (

@@ -2,7 +2,7 @@
 class Cms::MapMarker < ActiveRecord::Base
   include Sys::Model::Base
 
-  validates_presence_of :map_id, :lat, :lng
+  validates :map_id, :lat, :lng, presence: true
 
   def js_params
     name = self.name.gsub(/'/, "\\\\'").gsub(/\r\n|\r|\n/, '<br />')

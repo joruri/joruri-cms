@@ -6,6 +6,6 @@ class Sys::UsersGroup < ActiveRecord::Base
 
   self.primary_key = :rid
 
-  belongs_to   :user,  foreign_key: :user_id,  class_name: 'Sys::User'
-  belongs_to   :group, foreign_key: :group_id, class_name: 'Sys::Group'
+  belongs_to :user,  foreign_key: :user_id,  class_name: 'Sys::User'
+  belongs_to :group, foreign_key: :group_id, class_name: 'Sys::Group'
 end

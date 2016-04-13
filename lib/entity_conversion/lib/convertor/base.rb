@@ -28,25 +28,25 @@ class EntityConversion::Lib::Convertor::Base
   def convert
     @logs << (@env == :test ? "テスト実行\n==========" : "本実行\n======")
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'new'
-    @new_units = item.find(:all, order: :sort_no)
+    @new_units = EntityConversion::Unit
+                 .where(content_id: @content.id)
+                 .where(state: 'new')
+                 .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'edit'
-    @edit_units = item.find(:all, order: :sort_no)
+    @edit_units = EntityConversion::Unit
+                  .where(content_id: @content.id)
+                  .where(state: 'edit')
+                  .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'move'
-    @move_units = item.find(:all, order: :sort_no)
+    @move_units = EntityConversion::Unit
+                  .where(content_id: @content.id)
+                  .where(state: 'move')
+                  .order(:sort_no)
 
-    item = EntityConversion::Unit.new
-    item.and :content_id, @content.id
-    item.and :state, 'end'
-    @end_units = item.find(:all, order: 'old_parent_id, old_id')
+    @end_units = EntityConversion::Unit
+                 .where(content_id: @content.id)
+                 .where(state: 'end')
+                 .order(:old_parent_id, :old_id)
 
     @logs << "\n# 新設"
     @logs << '' if @new_units.size > 0
@@ -113,7 +113,7 @@ class EntityConversion::Lib::Convertor::Base
 
   ensure
     cond  = { content_id: @content.id, env: @env.to_s }
-    log   = EntityConversion::Log.find(:first, conditions: cond)
+    log   = EntityConversion::Log.find_by(cond)
     log ||= EntityConversion::Log.new(cond)
     log.state = @state
     log.body  = @logs.join("\n")
@@ -147,7 +147,7 @@ class EntityConversion::Lib::Convertor::Base
       fields.each do |f|
         cond.or f, 'REGEXP', "(^| )#{group.id}( |$)"
       end
-      items = cls.uncached { cls.find(:all, conditions: cond.where) }
+      items = cls.uncached { cls.where(cond.where) }
 
       next unless items.size > 0
       records += items.size
@@ -170,7 +170,7 @@ class EntityConversion::Lib::Convertor::Base
       fields.each do |f|
         texts.each { |src, _dst| cond.or f, 'REGEXP', Regexp.escape(src) }
       end
-      items = cls.uncached { cls.find(:all, conditions: cond.where) }
+      items = cls.uncached { cls.where(cond.where) }
 
       next unless items.size > 0
       records += items.size

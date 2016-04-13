@@ -7,7 +7,9 @@ class Util::Sequencer
     lock = Util::File::Lock.lock("#{name}_#{version}")
     raise('error: sequencer locked') unless lock
 
-    if seq = Sys::Sequence.versioned(version.to_s).find_by(name: name)
+    seq = Sys::Sequence.versioned(version.to_s).find_by(name: name)
+
+    if seq
       seq.value += 1
       seq.save
     else

@@ -3,7 +3,8 @@ module Sys::Model::Rel::Recognition
   extend ActiveSupport::Concern
 
   included do
-    belongs_to :recognition, foreign_key: 'unid', class_name: 'Sys::Recognition',
+    belongs_to :recognition, foreign_key: 'unid',
+                             class_name: 'Sys::Recognition',
                              dependent: :destroy
 
     after_save :save_recognition
@@ -11,16 +12,14 @@ module Sys::Model::Rel::Recognition
     scope :recognizable, -> {
       rel = joins(:creator, :recognition)
 
-      creators = Sys::Creator.arel_table
       recognitions = Sys::Recognition.arel_table
 
-      rel = rel.where(recognitions[:user_id].eq(Core.user.id)
-        .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %")
-          .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %")
-            .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}"))
-             )
-           )
-                     )
+      rel = rel.where(
+        recognitions[:user_id].eq(Core.user.id)
+        .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %"))
+        .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %"))
+        .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}"))
+      )
 
       rel.where(state: 'recognize')
     }
@@ -28,18 +27,15 @@ module Sys::Model::Rel::Recognition
     scope :recognizable_with_admin, -> {
       rel = joins(:creator, :recognition)
 
-      creators = Sys::Creator.arel_table
       recognitions = Sys::Recognition.arel_table
 
-      rel = rel.where(recognitions[:user_id].eq(Core.user.id)
-        .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %")
-          .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %")
-            .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}")
-              .or(recognitions[:info_xml].matches('%<admin/>%'))
-               )
-             )
-           )
-                     )
+      rel = rel.where(
+        recognitions[:user_id].eq(Core.user.id)
+        .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %"))
+        .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %"))
+        .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}"))
+        .or(recognitions[:info_xml].matches('%<admin/>%'))
+      )
 
       rel.where(state: 'recognize')
     }

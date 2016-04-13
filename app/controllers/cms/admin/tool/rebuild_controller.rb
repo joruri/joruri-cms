@@ -7,7 +7,7 @@ class Cms::Admin::Tool::RebuildController < Cms::Controller::Admin::Base
   end
 
   def index
-    @item = Cms::Node.new(params[:item])
+    @item = Cms::Node.new(rebuild_params)
 
     if params[:do] == 'styleseet'
       Core.messages << '--'
@@ -39,5 +39,11 @@ class Cms::Admin::Tool::RebuildController < Cms::Controller::Admin::Base
       flash[:notice] = ('再構築が完了しました。<br />' + messages).html_safe
       redirect_to action: :index
     end
+  end
+
+  private
+
+  def rebuild_params
+    params.require(:item).permit(:concept_id) if params[:item]
   end
 end

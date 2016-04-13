@@ -6,7 +6,7 @@ class Cms::KanaDictionary < ActiveRecord::Base
   include Sys::Model::Rel::Creator
   include Sys::Model::Auth::Manager
 
-  validates_presence_of :name
+  validates :name, presence: true
 
   before_save :convert_csv
 

@@ -4,7 +4,7 @@ module Cms::Model::Base::Page
 
   included do
     scope :published, -> {
-      where(state: 'public')
+      where(arel_table[:state].eq('public'))
     }
 
     scope :public_or_preview, -> {

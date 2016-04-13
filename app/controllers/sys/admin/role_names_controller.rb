@@ -16,7 +16,7 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = Sys::RoleName.new.find(params[:id])
+    @item = Sys::RoleName.find(params[:id])
     _show @item
   end
 
@@ -25,18 +25,24 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Sys::RoleName.new(params[:item])
+    @item = Sys::RoleName.new(role_name_params)
     _create @item
   end
 
   def update
     @item = Sys::RoleName.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = role_name_params
     _update @item
   end
 
   def destroy
     @item = Sys::RoleName.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def role_name_params
+    params.require(:item).permit(:name, :title)
   end
 end

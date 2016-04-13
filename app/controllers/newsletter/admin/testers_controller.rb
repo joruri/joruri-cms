@@ -29,7 +29,7 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Newsletter::Tester.new(params[:item])
+    @item = Newsletter::Tester.new(tester_params)
     @item.content_id = @content.id
 
     _create @item
@@ -37,7 +37,7 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
 
   def update
     @item = Newsletter::Tester.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = tester_params
 
     _update(@item)
   end
@@ -45,5 +45,13 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   def destroy
     @item = Newsletter::Tester.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def tester_params
+    params.require(:item).permit(
+      :state, :email, :agent_state, :name,
+      in_creator: [:group_id, :user_id])
   end
 end

@@ -28,13 +28,11 @@ class Cms::DataText < ActiveRecord::Base
       case n
       when 's_name_or_title'
         rel = rel.where(data_texts[:title].matches("%#{v}%")
-          .or(data_texts[:name].matches("%#{v}%")))
+                        .or(data_texts[:name].matches("%#{v}%")))
       when 's_keyword'
-        rel = rel.where(
-          data_texts[:title].matches("%#{v}%")
-          .or(data_texts[:name].matches("%#{v}%")
-            .or(data_texts[:body].matches("%#{v}%")))
-        )
+        rel = rel.where(data_texts[:title].matches("%#{v}%")
+                        .or(data_texts[:name].matches("%#{v}%"))
+                        .or(data_texts[:body].matches("%#{v}%")))
       end
     end if params.size != 0
 

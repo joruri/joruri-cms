@@ -21,9 +21,9 @@ class Portal::Public::Piece::CalendarsController < Sys::Controller::Public::Base
       entries = Portal::FeedEntry
                 .published
                 .agent_filter(request.mobile)
-                .where(Cms::FeedEntry.arel_table[:content_id]: @content.id)
+                .where(Cms::FeedEntry.arel_table[:content_id].eq(@content.id))
                 .event_date_is(year: @calendar.year, month: @calendar.month)
-                .project(:event_date)
+                .select(:event_date)
                 .group(:event_date)
 
       entries.each { |entry| dates << entry.event_date }
@@ -36,8 +36,8 @@ class Portal::Public::Piece::CalendarsController < Sys::Controller::Public::Base
                .agent_filter(request.mobile)
                .where(content_id: doc_content.id)
                .event_date_is(year: @calendar.year, month: @calendar.month)
-               .project(:event_date)
                .group(:event_date)
+               .select(:event_date)
 
         docs.each { |doc| dates << doc.event_date }
       end

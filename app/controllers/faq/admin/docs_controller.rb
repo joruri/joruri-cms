@@ -29,7 +29,6 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   def new
     @item = Faq::Doc.new(content_id: @content.id,
                          state: 'recognize',
-                         notice_state: 'hidden',
                          recent_state: 'visible')
     @item.in_inquiry = @item.default_inquiry
     @item.in_recognizer_ids = @content.setting_value(:default_recognizers)

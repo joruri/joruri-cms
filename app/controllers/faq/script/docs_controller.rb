@@ -7,7 +7,7 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
 
     items = Faq::Doc.published
     items = items.where(content_id: content_id) if content_id
-    items = items.project(:id).order(published_at: :desc)
+    items = items.order(published_at: :desc).select(:id)
 
     Script.total items.size
 

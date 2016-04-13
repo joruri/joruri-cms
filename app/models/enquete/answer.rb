@@ -7,11 +7,12 @@ class Enquete::Answer < ActiveRecord::Base
   include StateText
 
   belongs_to :content, foreign_key: :content_id,
-             class_name: 'Article::Content::Doc'
+                       class_name: 'Article::Content::Doc'
+
   belongs_to :form, foreign_key: :form_id, class_name: 'Enquete::Form'
 
   has_many :columns, foreign_key: :answer_id,
-           class_name: 'Enquete::AnswerColumn', dependent: :destroy
+                     class_name: 'Enquete::AnswerColumn', dependent: :destroy
 
   validates :form_id, presence: true
 

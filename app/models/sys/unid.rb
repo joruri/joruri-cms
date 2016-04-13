@@ -2,5 +2,5 @@
 class Sys::Unid < ActiveRecord::Base
   include Sys::Model::Base
 
-  validates_presence_of :model, :item_id
+  validates :model, :item_id, presence: true
 end

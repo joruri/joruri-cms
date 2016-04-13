@@ -16,7 +16,7 @@ class Cms::DataFile < ActiveRecord::Base
 
   attr_accessor :in_resize_size, :in_thumbnail_size
 
-  validates_presence_of :concept_id
+  validates :concept_id, presence: true
 
   before_save :set_published_at
   after_save :upload_public_file

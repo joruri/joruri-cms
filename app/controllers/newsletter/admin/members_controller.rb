@@ -33,7 +33,7 @@ class Newsletter::Admin::MembersController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Newsletter::Member.new(params[:item])
+    @item = Newsletter::Member.new(member_params)
     @item.content_id = @content.id
 
     _create @item
@@ -41,7 +41,7 @@ class Newsletter::Admin::MembersController < Cms::Controller::Admin::Base
 
   def update
     @item = Newsletter::Member.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = member_params
 
     _update(@item)
   end
@@ -76,5 +76,11 @@ class Newsletter::Admin::MembersController < Cms::Controller::Admin::Base
 
     csv = NKF.nkf('-s', csv)
     send_data csv, type: 'text/csv', filename: "#{::File.basename(params[:controller])}_#{Time.now.to_i}.csv"
+  end
+
+  private
+
+  def member_params
+    params.require(:item).permit(:state, :email, :letter_type)
   end
 end

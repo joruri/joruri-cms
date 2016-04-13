@@ -15,8 +15,9 @@ class Portal::Category < ActiveRecord::Base
   belongs_to :content, foreign_key: :content_id, class_name: 'Cms::Content'
   belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
 
-  has_many   :children, foreign_key: :parent_id, class_name: to_s,
-                        order: :sort_no, dependent: :destroy
+  has_many :children, ->{ order(:sort_no) },
+           foreign_key: :parent_id, class_name: to_s,
+           dependent: :destroy
 
   validates :state, :parent_id, :name, :title, presence: true
 

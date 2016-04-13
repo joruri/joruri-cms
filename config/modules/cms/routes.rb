@@ -9,13 +9,13 @@ Joruri::Application.routes.draw do
 
   scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
 
-    get "tool_rebuild" => "admin/tool/rebuild#index"
-    get "tool_search"  => "admin/tool/search#index"
-    get "tool_export"  => "admin/tool/export#index"
-    get "tool_import"  => "admin/tool/import#index"
+    match "tool_rebuild" => "admin/tool/rebuild#index", via: [:get, :post]
+    match "tool_search"  => "admin/tool/search#index", via: [:get, :post]
+    match "tool_export"  => "admin/tool/export#index", via: [:get, :post]
+    match "tool_import"  => "admin/tool/import#index", via: [:get, :post]
 
-    get "tests_kana" => "admin/tests/kana#index",
-      :as => :tests_kana
+    match "tests_kana" => "admin/tests/kana#index",
+      :as => :tests_kana, via: [:get, :post]
     get "embedded_file/:id/:name" => "admin/embedded_files#index",
       :as => :embedded_file
     get "embedded_file/:id/thumb/:name" => "admin/embedded_files#index",

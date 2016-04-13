@@ -7,6 +7,6 @@
 <%= action_menu :destroy if safe{item.deletable?} %>
 <% if params[:action] == 'show' %>
   <% if Core.user.has_priv?(:create, :item => Core.concept) %>
-  <%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+  <%= link_to :duplicate, {:do => :duplicate}, data: { confirm: "複製してよろしいですか？" } %>
   <% end %>
 <% end %>

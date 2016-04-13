@@ -25,18 +25,24 @@ class Sys::Admin::LanguagesController < Cms::Controller::Admin::Base
   end
 
   def create
-    @item = Sys::Language.new(params[:item])
+    @item = Sys::Language.new(language_params)
     _create @item
   end
 
   def update
     @item = Sys::Language.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = language_params
     _update @item
   end
 
   def destroy
     @item = Sys::Language.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def language_params
+    params.require(:item).permit(:state, :name, :title, :sort_no)
   end
 end

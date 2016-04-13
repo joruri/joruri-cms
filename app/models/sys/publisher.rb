@@ -2,7 +2,7 @@
 class Sys::Publisher < ActiveRecord::Base
   include Sys::Model::Base
 
-  validates_presence_of :unid
+  validates :unid, presence: true
 
   before_validation :modify_path
   before_save :check_path

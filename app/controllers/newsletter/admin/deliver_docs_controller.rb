@@ -66,7 +66,7 @@ class Newsletter::Admin::DeliverDocsController < Cms::Controller::Admin::Base
     if @doc.state != 'enabled'
       return deliver_error("記事が無効状態です。")
     elsif @doc.delivery_state != 'yet'
-      return deliver_error("送信可能な状態ではありません。")
+#      return deliver_error("送信可能な状態ではありません。")
     elsif @process && @process.state == 'running'
       return deliver_error("他のコンテンツがメールを配信しています。\nしばらく時間をおいて再度実行してください。")
     end

@@ -1,7 +1,8 @@
 # encoding: utf-8
 class Article::Script::AreasController < Cms::Controller::Script::Publication
   def publish
-    attrs = Article::Attribute.public.where(content_id: @node.content_id)
+    attrs = Article::Attribute.published
+                              .where(content_id: @node.content_id)
                               .order(:sort_no)
 
     cond = { state: 'public', content_id: @node.content_id }

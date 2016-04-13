@@ -1,8 +1,8 @@
 # encoding: utf-8
 module Cms::Model::Rel::Map
   def self.included(mod)
-    mod.has_many :maps, primary_key: 'unid', foreign_key: 'unid', class_name: 'Cms::Map',
-                        dependent: :destroy
+    mod.has_many :maps, primary_key: 'unid', foreign_key: 'unid',
+                        class_name: 'Cms::Map', dependent: :destroy
 
     mod.after_save :save_maps
   end

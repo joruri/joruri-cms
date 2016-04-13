@@ -25,10 +25,10 @@ class Sys::Admin::OperationLogsController < Cms::Controller::Admin::Base
              rescue
                nil
              end
-      @items = @items.where(arel_table[:created_at].lteq(date) if date
+      @items = @items.where(arel_table[:created_at].lteq(date)) if date
     end
 
-    return destroy_items(item.condition.where) if params[:destroy]
+    return destroy_items(@items) if params[:destroy]
 
     @items = @items.order(params[:sort], id: :desc)
 
@@ -69,8 +69,8 @@ class Sys::Admin::OperationLogsController < Cms::Controller::Admin::Base
 
   protected
 
-  def destroy_items(where)
-    num = Sys::OperationLog.delete_all(where)
+  def destroy_items(items)
+    num = items.delete_all
 
     flash[:notice] = "削除処理が完了しました。##{num}件"
     redirect_to url_for(action: :index)

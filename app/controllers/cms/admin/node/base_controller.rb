@@ -14,7 +14,10 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
 
   def model
     return @model_class if @model_class
-    mclass = '::' + self.class.to_s.gsub(/^(\w+)::Admin/, '\1').gsub(/Controller$/, '').singularize
+    mclass = '::' + self.class.to_s.gsub(/^(\w+)::Admin/, '\1')
+                                   .gsub(/Controller$/, '')
+                                   .singularize
+    mclass.constantize
     @model_class = mclass.constantize
   rescue
     @model_class = Cms::Node

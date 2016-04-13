@@ -18,7 +18,7 @@ class Util::File::Lock
     if name
       lock_by_name(name)
     else
-      @names.each { |name| lock_by_name(name) }
+      @names.each { |_name| lock_by_name(_name) }
     end
   end
 
@@ -39,7 +39,7 @@ class Util::File::Lock
     if name
       unlock_by_name(name)
     else
-      @names.each { |name| unlock_by_name(name) }
+      @names.each { |_name| unlock_by_name(_name) }
     end
   end
 

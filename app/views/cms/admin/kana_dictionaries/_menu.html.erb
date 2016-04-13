@@ -10,5 +10,5 @@
 <span class="separator"></span>
 <% end %>
 <%= link_to 'データ一覧', cms_kana_dictionaries_path %>
-<%= link_to '辞書更新', make_cms_kana_dictionaries_path, :confirm => "辞書を更新してよろしいですか？" %>
+<%= link_to '辞書更新', make_cms_kana_dictionaries_path, data: { confirm: "辞書を更新してよろしいですか？" } %>
 </div>

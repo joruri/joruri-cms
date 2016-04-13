@@ -10,9 +10,10 @@ class Newsletter::Doc < ActiveRecord::Base
   include StateText
 
   belongs_to :content, foreign_key: :content_id,
-             class_name: 'Newsletter::Content::Base'
+                       class_name: 'Newsletter::Content::Base'
+
   has_many :logs, foreign_key: :doc_id,
-           class_name: 'Newsletter::Log', dependent: :destroy
+                  class_name: 'Newsletter::Log', dependent: :destroy
 
   validates :state, :title, :body, presence: true
 

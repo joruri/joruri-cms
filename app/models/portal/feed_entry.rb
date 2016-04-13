@@ -1,8 +1,14 @@
 # encoding: utf-8
 class Portal::FeedEntry < Cms::FeedEntry
-  belongs_to :content,        foreign_key: :content_id,        class_name: 'Portal::Content::FeedEntry'
-  belongs_to :portal_content, foreign_key: :portal_content_id, class_name: 'Portal::Content::Base'
-  belongs_to :doc,            foreign_key: :doc_id,            class_name: 'Article::Doc'
+  belongs_to :content,
+             foreign_key: :content_id,
+             class_name: 'Portal::Content::FeedEntry'
+
+  belongs_to :portal_content,
+             foreign_key: :portal_content_id,
+             class_name: 'Portal::Content::Base'
+
+  belongs_to :doc, foreign_key: :doc_id, class_name: 'Article::Doc'
 
   def source_title
     return @source_title if @source_title
@@ -27,7 +33,7 @@ class Portal::FeedEntry < Cms::FeedEntry
       if suffix == 'site'
         values << %(<span class="site">#{ERB::Util.html_escape(portal_content.site.name)}</span>) if portal_content.site
       elsif suffix == 'unit'
-        doc = Article::Doc.find(:first, conditions: { id: doc_id, content_id: content.id })
+        doc = Article::Doc.find_by(id: doc_id, content_id: content.id)
         if doc
           values << %(<span class="unit">#{ERB::Util.html_escape(doc.creator.group.name)}</span>) if doc.creator && doc.creator.group
         end

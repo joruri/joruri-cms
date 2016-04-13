@@ -15,12 +15,12 @@ pubmsg  = "公開日時が設定されています。\n（ #{pubdate} ）\n直�
 <%= action_menu :destroy if safe{@item.deletable?} %>
 
 <% if params[:action] == 'show' %>
-<%= link_to :duplicate, {:do => :duplicate}, :confirm => "複製してよろしいですか？" %>
+<%= link_to :duplicate, {:do => :duplicate}, data: { confirm: "複製してよろしいですか？" } %>
 <%= link_to("複製（更新用）", {:do => :duplicate_for_replace},
   :confirm => "複製してよろしいですか？") if @item.editable? && @item.public? && !@item.unid_related? %>
-<%= link_to(:recognize, {:do => :recognize}, :confirm => "承認してよろしいですか？") if @item.recognizable?(Core.user) %>
-<%= link_to(:publish, {:do => :publish}, :confirm => pubmsg) if @item.publishable? %>
-<%= link_to(:close, {:do => :close}, :confirm => "公開を終了してよろしいですか？") if @item.closable? %>
+<%= link_to(:recognize, {:do => :recognize}, data: { confirm: "承認してよろしいですか？" }) if @item.recognizable?(Core.user) %>
+<%= link_to(:publish, {:do => :publish}, data: { confirm: pubmsg }) if @item.publishable? %>
+<%= link_to(:close, {:do => :close}, data: { confirm: "公開を終了してよろしいですか？" }) if @item.closable? %>
 <% end %>
 
 <span class="separator"></span>

@@ -8,22 +8,41 @@ class Cms::Concept < ActiveRecord::Base
   include Sys::Model::Base::Page
   include Sys::Model::Auth::Manager
 
-  belongs_to :status, foreign_key: :state,
-                      class_name: 'Sys::Base::Status'
-  has_many :children, -> { order(:name) }, foreign_key: :parent_id,
-                                           class_name: 'Cms::Concept', dependent: :destroy
-  has_many :layouts, -> { order(:name) }, foreign_key: :concept_id,
-                                          class_name: 'Cms::Layout', dependent: :destroy
-  has_many :pieces, -> { order(:name) }, foreign_key: :concept_id,
-                                         class_name: 'Cms::Piece', dependent: :destroy
-  has_many :contents, foreign_key: :concept_id,
-                      class_name: 'Cms::Content', dependent: :destroy
-  has_many :data_files, foreign_key: :concept_id,
-                        class_name: 'Cms::DataFile', dependent: :destroy
-  has_many :data_file_nodes, foreign_key: :concept_id,
-                             class_name: 'Cms::DataFileNode', dependent: :destroy
+  belongs_to :status,
+             foreign_key: :state,
+             class_name: 'Sys::Base::Status'
 
-  validates_presence_of :site_id, :state, :level_no, :name
+  has_many :children, -> { order(:name) },
+           foreign_key: :parent_id,
+           class_name: 'Cms::Concept',
+           dependent: :destroy
+
+  has_many :layouts, -> { order(:name) },
+           foreign_key: :concept_id,
+           class_name: 'Cms::Layout',
+           dependent: :destroy
+
+  has_many :pieces, -> { order(:name) },
+           foreign_key: :concept_id,
+           class_name: 'Cms::Piece',
+           dependent: :destroy
+
+  has_many :contents,
+           foreign_key: :concept_id,
+           class_name: 'Cms::Content',
+           dependent: :destroy
+
+  has_many :data_files,
+           foreign_key: :concept_id,
+           class_name: 'Cms::DataFile',
+           dependent: :destroy
+
+  has_many :data_file_nodes,
+           foreign_key: :concept_id,
+           class_name: 'Cms::DataFileNode',
+           dependent: :destroy
+
+  validates :site_id, :state, :level_no, :name, presence: true
 
   def validate
     errors.add :parent_id, :invalid if !id.nil? && id == parent_id
@@ -46,9 +65,8 @@ class Cms::Concept < ActiveRecord::Base
         unid: Sys::ObjectPrivilege.select(:item_unid).where(
           action: priv_name,
           role_id: Sys::UsersRole.select(:role_id).where(
-            Sys::UsersRole.arel_table[:user_id].eq(user.id).or(
-              Sys::UsersRole.arel_table[:group_id].eq(gids)
-            )
+            Sys::UsersRole.arel_table[:user_id].eq(user.id)
+            .or(Sys::UsersRole.arel_table[:group_id].eq(gids))
           )
         )
       )
@@ -92,7 +110,7 @@ class Cms::Concept < ActiveRecord::Base
     path
   end
 
-  def make_candidates(args1, args2)
+  def make_candidates
     choiced = []
     choices = []
     down    = lambda do |p, i|
@@ -100,22 +118,20 @@ class Cms::Concept < ActiveRecord::Base
       choiced[p.id] = true
 
       choices << [('　　' * i) + p.name, p.id]
-      self.class.find(:all, eval("{#{args2}}")).each do |c|
+      c_items = self.class.where(parent_id: p.id)
+      c_items = c_items.where(id: id) if id
+      c_items.order(:sort_no).each do |c|
         down.call(c, i + 1)
       end
     end
 
-    self.class.find(:all, eval("{#{args1}}")).each { |item| down.call(item, 0) }
+    items = self.class.where(site_id: Core.site.id, level_no: 1)
+    items = items.where.not(id: id) if id
+    items.order(:sort_no).each { |item| down.call(item, 0) }
     choices
   end
 
   def candidate_parents
-    args1  = %( :conditions => ["id != ? AND site_id = ? AND level_no = 1", id, Core.site.id], )
-    args1  = %( :conditions => ["site_id = ? AND level_no = 1", Core.site.id], ) unless id
-    args1 += %( :order => :sort_no)
-    args2  = %( :conditions => ["id != ? AND parent_id = ?", id, p.id], )
-    args2  = %( :conditions => ["parent_id = ?", p.id], ) if new_record?
-    args2 += %( :order => :sort_no)
-    make_candidates(args1, args2)
+    make_candidates
   end
 end

@@ -5,10 +5,11 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
   include Sys::Model::Auth::Manager
 
   belongs_to :unid_original, foreign_key: 'item_unid', class_name: 'Sys::Unid'
-  belongs_to :concept, foreign_key: 'item_unid', primary_key: 'unid', class_name: 'Cms::Concept'
+  belongs_to :concept, foreign_key: 'item_unid', primary_key: 'unid',
+                       class_name: 'Cms::Concept'
 
-  validates_presence_of :role_id, :item_unid
-  validates_presence_of :action, if: %(in_actions.blank?)
+  validates :role_id, :item_unid, presence: true
+  validates :action, presence: true, if: %(in_actions.blank?)
 
   def in_actions
     @in_actions = actions if @in_actions.nil?
@@ -18,7 +19,7 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
   def in_actions=(values)
     @_in_actions_changed = true
     _values = []
-    if values.class == Hash || values.class == HashWithIndifferentAccess
+    if values.class == Hash || values.class == HashWithIndifferentAccess || values.class == ActionController::Parameters
       values.each { |key, val| _values << key unless val.blank? }
       @in_actions = _values
     else
@@ -74,7 +75,7 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
     values = in_actions.clone
 
     cond = { role_id: role_id, item_unid: (item_unid_was || item_unid) }
-    old_privileges = self.class.find.where(cond).order(:action)
+    old_privileges = self.class.where(cond).order(:action)
 
     old_privileges.each do |priv|
       if values.index(priv.action)

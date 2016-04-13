@@ -37,7 +37,7 @@ class Cms::Admin::Tool::SearchController < Cms::Controller::Admin::Base
     @items << group
 
     contents = Cms::Content
-               .where(site_id: core.site.id)
+               .where(site_id: Core.site.id)
                .where(model: 'Article::Doc')
                .order(:id)
 

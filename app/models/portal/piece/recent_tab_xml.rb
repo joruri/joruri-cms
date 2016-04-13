@@ -12,7 +12,7 @@ class Portal::Piece::RecentTabXml < Cms::Model::Base::PieceExtension
 
   elem_accessor :category
 
-  validates_presence_of :name, :title, :sort_no
+  validates :name, :title, :sort_no, presence: true
 
   def category_items
     list = []

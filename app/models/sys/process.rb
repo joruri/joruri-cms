@@ -18,7 +18,7 @@ class Sys::Process < ActiveRecord::Base
   def self.lock(attrs = {})
     raise 'lock name is blank.' if attrs[:name].blank?
 
-    proc = find(:first, conditions: { name: attrs[:name] })
+    proc = find_by(name: attrs[:name])
 
     if proc
       # if proc.closed_at.nil?
@@ -55,7 +55,7 @@ class Sys::Process < ActiveRecord::Base
 
   def interrupted?
     self.class.uncached do
-      item = self.class.find_by(id: id, select: 'interrupt')
+      item = self.class.find_by(id: id)
       self.interrupt = item.interrupt
       return item.interrupt.blank? ? nil : item.interrupt
     end

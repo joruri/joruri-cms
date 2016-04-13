@@ -33,7 +33,13 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Max: 14
 
+Lint/DuplicatedKey:
+  Enabled: false
+
 Lint/UnderscorePrefixedVariableName:
+  Enabled: false
+
+Style/AsciiComments:
   Enabled: false
 
 Style/BlockComments:

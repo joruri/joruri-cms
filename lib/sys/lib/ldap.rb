@@ -27,7 +27,7 @@ class Sys::Lib::Ldap
   ## Connect.
   def self.connect(params)
     require 'ldap'
-    timeout(3) do
+    Timeout.timeout(3) do
       conn = LDAP::Conn.new(params[:host], params[:port])
       conn.set_option(LDAP::LDAP_OPT_PROTOCOL_VERSION, 3)
       return conn

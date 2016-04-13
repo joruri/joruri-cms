@@ -5,7 +5,7 @@ class Sys::LdapSynchro < ActiveRecord::Base
   include Sys::Model::Tree
   include Sys::Model::Auth::Manager
 
-  validates_presence_of :version, :entry_type, :code, :name
+  validates :version, :entry_type, :code, :name, presence: true
 
   def children
     return @_children if @_children

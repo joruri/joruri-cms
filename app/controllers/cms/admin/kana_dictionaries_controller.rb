@@ -38,13 +38,13 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
   def create
     return test if params[:do] == 'test'
 
-    @item = Cms::KanaDictionary.new(params[:item])
+    @item = Cms::KanaDictionary.new(kana_dictionary_params)
     _create @item
   end
 
   def update
     @item = Cms::KanaDictionary.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = kana_dictionary_params
     _update @item
   end
 
@@ -62,5 +62,10 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
                      end
 
     redirect_to cms_kana_dictionaries_url
+  end
+
+  def kana_dictionary_params
+    params.require(:item).permit(
+      :name, :body, in_creator: [:group_id, :user_id])
   end
 end

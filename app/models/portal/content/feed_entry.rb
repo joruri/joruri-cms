@@ -2,33 +2,41 @@
 class Portal::Content::FeedEntry < Cms::Content
   def entry_node
     return @entry_node if @entry_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Portal::FeedEntry'
-    @doc_node = item.find(:first, order: :id)
+    @doc_node = Cms::Node
+                .published
+                .where(content_id: id)
+                .where(model: 'Portal::FeedEntry')
+                .order(:id)
+                .first
   end
 
   def category_node
     return @category_node if @category_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Portal::Category'
-    @category_node = item.find(:first, order: :id)
+    @category_node = Cms::Node
+                     .published
+                     .where(content_id: id)
+                     .where(model: 'Portal::Category')
+                     .order(:id)
+                     .first
   end
 
   def event_node
     return @event_node if @event_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Portal::EventEntry'
-    @event_node = item.find(:first, order: :id)
+    @event_node = Cms::Node
+                  .published
+                  .where(content_id: id)
+                  .where(model: 'Portal::EventEntry')
+                  .order(:id)
+                  .first
   end
 
   def doc_node
     return @doc_node if @doc_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Article::Doc'
-    @doc_node = item.find(:first, order: :id)
+    @doc_node = Cms::Node
+                .published
+                .where(content_id: id)
+                .where(model: 'Article::Doc')
+                .order(:id)
+                .first
   end
 end

@@ -15,8 +15,7 @@ class Sys::Model::Base::Setting < ActiveRecord::Base
   end
 
   def self.config(name)
-    cond = { name: name.to_s }
-    find(:first, conditions: cond) || new(cond)
+    find_by(name: name.to_s) || new(name: name.to_s)
   end
 
   def self.value(name, default_value = nil)

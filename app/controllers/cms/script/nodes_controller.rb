@@ -5,7 +5,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
 
     Cms::Node.published
              .where(parent_id: 0)
-             .order(directory: :desc, :name, :id).each do |node|
+             .order(directory: :desc, name: :asc, id: :asc)
+             .each do |node|
       publish_node(node)
     end
 
@@ -23,8 +24,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
             .where(parent_id: node.id)
             .where.not(name: nil)
             .where.not(name: '')
-            .project(:id)
             .order(:directory, :name, :id)
+            .select(:id)
 
     nodes.each do |v|
       item = Cms::Node.find_by(id: v[:id])

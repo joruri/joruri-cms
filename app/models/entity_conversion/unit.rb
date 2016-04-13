@@ -6,7 +6,8 @@ class EntityConversion::Unit < ActiveRecord::Base
   include Cms::Model::Rel::Concept
   include Cms::Model::Auth::Content
 
-  belongs_to :web_status, foreign_key: :web_state, class_name: 'Sys::Base::Status'
+  include StateText
+
   belongs_to :content, foreign_key: :content_id, class_name: 'Cms::Content'
   belongs_to :layout, foreign_key: :layout_id, class_name: 'Cms::Layout'
 
@@ -14,16 +15,18 @@ class EntityConversion::Unit < ActiveRecord::Base
   belongs_to :old_parent, foreign_key: :old_parent_id, class_name: 'Sys::Group'
   belongs_to :parent, foreign_key: :parent_id, class_name: 'Sys::Group'
   belongs_to :move, foreign_key: :move_id, class_name: 'Sys::Group'
-  belongs_to :new_parent, foreign_key: :new_parent_id, class_name: 'EntityConversion::Unit'
-  belongs_to :new_move, foreign_key: :new_move_id, class_name: 'EntityConversion::Unit'
+  belongs_to :new_parent, foreign_key: :new_parent_id,
+                          class_name: 'EntityConversion::Unit'
+  belongs_to :new_move, foreign_key: :new_move_id,
+                        class_name: 'EntityConversion::Unit'
 
-  validates_presence_of :code, :name, :name_en, :web_state, :ldap,
+  validates :code, :name, :name_en, :web_state, :ldap, presence: true,
                         if: %(state == "new")
-  validates_presence_of :old_id, :code, :name, :name_en, :web_state, :ldap,
+  validates :old_id, :code, :name, :name_en, :web_state, :ldap, presence: true,
                         if: %(state == "edit")
-  validates_presence_of :old_id,
+  validates :old_id, presence: true,
                         if: %(state == "move")
-  validates_presence_of :old_id,
+  validates :old_id, presence: true,
                         if: %(state == "end")
 
   validate :validates_all

@@ -1,10 +1,11 @@
 # encoding: utf-8
 class Sys::Script::TasksController < ApplicationController
   def exec
-    task = Sys::Task.new
-    task.and :process_at, '<=', Time.now + (60 * 5) # before 5 min
-    task.and :process_at, '>', (Date.today << 1)
-    tasks = task.all.order(:process_at)
+    arel_table = Sys::Task.arel_table
+    tasks = Sys::Task
+            .where(arel_table[:process_at].lteq(Time.now + (60 * 5)))
+            .where(arel_table[:process_at].gt((Date.today << 1)))
+            .order(:process_at)
 
     Script.total tasks.size
 

@@ -28,7 +28,7 @@ class Article::Public::Piece::CalendarsController < Sys::Controller::Public::Bas
              .agent_filter(request.mobile)
              .where(content_id: @content.id)
              .event_date_in(@sdate, @edate)
-             .project(:event_date, :event_colose_date)
+             .select(:event_date, :event_close_date)
 
       docs.each do |doc|
         dates << doc.event_date

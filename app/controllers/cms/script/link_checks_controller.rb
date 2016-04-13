@@ -12,7 +12,7 @@ class Cms::Script::LinkChecksController < Cms::Controller::Script::Publication
     pubs = pubs.where(arel_publishers[:internal_links].not_eq(nil)
                       .or(arel_publishers[:external_links].not_eq(nil)))
 
-    pubs = pubs.project(:id)
+    pubs = pubs.select(:id)
 
     Script.total pubs.size
 

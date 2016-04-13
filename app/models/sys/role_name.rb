@@ -4,10 +4,10 @@ class Sys::RoleName < ActiveRecord::Base
   include Sys::Model::Base::Config
   include Sys::Model::Auth::Manager
 
-  has_many :privileges, foreign_key: :role_id, class_name: 'Sys::ObjectPrivilege',
-                        dependent: :destroy
+  has_many :privileges, foreign_key: :role_id,
+           class_name: 'Sys::ObjectPrivilege',dependent: :destroy
 
-  validates_presence_of :name, :title
+  validates :name, :title, presence: true
 
   def groups
     ids = Sys::UsersRole
@@ -22,7 +22,7 @@ class Sys::RoleName < ActiveRecord::Base
   def users
     ids = Sys::UsersRole
           .where(role_id: id)
-          .where.not(user_id, nil)
+          .where.not(user_id: nil)
           .collect(&:user_id)
     return [] if ids.size == 0
 

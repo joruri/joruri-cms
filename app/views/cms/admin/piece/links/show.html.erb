@@ -11,7 +11,7 @@
 </div>
 
 <table class="show">
-  <% @item.link_items.find(:all, :conditions => {:state => 'public'}).each_with_index do |item, idx| %>
+  <% @item.link_items.where(state: 'public').each_with_index do |item, idx| %>
   <tr>
     <th>リンク <%= idx + 1 %></th>
     <td><%= link_to h(item.name), item.uri, :target => item.target %></td>

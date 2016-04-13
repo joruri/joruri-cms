@@ -2,5 +2,5 @@
 class Sys::UnidRelation < ActiveRecord::Base
   include Sys::Model::Base
 
-  validates_presence_of :unid, :rel_unid, :rel_type
+  validates :unid, :rel_unid, :rel_type, presence: true
 end

@@ -11,14 +11,13 @@ class Util::Sequencer
 
     if seq
       seq.value += 1
-      seq.save
     else
       seq = Sys::Sequence.new
       seq.name = name
       seq.version = version
       seq.value = 1
-      seq.save
     end
+    seq.save
 
     lock.unlock
 

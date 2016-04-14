@@ -29,7 +29,7 @@ module Article::Model::Rel::Doc::Unit
     category_items.each { |c| cate << c.title }
     separator = %(<span class="separator">　</span>)
     values = []
-    values << %(<span class="category">#{ERB::Util.html_escape(cate.join('，'))}</span>) if cate.size > 0
+    values << %(<span class="category">#{ERB::Util.html_escape(cate.join('，'))}</span>) unless cate.empty?
     values << %(<span class="unit">#{ERB::Util.html_escape(creator.group.name)}</span>) if creator && creator.group
     %(<span class="attributes">（#{values.join(separator)}）</span>).html_safe
   end

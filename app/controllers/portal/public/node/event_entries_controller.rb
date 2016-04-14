@@ -42,12 +42,15 @@ class Portal::Public::Node::EventEntriesController < Cms::Controller::Public::Ba
     ## entries
     @items = []
     prev   = nil
-    item = Portal::FeedEntry.new.public
-    item.agent_filter(request.mobile)
-    item.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
-    item.event_date_is(year: @calendar.year, month: @calendar.month)
-    item.page 0, 1000
-    entries = item.find_with_own_docs(@content.doc_content, :events, year: @calendar.year, month: @calendar.month)
+    entries = Portal::FeedEntry
+              .public_content_with_own_docs(
+                @content,
+                :events,
+                year: @calendar.year,
+                month: @calendar.month,
+                mobile: request.mobile
+              )
+              .paginate(page: 0, per_page: 1000)
 
     return true if render_feed(entries)
 

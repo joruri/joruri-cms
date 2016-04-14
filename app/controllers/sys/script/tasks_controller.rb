@@ -9,7 +9,7 @@ class Sys::Script::TasksController < ApplicationController
 
     Script.total tasks.size
 
-    return render(text: 'OK') if tasks.size == 0
+    return render(text: 'OK') if tasks.empty?
 
     tasks.each_with_index do |task, _idx|
       begin

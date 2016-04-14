@@ -13,7 +13,7 @@ class Sys::Script::RunnerController < ApplicationController
     Script.log "Interrupt: #{e}"
   rescue LoadError => e
     Script.error e.to_s
-  rescue Exception => e
+  rescue StandardError => e
     Script.error e.to_s
   end
 end

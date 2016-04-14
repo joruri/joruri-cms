@@ -8,9 +8,9 @@ class Util::Http::QueryString
   end
 
   def self.build_query(params)
-    query_string = params.inject('') do |str, param|
-      str += '&' unless str.empty?
-      str += "#{param[0]}=#{param[1]}"
+    query_string = params.inject('') do |_str, param|
+      _str += '&' unless _str.empty?
+      _str += "#{param[0]}=#{param[1]}"
     end
     query_string.blank? ? nil : query_string
   end

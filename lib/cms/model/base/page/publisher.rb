@@ -39,7 +39,7 @@ module Cms::Model::Base::Page::Publisher
     mobile = options[:mobile] ? 'm' : nil
     params = []
     options[:params].each { |k, v| params << "#{k}=#{v}" } if options[:params]
-    params = params.size > 0 ? "?#{params.join('&')}" : ''
+    params = !params.empty? ? "?#{params.join('&')}" : ''
     "#{Core.site.admin_uri}_preview/#{format('%08d', site.id)}#{mobile}#{public_uri}#{params}"
   end
 
@@ -171,8 +171,8 @@ module Cms::Model::Base::Page::Publisher
 
     inlinks.uniq!
     exlinks.uniq!
-    pub.internal_links = inlinks.size > 0 ? inlinks.join("\n") : nil
-    pub.external_links = exlinks.size > 0 ? exlinks.join("\n") : nil
+    pub.internal_links = !inlinks.empty? ? inlinks.join("\n") : nil
+    pub.external_links = !exlinks.empty? ? exlinks.join("\n") : nil
     true
   end
 end

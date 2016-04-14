@@ -4,7 +4,7 @@ class ActionView::Helpers::FormBuilder
     name = method.gsub(/^.*?\[/, '').gsub(/\]\[/, '_').gsub(/\]$/, '')
     ins  = @template.instance_variable_get("@#{@object_name}")
     err  = ins.errors[name.to_sym]
-    err.size > 0 ? ActionView::Base.field_error_proc.call(tag, ins) : tag
+    !err.empty? ? ActionView::Base.field_error_proc.call(tag, ins) : tag
   end
 
   def array_name(method)
@@ -95,7 +95,7 @@ class ActionView::Helpers::FormBuilder
 
     choices = []
     roots = root.to_a
-    if roots.size > 0
+    unless roots.empty?
       iclass  = roots[0].class
       indstr  = '　　'
       down = lambda do |_parent, _indent|

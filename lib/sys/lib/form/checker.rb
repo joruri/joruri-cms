@@ -34,7 +34,7 @@ class Sys::Lib::Form::Checker
     html  = %(<div class="noticeExplanation" id="noticeExplanation">)
     html += %(<h2>リンクチェック結果</h2>)
 
-    if @links.size > 0
+    unless @links.empty?
       html += %(<p>次のURLを確認しました。</p><ul>)
       @links.each do |uri, res|
         res = res ? %(<span class="success">成功</span>) : %(<span class="failed">失敗</span>)

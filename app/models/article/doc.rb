@@ -74,11 +74,12 @@ class Article::Doc < ActiveRecord::Base
   }
 
   scope :visible_in_recent, -> {
-    where(language_id: 1, recent_state: 'visible')
+    where(arel_table[:language_id].eq(1)
+          .and(arel_table[:recent_state].eq('visible')))
   }
 
   scope :visible_in_list, -> {
-    where(list_state: 'visible')
+    where(arel_table[:list_state].eq('visible'))
   }
 
   scope :event_date_in, ->(sdate, edate) {
@@ -384,7 +385,7 @@ class Article::Doc < ActiveRecord::Base
       end
     end
 
-    if crumbs.size == 0
+    if crumbs.empty?
       doc_node.routes.each do |r|
         c = []
         r.each { |i| c << [i.title, i.public_uri] }

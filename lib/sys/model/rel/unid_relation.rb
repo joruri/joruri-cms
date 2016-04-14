@@ -1,9 +1,12 @@
 # encoding: utf-8
 module Sys::Model::Rel::UnidRelation
-  def self.included(mod)
-    mod.has_many :rel_unids, primary_key: 'unid', foreign_key: 'unid', class_name: 'Sys::UnidRelation'
+  extend ActiveSupport::Concern
 
-    mod.after_destroy :remove_unid_relations
+  included do
+    has_many :rel_unids, primary_key: 'unid', foreign_key: 'unid',
+                         class_name: 'Sys::UnidRelation'
+
+    after_destroy :remove_unid_relations
   end
 
   def remove_unid_relations

@@ -25,7 +25,7 @@ class Article::Script::CategoriesController < Cms::Controller::Script::Publicati
       end
     end
 
-    render text: (@errors.size == 0 ? 'OK' : @errors.join("\n"))
+    render text: (@errors.empty? ? 'OK' : @errors.join("\n"))
   end
 
   def publish_children(_item, child, units)

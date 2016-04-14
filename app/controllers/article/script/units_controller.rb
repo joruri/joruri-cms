@@ -38,6 +38,6 @@ class Article::Script::UnitsController < Cms::Controller::Script::Publication
       end
     end
 
-    render text: (@errors.size == 0 ? 'OK' : @errors.join("\n"))
+    render text: (@errors.empty? ? 'OK' : @errors.join("\n"))
   end
 end

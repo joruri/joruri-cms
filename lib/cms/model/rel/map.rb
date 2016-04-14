@@ -1,10 +1,12 @@
 # encoding: utf-8
 module Cms::Model::Rel::Map
-  def self.included(mod)
-    mod.has_many :maps, primary_key: 'unid', foreign_key: 'unid',
-                        class_name: 'Cms::Map', dependent: :destroy
+  extend ActiveSupport::Concern
 
-    mod.after_save :save_maps
+  included do
+    has_many :maps, primary_key: 'unid', foreign_key: 'unid',
+                    class_name: 'Cms::Map', dependent: :destroy
+
+    after_save :save_maps
   end
 
   def in_maps
@@ -26,7 +28,7 @@ module Cms::Model::Rel::Map
   end
 
   def find_map_by_name(name)
-    return nil if maps.size == 0
+    return nil if maps.empty?
     maps.each do |map|
       return map if map.name == name
     end

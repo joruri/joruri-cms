@@ -115,7 +115,7 @@ module Storage::Db
   def self.rmdir(path)
     r = storage(path)
     return false unless r
-    return false if entries(path).size > 0
+    return false unless entries(path).empty?
     r.destroy
   end
 

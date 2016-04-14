@@ -5,7 +5,7 @@ class Sys::EditableGroup < ActiveRecord::Base
   def groups
     groups = []
     ids = group_ids.to_s.split(' ').uniq
-    return groups if ids.size == 0
+    return groups if ids.empty?
     ids.each do |id|
       group = Sys::Group.find_by(id: id)
       groups << group if group

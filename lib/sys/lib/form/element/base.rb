@@ -29,7 +29,7 @@ class Sys::Lib::Form::Element::Base
   def attributes_string
     attr = []
     @options.each { |k, v| attr << %(#{k}="#{v}") unless v.blank? }
-    attr = attr.size == 0 ? nil : attr.join(' ')
+    attr = attr.empty? ? nil : attr.join(' ')
   end
 
   def tag_id(key = nil)

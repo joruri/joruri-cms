@@ -73,7 +73,7 @@ class Article::Public::Node::AttributesController < Cms::Controller::Public::Bas
 
     @attr = Article::Unit
             .published
-            .where(ame_en: params[:attr])
+            .where(name_en: params[:attr])
             .order(:sort_no)
             .first
     return http_error(404) unless @attr

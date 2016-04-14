@@ -3,20 +3,22 @@ class Portal::Public::Node::FeedEntriesController < Cms::Controller::Public::Bas
   include Portal::Controller::Feed
 
   def pre_dispatch
-    return http_error(404) unless content = Page.current_node.content
+    content = Page.current_node.content
+    return http_error(404) unless content
     @content = Portal::Content::Base.find_by(id: content.id)
   end
 
   def index
-    entry = Portal::FeedEntry.new.public
-    entry.content_id = @content.id
-    entry.agent_filter(request.mobile)
-    entry.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
+    @entries = Portal::FeedEntry
+               .public_content_with_own_docs(
+                 @content,
+                 :docs,
+                 search: params,
+                 mobile: request.mobile
+               )
+               .paginate(page: params[:page],
+                         per_page: (request.mobile? ? 20 : 50))
 
-    entry.search params
-    entry.page params[:page], (request.mobile? ? 20 : 50)
-
-    @entries = entry.find_with_own_docs(@content.doc_content, :docs)
     return true if render_feed(@entries)
 
     return http_error(404) if @entries.current_page > @entries.total_pages

@@ -23,29 +23,36 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
     Portal::Piece::RecentTabXml.find(:all, feed, order: :sort_no).each do |tab|
       next if tab.name.blank?
 
-      current   = (@tabs.size == 0) ? true : nil
+      current   = (@tabs.empty?) ? true : nil
       tab_class = tab.name
       tab_class = "#{tab.name} current" if current
       more_uri = tab.more.blank? ? nil : tab.more
 
       entries = []
-      entry = Portal::FeedEntry.new.public
-      entry.content_id = @content.id
-      entry.agent_filter(request.mobile)
-      entry.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
-      entry.page 1, limit
       list = tab.category_items
       if list.size > 0
-        entry.category_is list[0]
-        entries = entry.find_with_own_docs(base_content.doc_content, :groups, item: list[0])
+        entries = Portal::FeedEntry
+                  .public_content_with_own_docs(
+                    @content,
+                    :groups,
+                    category: list[0],
+                    mobile: request.mobile
+                  )
+                  .paginate(page: 1, limit)
 
         # more
-        more_uri = "#{@content.category_node.public_uri}#{list[0].name}/" if !more_uri && @content.category_node && entries.size > 0
+        more_uri = "#{@content.category_node.public_uri}#{list[0].name}/" if !more_uri && @content.category_node && !entries.empty?
       else
-        entries = entry.find_with_own_docs(base_content.doc_content, :docs)
+        entries = Portal::FeedEntry
+                  .public_content_with_own_docs(
+                    @content,
+                    :docs,
+                    mobile: request.mobile
+                  )
+                  .paginate(page: 1, limit)
 
         # more
-        more_uri = @content.entry_node.public_uri if !more_uri && @content.entry_node && entries.size > 0
+        more_uri = @content.entry_node.public_uri if !more_uri && @content.entry_node && !entries.empty?
       end
 
       @tabs << {
@@ -58,6 +65,6 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
       }
     end
 
-    return render text: '' if @tabs.size == 0
+    return render text: '' if @tabs.empty?
   end
 end

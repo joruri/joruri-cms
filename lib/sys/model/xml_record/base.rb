@@ -105,6 +105,10 @@ class Sys::Model::XmlRecord::Base
     []
   end
 
+  def self._reflect_on_association(association)
+    nil
+  end
+
   def self.find(key, record, options = {})
     xml = eval("record.#{column_name}")
     doc = REXML::Document.new(xml)
@@ -119,7 +123,7 @@ class Sys::Model::XmlRecord::Base
         item.set_primary_value
         items << item
       end
-      if options[:order] && items.size > 0
+      if options[:order] && !items.empty?
         begin
           return items.sort { |a, b| a.send(options[:order]) <=> b.send(options[:order]) }
         rescue
@@ -171,7 +175,9 @@ class Sys::Model::XmlRecord::Base
   end
 
   def save(validation = true)
-    return false if validation && !valid?
+    if validation
+      return false unless valid?
+    end
     return false unless before_save
     eval("@_record.#{self.class.column_name} = build_xml.to_s")
     return false unless @_record.save(validate: false)

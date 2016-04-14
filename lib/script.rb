@@ -64,7 +64,7 @@ class Script
     log "[#{finish.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... finished (#{past} sec)"
     unlock
 
-  rescue Exception => e
+  rescue StandardError => e
     error e
     error e.backtrace.slice(0, 20).join("\n")
     unlock

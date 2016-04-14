@@ -15,7 +15,7 @@ module Sys::Model::Rel::Role
              .select(:role_id)
              .collect(&:role_id)
 
-      rids = rids.size > 0 ? rids * ',' : '-1'
+      rids = !rids.empty? ? rids * ',' : '-1'
 
       sql = "SELECT item_unid FROM sys_object_privileges" +
         " WHERE action = '#{name}' AND role_id IN (#{rids}) "

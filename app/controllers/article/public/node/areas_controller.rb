@@ -101,7 +101,7 @@ class Article::Public::Node::AreasController < Cms::Controller::Public::Base
             .published
             .where(content_id: @content.id)
             .where(name: params[:attr])
-            .order(:sorrt_no)
+            .order(:sort_no)
             .first
     return http_error(404) unless @attr
 

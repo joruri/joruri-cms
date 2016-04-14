@@ -1,14 +1,12 @@
 # encoding: utf-8
 module Sys::Model::Rel::File
-  def self.included(mod)
-    mod.has_many :files, foreign_key: 'parent_unid', class_name: 'Sys::File',
-                         primary_key: 'unid', dependent: :destroy
+  extend ActiveSupport::Concern
 
-    # mod.before_save :publish_files
-    # :if => %Q(@save_mode == :publish)
-    # mod.before_save :close_files,
-    # :if => %Q(@save_mode == :close)
-    mod.after_destroy :close_files
+  included do
+    has_many :files, foreign_key: 'parent_unid', class_name: 'Sys::File',
+                     primary_key: 'unid', dependent: :destroy
+
+    after_destroy :close_files
   end
 
   ## Remove the temporary flag.
@@ -23,7 +21,7 @@ module Sys::Model::Rel::File
 
   def publish_files
     # return true unless @save_mode == :publish
-    return true if files.size == 0
+    return true if files.empty?
 
     public_dir = public_files_path
     file_paths = []

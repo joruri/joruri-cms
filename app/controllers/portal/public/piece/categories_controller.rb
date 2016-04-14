@@ -17,6 +17,6 @@ class Portal::Public::Piece::CategoriesController < Sys::Controller::Public::Bas
                end
     end
 
-    return render text: '' if @items.size == 0
+    return render text: '' if @items.empty?
   end
 end

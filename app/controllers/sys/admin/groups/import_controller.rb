@@ -40,7 +40,7 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
   rescue CSV::MalformedCSVError => e
     flash[:notice] = "インポートに失敗しました。（不正なCSVデータ）"
     return redirect_to(action: :index)
-  rescue Exception => e
+  rescue StandardError => e
     flash[:notice] = "インポートに失敗しました。（#{e}）"
     return redirect_to(action: :index)
   end

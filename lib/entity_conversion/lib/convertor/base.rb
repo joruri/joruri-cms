@@ -49,7 +49,7 @@ class EntityConversion::Lib::Convertor::Base
                  .order(:old_parent_id, :old_id)
 
     @logs << "\n# 新設"
-    @logs << '' if @new_units.size > 0
+    @logs << '' unless @new_units.empty?
 
     @new_units.each do |unit|
       @logs << "- #{unit.name} ##{unit.id}"
@@ -57,7 +57,7 @@ class EntityConversion::Lib::Convertor::Base
     end
 
     @logs << "\n# 変更"
-    @logs << '' if @edit_units.size > 0
+    @logs << '' unless @edit_units.empty?
 
     @edit_units.each do |unit|
       group = unit.old
@@ -73,7 +73,7 @@ class EntityConversion::Lib::Convertor::Base
     end
 
     @logs << "\n# 統合"
-    @logs << '' if @move_units.size > 0
+    @logs << '' unless @move_units.empty?
 
     @move_units.each do |unit|
       group = unit.old
@@ -91,7 +91,7 @@ class EntityConversion::Lib::Convertor::Base
     end
 
     @logs << "\n# 廃止"
-    @logs << '' if @end_units.size > 0
+    @logs << '' unless @end_units.empty?
 
     @end_units.each do |unit|
       group = unit.old
@@ -107,7 +107,7 @@ class EntityConversion::Lib::Convertor::Base
     @state = 'success'
     @logs << "\n* 正常終了"
 
-  rescue Exception => e
+  rescue StandardError => e
     @state = 'error'
     @logs << "\n* エラー\n- #{e}"
 
@@ -149,7 +149,7 @@ class EntityConversion::Lib::Convertor::Base
       end
       items = cls.uncached { cls.where(cond.where) }
 
-      next unless items.size > 0
+      next if items.empty?
       records += items.size
       if new_id
         items.each { |item| replace_group_id_save(item, fields, group.id, new_id) }
@@ -161,7 +161,7 @@ class EntityConversion::Lib::Convertor::Base
   def replace_texts(texts)
     @logs << '  replace_texts:'
 
-    return if texts.size == 0 # no change
+    return if texts.empty? # no change
 
     target_fields(:text).each do |cls, fields|
       records = 0
@@ -172,7 +172,7 @@ class EntityConversion::Lib::Convertor::Base
       end
       items = cls.uncached { cls.where(cond.where) }
 
-      next unless items.size > 0
+      next if items.empty?
       records += items.size
       items.each { |item| replace_texts_save(item, fields, texts) }
       @logs << "    #{cls.table_name}: #{records} records"

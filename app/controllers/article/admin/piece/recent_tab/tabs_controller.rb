@@ -3,9 +3,11 @@ class Article::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin:
   include Sys::Controller::Scaffold::Base
 
   def pre_dispatch
-    return error_auth unless @piece = Cms::Piece.find(params[:piece])
+    @piece = Cms::Piece.find(params[:piece])
+    return error_auth unless @piece
     return error_auth unless @piece.editable?
-    return error_auth unless @content = @piece.content
+    @content = @piece.content
+    return error_auth unless @content
   end
 
   def index
@@ -24,19 +26,31 @@ class Article::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin:
   end
 
   def create
-    @item = Article::Piece::RecentTabXml.new(@piece, params[:item])
+    @item = Article::Piece::RecentTabXml.new(@piece, tab_params)
     _create @item
   end
 
   def update
     @item = Article::Piece::RecentTabXml.find(params[:id], @piece)
     return error_auth unless @item
-    @item.attributes = params[:item]
+    @item.attributes = tab_params
     _update @item
   end
 
   def destroy
     @item = Article::Piece::RecentTabXml.find(params[:id], @piece)
     _destroy @item
+  end
+
+  private
+
+  def tab_params
+    params.require(:item).permit(
+      :name, :title, :more, :condition, :sort_no,
+      unit: ['0','1','2'],
+      category: ['0','1','2'],
+      attribute: ['0','1','2'],
+      area: ['0','1','2']
+    )
   end
 end

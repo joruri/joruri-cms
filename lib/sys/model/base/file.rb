@@ -1,13 +1,15 @@
 # encoding: utf-8
 module Sys::Model::Base::File
-  def self.included(mod)
-    mod.validates_presence_of :file, if: '@_skip_upload != true'
-    mod.validates_presence_of :name, :title
-    mod.validate :validate_file_name
-    mod.validate :validate_file_type
-    mod.validate :validate_upload_file
-    mod.after_save :upload_internal_file
-    mod.after_destroy :remove_internal_file
+  extend ActiveSupport::Concern
+
+  included do
+    validates :file, presence: true, if: '@_skip_upload != true'
+    validates :name, :title, presence: true
+    validate :validate_file_name
+    validate :validate_file_type
+    validate :validate_upload_file
+    after_save :upload_internal_file
+    after_destroy :remove_internal_file
   end
 
   def self.sizes(options = {})

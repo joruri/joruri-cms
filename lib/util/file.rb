@@ -9,7 +9,9 @@ class Util::File
       f = ::File.open(path, 'w')
       f.flock(File::LOCK_EX)
 
-      options[:data].force_encoding(Encoding::UTF_8) if options[:data].respond_to?(:force_encoding)
+      if options[:data].respond_to?(:force_encoding)
+        options[:data].force_encoding(Encoding::UTF_8)
+      end
 
       f.write(options[:data] ? options[:data] : '')
       f.flock(File::LOCK_UN)

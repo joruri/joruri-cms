@@ -11,7 +11,7 @@ module Article::Model::Rel::Doc::Tag
   end
 
   def find_tag_by_name(name)
-    return nil if tags.size == 0
+    return nil if tags.empty?
     tags.each do |tag|
       return tag.word if tag.name == name
     end
@@ -31,7 +31,8 @@ module Article::Model::Rel::Doc::Tag
     _words = []
     if words.class == Array
       _words = words
-    elsif words.class == Hash || words.class == HashWithIndifferentAccess || words.class == ActionController::Parameters
+    elsif words.class == Hash || words.class == HashWithIndifferentAccess \
+          || words.class == ActionController::Parameters
       words.each { |_key, val| _words << val unless val.blank? }
     else
       _words = words.to_s.split(' ').uniq

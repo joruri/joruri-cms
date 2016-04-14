@@ -1,6 +1,6 @@
 <%
 
-return '' if item.tasks.size == 0
+return '' if item.tasks.empty?
 
 _publish = item.find_task_by_name('publish')
 _close   = item.find_task_by_name('close')

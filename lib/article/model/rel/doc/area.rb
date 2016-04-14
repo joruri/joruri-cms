@@ -35,9 +35,8 @@ module Article::Model::Rel::Doc::Area
   end
 
   def in_area_ids
-    unless val = @in_area_ids
-      @in_area_ids = area_ids.to_s.split(' ').uniq
-    end
+    val = @in_area_ids
+    @in_area_ids = area_ids.to_s.split(' ').uniq unless val
     @in_area_ids
   end
 
@@ -46,7 +45,8 @@ module Article::Model::Rel::Doc::Area
     if ids.class == Array
       ids.each { |val| _ids << val }
       self.area_ids = _ids.join(' ')
-    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess || ids.class == ActionController::Parameters
+    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess  \
+          || ids.class == ActionController::Parameters
       ids.each { |key, val| _ids << key unless val.blank? }
       self.area_ids = _ids.join(' ')
     else
@@ -56,7 +56,7 @@ module Article::Model::Rel::Doc::Area
 
   def area_items(options = {})
     ids = area_ids.to_s.split(' ').uniq
-    return [] if ids.size == 0
+    return [] if ids.empty?
 
     items = Article::Area.where(id: ids)
     items = items.where(state: options[:state]) if options[:state]

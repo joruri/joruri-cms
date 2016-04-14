@@ -1,32 +1,43 @@
 # encoding: utf-8
 module Sys::Model::Rel::Task
-  def self.included(mod)
-    mod.has_many :tasks, primary_key: 'unid', foreign_key: 'unid', class_name: 'Sys::Task',
-                         dependent: :destroy
+  extend ActiveSupport::Concern
 
-    mod.after_save :save_tasks
+  included do
+    has_many :tasks, primary_key: 'unid', foreign_key: 'unid',
+                     class_name: 'Sys::Task', dependent: :destroy
+
+    after_save :save_tasks
   end
 
   def find_task_by_name(name)
-    return nil if tasks.size == 0
+    return nil if tasks.empty?
+
     tasks.each do |task|
       return task.process_at if task.name == name.to_s
     end
+
     nil
   end
 
   def in_tasks
-    unless val = @in_tasks
+    val = @in_tasks
+    unless val
       val = {}
-      tasks.each { |task| val[task.name] = task.process_at.strftime('%Y-%m-%d %H:%M') if task.process_at }
+      tasks.each do |task|
+        if task.process_at
+          val[task.name] = task.process_at.strftime('%Y-%m-%d %H:%M')
+        end
+      end
       @in_tasks = val
     end
+
     @in_tasks
   end
 
   def in_tasks=(values)
     _values = {}
-    if values.class == Hash || values.class == HashWithIndifferentAccess || values.class == ActionController::Parameters
+    if values.class == Hash || values.class == HashWithIndifferentAccess \
+       || values.class == ActionController::Parameters
       values.each { |key, val| _values[key] = val }
     end
     @tasks = _values
@@ -57,7 +68,7 @@ module Sys::Model::Rel::Task
           items = []
         end
 
-        if items.size == 0
+        if items.empty?
           task = Sys::Task.new(unid: unid, name: name, process_at: date)
           task.save
         else

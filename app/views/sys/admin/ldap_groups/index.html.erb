@@ -7,7 +7,7 @@
       <% @groups.each do |g| %>
       <div><%= link_to h(g.ou), url_for(:action => :index, :parent => g.ou) %><br /></div>
       <% end %>
-      <%== "<div>no groups</div>" if @groups.size == 0 %>
+      <%== "<div>no groups</div>" if @groups.empty? %>
   </div>
 </div>
 <div class="content">
@@ -16,7 +16,7 @@
     <% @users.each do |u| %>
     <tr class="<%= cycle '', 'cycle' %>"><td><%= u.name %> (<%= u.uid %>)</td></tr>
     <% end %>
-    <% if @users.size == 0 %><tr><td>no users<br /></td></tr><% end %>
+    <% if @users.empty? %><tr><td>no users<br /></td></tr><% end %>
   </table>
 </div>
 <div class="footer"></div>

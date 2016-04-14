@@ -13,7 +13,7 @@ module Cms::Controller::Scaffold::Process
       ::Script.run_from_web(@process_name, options)
       flash[:notice] = "プロセスを開始しました。"
       redirect_to start_process: Time.now.to_i
-    rescue Exception => e
+    rescue StandardError => e
       raise e
 #      flash[:notice] = e.to_s
 #      redirect_to {}

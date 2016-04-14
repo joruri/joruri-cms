@@ -122,7 +122,7 @@ class Cms::Stylesheet < ActiveRecord::Base
     elsif value =~ /^[\.]+$/
       errors.add name, :not_a_filename
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def valid_path?(name, value)
@@ -133,7 +133,7 @@ class Cms::Stylesheet < ActiveRecord::Base
     elsif value =~ /(^|\/)\.+(\/|$)/
       errors.add name, :not_a_filename
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def valid_exists?(path, type = nil)
@@ -145,7 +145,7 @@ class Cms::Stylesheet < ActiveRecord::Base
     elsif type == :directory
       errors.add :base, "ディレクトリが既に存在します。" if ::Storage.file?(path)
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def create_directory(name)

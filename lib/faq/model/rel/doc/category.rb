@@ -37,7 +37,6 @@ module Faq::Model::Rel::Doc::Category
   def in_category_ids
     val = @in_category_ids
     @in_category_ids = category_ids.to_s.split(' ').uniq unless val
-
     @in_category_ids
   end
 
@@ -46,7 +45,8 @@ module Faq::Model::Rel::Doc::Category
     if ids.class == Array
       ids.each { |val| _ids << val }
       self.category_ids = _ids.join(' ')
-    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess || ids.class == ActionController::Parameters
+    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess \
+          || ids.class == ActionController::Parameters
       ids.each { |_key, val| _ids << val }
       self.category_ids = _ids.join(' ')
     else
@@ -56,7 +56,7 @@ module Faq::Model::Rel::Doc::Category
 
   def category_items
     ids = category_ids.to_s.split(' ').uniq
-    return [] if ids.size == 0
+    return [] if ids.empty?
 
     Faq::Category.where(id: ids)
   end

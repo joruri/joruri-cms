@@ -1,5 +1,5 @@
 <%= form_for :item, :url => "?do=update", :html => {:method => :put} do |f| %>
-  
+
 <%= error_messages_for :item %>
 
 <p class="form">基本情報</p>
@@ -22,7 +22,7 @@
       <td><%= f.text_field :name, :class => "nameEn" %></td>
     </tr>
   </table>
-  
+
   <% if @item.textfile? %>
   <table class="show">
     <tr>
@@ -31,14 +31,14 @@
       <td>
         <% begin %><!-- <%= @item[:body] %> -->
         <%= f.text_area :body, :class => 'body pre monospace', :style => "height: 400px;" %>
-        <% rescue Exception => e %>
+        <% rescue StandardError => e %>
         --> 読み込みに失敗しました。
         <% end %>
       </td>
     </tr>
   </table>
   <% end %>
-  
+
 <% end %>
 
   <%= submit :edit %>

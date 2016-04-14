@@ -54,7 +54,7 @@ class Sys::Lib::Ldap::Group < Sys::Lib::Ldap::Entry
       next if name =~ /^dc=/
       filters << name
     end
-    return nil if filters.size == 0
+    return nil if filters.empty?
     search(filters)[0]
   end
 

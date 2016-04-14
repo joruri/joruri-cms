@@ -25,7 +25,7 @@ class Sys::Admin::Tests::MailController < Cms::Controller::Admin::Base
       @errors << "宛先を入力してください。" if @item[:to].blank?
       @errors << "件名を入力してください。" if @item[:subject].blank?
 
-      if @errors.size == 0
+      if @errors.empty?
         begin
           send_mail(@item)
         rescue => e

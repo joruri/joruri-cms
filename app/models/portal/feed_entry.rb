@@ -10,6 +10,94 @@ class Portal::FeedEntry < Cms::FeedEntry
 
   belongs_to :doc, foreign_key: :doc_id, class_name: 'Article::Doc'
 
+  scope :public_content_with_own_docs, ->(content, *args) {
+    doc_content = content.doc_content
+
+    list_type = args.slice!(0)
+    options = args.slice!(0) || {}
+
+    _union_tbl = 'union_entries'
+    _order = ''
+    _content_id = content.id || 'NULL'
+
+    _feed_tbl = table_name
+
+    entries = published
+              .where(content_id: content.id)
+              .agent_filter(options[:mobile])
+
+    entries = entries.select(
+      "#{_content_id} AS portal_content_id" \
+      ", #{_feed_tbl}.content_id" \
+      ', NULL AS doc_id, NULL as name' \
+      ", #{_feed_tbl}.feed_id" \
+      ", #{_feed_tbl}.entry_updated" \
+      ", #{_feed_tbl}.title" \
+      ", #{_feed_tbl}.event_date" \
+      ', NULL as attribute_ids' \
+      ", #{_feed_tbl}.summary" \
+      ", #{_feed_tbl}.link_alternate" \
+      ", #{_feed_tbl}.categories " \
+      ", #{_feed_tbl}.categories_xml " \
+      ", #{_feed_tbl}.entry_id" \
+      ", #{_feed_tbl}.author_name" \
+      ", #{_feed_tbl}.author_email" \
+      ", #{_feed_tbl}.author_uri"
+    )
+
+    if doc_content
+      docs = Article::Doc
+             .published
+             .where(Article::Doc.arel_table[:content_id].eq(doc_content.id))
+             .visible_in_recent
+    else
+      docs = Article::Doc.none
+    end
+
+    case list_type
+    when :docs
+      _order = "#{_union_tbl}.entry_updated desc"
+    when :events
+      entries = entries.event_date_is(year: options[:year],
+                                      month: options[:month])
+      docs = docs.event_date_is(year: options[:year],
+                                month: options[:month])
+      _order = "#{_union_tbl}.event_date desc"
+    when :groups
+      entries = entries.category_is(options[:category]) if options[:category]
+      docs = make_groups_docs(docs, content, options)
+      _order = "#{_union_tbl}.entry_updated desc"
+    else
+      docs = docs.none
+    end
+
+    docs = docs.select(
+      "#{_content_id} AS portal_content_id" \
+      ', content_id' \
+      ', id AS doc_id' \
+      ', name' \
+      ', NULL AS feed_id' \
+      ', published_at AS entry_updated' \
+      ', title' \
+      ', event_date' \
+      ', attribute_ids' \
+      ', body AS summary' \
+      ', NULL AS link_alternate' \
+      ', NULL AS categories ' \
+      ', NULL AS categories_xml ' \
+      ', NULL AS entry_id' \
+      ', NULL AS author_name' \
+      ', NULL AS author_email' \
+      ', NULL AS author_uri' \
+    )
+
+    union_sql = entries.union(docs).to_sql
+
+    self.from("#{union_sql} #{_union_tbl}")
+        .select("#{_union_tbl}.*")
+        .order(_order)
+  }
+
   def source_title
     return @source_title if @source_title
     @source_title = (feed.title if feed)
@@ -35,12 +123,14 @@ class Portal::FeedEntry < Cms::FeedEntry
       elsif suffix == 'unit'
         doc = Article::Doc.find_by(id: doc_id, content_id: content.id)
         if doc
-          values << %(<span class="unit">#{ERB::Util.html_escape(doc.creator.group.name)}</span>) if doc.creator && doc.creator.group
+          if doc.creator && doc.creator.group
+            values << %(<span class="unit">#{ERB::Util.html_escape(doc.creator.group.name)}</span>)
+          end
         end
       end
     end
 
-    return '' if values.size == 0
+    return '' if values.empty?
 
     separator = %(<span class="separator">　</span>)
     %(<span class="attributes">（#{values.join(separator)}）</span>).html_safe
@@ -51,9 +141,8 @@ class Portal::FeedEntry < Cms::FeedEntry
     return false if term =~ /^0(\s|$)/i
 
     if (term.nil? || term =~ /^[\s|]*$/) && content_id != portal_content_id
-      if doc_content = portal_content.doc_content
-        term = doc_content.setting_value(:new_term)
-      end
+      doc_content = portal_content.doc_content
+      term = doc_content.setting_value(:new_term) if doc_content
     end
     term = term.to_f * 60
     return false if term <= 0
@@ -64,7 +153,8 @@ class Portal::FeedEntry < Cms::FeedEntry
 
   def public_uri
     if name
-      return nil unless node = content.doc_node
+      node = content.doc_node
+      return nil unless node
       "#{node.public_uri}#{name}/"
     else
       super
@@ -75,165 +165,39 @@ class Portal::FeedEntry < Cms::FeedEntry
     doc ? doc.public_full_uri : super
   end
 
-  def find_with_own_docs(doc_content, *args)
-    list_type = args.slice!(0)
-    options = args.slice!(0) || {}
-
-    _tmp_table_alias = 'TMP'
-    _tmp_order = ''
-    _sql_params = []
-
-    content_id = self.content_id || 'NULL'
-
-    # feeds
-    _feed_tbl = self.class.table_name
-    feeds_sql = "SELECT #{content_id} AS portal_content_id" \
-                ", #{_feed_tbl}.content_id" \
-                ', NULL AS doc_id, NULL as name' \
-                ", #{_feed_tbl}.feed_id" \
-                ", #{_feed_tbl}.entry_updated" \
-                ", #{_feed_tbl}.title" \
-                ", #{_feed_tbl}.event_date" \
-                ', NULL as attribute_ids' \
-                ", #{_feed_tbl}.summary" \
-                ", #{_feed_tbl}.link_alternate" \
-                ", #{_feed_tbl}.categories " \
-                ", #{_feed_tbl}.categories_xml " \
-                ", #{_feed_tbl}.entry_id" \
-                ", #{_feed_tbl}.author_name" \
-                ", #{_feed_tbl}.author_email" \
-                ", #{_feed_tbl}.author_uri" \
-                " FROM #{_feed_tbl} #{cb_extention[:joins][0]}"
-
-    feed_where = cb_condition_where
-    feeds_sql += " WHERE #{feed_where[0]}"
-    feed_where[1..feed_where.size - 1].each { |p| _sql_params << p }
-
-    # docs
-    _doc_tbl = Article::Doc.table_name
-    docs_sql = "SELECT #{content_id} AS portal_content_id" \
-               ', content_id' \
-               ', id AS doc_id' \
-               ', name' \
-               ', NULL AS feed_id' \
-               ', published_at AS entry_updated' \
-               ', title' \
-               ', event_date' \
-               ', attribute_ids' \
-               ', body AS summary' \
-               ', NULL AS link_alternate' \
-               ', NULL AS categories ' \
-               ', NULL AS categories_xml ' \
-               ', NULL AS entry_id' \
-               ', NULL AS author_name' \
-               ', NULL AS author_email' \
-               ', NULL AS author_uri' \
-               " FROM #{_doc_tbl}"
-
-    case list_type
-    when :docs
-      docs_sql += doc_content ? make_docs_where(doc_content, list_type, _sql_params, options) : ' WHERE 1 = 0'
-      _tmp_order = "#{_tmp_table_alias}.entry_updated DESC"
-    when :events
-      docs_sql += doc_content ? make_events_where(doc_content, list_type, _sql_params, options) : ' WHERE 1 = 0'
-      _tmp_order = "#{_tmp_table_alias}.event_date"
-    when :groups
-      docs_sql += doc_content ? make_groups_sql(doc_content, list_type, _sql_params, options) : ' WHERE 1 = 0'
-      _tmp_order = "#{_tmp_table_alias}.entry_updated DESC"
-    else
-      docs_sql += ' WHERE 1 = 0'
-    end
-
-    # union
-    sql = "SELECT * FROM ( #{feeds_sql} UNION ALL #{docs_sql} ) AS #{_tmp_table_alias} "
-    sql += "ORDER BY #{_tmp_order}" unless _tmp_order.blank?
-
-    sql_array = []
-    sql_array << sql
-    _sql_params.each { |p| sql_array << p }
-    docs = self.class.paginate_by_sql(sql_array, page: cb_extention[:page], per_page: cb_extention[:limit])
-    docs
-  end
-
-  def make_docs_where(doc_content, _list_type, sql_params = [], _options = {})
-    docs_where = ''
-    doc = Article::Doc.new.public
-    doc.and :content_id, doc_content.id
-    doc.visible_in_recent
-
-    doc_where = doc.cb_condition_where
-    docs_where += " WHERE #{doc_where[0]}"
-    doc_where[1..doc_where.size - 1].each { |p| sql_params << p }
-    docs_where
-  end
-
-  def make_events_where(doc_content, _list_type, sql_params = [], options = {})
-    docs_where = ''
-    doc = Article::Doc.new.public
-    doc.and :content_id, doc_content.id
-    doc.event_date_is(year: options[:year], month: options[:month])
-    doc.visible_in_recent
-
-    doc_where = doc.cb_condition_where
-    docs_where += " WHERE #{doc_where[0]}"
-    doc_where[1..doc_where.size - 1].each { |p| sql_params << p }
-    docs_where
-  end
-
-  def make_groups_sql(doc_content, _list_type, sql_params = [], options = {})
-    docs_sql = ''
-    doc = Article::Doc.new.public
-    doc.and :content_id, doc_content.id
-
-    conditions = []
+  def self.make_groups_docs(docs, content, options = {})
+    _docs = Article::Doc
     condition_exist = false
-    if options[:item]
-      doc_groups = options[:item].article_groups doc_content
+
+    if options[:category]
+      doc_groups = options[:category].article_groups(content.doc_content)
+
       doc_groups.each do |g|
+        next unless g[:instance]
+
         case g[:kind]
         when 'cate'
-          if g[:instance]
-            doc_group_cond = Article::Doc.new
-            doc_group_cond.category_is g[:instance]
-            conditions << doc_group_cond.condition
-            condition_exist = true
-          end
+          _docs = _docs.category_is(g[:instance])
+          condition_exist = true
         when 'attr'
-          if g[:instance]
-            doc_group_cond = Article::Doc.new
-            doc_group_cond.attribute_is g[:instance]
-            conditions << doc_group_cond.condition
-            condition_exist = true
-          end
+          _docs = _docs.attribute_is(g[:instance])
+          condition_exist = true
         when 'unit'
-          if g[:instance]
-            doc_group_cond = Article::Doc.new
-            doc_group_cond.unit_is g[:instance]
-            conditions << doc_group_cond.condition
-            docs_sql += " #{doc_group_cond.cb_extention[:joins][0]}"
-            condition_exist = true
-          end
+          _docs = _docs.unit_is(g[:instance])
+          condition_exist = true
         when 'area'
-          if g[:instance]
-            doc_group_cond = Article::Doc.new
-            doc_group_cond.area_is g[:instance]
-            conditions << doc_group_cond.condition
-            condition_exist = true
-          end
+          _docs = _docs.area_is(g[:instance])
+          condition_exist = true
         end
       end
-      doc.and '1', '=', '0' unless condition_exist
-    else
-      doc.and '1', '=', '0'
-    end
-    condition = Condition.new
-    conditions.each { |c| condition.or(c) }
-    doc.and condition if conditions.size > 0
-    doc.visible_in_recent
 
-    doc_where = doc.cb_condition_where
-    docs_sql += " WHERE #{doc_where[0]}"
-    doc_where[1..doc_where.size - 1].each { |p| sql_params << p }
-    docs_sql
+      _docs = _docs.none unless condition_exist
+    else
+      _docs = _docs.none
+    end
+
+    _docs = _docs.where_values.reduce(:or)
+
+    docs.where(_docs)
   end
 end

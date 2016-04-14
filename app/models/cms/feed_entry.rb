@@ -13,7 +13,7 @@ class Cms::FeedEntry < ActiveRecord::Base
   scope :published, -> {
     where(arel_table[:state].eq('public'))
     .joins(:feed)
-    .where(feed.arel_table[:state].eq('public'))
+    .where(Cms::Feed.arel_table[:state].eq('public'))
   }
 
   scope :search, ->(params) {

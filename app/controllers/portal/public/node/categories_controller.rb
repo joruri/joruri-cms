@@ -36,13 +36,13 @@ class Portal::Public::Node::CategoriesController < Cms::Controller::Public::Base
     @page = params[:page]
 
     @entries = Portal::FeedEntry
-               .published
-               .where(content_id: @content.id)
-               .agent_filter(request.mobile)
-               .where(CMS::FeedEntry.arel_table[:content_id].eq(@content.id))
-               .category_is(@item)
-               .find_with_own_docs(@content.doc_content, :groups, item: @item)
+               .public_content_with_own_docs(
+                  @content,
+                  :groups,
+                  category: @item,
+                  mobile: request.mobile)
                .paginate(page: @page, per_page: @limit)
+
     return true if render_feed(@entries)
 
     if @entries.current_page > 1 && @entries.current_page > @entries.total_pages

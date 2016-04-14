@@ -24,9 +24,8 @@ module Article::Model::Rel::Doc::Attribute
   end
 
   def in_attribute_ids
-    unless val = @in_attribute_ids
-      @in_attribute_ids = attribute_ids.to_s.split(' ').uniq
-    end
+    val = @in_attribute_ids
+    @in_attribute_ids = attribute_ids.to_s.split(' ').uniq unless val
     @in_attribute_ids
   end
 
@@ -35,7 +34,8 @@ module Article::Model::Rel::Doc::Attribute
     if ids.class == Array
       ids.each { |val| _ids << val }
       self.attribute_ids = _ids.join(' ')
-    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess || ids.class == ActionController::Parameters
+    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess \
+          || ids.class == ActionController::Parameters
       ids.each { |_key, val| _ids << val }
       self.attribute_ids = _ids.join(' ')
     else
@@ -45,7 +45,7 @@ module Article::Model::Rel::Doc::Attribute
 
   def attribute_items(options = {})
     ids = attribute_ids.to_s.split(' ').uniq
-    return [] if ids.size == 0
+    return [] if ids.empty?
 
     items = Article::Attribute.where(id: ids)
     items = items.where(state: options[:state]) if options[:state]

@@ -10,7 +10,8 @@ module Sys::Model::Rel::EditableGroup
   end
 
   def in_editable_groups
-    unless val = @in_editable_groups
+    val = @in_editable_groups
+    unless val
       val = []
       val = editable_group.group_ids.to_s.split(' ').uniq if editable_group
       @in_editable_groups = val
@@ -22,7 +23,8 @@ module Sys::Model::Rel::EditableGroup
     _ids = []
     if ids.class == Array
       _ids = ids
-    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess || ids.class == ActionController::Parameters
+    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess \
+          || ids.class == ActionController::Parameters
       ids.each { |_key, val| _ids << val unless val.blank? }
     else
       _ids = ids.to_s.split(' ').uniq

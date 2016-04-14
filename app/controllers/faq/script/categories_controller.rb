@@ -23,7 +23,7 @@ class Faq::Script::CategoriesController < Cms::Controller::Script::Publication
       end
     end
 
-    render text: (@errors.size == 0 ? 'OK' : @errors.join("\n"))
+    render text: (@errors.empty? ? 'OK' : @errors.join("\n"))
   end
 
   def publish_children(_item, child)

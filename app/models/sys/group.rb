@@ -87,7 +87,7 @@ class Sys::Group < ActiveRecord::Base
 
     cond = { action: action.to_s, item_unid: item }
     priv = Sys::ObjectPrivilege.where(cond)
-    return false if priv.size == 0
+    return false if priv.empty?
 
     rids = priv.collect(&:role_id)
     gids = parents_tree.collect(&:id)

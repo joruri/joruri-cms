@@ -19,7 +19,7 @@ module Cms::Model::Rel::Concept
         concept_ids << concept.id.to_s
       end
 
-      rel = where(concept_id: concept_ids) if concept_ids.size > 0
+      rel = where(concept_id: concept_ids) unless concept_ids.empty?
       rel
     }
   end

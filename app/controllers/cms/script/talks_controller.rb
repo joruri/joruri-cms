@@ -52,7 +52,7 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
     raise "Sound is empty - #{src}" unless mp3
 
     mp3 = mp3[:path]
-    raise "Sound is empty - #{src}" if ::File.stat(mp3).size == 0
+    raise "Sound is empty - #{src}" if ::File.stat(mp3).empty?
 
     ::Storage.binwrite(dst, ::File.read(mp3))
     ::Storage.chmod(0644, dst)

@@ -17,6 +17,6 @@ class Faq::Public::Piece::CategoriesController < Sys::Controller::Public::Base
                end
     end
 
-    return render text: '' if @items.size == 0
+    return render text: '' if @items.empty?
   end
 end

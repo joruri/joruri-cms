@@ -4,10 +4,11 @@ class Portal::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin::
   # simple_layout
 
   def pre_dispatch
-    return error_auth unless @piece = Cms::Piece.find(params[:piece])
+    @piece = Cms::Piece.find(params[:piece])
+    return error_auth unless @piece
     return error_auth unless @piece.editable?
-    return error_auth unless @content = @piece.content
-    # default_url_options[:piece] = @piece
+    @content = @piece.content
+    return error_auth unless @content
   end
 
   def index
@@ -26,19 +27,27 @@ class Portal::Admin::Piece::RecentTab::TabsController < Cms::Controller::Admin::
   end
 
   def create
-    @item = Portal::Piece::RecentTabXml.new(@piece, params[:item])
+    @item = Portal::Piece::RecentTabXml.new(@piece, tab_params)
     _create @item
   end
 
   def update
     @item = Portal::Piece::RecentTabXml.find(params[:id], @piece)
     return error_auth unless @item
-    @item.attributes = params[:item]
+    @item.attributes = tab_params
     _update @item
   end
 
   def destroy
     @item = Portal::Piece::RecentTabXml.find(params[:id], @piece)
     _destroy @item
+  end
+
+  private
+
+  def tab_params
+    params.require(:item).permit(
+      :name, :title, :more, :sort_no, category: ['0']
+    )
   end
 end

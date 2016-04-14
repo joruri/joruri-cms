@@ -13,10 +13,5 @@ module Sys::Model::Scope
     def escape_like(s)
       s.gsub(/[\\%_]/) { |r| "\\#{r}" }
     end
-
-    def union(relations)
-      sql = '((' + relations.map(&:to_sql).join(') UNION (') + ')) AS ' + table_name
-      from(sql)
-    end
   end
 end

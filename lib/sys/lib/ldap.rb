@@ -34,7 +34,7 @@ class Sys::Lib::Ldap
     end
   rescue Timeout::Error => e
     raise "LDAP: 接続に失敗 (#{e})"
-  rescue Exception => e
+  rescue StandardError => e
     raise "LDAP: エラー (#{e})"
   end
 

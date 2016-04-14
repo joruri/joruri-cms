@@ -19,7 +19,8 @@ class Sys::ObjectPrivilege < ActiveRecord::Base
   def in_actions=(values)
     @_in_actions_changed = true
     _values = []
-    if values.class == Hash || values.class == HashWithIndifferentAccess || values.class == ActionController::Parameters
+    if values.class == Hash || values.class == HashWithIndifferentAccess \
+      || values.class == ActionController::Parameters
       values.each { |key, val| _values << key unless val.blank? }
       @in_actions = _values
     else

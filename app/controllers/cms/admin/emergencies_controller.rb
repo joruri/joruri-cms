@@ -69,13 +69,13 @@ class Cms::Admin::EmergenciesController < Cms::Controller::Admin::Base
 
     @item.errors.add :base, "トップページが見つかりません。" unless @node
 
-    if @item.errors.size == 0
+    if @item.errors.empty?
       @node.layout_id = @item.value
       @node.save(validate: false)
       publish_page(@node)
     end
 
-    if @item.errors.size == 0
+    if @item.errors.empty?
       flash[:notice] = '反映処理が完了しました。'
       respond_to do |format|
         format.html { redirect_to url_for(action: :index) }

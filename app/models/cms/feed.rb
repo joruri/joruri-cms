@@ -112,7 +112,7 @@ class Cms::Feed < ActiveRecord::Base
         ## save
         latest << entry.id if entry.save
       end
-    rescue Exception => e
+    rescue StandardError => e
       errors.add :base, "FeedEntryError: #{e}"
     end
 
@@ -121,7 +121,7 @@ class Cms::Feed < ActiveRecord::Base
                     .where(feed_id: id)
                     .destroy_all
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def update_feed_atom(root)
@@ -196,7 +196,7 @@ class Cms::Feed < ActiveRecord::Base
         ## save
         latest << entry.id if entry.save
       end
-    rescue Exception => e
+    rescue StandardError => e
       errors.add :base, "FeedEntryError: #{e}"
     end
 
@@ -205,7 +205,7 @@ class Cms::Feed < ActiveRecord::Base
                     .where(feed_id: id)
                     .destroy_all
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def set_entry_category(entry)

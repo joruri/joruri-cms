@@ -39,6 +39,9 @@ Lint/DuplicatedKey:
 Lint/UnderscorePrefixedVariableName:
   Enabled: false
 
+Style/AccessorMethodName:
+  Enabled: false
+
 Style/AsciiComments:
   Enabled: false
 
@@ -46,6 +49,9 @@ Style/BlockComments:
   Enabled: false
 
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ClassVars:
   Enabled: false
 
 Style/Documentation:

@@ -17,9 +17,9 @@ class Sys::User < ActiveRecord::Base
 
   attr_accessor :current_password, :new_password, :confirm_password
 
-  validates_uniqueness_of :account
-  validates_presence_of :in_group_id, if: %(in_group_id == '')
-  validates_presence_of :state, :account, :name, :ldap
+  validates :account, uniqueness: true
+  validates :in_group_id, presence: true, if: %(in_group_id == '')
+  validates :state, :account, :name, :ldap, presence: true
 
   after_save :save_users_roles
   after_save :save_group, if: %(@_in_group_id_changed)
@@ -112,7 +112,7 @@ class Sys::User < ActiveRecord::Base
 
   def group(load = nil)
     return @group if @group && load
-    @group = groups(load).size == 0 ? nil : groups[0]
+    @group = groups(load).empty? ? nil : groups[0]
   end
 
   def group_id(load = nil)
@@ -150,7 +150,7 @@ class Sys::User < ActiveRecord::Base
     item = item.unid if item.is_a?(ActiveRecord::Base)
 
     priv = Sys::ObjectPrivilege.where(action: action.to_s, item_unid: item)
-    return false if priv.size == 0
+    return false if priv.empty?
 
     rids = priv.collect(&:role_id)
 
@@ -198,7 +198,7 @@ class Sys::User < ActiveRecord::Base
         valid = false if g.state != 'enabled'
         valid = false if g.parent && g.parent.state != 'enabled'
       end
-      valid = false if u.groups.size == 0
+      valid = false if u.groups.empty?
 
       user = u if valid == true
       break

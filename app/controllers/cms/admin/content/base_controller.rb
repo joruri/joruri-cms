@@ -34,7 +34,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
       @pieces << {
         name: data[0].gsub(/.*\//, ''),
         model: data[1],
-        items: Cms::Piece..where(content_id: @item.id, model: data[1])
+        items: Cms::Piece.where(content_id: @item.id, model: data[1])
       }
     end
 
@@ -67,7 +67,7 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
 
   def update
     @item = model.find(params[:id])
-    @item.attributes = params[:item]
+    @item.attributes = base_params
 
     _update @item do
       respond_to do |format|
@@ -83,5 +83,11 @@ class Cms::Admin::Content::BaseController < Cms::Controller::Admin::Base
         format.html { return redirect_to(cms_contents_path) }
       end
     end
+  end
+
+  private
+
+  def base_params
+    params.require(:item).permit(:code, :concept_id, :name, :note, :sort_no, :in_creator => [:group_id, :user_id])
   end
 end

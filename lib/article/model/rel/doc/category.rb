@@ -37,7 +37,6 @@ module Article::Model::Rel::Doc::Category
   def in_category_ids
     val = @in_category_ids
     @in_category_ids = category_ids.to_s.split(' ').uniq unless val
-
     @in_category_ids
   end
 
@@ -46,7 +45,8 @@ module Article::Model::Rel::Doc::Category
     if ids.class == Array
       ids.each { |val| _ids << val }
       self.category_ids = _ids.join(' ')
-    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess || ids.class == ActionController::Parameters
+    elsif ids.class == Hash || ids.class == HashWithIndifferentAccess \
+          || ids.class == ActionController::Parameters
       ids.each { |_key, val| _ids << val }
       self.category_ids = _ids.join(' ')
     else

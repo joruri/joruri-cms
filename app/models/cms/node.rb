@@ -154,7 +154,7 @@ class Cms::Node < ActiveRecord::Base
     search = lambda do |current, level|
       _nodes = { level: level, item: current, children: nil }
       return _nodes if level >= 10
-      return _nodes if current.children.size == 0
+      return _nodes if current.children.empty?
 
       _tmp = []
       current.children.each do |child|

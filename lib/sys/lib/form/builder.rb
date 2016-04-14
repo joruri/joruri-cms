@@ -67,7 +67,7 @@ class Sys::Lib::Form::Builder
         errors.add :base, "#{e.label} を#{act}してください。"
       end
     end
-    errors.size == 0
+    errors.empty?
   end
 
   def freeze

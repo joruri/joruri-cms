@@ -236,7 +236,7 @@ class Faq::Doc < ActiveRecord::Base
       end
     end
 
-    if crumbs.size == 0
+    if crumbs.empty?
       doc_node.routes.each do |r|
         c = []
         r.each { |i| c << [i.title, i.public_uri] }

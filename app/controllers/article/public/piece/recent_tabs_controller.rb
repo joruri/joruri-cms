@@ -21,7 +21,7 @@ class Article::Public::Piece::RecentTabsController < Sys::Controller::Public::Ba
     Article::Piece::RecentTabXml.find(:all, @piece, order: :sort_no).each do |tab|
       next if tab.name.blank?
 
-      current   = (@tabs.size == 0) ? true : nil
+      current   = (@tabs.empty?) ? true : nil
       tab_class = tab.name
       tab_class = "#{tab.name} current" if current
 
@@ -44,6 +44,6 @@ class Article::Public::Piece::RecentTabsController < Sys::Controller::Public::Ba
       }
     end
 
-    return render text: '' if @tabs.size == 0
+    return render text: '' if @tabs.empty?
   end
 end

@@ -14,7 +14,7 @@ class Sys::RoleName < ActiveRecord::Base
           .where(role_id: id)
           .where.not(group_id: nil)
           .collect(&:group_id)
-    return [] if ids.size == 0
+    return [] if ids.empty?
 
     Sys::Group.where(id: ids).order(:sort_no, :code, :id)
   end
@@ -24,7 +24,7 @@ class Sys::RoleName < ActiveRecord::Base
           .where(role_id: id)
           .where.not(user_id: nil)
           .collect(&:user_id)
-    return [] if ids.size == 0
+    return [] if ids.empty?
 
     Sys::User.where(id: ids).order(:account)
   end

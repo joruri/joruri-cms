@@ -22,6 +22,6 @@ module Util::String
       end
     end
 
-    chars.size == 0 ? nil : chars.uniq.join('')
+    chars.empty? ? nil : chars.uniq.join('')
   end
 end

@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Base
   def pre_dispatch
-    @piece   = Page.current_piece
-    @piece   = Portal::Piece::FeedEntry.find(@piece.id)
+    @piece = Page.current_piece
+    @piece = Portal::Piece::FeedEntry.find(@piece.id)
     @item = Page.current_item
   end
 
@@ -10,10 +10,6 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
     page = 1
     limit = 10
     @content = Portal::Content::FeedEntry.find(Page.current_piece.content_id)
-    entry = Portal::FeedEntry.new.public
-    entry.content_id = @content.id
-    entry.agent_filter(request.mobile)
-    entry.and "#{Cms::FeedEntry.table_name}.content_id", @content.id
 
     list_type = nil
     category = @piece.category
@@ -51,7 +47,6 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
                                       name: 'dummy',
                                       title: '',
                                       entry_categories: texts.join("\n"))
-      entry.category_is category
       list_type = :groups
       @node = true
       @node_uri = 'feed.html'
@@ -65,17 +60,24 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
       end
     end
 
-    entry.page page, limit
     content = Portal::Content::Base.find_by(id: @content.id)
-    @entries = entry.find_with_own_docs(content.doc_content, list_type, item: category)
+
+    @entries = Portal::FeedEntry
+               .public_content_with_own_docs(
+                 @content,
+                 list_type,
+                 item: category,
+                 mobile: request.mobile
+               )
+               .paginate(page: page, per_page: limit)
 
     prev   = nil
     @items = []
-    @entries.each do |entry|
-      date = entry.entry_updated.strftime('%y%m%d')
+    @entries.each do |_entry|
+      date = _entry.entry_updated.strftime('%y%m%d')
       @items << {
-        date: (date != prev ? entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
-        entry: entry
+        date: (date != prev ? _entry.entry_updated.strftime('%Y年%-m月%-d日') : nil),
+        entry: _entry
       }
       prev = date
     end

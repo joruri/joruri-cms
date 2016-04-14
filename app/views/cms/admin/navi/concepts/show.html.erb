@@ -7,7 +7,7 @@
     <td><%= link_to h(item.name), item.admin_uri %></td>
   </tr>
   <% end %>
-  <% if @item.contents.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  <% if @item.contents.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
 </table>
 
 <br />
@@ -25,7 +25,7 @@
       <td><%= item.title %></td>
     </tr>
     <% end %>
-    <% if @item.layouts.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+    <% if @item.layouts.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
   </table>
 
   <br />
@@ -41,7 +41,7 @@
       <td><%= item.title %><%= " （更新用）" if item.replace_page? %></td>
     </tr>
     <% end %>
-    <% if @item.pieces.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+    <% if @item.pieces.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
   </table>
 
 <% end %>

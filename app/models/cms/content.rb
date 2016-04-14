@@ -77,11 +77,6 @@ class Cms::Content < ActiveRecord::Base
     [%w(公開 public)]
   end
 
-  def node_is(node)
-    node = Cms::Node.find_by(id: node) if node.class != Cms::Node
-    self.and :id, node.content_id if node
-  end
-
   def new_setting(name = nil)
     Cms::ContentSetting.new(content_id: id, name: name.to_s)
   end

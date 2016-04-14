@@ -3,7 +3,6 @@ class Cms::EmbeddedFile < ActiveRecord::Base
   include Sys::Model::Base
   include Sys::Model::Base::File
   include Sys::Model::Rel::Unid
-  # include Sys::Model::Rel::Creator
   include Cms::Model::Rel::Site
 
   belongs_to :site, foreign_key: :site_id, class_name: 'Cms::Site'
@@ -13,6 +12,10 @@ class Cms::EmbeddedFile < ActiveRecord::Base
   before_save :set_published_at
   after_save :upload_public_file
   after_destroy :remove_public_file
+
+  scope :published, -> {
+    where(arel_table[:state].eq('public'))
+  }
 
   def public_path
     return nil unless site
@@ -27,11 +30,6 @@ class Cms::EmbeddedFile < ActiveRecord::Base
 
   def public_full_uri
     "#{site.full_uri}#{public_uri.sub(/^\//, '')}"
-  end
-
-  def public
-    self.and :state, 'public'
-    self
   end
 
   def set_published_at

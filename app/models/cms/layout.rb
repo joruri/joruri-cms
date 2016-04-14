@@ -69,11 +69,6 @@ class Cms::Layout < ActiveRecord::Base
     true
   end
 
-  def node_is(node)
-    node = Cms::Node.find_by(id: node) if node.class != Cms::Node
-    self.and :id, node.inherited_layout.id if node
-  end
-
   def piece_names
     names = []
     body.scan(/\[\[piece\/([0-9a-zA-Z_-]+)\]\]/) do |name|

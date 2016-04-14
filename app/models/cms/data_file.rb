@@ -22,6 +22,10 @@ class Cms::DataFile < ActiveRecord::Base
   after_save :upload_public_file
   after_destroy :remove_public_file
 
+  scope :published, -> {
+    where(arel_table[:state].eq('public'))
+  }
+
   scope :search, -> (params) {
     rel = all
 

@@ -65,13 +65,6 @@ class Cms::Piece < ActiveRecord::Base
     label =~ /^translation missing:/ ? name.to_s.humanize : label
   end
 
-  def node_is(node)
-    layout = nil
-    node = Cms::Node.find_by(id: node) if node.class != Cms::Node
-    layout = node.inherited_layout if node
-    self.and :id, 'IN', layout.pieces if layout
-  end
-
   def css_id
     name.tr('-', '_').camelize(:lower)
   end

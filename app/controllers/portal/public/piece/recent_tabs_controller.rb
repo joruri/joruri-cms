@@ -38,7 +38,7 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
                     category: list[0],
                     mobile: request.mobile
                   )
-                  .paginate(page: 1, limit)
+                  .paginate(page: 1, per_page: limit)
 
         # more
         more_uri = "#{@content.category_node.public_uri}#{list[0].name}/" if !more_uri && @content.category_node && !entries.empty?
@@ -49,7 +49,7 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
                     :docs,
                     mobile: request.mobile
                   )
-                  .paginate(page: 1, limit)
+                  .paginate(page: 1, per_page: limit)
 
         # more
         more_uri = @content.entry_node.public_uri if !more_uri && @content.entry_node && !entries.empty?

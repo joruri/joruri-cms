@@ -1,8 +1,8 @@
 production:
   adapter : mysql2
-  database: joruri
-  username: joruripass
-  password: pass
+  database: joruri_production
+  username: joruri
+  password: joruripass
   timeout : 5000
   encoding: utf8
   reconnect: true
@@ -10,9 +10,9 @@ production:
 
 #production_slave_database:
 #  adapter : mysql2
-#  database: joruri
-#  username: joruripass
-#  password: pass
+#  database: joruri_production
+#  username: joruri
+#  password: joruripass
 #  timeout : 5000
 #  encoding: utf8
 #  reconnect: true
@@ -20,9 +20,9 @@ production:
 
 #production_pull_database:
 #  adapter : mysql2
-#  database: joruri
-#  username: joruripass
-#  password: pass
+#  database: joruri_production
+#  username: joruri
+#  password: joruripass
 #  timeout : 5000
 #  encoding: utf8
 #  reconnect: true

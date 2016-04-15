@@ -6,8 +6,9 @@
 
 [システム]
 OS         : CentOS 6.7 (x86_64)
-Webサーバ  : Apache 2.2
-DBシステム : MySQL 5.6
+Webサーバ   : Apache 2.2
+APサーバ    : Phusion Passenger 5.0
+DBサーバ    : MySQL 5.6
 Ruby       : 2.3
 Rails      : 4.2
 
@@ -75,6 +76,9 @@ Rubyをインストールします。
   # rbenv rehash
   # ruby -v
 
+  # gem update --system
+  # gem install bundler
+
 **********************************************************************
  6 Joruri のインストール
 **********************************************************************
@@ -87,8 +91,9 @@ Joruriをインストールします。
 
   # yum -y install ImageMagick-devel libxml2-devel libxslt-devel mysql-community-devel openldap-devel nodejs patch
 
-  # git clone -b 3.0.0.a https://github.com/joruri/joruri-cms.git /var/share/joruri
+  # git clone -b v3-develop https://github.com/joruri/joruri-cms.git /var/share/joruri
   # chown -R joruri:joruri /var/share/joruri
+  # cp -p /var/share/joruri/config/original/application.yml /var/share/joruri/config/application.yml
   # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
 
 **********************************************************************
@@ -163,7 +168,7 @@ MySQLをインストールします
 
 URLを設定します。
 
-  # cp -p /var/share/joruri/config/samples/core.yml /var/share/joruri/config/core.yml
+  # cp -p /var/share/joruri/config/original/core.yml /var/share/joruri/config/core.yml
   # vi /var/share/joruri/config/core.yml
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   uri: http://zomeki.example.com/
@@ -171,12 +176,20 @@ URLを設定します。
 
 バーチャルホストを設定します。
 
-  # cp -p /var/share/joruri/config/samples/hosts/joruri.conf /var/share/joruri/config/hosts/joruri.conf
+  # cp -p /var/share/joruri/config/original/hosts/joruri.conf /var/share/joruri/config/hosts/joruri.conf
   # vi /var/share/joruri/config/hosts/joruri.conf
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ServerName joruri.example.com
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # ln -s /var/share/joruri/config/hosts/joruri.conf /etc/httpd/conf.d/joruri.conf
+
+SMTP接続を設定します。
+
+  # cp -p /var/share/joruri/config/original/smtp.yml /var/share/joruri/config/smtp.yml
+
+LDAP接続を設定します。
+
+  # cp -p /var/share/joruri/config/original/ldap.yml /var/share/joruri/config/ldap.yml
 
 ログローテーションを設定します。
 
@@ -189,17 +202,18 @@ URLを設定します。
 
 データベース接続を設定します。
 
-    # cp -p /var/share/joruri/config/samples/database.yml /var/share/joruri/config/database.yml
+    # cp -p /var/share/joruri/config/original/database.yml /var/share/joruri/config/database.yml
 
 必要なデータベースを作成します。
 
   # service mysqld start
   # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:setup RAILS_ENV=production'
-  # service mysqld stop
 
 サンプルデータを登録します。
 
-  # bundle exec rake db:seed:demo RAILS_ENV=production
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'
+
+  # service mysqld stop
 
 **********************************************************************
  10 ふりがな・読み上げ機能 のインストール
@@ -254,6 +268,12 @@ MeCab-Rubyをインストールします。
   # curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
   # tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
 
+libmecab.so.2のパスを設定します。
+
+  # echo '/usr/local/lib' >> /etc/ld.so.conf.d/usrlocal.conf
+  # sudo ldconfig
+  # ldconfig -p | grep "/usr/local/lib"
+
 **********************************************************************
  11 Apache/MySQL の起動
 **********************************************************************
@@ -261,14 +281,13 @@ MeCab-Rubyをインストールします。
   # service httpd configtest && service httpd start && chkconfig httpd on
   # service mysqld start && chkconfig mysqld on
 
-
 **********************************************************************
  12 定期実行処理 の設定
 **********************************************************************
 
-ユーザjoruriのcronに処理を追加します。
+joruriユーザのcronに処理を追加します。
 
-  # su - zomeki -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec whenever --update-crontab'
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec whenever --update-crontab'
 
 **********************************************************************
  13 動作確認

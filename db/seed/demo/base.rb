@@ -80,7 +80,7 @@ u4 = create 2, '吉野　三郎'    , 'user3', 'user3'
 ## sys/users_groups
 
 g = Sys::Group.find_by(name_en: 'hisyokohoka')
-Sys::UsersGroup.update_all({:group_id => g.id}, {:user_id => 1})
+Sys::UsersGroup.find_by(user_id: 1).update(group_id: g.id)
 Sys::UsersGroup.create :user_id => 2, :group_id => g.id
 Sys::UsersGroup.create :user_id => 3, :group_id => g.id
 Sys::UsersGroup.create :user_id => 4, :group_id => g.id
@@ -296,7 +296,7 @@ def create_cms_node(params)
 end
 
 #Cms::Node.update_all({:layout_id => l_top.id}, {:id => 1})
-Cms::Node.update_all({:concept_id => c_top.id, :layout_id => l_top.id}, {:id => 2})
+Cms::Node.find_by(id: 2).update(:concept_id => c_top.id, :layout_id => l_top.id)
 create_cms_node :parent_id => 1, :layout_id => l_page.id, :model => 'Cms::Page', :name => 'mobile.html', :title => 'ジョールリ市携帯サイトのご紹介', :body => read_data("nodes/pages/mobile/body")
 create_cms_node :parent_id => 1, :layout_id => l_page.id, :model => 'Cms::Page', :name => 'smart.html', :title => 'ジョールリ市スマートフォンサイトのご紹介', :body => read_data("nodes/pages/smart/body")
 

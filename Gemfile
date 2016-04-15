@@ -22,6 +22,8 @@ gem 'multi_db', '0.3.1'
 gem 'sass-rails',   '~> 5.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'whenever', require: false
+
 
 require "yaml"
 gem 'ruby-ldap', '0.9.12' if ::YAML.load_file(File.dirname(__FILE__) + "/config/application.yml")["sys"]["use_ldap"]

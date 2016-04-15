@@ -1,17 +1,17 @@
 production:
   title      : Joruri
-  uri        : http://192.168.0.2/
+  uri        : http://joruri.example.com/
   http_proxy : <%= ENV['HTTP_PROXY'] %>
   https_proxy: <%= ENV['HTTPS_PROXY'] %>
 
 test:
-  title      : 
-  uri        : 
+  title      :
+  uri        :
   http_proxy :
   https_proxy:
 
 development:
-  title      : 
-  uri        : 
+  title      :
+  uri        :
   http_proxy :
   https_proxy:

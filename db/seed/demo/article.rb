@@ -76,7 +76,7 @@ create_cms_node :layout_id => l_tag.id   , :content_id => doc.id, :model => 'Art
 ## ---------------------------------------------------------
 ## article/units
 
-Article::Unit.update_all({:web_state => 'public', :layout_id => l_unit.id}, ["parent_id > 0"])
+Article::Unit.where('parent_id > ?', 0).update_all(:web_state => 'public', :layout_id => l_unit.id)
 
 ## ---------------------------------------------------------
 ## article/categories
@@ -211,7 +211,7 @@ end
 ## cms/inquiries
 @in_inquiry = {:state => 'visible', :group_id => 2, :tel => '000-000-0000', :email => 'info@joruri.org'}
 def create_inquiry(unid)
-  item = Cms::Inquiry.find_or_initialize_by_id(unid)
+  item = Cms::Inquiry.find_or_initialize_by(id: unid)
   item.attributes = @in_inquiry
   item.save
 end
@@ -243,4 +243,3 @@ d = create doc.id, 3, 4, 12, nil, 'hidden', nil,'サンプル記事　地図'
       :map_lat=> '34.07367062652467', :map_lng => '134.5530366897583', :map_zoom =>'15'
     Cms::MapMarker.create :map_id => 1, :sort_no => 1,
       :name => "ジョールリ市", :lat => "34.0720505", :lng => "134.552594"
-

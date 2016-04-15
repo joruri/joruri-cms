@@ -1,4 +1,4 @@
-/var/share/zomeki/log/*.log {
+/var/share/joruri/log/*.log {
   compress
   daily
   dateext

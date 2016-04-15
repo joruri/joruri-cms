@@ -171,7 +171,7 @@ URLを設定します。
   # cp -p /var/share/joruri/config/original/core.yml /var/share/joruri/config/core.yml
   # vi /var/share/joruri/config/core.yml
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  uri: http://zomeki.example.com/
+  uri: http://joruri.example.com/
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 バーチャルホストを設定します。
@@ -306,4 +306,4 @@ joruriユーザのcronに処理を追加します。
 １．MySQL の joruri ユーザはパスワードが joruripass に設定されています。適宜変更してください。
     mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('newpass');
     また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
-    # vi /var/share/zomeki/config/database.yml
+    # vi /var/share/joruri/config/database.yml

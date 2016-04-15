@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-DONE_FLAG = '/tmp/{$PROGRAM_NAME}_done'.freeze
-
-PASSENGER_VERSION = '4.0.53'.freeze
+DONE_FLAG = "/tmp/#{$0}_done"
 
 puts '#### Install Apache ####'
 exit if File.exist?(DONE_FLAG)
@@ -42,20 +40,9 @@ def centos
 
   unless File.exist?(passenger_conf)
     system 'yum install -y curl-devel'
-    system "gem install passenger -v #{PASSENGER_VERSION}"
-    system 'passenger-install-apache2-module'
-
-    File.open(passenger_conf, File::RDWR | File::CREAT, 0644) do |f|
-      f.flock(File::LOCK_EX)
-
-      conf = File.read('/var/share/joruri/config/samples/passenger.conf')
-
-      f.write conf.gsub(/PASSENGER_VERSION/, PASSENGER_VERSION)
-      f.flush
-      f.truncate(f.pos)
-
-      f.flock(File::LOCK_UN)
-    end
+    system "gem install passenger -v 5.0.23"
+    system 'passenger-install-apache2-module -a'
+    system 'cp /var/share/joruri/config/samples/passenger.conf /etc/httpd/conf.d/passenger.conf'
   end
 end
 
@@ -64,7 +51,7 @@ def others
   exit
 end
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $0
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'

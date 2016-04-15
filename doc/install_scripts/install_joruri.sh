@@ -20,17 +20,15 @@ centos() {
 
   id joruri || useradd -m joruri
 
-  yum install -y ImageMagick-devel libxml2-devel libxslt-devel mysql-devel openldap-devel
+  yum install -y ImageMagick-devel libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
-  git clone https://github.com/joruri/joruri-cms.git /var/share/joruri
-
-  cp /var/share/joruri/config/original/* /var/share/joruri/config/
-
-  cp -r /var/share/joruri/public/_common/themes/joruri.original /var/share/joruri/public/_common/themes/joruri
+  git clone -b v3-develop https://github.com/joruri/joruri-cms.git /var/share/joruri
 
   chown -R joruri:joruri /var/share/joruri
-  su - joruri -c 'cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
 
+  cp -p /var/share/joruri/config/original/application.yml /var/share/joruri/config/application.yml
+
+  su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
 }
 
 others() {

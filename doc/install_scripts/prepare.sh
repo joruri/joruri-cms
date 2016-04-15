@@ -1,7 +1,8 @@
 #!/bin/bash
 
 EPEL_RPM_URL="http://dl.fedoraproject.org/pub/epel/6/`uname -i`/epel-release-6-8.noarch.rpm"
-INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts'
+MYSQL_REPO_URL="http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
+INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts'
 
 echo '#### Prepare to install ####'
 
@@ -13,7 +14,8 @@ centos() {
   echo "It's CentOS6!"
 
   rpm -ivh $EPEL_RPM_URL
-  yum install -y wget git
+  yum -y install $MYSQL_REPO_URL
+  yum -y install wget git
 
   cd /usr/local/src
 
@@ -34,6 +36,9 @@ centos() {
   rm -f install_all.sh
   for file in ${files[@]}; do
     echo "./$file" >> install_all.sh
+    if [ $file = 'install_ruby.sh' ]; then
+      echo ". /etc/profile.d/rbenv.sh" >> install_all.sh
+    fi
   done
 cat <<'EOF' >> install_all.sh
 
@@ -49,9 +54,9 @@ echo "
     パスワード : joruri
 
 １．MySQL の root ユーザはパスワードが rootpass に設定されています。適宜変更してください。
-    # mysqladmin -u root -prootpass password 'pass'
-２．MySQL の joruri ユーザはパスワードが pass に設定されています。適宜変更してください。
-    mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('pass');
+    # mysqladmin -u root -prootpass password 'newpass'
+２．MySQL の joruri ユーザはパスワードが joruripass に設定されています。適宜変更してください。
+    mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('newpass');
     また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
     # vi /var/share/joruri/config/database.yml
 ３．OS の joruri ユーザに cron が登録されています。

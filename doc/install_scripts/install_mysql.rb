@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-DONE_FLAG = '/tmp/{$PROGRAM_NAME}_done'.freeze
+DONE_FLAG = "/tmp/#{$0}_done"
 
 puts '#### Install MySQL ####'
 exit if File.exist?(DONE_FLAG)
@@ -15,7 +15,7 @@ end
 def centos
   puts "It's CentOS!"
 
-  system 'yum install -y mysql-server'
+  system 'yum install -y mysql-community-server'
 
   my_cnf = '/etc/my.cnf'
 
@@ -45,8 +45,8 @@ def centos
     system 'mysql_install_db --user=mysql'
     system 'service mysqld start'
     sleep 1 until system 'mysqladmin ping' # Not required to connect
-    system "mysqladmin -u root password 'pass'"
-    system %q(mysql -u root -ppass -e "GRANT ALL ON joruri.* TO joruri@localhost IDENTIFIED BY 'pass'")
+    system "mysqladmin -u root password 'rootpass'"
+    system %q(mysql -u root -prootpass -e "GRANT ALL ON joruri_production.* TO joruri@localhost IDENTIFIED BY 'joruripass'")
     system 'service mysqld stop'
   end
 end
@@ -56,7 +56,7 @@ def others
   exit
 end
 
-if __FILE__ == $PROGRAM_NAME
+if __FILE__ == $0
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'

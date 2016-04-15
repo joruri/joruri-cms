@@ -52,6 +52,10 @@ centos() {
   rm -rf mecab-ruby-0.996.tar.gz mecab-ruby-0.996
   curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
   tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
+
+  echo '/usr/local/lib' >> /etc/ld.so.conf.d/usrlocal.conf
+  sudo ldconfig
+  ldconfig -p | grep "/usr/local/lib"
 }
 
 others() {

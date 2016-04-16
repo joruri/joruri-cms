@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130528121406) do
+ActiveRecord::Schema.define(version: 20160415041553) do
 
   create_table "article_areas", force: :cascade do |t|
     t.integer  "unid",       limit: 4

@@ -43,11 +43,24 @@ def centos
 
   unless system 'mysqladmin ping' # Not required to connect
     system 'mysql_install_db --user=mysql'
-    system 'service mysqld start'
+
+    if ENV["OS_VERSION"] == 'centos6'
+      system 'service mysqld start'
+    else
+      system 'systemctl start mysqld.service'
+    end
+
     sleep 1 until system 'mysqladmin ping' # Not required to connect
+
     system "mysqladmin -u root password 'rootpass'"
+
     system %q(mysql -u root -prootpass -e "GRANT ALL ON joruri_production.* TO joruri@localhost IDENTIFIED BY 'joruripass'")
-    system 'service mysqld stop'
+
+    if ENV["OS_VERSION"] == 'centos6'
+      system 'service mysqld stop'
+    else
+      system 'systemctl stop mysqld.service'
+    end
   end
 end
 

@@ -33,7 +33,16 @@ def centos
     conf = f.read
 
     f.rewind
-    f.write conf.gsub('joruri.example.com') { |_m| `hostname`.chomp }
+
+    stdout = `/usr/sbin/httpd -v`
+    if stdout.index('Apache/2.2.')
+      conf = conf.gsub('#NameVirtualHost','NameVirtualHost')
+      conf = conf.gsub('Require all granted','#Require all granted')
+    end
+
+    conf = conf.gsub('joruri.example.com') { |_m| `hostname`.chomp }
+
+    f.write conf
     f.flush
     f.truncate(f.pos)
 
@@ -51,7 +60,11 @@ def centos
 
   system "cp -p #{config_dir}original/database.yml #{config_dir}database.yml"
 
-  system 'service mysqld start'
+  if ENV["OS_VERSION"] == 'centos6'
+    system 'service mysqld start'
+  else
+    system 'systemctl start mysqld.service'
+  end
 
   sleep 1 until system 'mysqladmin ping' # Not required to connect
 
@@ -59,7 +72,11 @@ def centos
 
   system "su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'"
 
-  system 'service mysqld stop'
+  if ENV["OS_VERSION"] == 'centos6'
+    system 'service mysqld stop'
+  else
+    system 'systemctl stop mysqld.service'
+  end
 end
 
 def others

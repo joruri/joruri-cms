@@ -1,12 +1,12 @@
-## Joruri CMS 3.0.0a インストールマニュアル                  2016.04.15
+## Joruri CMS 3.0.0a インストールマニュアル                  2016.04.17
 
 **********************************************************************
  1 想定環境
 **********************************************************************
 
 [システム]
-OS         : CentOS 6.7 (x86_64)
-Webサーバ   : Apache 2.2
+OS         : CentOS 6.7 (x86_64), 7.0 (x86_64)
+Webサーバ   : Apache 2.2, 2.4
 APサーバ    : Phusion Passenger 5.0
 DBサーバ    : MySQL 5.6
 Ruby       : 2.3
@@ -47,7 +47,7 @@ CentOSに関するセキュリティ設定については、本マニュアル�
 
 yumリポジトリにEPELを追加します。
 
-  # rpm -ivh http://dl.fedoraproject.org/pub/epel/6/`uname -i`/epel-release-6-8.noarch.rpm
+  # yum install epel-release
 
 yumリポジトリにmysqlを追加します。
 
@@ -144,7 +144,10 @@ MySQLをインストールします
 初期設定をします。
 
   # mysql_install_db --user=mysql
-  # service mysqld start
+
+  # service mysqld start             <- CentOS6の場合
+  # systemctl start mysqld.service   <- CentOS7の場合
+
   # mysql_secure_installation
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Enter current password for root (enter for none): # そのままEnter
@@ -160,7 +163,9 @@ MySQLをインストールします
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   Enter password:                                   # rootのパスワードを入力
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # service mysqld stop
+
+  # service mysqld stop             <- CentOS6
+  # systemctl stop mysqld.service   <- CentOS7
 
 **********************************************************************
  9 Joruri の設定
@@ -177,10 +182,14 @@ URLを設定します。
 バーチャルホストを設定します。
 
   # cp -p /var/share/joruri/config/original/hosts/joruri.conf /var/share/joruri/config/hosts/joruri.conf
+
   # vi /var/share/joruri/config/hosts/joruri.conf
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  ServerName joruri.example.com
+  #Require all granted       　　　#Apache2.2の場合はコメントアウト
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ServerName joruri.example.com   #変更
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   # ln -s /var/share/joruri/config/hosts/joruri.conf /etc/httpd/conf.d/joruri.conf
 
 SMTP接続を設定します。
@@ -206,14 +215,17 @@ LDAP接続を設定します。
 
 必要なデータベースを作成します。
 
-  # service mysqld start
+  # service mysqld start                <- CentOS6
+  # systemctl start mysqld.service      <- CentOS7
+
   # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:setup RAILS_ENV=production'
 
 サンプルデータを登録します。
 
   # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'
 
-  # service mysqld stop
+  # service mysqld stop              <- CentOS6の場合
+  # systemctl stop mysqld.service   <- CentOS7の場合
 
 **********************************************************************
  10 ふりがな・読み上げ機能 のインストール
@@ -278,8 +290,11 @@ libmecab.so.2のパスを設定します。
  11 Apache/MySQL の起動
 **********************************************************************
 
-  # service httpd configtest && service httpd start && chkconfig httpd on
-  # service mysqld start && chkconfig mysqld on
+  # service httpd start && chkconfig httpd on      <- CentOS6の場合
+  # service mysqld start && chkconfig mysqld on    <- CentOS6の場合
+
+  # systemctl start httpd.service && systemctl enable httpd.service    <- CentOS7の場合
+  # systemctl start mysqld.service && systemctl enable mysqld.service   <- CentOS7の場合
 
 **********************************************************************
  12 定期実行処理 の設定

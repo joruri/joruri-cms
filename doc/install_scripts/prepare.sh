@@ -1,6 +1,5 @@
 #!/bin/bash
 
-EPEL_RPM_URL="http://dl.fedoraproject.org/pub/epel/6/`uname -i`/epel-release-6-8.noarch.rpm"
 MYSQL_REPO_URL="http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
 INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts'
 
@@ -11,9 +10,9 @@ ubuntu() {
 }
 
 centos() {
-  echo "It's CentOS6!"
+  echo "It's CentOS!"
 
-  rpm -ivh $EPEL_RPM_URL
+  yum install epel-release
   yum -y install $MYSQL_REPO_URL
   yum -y install wget git
 
@@ -34,12 +33,21 @@ centos() {
   done
 
   rm -f install_all.sh
+
+  if [ `cat /etc/redhat-release | grep 'CentOS release 6.'`]; then
+    echo "OS_VERSION = 'centos6'" >> install_all.sh
+  else
+    echo "OS_VERSION = 'centos7'" >> install_all.sh
+  fi
+  echo "export OS_VERSION" >> install_all.sh
+
   for file in ${files[@]}; do
     echo "./$file" >> install_all.sh
     if [ $file = 'install_ruby.sh' ]; then
       echo ". /etc/profile.d/rbenv.sh" >> install_all.sh
     fi
   done
+
 cat <<'EOF' >> install_all.sh
 
 echo "

@@ -26,8 +26,12 @@ cms:
   # Talk settings
   sox_bin: "/usr/bin/sox"
   lame_bin: "/usr/local/bin/lame"
+  #lame_opts: "-q 5 -V 4 --silent" # HQ
+  lame_opts: "-q 7 -V 9 --silent" # LQ
   talk_bin: "/usr/local/bin/open_jtalk"
   talk_dic: "/usr/local/share/open_jtalk/dic"
   talk_voice: "config/voices/mei_normal/mei_normal.htsvoice"
-  talk_opts: "-s 48000 -p 200 -u 0.5 -jm 0.5 -jf 0.5"
-  talk_strlen: 500
+  #talk_opts: "-s 48000 -p 240 -r 1.1" # HQ
+  talk_opts: "-s 40000 -p 200 -a 0.47 -r 1.1" # LQ
+  talk_strlen: 100
+  talk_thread_num: 2

@@ -19,11 +19,12 @@ gem 'jquery-rails', '~> 2.2.1'
 gem 'therubyracer', '0.11.4', :platforms => :ruby
 gem 'simple_captcha2', '~> 0.3.4', :require => 'simple_captcha'
 gem 'multi_db', '0.3.1'
+gem 'nokogiri', '~> 1.6.7.2'
+gem 'parallel', '~> 1.6.1'
 gem 'sass-rails',   '~> 5.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever', require: false
-
 
 require "yaml"
 gem 'ruby-ldap', '0.9.12' if ::YAML.load_file(File.dirname(__FILE__) + "/config/application.yml")["sys"]["use_ldap"]

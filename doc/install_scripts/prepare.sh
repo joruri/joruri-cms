@@ -35,16 +35,16 @@ centos() {
   rm -f install_all.sh
 
   if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
-    echo "OS_VERSION = 'centos6'" >> install_all.sh
+    echo "OS_VERSION='centos6'" >> install_all.sh
   else
-    echo "OS_VERSION = 'centos7'" >> install_all.sh
+    echo "OS_VERSION='centos7'" >> install_all.sh
   fi
   echo "export OS_VERSION" >> install_all.sh
 
   for file in ${files[@]}; do
     echo "./$file" >> install_all.sh
     if [ $file = 'install_ruby.sh' ]; then
-      echo ". /etc/profile.d/rbenv.sh" >> install_all.sh
+      echo ". /etc/profile" >> install_all.sh
     fi
   done
 

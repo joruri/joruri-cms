@@ -34,7 +34,7 @@ centos() {
 
   rm -f install_all.sh
 
-  if [ `cat /etc/redhat-release | grep 'CentOS release 6.'`]; then
+  if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
     echo "OS_VERSION = 'centos6'" >> install_all.sh
   else
     echo "OS_VERSION = 'centos7'" >> install_all.sh

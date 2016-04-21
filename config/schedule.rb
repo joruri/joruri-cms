@@ -28,50 +28,50 @@ env :PATH, ENV['PATH']
 
 # 記事の公開/非公開処理を行います。
 every '10,25,40,55 * * * *' do
-  rake 'joruri:sys:tasks:exec'
+  rake 'sys:tasks:exec'
 end
 
 # トップページのみを静的ファイルとして書き出します。
 every '*/3 * * * *' do
-  rake 'joruri:cms:nodes:publish_top'
+  rake 'cms:nodes:publish_top'
 end
 
 # トップページや中間ページを静的ファイルとして書き出します。
 every '*/30 * * * *' do
-  rake 'joruri:cms:nodes:publish'
+  rake 'cms:nodes:publish'
 end
 
 # 音声ファイルを静的ファイルとして書き出します。
 every '*/15 * * * *' do
-  rake 'joruri:cms:talks:exec'
+  rake 'cms:talks:exec'
 end
 
 # フィード取り込みます。
 every '*/30 * * * *' do
-  rake 'joruri:cms:feeds:read'
+  rake 'cms:feeds:read'
 end
 
 # メルマガ読者登録の取り込みます。
 every '*/10 * * * *' do
-  rake 'joruri:newsletter:requests:read'
+  rake 'newsletter:requests:read'
 end
 
 # アンケート取り込み
 every '#00 * * * *' do
-  rake 'joruri:enquete:answers:pull'
+  rake 'enquete:answers:pull'
 end
 
 # 記事再構築(ページ)
 every '#00 * * * *' do
-  rake 'joruri:article:docs:rebuild'
+  rake 'article:docs:rebuild'
 end
 
 # FAQ再構築(ページ)
 every '#00 * * * *' do
-  rake 'joruri:faq:docs:rebuild'
+  rake 'faq:docs:rebuild'
 end
 
 # DBセッション削除
 every '#00 * * * *' do
-  rake 'joruri:db:session:sweep'
+  rake 'db:session:sweep'
 end

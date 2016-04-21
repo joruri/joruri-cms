@@ -43,7 +43,7 @@ end
 
 # 音声ファイルを静的ファイルとして書き出します。
 every '*/15 * * * *' do
-  rake 'cms:talks:exec'
+  rake 'cms:talks:publish'
 end
 
 # フィード取り込みます。

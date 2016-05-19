@@ -76,6 +76,29 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
     end
   end
 
+  def publish_top
+    @ids = {}
+
+    Cms::Node.published
+             .where(parent_id: 0)
+             .order(directory: :desc, name: :asc, id: :asc)
+             .each do |node|
+      publish_index(node)
+    end
+
+    render text: 'OK'
+  end
+
+  def publish_index(node)
+    item = Cms::Node.where(parent_id: node.id, name: 'index.html').first
+    return unless item
+
+    uri  = "#{item.public_uri}?node_id=#{item.id}"
+    publish_page(item, uri: uri, site: item.site, path: item.public_path)
+  end
+
+
+
   def publish_by_task
     item = params[:item]
 

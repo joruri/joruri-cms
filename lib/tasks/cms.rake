@@ -6,6 +6,12 @@ namespace :cms do
     end
   end
 
+  namespace :nodes do
+    task publish_top: :environment do
+      Script.run('cms/nodes#publish_top')
+    end
+  end
+
   namespace :talks do
     task publish: :environment do
       Script.run('cms/talks#publish')

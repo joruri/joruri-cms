@@ -22,6 +22,7 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc.
 * Selinux, iptablesは無効まはた適切な設定を行っていることを想定しています。
 * rootユーザで実行してください。
 
+コマンド：
 
     export LANG=ja_JP.UTF-8; curl -L https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/prepare.sh | bash
 

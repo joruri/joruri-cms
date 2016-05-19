@@ -41,8 +41,8 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc.
 
 CMSサーバ：
 
-    export LANG=ja_JP.UTF-8; curl -L https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/cms_isolation/prepare.sh | bash
+    export LANG=ja_JP.UTF-8; curl -L -O https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/cms_isolation/prepare.sh | bash prepare.sh
 
 WEBサーバ：
 
-    export LANG=ja_JP.UTF-8; curl -L https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/web_isolation/prepare.sh | bash
+    export LANG=ja_JP.UTF-8; curl -L -O https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/web_isolation/prepare.sh | bash prepare.sh

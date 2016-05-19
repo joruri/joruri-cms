@@ -15,7 +15,7 @@ centos() {
 
   cd /usr/local/src/web_isolation
 
-  files=('configure_cron.rb', 'configure_mysql.rb', 'configure_joruri.rb')
+  files=('configure_cron.rb' 'configure_mysql.rb' 'configure_joruri.rb')
 
   rm -f install_scripts.txt
   for file in ${files[@]}; do
@@ -41,7 +41,7 @@ centos() {
 
   # INPUT IPADDR
   echo "-------"
-  echo -n "Please enter the　IP Address of CMS server:"
+  echo -n "接続するCMSサーバのIPアドレスを入力してください:"
   while :
     do
       read ipaddr
@@ -55,7 +55,7 @@ centos() {
   echo "CMS_IPADDR='$ipaddr'" >> install_all.sh
   echo "export CMS_IPADDR" >> install_all.sh
 
-  echo "Please enter the File of MySQL master status."
+  echo "MySQLマスターデータベースのスタータスを入力してください"
   echo -n "File:"
   while :
     do

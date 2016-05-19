@@ -15,7 +15,7 @@ centos() {
 
   cd /usr/local/src/cms_isolation
 
-  files=('configure_mysql.rb', 'configure_file_sync.rb', 'configure_joruri.rb')
+  files=('configure_mysql.rb' 'configure_file_sync.rb' 'configure_joruri.rb')
 
   rm -f install_scripts.txt
   for file in ${files[@]}; do
@@ -41,7 +41,7 @@ centos() {
 
   # INPUT IPADDR
   echo "-------"
-  echo -n "Please enter the　IP Address of Web server:"
+  echo -n "接続するWEBサーバのIPアドレスを入力してください："
   while :
     do
       read ipaddr

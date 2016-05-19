@@ -8,7 +8,7 @@ GNU GENERAL PUBLIC LICENSE Version 3
 Copyright (C) Tokushima Prefectural Government, IDS Inc.
 
 ## 環境
-* CentOS 6.7 x86_64, 7.2 x86_64
+* CentOS 7.2 x86_64, 6.7 x86_64
 * Ruby 2.3
 * Rails 4.2
 * MySQL 5.6

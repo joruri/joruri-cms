@@ -30,6 +30,8 @@ centos() {
 
   rm -f install_all.sh
 
+  echo ". /etc/profile" >> install_all.sh
+
   # SET OS_VERSION
   if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
     echo "OS_VERSION='centos6'" >> install_all.sh
@@ -51,7 +53,6 @@ centos() {
           echo -n 'Re-enter:'
       fi
     done
-#  echo $ipaddr
   echo "WEB_IPADDR='$ipaddr'" >> install_all.sh
   echo "export WEB_IPADDR" >> install_all.sh
 

@@ -78,7 +78,7 @@ def centos
 
 
   puts "\n"
-  puts '-----下記の確認後にWEBサーバ側の設定に進んでください-----'
+  puts '-----以下を確認してから設定を進めてください。-----'
   puts "\n"
   puts '1.以下のダンプファイルをWEBサーバの同じディレクトリにコピーしてください。'
   puts `ls /home/joruri/joruri_production.dmp`
@@ -87,6 +87,7 @@ def centos
   puts '2.下記の設定値をメモしてください。WEBサーバ側でMySQLレプリケーション設定に利用します。'
   puts "File: #{repl_config[:file]}"
   puts "Position: #{repl_config[:position]}"
+  puts "\n"
 
 end
 

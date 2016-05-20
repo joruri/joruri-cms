@@ -30,6 +30,8 @@ centos() {
 
   rm -f install_all.sh
 
+  echo ". /etc/profile" >> install_all.sh
+
   # SET OS_VERSION
   if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
     echo "OS_VERSION='centos6'" >> install_all.sh

@@ -1,5 +1,58 @@
 # encoding: utf-8
 module FormHelper
+  ## CKEditor
+
+  def is_ckeditor
+    case Joruri.config[:cms_editor]
+    when 'ckeditor'
+      return true
+    when 'tiny_mce'
+      return false
+    else
+      return true
+    end
+  end
+
+  def init_editor(options = {})
+    if is_ckeditor
+      init_ckeditor(options)
+    else
+      init_ckeditor(options)
+    end
+  end
+
+  ## ckeditor
+  def init_ckeditor(options = {})
+    settings = []
+    if options[:document_base_url].present?
+      options[:baseHref] = options[:document_base_url]
+      options.delete(:document_base_url)
+    end
+    if options[:readonly].present?
+      options[:readOnly] = options[:readonly]
+      options.delete(:readonly)
+    end
+    # リードオンリーではツールバーを表示しない・リンクを動作させる
+    unless (options[:toolbarStartupExpanded] = !options[:readOnly])
+      settings.push(<<-EOS)
+        CKEDITOR.on('instanceReady', function (e) {
+          $('#'+e.editor.id+'_top').hide();
+          var links = $('#'+e.editor.id+'_contents > iframe:first').contents().find('a');
+          for (var i = 0; i < links.length; i++) {
+            $(links[i]).click(function (ee) { location.href = ee.target.href; });
+          }
+        });
+      EOS
+    end
+
+    settings.concat(options.map {|k, v|
+      %Q(CKEDITOR.config.#{k} = #{v.kind_of?(String) ? "'#{v}'" : v};)
+    })
+
+    [ '<script type="text/javascript" src="/_common/js/ckeditor/ckeditor.js"></script>',
+      javascript_tag(settings.join) ].join.html_safe
+  end
+
   ## tinyMCE
   def init_tiny_mce(options = {})
     settings = []
@@ -12,6 +65,23 @@ module FormHelper
       javascript_include_tag('/_common/js/tiny_mce/init.js'),
       javascript_tag("initTinyMCE({#{settings.join(',')}});")
     ].join("\n").html_safe
+  end
+
+
+  def editor_class
+    if is_ckeditor
+      'ckeditor'
+    else
+      'mceEditor'
+    end
+  end
+
+  def editor_wrapper_class
+    if is_ckeditor
+      'cke_editor_wrapper'
+    else
+      'mceEditor'
+    end
   end
 
   def submission_label(name)

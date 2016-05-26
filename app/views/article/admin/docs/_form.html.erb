@@ -89,7 +89,7 @@ function importUri() {
 <% end %>
 
 <% inline_id = @item.unid || params[:_tmp] %>
-<%= init_tiny_mce :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
+<%= init_editor :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
 
 <span class="note">※は必須項目です。</span>
 
@@ -108,8 +108,8 @@ function importUri() {
   </tr>
   <tr>
     <th colspan="4">内容</th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= f.text_area :body, :class => 'body mceEditor' %>
+    <td colspan="4" class="<%=editor_wrapper_class%>">
+      <%= f.text_area :body, :class => "body #{editor_class}" %>
       <div class="lowerMenu">
         <a href="#" onclick="checkLinks(); return false;">リンクチェック</a>
         <a href="#" onclick="importUri(); return false;">URLインポート</a>

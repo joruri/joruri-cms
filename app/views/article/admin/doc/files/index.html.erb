@@ -7,7 +7,21 @@
 //<![CDATA[
 
 function mceInsertContent(value) {
+<%- if Joruri.config[:cms_editor].blank? || Joruri.config[:cms_editor] == 'ckeditor' -%>
+  if (parent.CKEDITOR.currentInstance) {
+    parent.CKEDITOR.currentInstance.insertHtml(value);
+  } else {
+    for (var i in parent.CKEDITOR.instances) {
+      var instance = parent.CKEDITOR.instances[i];
+      if (instance.container.isVisible()) {
+        instance.insertHtml(value);
+        break;
+      }
+    }
+  }
+<%- else -%>
   parent.tinyMCE.execInstanceCommand('<%= _form_id %>','mceInsertContent',true, value);
+<%- end -%>
 }
 
 //]]>
@@ -24,7 +38,7 @@ function mceInsertContent(value) {
     <th style="width: 200px; text-align: center;">URL</th>
     <th style="width: 120px; text-align: center;">ファイルサイズ</th>
   </tr>
-  
+
   <% @items.each do |item| %>
   <% file_path = url_for(:action => :download, :id => item) %>
   <tr class="<%= cycle '', 'cycle' %>">
@@ -32,7 +46,7 @@ function mceInsertContent(value) {
       <%= link_to :show, url_for(:action => :show, :id => item) %>
     </td>
     <td style="text-align: center;">
-      <%= link_to '添付', '#', :id => "link_attach#{item.id}", 
+      <%= link_to '添付', '#', :id => "link_attach#{item.id}",
         :onclick => %Q(mceInsertContent('<a href="./files/#{item.escaped_name}" class="#{item.css_class}">#{h(item.united_name)}</a>'); return false;) %>
     </td>
     <td style="text-align: center;">
@@ -52,7 +66,7 @@ function mceInsertContent(value) {
           <% script = %Q(<img src='./files/#{item.escaped_name}' alt='#{item.alt}' title='#{item.alt}'>) %>
           <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>
           <a href="#" id="link_image#{item.id}" onclick="<%= script %>">画像貼付 (<%= "#{item.image_width}x#{item.image_height}" %>)</a>
-          
+
           <% if item.has_thumbnail? %>
           <% script = %Q(<img src='./files/thumb/#{item.escaped_name}' alt='' title=''>) %>
           <% script = "mceInsertContent('" + script.gsub(/'/, "\\\\'") + "'); return false;" %>

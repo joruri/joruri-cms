@@ -9,7 +9,7 @@ else
   value_form = opt ? f.select(:value, opt, :include_blank => "　") : f.text_field(:value, :style => "width: 400px;")
 end
 
-%><%= init_tiny_mce %>
+%><%= init_editor %>
 <%= f.hidden_field :content_id %>
 
 <table class="show">

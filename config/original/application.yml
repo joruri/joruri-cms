@@ -35,3 +35,6 @@ cms:
   talk_opts: "-s 40000 -p 200 -a 0.47 -r 1.1" # LQ
   talk_strlen: 100
   talk_thread_num: 2
+
+  # Text Editor(ckeditor or tiny_mce)
+  editor: "ckeditor"

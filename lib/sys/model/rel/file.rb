@@ -48,7 +48,10 @@ module Sys::Model::Rel::File
     end
     
     ## remove old files
-    ::Storage.find(public_dir) do |file|
+    dir_files = []
+    ::Storage.entries(public_dir).each {|n| dir_files << "#{public_dir}/#{n}" }
+    ::Storage.entries("#{public_dir}/thumb").each {|n| dir_files << "#{public_dir}/thumb/#{n}" }
+    dir_files.each do |file|
       next if ::Storage.directory?(file)
       next if file_paths.index(file)
       ::Storage.rm_rf(file)

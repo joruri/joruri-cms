@@ -10,7 +10,7 @@ function getTextRange(textarea) {
 
 function insertText(textarea, txt) {
   if (textarea.style.display == "none") { // TinyMCE
-  <%- if Joruri.config[:cms_editor].blank? || Joruri.config[:cms_editor] == 'ckeditor' -%>
+  <%- if is_ckeditor -%>
     if (parent.CKEDITOR.currentInstance) {
       parent.CKEDITOR.currentInstance.insertHtml(txt);
     } else {

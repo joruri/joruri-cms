@@ -13,11 +13,27 @@ module FormHelper
     end
   end
 
+  def editor_class
+    if is_ckeditor
+      'ckeditor'
+    else
+      'mceEditor'
+    end
+  end
+
+  def editor_wrapper_class
+    if is_ckeditor
+      'cke_editor_wrapper'
+    else
+      'mceEditor'
+    end
+  end
+
   def init_editor(options = {})
     if is_ckeditor
       init_ckeditor(options)
     else
-      init_ckeditor(options)
+      init_tiny_mce(options)
     end
   end
 
@@ -67,22 +83,6 @@ module FormHelper
     ].join("\n").html_safe
   end
 
-
-  def editor_class
-    if is_ckeditor
-      'ckeditor'
-    else
-      'mceEditor'
-    end
-  end
-
-  def editor_wrapper_class
-    if is_ckeditor
-      'cke_editor_wrapper'
-    else
-      'mceEditor'
-    end
-  end
 
   def submission_label(name)
     {

@@ -3,77 +3,88 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
   def publish
     @ids = {}
 
-    Cms::Node.published
-             .where(parent_id: 0)
-             .order(directory: :desc, name: :asc, id: :asc)
-             .each do |node|
-      publish_node(node)
+    content_id = params[:target_content_id]
+    
+    case params[:target_module]
+    when 'cms'
+      if (target_node = Cms::Node.where(id: params[:target_node_id]).first)
+        publish_node(target_node)
+      end
+    when 'article'
+      if (target_node = Cms::Node.where(id: params[:target_node_id]).first)
+        publish_node(target_node)
+      end
+    else
+      Cms::Node.published
+               .where(parent_id: 0)
+               .order(directory: :desc, name: :asc, id: :asc)
+               .each do |node|
+        publish_node(node)
+      end
     end
 
     render text: 'OK'
   end
 
   def publish_node(node)
+    article_nodes = ['Article::Category', 'Article::Attribute', 
+                     'Article::Area', 'Article::Unit']
+    return if params[:all].nil? && node.model.in?(article_nodes)
+
     return if @ids.key?(node.id)
     @ids[node.id] = 1
 
+    started_at = Time.now
+
     return unless node.site
-    last_name = nil
 
-    nodes = Cms::Node
-            .where(parent_id: node.id)
-            .where.not(name: nil)
-            .where.not(name: '')
-            .order(:directory, :name, :id)
-            .select(:id)
-
-    nodes.each do |v|
-      item = Cms::Node.find_by(id: v[:id])
-      next unless item
-      next if item.name.blank? || item.name == last_name
-      last_name = item.name
-
-      unless item.public?
-        item.close_page
-        next
-      end
-
-      ## page
-      if item.model == 'Cms::Page'
-        begin
-          uri = "#{item.public_uri}?node_id=#{item.id}"
-          publish_page(item, uri: uri, site: item.site, path: item.public_path)
-        rescue Script::InterruptException => e
-          raise e
-        rescue => e
-          Script.error "#{item.class}##{item.id} #{e}"
-        end
-        next
-      end
-
-      ## modules' page
-      if item.model != 'Cms::Directory'
-        begin
-          model = item.model.underscore.pluralize.gsub(/^(.*?)\//, '\1/script/')
-          next unless eval("#{model.camelize}Controller").publishable?
-
-          publish_page(item, uri: item.public_uri, site: item.site, path: item.public_path)
-          res = render_component_into_view controller: model, action: 'publish', params: params.merge(node: item)
-
-        rescue Script::InterruptException => e
-          raise e
-        rescue LoadError => e
-          Script.error "#{item.class}##{item.id} #{e}"
-          next
-        rescue Exception => e
-          Script.error "#{item.class}##{item.id} #{e}"
-          next
-        end
-        # next
-      end
-
-      publish_node(item)
+    unless node.public?
+      node.close_page
+      return
     end
+
+    ## page
+    if node.model == 'Cms::Page'
+      begin
+        uri = "#{node.public_uri}?node_id=#{node.id}"
+        publish_page(node, uri: uri, site: node.site, path: node.public_path)
+      rescue Script::InterruptException => e
+        raise e
+      rescue => e
+        Script.error "#{node.class}##{node.id} #{e}"
+      end
+      return
+    end
+    
+    ## modules' page
+    unless node.model == 'Cms::Directory'
+      begin
+        model = node.model.underscore.pluralize.gsub(/^(.*?)\//, '\1/script/')
+        return unless eval("#{model.camelize}Controller").publishable?
+
+        publish_page(node, uri: node.public_uri, site: node.site, path: node.public_path)
+        res = render_component_into_view controller: model, action: 'publish', params: params.merge(node: node)
+
+      rescue Script::InterruptException => e
+        raise e
+      rescue LoadError => e
+        Script.error "#{node.class}##{node.id} #{e}"
+        return
+      rescue Exception => e
+        Script.error "#{node.class}##{node.id} #{e}"
+        return
+      end
+    end
+    
+    last_name = nil
+    nodes = Cms::Node.arel_table
+    Cms::Node.where(parent_id: node.id)
+             .where(nodes[:name].not_eq(nil).and(nodes[:name].not_eq('')).and(nodes[:name].not_eq(last_name)))
+             .order('directory, name, id').each do |child_node|
+      last_name = child_node.name
+      publish_node(child_node)
+    end
+    
   end
 
   def publish_top

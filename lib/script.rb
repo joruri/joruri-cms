@@ -51,26 +51,27 @@ class Script
 
     ## start
     start = Time.now
-    log "[#{start.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... start"
+    self.log "[#{start.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... start"
 
     ## dispatch
     app = ActionDispatch::Integration::Session.new(Joruri::Application)
     app.get '/_script/sys/run/' + path.tr('#', '/').gsub(/^(.*?)\//, '\\1/script/')
-    log 'success ' + @@proc.success.to_s + (@@proc.total ? "/#{@@proc.total}" : '')
+    self.log 'success ' + @@proc.success.to_s + (@@proc.total ? "/#{@@proc.total}" : '')
 
     ## finish
     finish = Time.now
     past   = sprintf('%.2f', finish - start)
-    log "[#{finish.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... finished (#{past} sec)"
-    unlock
+    self.log "[#{finish.strftime('%Y-%m-%d %H:%M:%S')}] script:#{@@path} ... finished (#{past} sec)"
+    self.unlock
 
   rescue StandardError => e
-    error e
-    error e.backtrace.slice(0, 20).join("\n")
-    unlock
+    self.error e
+    self.error e.backtrace.slice(0, 20).join("\n")
+    self.unlock
   end
 
   def self.total(num = 1)
+    return unless defined? @@proc
     if num.is_a?(Fixnum)
       @@proc.total += num
     else
@@ -84,6 +85,7 @@ class Script
   end
 
   def self.current(num = 1)
+    return unless defined? @@proc
     @@proc.current += num
     if (@@proc.current % @@reflesh) == 0
       value = @@proc.interrupted?
@@ -94,6 +96,8 @@ class Script
   end
 
   def self.success(num = 1)
+    return if num.class != Fixnum
+    return unless defined? @@proc
     @@proc.success += num
     if num > 0 && (@@proc.success % @@reflesh) == 0
       @@proc.updated_at = DateTime.now
@@ -103,14 +107,16 @@ class Script
   end
 
   def self.error(message = nil)
+    return unless defined? @@proc
     if message
       @@proc.error += 1
-      log "Error: #{message}"
+      self.log "Error: #{message}"
     end
     @@proc.error
   end
 
   def self.log(message)
+    return unless defined? @@proc
     unless message.blank?
       @@proc.message = '' if @@proc.message.blank?
       @@proc.message += "#{message}\n"

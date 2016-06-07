@@ -5,6 +5,8 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Publication
   helper Article::FormHelper
 
+  include Article::DocsCommon
+
   def pre_dispatch
     @content = Cms::Content.find(params[:content])
     return error_auth unless @content
@@ -69,6 +71,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       end
     end
 
+    set_categories(@item)
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
       @item.body = @item.body.gsub(
@@ -78,6 +81,8 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       @item = Article::Doc.find(@item.id)
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
+
+      publish_related_pages(@item) if @item.state == 'public'
     end
   end
 
@@ -105,17 +110,23 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
         @item.link_checker = @checker
       end
     end
-
+    
+    set_categories(@item)
     _update(@item) do
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
       @item.close unless @item.public?
+
+      publish_related_pages(@item) if @item.state == 'public'
     end
   end
 
   def destroy
     @item = Article::Doc.find(params[:id])
-    _destroy @item
+    set_categories(@item)
+    _destroy @item do
+      publish_related_pages(@item)
+    end
   end
 
   def recognize(item)
@@ -177,7 +188,11 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
 
   def publish(item)
     item.public_uri = "#{item.public_uri}?doc_id=#{item.id}"
-    _publish(item) { publish_ruby(item) }
+    set_categories(item)
+    _publish(item) do
+      publish_ruby(item)
+      publish_related_pages(item)
+    end
   end
 
   def publish_by_update(item)
@@ -233,6 +248,17 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   private
+  
+  def set_categories(item)
+    if oitem = Article::Doc.find_by_id(item.id)
+      @old_category_ids = oitem.category_items.inject([]){|ids, category| ids | category.ancestors.map(&:id) }
+    else
+      @old_category_ids = []
+      
+    end
+    
+    @new_category_ids = @item.category_items.inject([]){|ids, category| ids | category.ancestors.map(&:id) }
+  end
 
   def docs_params
     area_ids = Article::Area.content_is(@content).pluck(:id).map(&:to_s)

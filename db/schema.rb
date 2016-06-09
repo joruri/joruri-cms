@@ -92,9 +92,10 @@ ActiveRecord::Schema.define(version: 20160519022036) do
   add_index "article_docs", ["content_id", "published_at", "event_date"], name: "content_id", using: :btree
 
   create_table "article_publishers", force: :cascade do |t|
-    t.integer  "item_id",    limit: 4
-    t.integer  "content_id", limit: 4
-    t.string   "item_model", limit: 255
+    t.integer  "item_id",              limit: 4
+    t.integer  "content_id",           limit: 4
+    t.string   "item_model",           limit: 255
+    t.string   "lower_layer_item_ids", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

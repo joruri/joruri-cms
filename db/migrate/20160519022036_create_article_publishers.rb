@@ -4,6 +4,7 @@ class CreateArticlePublishers < ActiveRecord::Migration
       t.integer :item_id
       t.integer :content_id
       t.string :item_model
+      t.string :lower_layer_item_ids
 
       t.timestamps
     end

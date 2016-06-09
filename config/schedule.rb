@@ -28,7 +28,10 @@ env :PATH, ENV['PATH']
 
 # http://rubygems.org/gems/delayed_job_active_record
 every 3.minutes do
-  rake 'jobs:workoff'
+  rake 'jobs:workoff MIN_PRIORITY=0 MAX_PRIORITY=10'
+end
+every 3.minutes do
+  rake 'jobs:workoff MIN_PRIORITY=11'
 end
 
 # 記事の公開/非公開処理を行います。

@@ -2,6 +2,9 @@
 class Article::Script::AttributesController < Cms::Controller::Script::Publication
   def publish
     units = Article::Unit.find_departments(web_state: 'public')
+    if (unit_id = params[:target_child_id]).present?
+      units = units.where(id: unit_id) 
+    end
 
     if (target_id = params[:target_id]).present?
       attrs = Article::Attribute.where(id: target_id).all

@@ -6,7 +6,10 @@ class Article::Script::UnitsController < Cms::Controller::Script::Publication
     attrs = Article::Attribute
             .published
             .where(state: 'public', content_id: @node.content_id)
-            .order(:sort_no)
+    if (attr_id = params[:target_child_id]).present?
+      attrs = attrs.where(id: attr_id) 
+    end
+    attrs = attrs.order(:sort_no)
     
     if (target_id = params[:target_id]).present?
       

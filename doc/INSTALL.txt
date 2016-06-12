@@ -1,11 +1,11 @@
-## Joruri CMS 2.2.0 インストールマニュアル                  2015.4.24
+## Joruri CMS 2.2.1 インストールマニュアル                  2016.03.17
 
 **********************************************************************
  1 想定環境
 **********************************************************************
 
 [システム]
-OS         : CentOS 6.4
+OS         : CentOS 6.6 64bit
 Webサーバ  : Apache 2.2
 DBシステム : MySQL 5
 Ruby       : 2.1.5
@@ -45,21 +45,6 @@ rootユーザに変更します。
       httpd httpd-devel \
       mysql-server mysql-devel
 
-必要なパッケージをダウンロードします。
-
-  # cd /usr/local/src/
-  # wget http://joruri.org/download/joruri-2.2.0.tar.gz \
-      http://pyyaml.org/download/libyaml/yaml-0.1.4.tar.gz \
-      http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz \
-      http://sourceforge.net/projects/sox/files/sox/14.4.1/sox-14.4.1.tar.gz \
-      http://downloads.sourceforge.net/lame/lame-398-2.tar.gz \
-      http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.07.tar.gz \
-      http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.06.tar.gz \
-      http://downloads.sourceforge.net/open-jtalk/open_jtalk_dic_utf_8-1.06.tar.gz \
-      http://mecab.googlecode.com/files/mecab-0.996.tar.gz \
-      http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz \
-      http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
-
 Joruriユーザを作成します。
 
   # useradd joruri
@@ -67,8 +52,10 @@ Joruriユーザを作成します。
 
 Joruriソースコードを設置します。
 
+  # cd /usr/local/src
+  # curl -fsSLO http://joruri.org/download/joruri-2.2.1.tar.gz
   # mkdir /var/share
-  # tar xvzf joruri-2.2.0.tar.gz -C /var/share && cd /var/share/joruri
+  # tar xvzf joruri-2.2.1.tar.gz -C /var/share && cd /var/share/joruri
   # cp config/original/* config/
   # cp -r public/_common/themes/joruri.original public/_common/themes/joruri
   # chown -R joruri:joruri ./
@@ -81,17 +68,13 @@ Joruriソースコードを設置します。
  4.1 Rubyのインストール
 ======================================================================
 
-LibYAMLをインストールします。
-
-  # cd /usr/local/src
-  # tar xvzf yaml-0.1.4.tar.gz && cd yaml-0.1.4
-  # ./configure && make && make install
-
 Rubyをインストールします。
 
+  # yum -y install gcc-c++ libffi-devel libyaml-devel make openssl-devel readline-devel zlib-devel
+
   # cd /usr/local/src
-  # tar xvzf ruby-2.1.5.tar.gz && cd ruby-2.1.5
-  # ./configure && make && make install
+  # curl -fsSLO http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz
+  # tar xvzf ruby-2.1.5.tar.gz && cd ruby-2.1.5 && ./configure && make && make install
 
 ======================================================================
  4.2 gemライブラリのインストール
@@ -117,14 +100,14 @@ Ruby on Railsをインストールします。
 文字エンコーディングの標準を UTF-8 に設定します。
 
   # vi /etc/my.cnf
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   [mysqld]
   character-set-server=utf8
   default-table-type=myisam
-  
+
   [client]
   default-character-set = utf8
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ## [mysqld]に設定を追加、[client]と設定を追加。
 
 MySQLを起動します。
@@ -157,9 +140,9 @@ Apacheは[6.1]を、Thinは[6.2]の手順を進めてください。
 設定ファイルを編集します。
 
   # vi /etc/httpd/conf/httpd.conf
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   ServerName 192.168.0.2
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Phusion Passengerをインストールします。
 
@@ -196,7 +179,7 @@ Phusion Passengerをインストールします。
 Thinをインストールします。
 
   # thin install
-  
+
   # sed -i "s/\/usr\/bin\/env ruby/\/usr\/local\/bin\/ruby/" /usr/local/bin/thin
   # chmod 777 /var/share/joruri/tmp/pids
 
@@ -235,15 +218,15 @@ Production(本番)モードでの動作を想定しています。
 Joruriの基本設定
 
   $ vi config/core.yml
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   title      : 管理画面ウィンドウタイトル
   uri        : 管理画面URL (記述例 http://example.jp/)
   http_proxy : HTTP プロキシー (記述例 http://example.jp:8080/)
   https_proxy: HTTPSプロキシー (記述例 http://example.jp:8080/)
-  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 その他の設定ファイルも適宜編集してください。
-  
+
   application.yml ... アプリケーション設定
   database.yml    ... データベース設定
   ldap.yml        ... LDAP設定
@@ -296,69 +279,66 @@ Joruriの基本設定
 
 必要なパッケージをインストールします。
 
-  $ su -
+  # yum -y install sox
 
-hts_engine API
-
-  # cd /usr/local/src
-  # tar xvzf hts_engine_API-1.07.tar.gz && cd ./hts_engine_API-1.07
-  # ./configure && make && make install
-
-Open JTalk
+hts_engine APIをインストールします。
 
   # cd /usr/local/src
-  # tar xvzf open_jtalk-1.06.tar.gz && cd open_jtalk-1.06
-  # sed -i "s/#define MAXBUFLEN 1024/#define MAXBUFLEN 10240/" bin/open_jtalk.c
-  # ./configure --with-charset=UTF-8 && make && make install
+  # curl -fsSLO http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.09.tar.gz
+  # tar zxf hts_engine_API-1.09.tar.gz && cd hts_engine_API-1.09 && ./configure CFLAGS='-O3 -march=native -funroll-loops' && make && make install
 
-Dictionary
-
-  # cd /usr/local/src
-  # tar xvzf open_jtalk_dic_utf_8-1.06.tar.gz
-  # mkdir /usr/local/share/open_jtalk
-  # mv open_jtalk_dic_utf_8-1.06 /usr/local/share/open_jtalk/dic
-
-SoX
+Open JTalkをインストールします。
 
   # cd /usr/local/src
-  # tar xvzf sox-14.4.1.tar.gz && cd sox-14.4.1
-  # ./configure && make && make install
+  # curl -fsSLO http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.08.tar.gz
+  # tar zxf open_jtalk-1.08.tar.gz && cd open_jtalk-1.08
+  # sed -i 's/#define MAXBUFLEN 1024/#define MAXBUFLEN 10240/' bin/open_jtalk.c
+  # ./configure --with-charset=UTF-8 CFLAGS='-O3 -march=native -funroll-loops' CXXFLAGS='-O3 -march=native -funroll-loops' && make && make install
 
-lame
-
-  # cd /usr/local/src
-  # tar xvzf lame-398-2.tar.gz && cd lame-398-2
-  # ./configure --prefix=/usr && make && make install
-
-MeCab
+Dictionaryをインストールします。
 
   # cd /usr/local/src
-  # tar xvzf mecab-0.996.tar.gz && cd mecab-0.996
-  # ./configure --enable-utf8-only && make && make install
+  # curl -fsSLO http://downloads.sourceforge.net/open-jtalk/open_jtalk_dic_utf_8-1.08.tar.gz
+  # tar zxf open_jtalk_dic_utf_8-1.08.tar.gz
+  # mkdir /usr/local/share/open_jtalk && mv open_jtalk_dic_utf_8-1.08 /usr/local/share/open_jtalk/dic
 
-MeCab-IPAdic
-
-  # cd /usr/local/src
-  # tar xvzf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801
-  # ./configure --with-charset=utf8 && make && make install
-
-MeCab-Ruby
+LAMEをインストールします。
 
   # cd /usr/local/src
-  # tar xvzf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996
-  # ruby extconf.rb && make && make install
+  # curl -fsSLO http://jaist.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+  # tar zxf lame-3.99.5.tar.gz && cd lame-3.99.5 && ./configure && make && make install
+
+MeCabをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-0.996.tar.gz
+  # tar zxf mecab-0.996.tar.gz && cd mecab-0.996 && ./configure --enable-utf8-only && make && make install
+
+MeCab-IPAdicをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+  # tar zxf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801 && ./configure --with-charset=utf8 && make && make install
+
+MeCab-Rubyをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+  # tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
+
 
 **********************************************************************
  9 定期実行設定
 **********************************************************************
 
   # su - joruri
-  
+
   $ crontab -e
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin
 
   10,25,40,55 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake sys:tasks:exec'    # 日時指定処理
+  #*/5 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish_top' # トップページのみ書き出し
   */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish'        # ページ書き出し
   */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:talks:publish'        # 音声書き出し
   */30 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:feeds:read'           # フィード取り込み
@@ -376,7 +356,7 @@ MeCab-Ruby
 アンケートの取り込みは対象のデータベース設定を追加してください。
 
   $ cd /var/share/joruri
-  
+
   $ vi config/database.yml
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   production_pull_database:
@@ -388,10 +368,10 @@ MeCab-Ruby
     encoding: utf8
     reconnect: true
     host: 192.168.0.4
-  
+
   production_pull_database_2:
     # settings
-  
+
   production_pull_database_3:
     # settings
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

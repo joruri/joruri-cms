@@ -37,8 +37,6 @@ centos() {
   done
 cat <<'EOF' >> install_all.sh
 
-wget -i "$INSTALL_SCRIPT_URL/crontab_joruri"
-
 echo "
 -- インストールを完了しました。 --
 
@@ -52,8 +50,8 @@ echo "
 
 １．MySQL の root ユーザはパスワードが rootpass に設定されています。適宜変更してください。
     # mysqladmin -u root -prootpass password 'pass'
-２．MySQL の joruri ユーザはパスワードが joruripass に設定されています。適宜変更してください。
-    mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('joruripass');
+２．MySQL の joruri ユーザはパスワードが pass に設定されています。適宜変更してください。
+    mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('pass');
     また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
     # vi /var/share/joruri/config/database.yml
 ３．OS の joruri ユーザに cron が登録されています。

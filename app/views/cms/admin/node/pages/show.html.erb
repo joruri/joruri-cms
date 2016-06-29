@@ -1,4 +1,4 @@
-<%= init_tiny_mce :readonly => true %>
+<%= init_editor :readonly => true %>
 
 <% if rep = @item.replace_page %>
 <div class="noticeBox">更新用のページが作成されています : <%= link_to h(rep.title), rep.admin_uri %></div>
@@ -15,7 +15,7 @@
 <table class="show" style="margin: 0px;">
   <tr>
     <th><%= @item.locale(:body) %></th></tr><tr>
-    <td class="mceEditor"><%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor' %></td>
+    <td class="<%=editor_wrapper_class%>"><%= text_area_tag 'viewBody', @item.body, :class => editor_class %></td>
   </tr>
 </table>
 

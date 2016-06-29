@@ -1,4 +1,4 @@
-<%= init_tiny_mce %>
+<%= init_editor %>
 
 <span class="note">※は必須項目です。</span>
 
@@ -11,7 +11,7 @@
     <td><%= f.text_field :name, :class => 'title' %></td>
   </tr><tr>
     <th><%= @item.locale(:body) %></th>
-    <td><%= f.text_area :body, :class => 'body mceEditor', :style => "height: 100px;" %></td>
+    <td><%= f.text_area :body, :class => "body #{editor_class}", :style => "height: 100px;" %></td>
   </tr><tr>
     <th><%= @item.locale(:column_type) %> <span class="note">※</span></th>
     <td><%= f.select :column_type, @item.column_types.collect{|c| [c[:label], c[:name]]}, :include_blank => "　" %></td>

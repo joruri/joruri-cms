@@ -1,5 +1,5 @@
 <% inline_id = @item.unid %>
-<%= init_tiny_mce :readonly => true, :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/'
+<%= init_editor :readonly => true, :document_base_url => article_preview_doc_file_path(:parent => inline_id, :path => '') + '/'
  %>
 
 <% if rep = @item.replace_page %>
@@ -37,8 +37,8 @@
   </tr>
   <tr>
     <th colspan="4">内容</th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width:100%' %>
+    <td colspan="4" class="<%=editor_wrapper_class%>">
+      <%= text_area_tag 'viewBody', @item.body, :class => "#{editor_class}", :style => 'width:100%' %>
     </td>
   </tr>
 </table>

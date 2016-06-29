@@ -1,0 +1,52 @@
+.iconFile, .iconDefault {
+  height: 40px;
+  padding: 12px 5px 12px 42px;
+  line-height: 3.3;
+  background-repeat: no-repeat;
+  background-image: url(/_common/images/icons/default.gif);
+}
+.iconBmp {
+  background-image: url(/_common/images/icons/bmp.gif);
+}
+.iconCsv,
+.iconTxt {
+  background-image: url(/_common/images/icons/default.gif);
+}
+.iconDoc,
+.iconDocx {
+  background-image: url(/_common/images/icons/doc.gif);
+}
+.iconGif {
+  background-image: url(/_common/images/icons/gif.gif);
+}
+.iconJpg,
+.iconJpe,
+.iconJpeg {
+  background-image: url(/_common/images/icons/jpg.gif);
+}
+.iconJtd {
+  background-image: url(/_common/images/icons/jtd.gif);
+}
+.iconLzh {
+  background-image: url(/_common/images/icons/lzh.gif);
+}
+.iconPdf {
+  background-image: url(/_common/images/icons/pdf.gif);
+}
+.iconPng {
+  background-image: url(/_common/images/icons/png.gif);
+}
+.iconPpt,
+.iconPptx {
+  background-image: url(/_common/images/icons/ppt.gif);
+}
+.iconTxt {
+  background-image: url(/_common/images/icons/default.gif);
+}
+.iconXls,
+.iconXlsx {
+  background-image: url(/_common/images/icons/xls.gif);
+}
+.iconZip {
+  background-image: url(/_common/images/icons/zip.gif);
+}

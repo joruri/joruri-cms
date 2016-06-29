@@ -14,7 +14,7 @@ $(function() {
 
 <%= disable_enter_key_js %>
 <% inline_id = @item.unid || params[:_tmp] %>
-<%= init_tiny_mce :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
+<%= init_editor :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
 
 <span class="note">※は必須項目です。</span>
 
@@ -33,14 +33,14 @@ $(function() {
   </tr>
   <tr>
     <th colspan="4">質問 <span class="note">※</span></th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= f.text_area :question, :class => 'body mceEditor', :style => 'height: 200px' %>
+    <td colspan="4" class="<%= editor_wrapper_class =%>">
+      <%= f.text_area :question, :class => "body #{editor_class}", :style => 'height: 200px' %>
     </td>
   </tr>
   <tr>
     <th colspan="4">回答 <span class="note">※</span></th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= f.text_area :body, :class => 'body mceEditor', :style => 'height: 400px;' %>
+    <td colspan="4" class="<%= editor_wrapper_class =%>">
+      <%= f.text_area :body, :class => "body #{editor_class}", :style => 'height: 400px;' %>
     </td>
   </tr>
 </table>

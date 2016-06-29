@@ -4,11 +4,13 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	// Define changes to default configuration here. For example:
-	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
+  // Define changes to default configuration here. For example:
+  // config.language = 'fr';
+  // config.uiColor = '#AADC6E';
 
-  	// ツールバーの設定
+    //エディタのサイズ
+    config.height = '460px';
+    // ツールバーの設定
     // http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html#.toolbar_Full
     if (cms && cms.Page && cms.Page.smart_phone) {
       config.toolbar = [
@@ -72,6 +74,7 @@ CKEDITOR.editorConfig = function( config ) {
     // Wordからの貼付で装飾を削除する
     config.pasteFromWordRemoveFontStyles = true;
     config.pasteFromWordRemoveStyles = true;
+
   };
 
   // スタイルの設定

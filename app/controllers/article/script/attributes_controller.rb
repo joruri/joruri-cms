@@ -2,9 +2,17 @@
 class Article::Script::AttributesController < Cms::Controller::Script::Publication
   def publish
     units = Article::Unit.find_departments(web_state: 'public')
+    if (unit_id = params[:target_child_id]).present?
+      units = units.where(id: unit_id) 
+    end
 
-    cond = { state: 'public', content_id: @node.content_id }
-    Article::Attribute.root_items(cond).each do |item|
+    if (target_id = params[:target_id]).present?
+      attrs = Article::Attribute.where(id: target_id).all
+    else
+      cond = { state: 'public', content_id: @node.content_id }
+      attributes = Article::Attribute.root_items(cond)
+    end
+    attrs.each do |item|
       uri  = "#{@node.public_uri}#{item.name}/"
       path = "#{@node.public_path}#{item.name}/"
       publish_page(item, uri: uri, path: path)

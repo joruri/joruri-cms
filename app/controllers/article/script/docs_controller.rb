@@ -1,5 +1,7 @@
 # encoding: utf-8
 class Article::Script::DocsController < Cms::Controller::Script::Publication
+  include Article::DocsCommon
+  
   def rebuild
     ## options
     publish_files = Script.options[:file]

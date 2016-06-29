@@ -2,24 +2,37 @@
 class Article::Script::CategoriesController < Cms::Controller::Script::Publication
   def publish
     units = Article::Unit.find_departments(web_state: 'public')
+    if (unit_id = params[:target_child_id]).present?
+      units = units.where(id: unit_id) 
+    end
 
-    cond = { state: 'public', content_id: @node.content_id }
-    Article::Category.root_items(cond).each do |item|
-      uri  = "#{@node.public_uri}#{item.name}/"
-      path = "#{@node.public_path}#{item.name}/"
-      publish_page(item, uri: uri, path: path)
-      publish_more(item, uri: uri, path: path, file: 'more', dependent: :more)
-      publish_page(item, uri: "#{uri}index.rss", path: "#{path}index.rss", dependent: :rss)
-      publish_page(item, uri: "#{uri}index.atom", path: "#{path}index.atom", dependent: :atom)
-
-      item.public_children.each do |c|
-        publish_children(item, c, units)
-
-        c.public_children.each do |c2|
-          publish_children(item, c2, units)
-
-          c2.public_children.each do |c3|
-            publish_children(item, c3, units)
+    if (target_id = params[:target_id]).present?
+      Article::Category.where(id: target_id).each do |item|
+        if item.level_no <= 1
+          publish_children(nil, item, [])
+        else
+          publish_children(nil, item, units)
+        end
+      end
+    else
+      cond = { state: 'public', content_id: @node.content_id }
+      Article::Category.root_items(cond).each do |item|
+        uri  = "#{@node.public_uri}#{item.name}/"
+        path = "#{@node.public_path}#{item.name}/"
+        publish_page(item, uri: uri, path: path)
+        publish_more(item, uri: uri, path: path, file: 'more', dependent: :more)
+        publish_page(item, uri: "#{uri}index.rss", path: "#{path}index.rss", dependent: :rss)
+        publish_page(item, uri: "#{uri}index.atom", path: "#{path}index.atom", dependent: :atom)
+  
+        item.public_children.each do |c|
+          publish_children(item, c, units)
+  
+          c.public_children.each do |c2|
+            publish_children(item, c2, units)
+  
+            c2.public_children.each do |c3|
+              publish_children(item, c3, units)
+            end
           end
         end
       end

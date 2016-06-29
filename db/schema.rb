@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415041553) do
+ActiveRecord::Schema.define(version: 20160519022036) do
 
   create_table "article_areas", force: :cascade do |t|
     t.integer  "unid",       limit: 4
@@ -90,6 +90,17 @@ ActiveRecord::Schema.define(version: 20160415041553) do
   end
 
   add_index "article_docs", ["content_id", "published_at", "event_date"], name: "content_id", using: :btree
+
+  create_table "article_publishers", force: :cascade do |t|
+    t.integer  "item_id",              limit: 4
+    t.integer  "content_id",           limit: 4
+    t.string   "item_model",           limit: 255
+    t.string   "lower_layer_item_ids", limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "article_publishers", ["item_model"], name: "index_article_publishers_on_item_model", using: :btree
 
   create_table "article_tags", force: :cascade do |t|
     t.integer  "unid",       limit: 4
@@ -493,6 +504,22 @@ ActiveRecord::Schema.define(version: 20160415041553) do
   end
 
   add_index "cms_talk_tasks", ["unid", "dependent"], name: "unid", using: :btree
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer  "priority",   limit: 4,     default: 0, null: false
+    t.integer  "attempts",   limit: 4,     default: 0, null: false
+    t.text     "handler",    limit: 65535,             null: false
+    t.text     "last_error", limit: 65535
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "enquete_answer_columns", force: :cascade do |t|
     t.integer "answer_id", limit: 4

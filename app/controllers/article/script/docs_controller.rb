@@ -65,6 +65,7 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
       if item.published? || !::Storage.exists?(ruby_path)
         item.publish_page(render_public_as_string(ruby_uri, site: item.content.site),
                           path: ruby_path, uri: ruby_uri, dependent: :ruby)
+        publish_related_pages(item)
       end
       params[:task].destroy
 
@@ -83,6 +84,7 @@ class Article::Script::DocsController < Cms::Controller::Script::Publication
       Script.current
 
       item.close
+      publish_related_pages(item)
       params[:task].destroy
 
       Script.success

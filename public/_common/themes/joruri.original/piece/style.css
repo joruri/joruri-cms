@@ -115,21 +115,17 @@
   position: absolute;
   width: 1px;
 }
-.naviTalk .player object {
-  position: relative;
-  top: 25px;
-  left: -90px;
-}
-*html .naviTalk .player object {
-  top: 28px;
-}
+
 html:first-child .naviTalk .player {
   position: absolute;
 }
-html:first-child .naviTalk .player object {
+.naviTalk .player audio {
+  width: 250px;
   position: relative;
-  top: 25px;
-  left: 340px;
+  padding-top: 28px;
+  -webkit-padding-before: 8px;
+  left: -90px;
+  max-height: 32px;
 }
 /* common banner
 ----------------------------------------------- */
@@ -649,7 +645,7 @@ h1 {
 #docTab .tabs a {
   display: inline-block;
   float: left;
-  width: 15%; 
+  width: 15%;
   margin-right: 3px;
   padding: 5px 0;
   border: 1px solid #cccccc;

@@ -15,12 +15,13 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc.
 
 ## インストール
 
+##### 前提条件
+* root権限による操作を想定しています。
+
 ###### 手動インストールマニュアル
 [doc/INSTALL.txt](doc/INSTALL.txt)
 
 ###### 自動インストールスクリプト
-* Selinux, iptablesは無効まはた適切な設定を行っていることを想定しています。
-* rootユーザで実行してください。
 
 コマンド：
 

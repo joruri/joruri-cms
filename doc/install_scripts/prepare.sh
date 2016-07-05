@@ -12,6 +12,10 @@ ubuntu() {
 centos() {
   echo "It's CentOS!"
 
+  yum -y groupinstall base "Development tools"
+  setenforce 0
+  sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
   yum install epel-release
   yum -y install $MYSQL_REPO_URL
   yum -y install wget git

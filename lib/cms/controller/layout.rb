@@ -108,7 +108,7 @@ module Cms::Controller::Layout
           body.gsub!("[[piece/#{name}]]", piece_container_html(item, data))
         end
       rescue => e
-        #
+        error_log(e)
       end
     end
 

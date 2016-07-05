@@ -64,7 +64,7 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
 
     @entries = Portal::FeedEntry
                .public_content_with_own_docs(
-                 @content,
+                 content,
                  list_type,
                  item: category,
                  mobile: request.mobile

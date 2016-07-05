@@ -33,7 +33,7 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
       if list.size > 0
         entries = Portal::FeedEntry
                   .public_content_with_own_docs(
-                    @content,
+                    base_content,
                     :groups,
                     category: list[0],
                     mobile: request.mobile
@@ -45,7 +45,7 @@ class Portal::Public::Piece::RecentTabsController < Sys::Controller::Public::Bas
       else
         entries = Portal::FeedEntry
                   .public_content_with_own_docs(
-                    @content,
+                    base_content,
                     :docs,
                     mobile: request.mobile
                   )

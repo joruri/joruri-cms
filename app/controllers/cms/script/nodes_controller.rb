@@ -11,7 +11,9 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
         publish_node(target_node)
       end
     when 'article'
-      if (target_node = Cms::Node.where(id: params[:target_node_id]).first)
+      if !params[:target_node].nil?
+        publish_article_node(params[:target_node])
+      elsif (target_node = Cms::Node.where(id: params[:target_node_id]).first)
         publish_node(target_node)
       end
     else
@@ -87,6 +89,20 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
     
   end
 
+  def publish_all
+    params[:all] = 'all'
+
+    @ids = {}
+    Cms::Node.published
+             .where(parent_id: 0)
+             .order(directory: :desc, name: :asc, id: :asc)
+             .each do |node|
+      publish_node(node)
+    end
+    
+    render text: 'OK'
+  end
+
   def publish_top
     @ids = {}
 
@@ -108,7 +124,23 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
     publish_page(item, uri: uri, site: item.site, path: item.public_path)
   end
 
-
+  def publish_article_node(type)
+    Article::Content::Doc.all.each do |content|
+      node = nil
+      case type
+      when 'category'
+        node = content.category_node
+      when 'attribute'
+        node = content.attribute_node
+      when 'area'
+        node = content.area_node
+      when 'unit'
+        node = content.unit_node
+      end
+      next unless node
+      publish_node(node)
+    end
+  end
 
   def publish_by_task
     item = params[:item]

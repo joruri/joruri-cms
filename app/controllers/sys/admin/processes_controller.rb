@@ -15,7 +15,7 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
   def processes
     [
       ["日時指定処理", 'sys/tasks#exec'],
-      ["ページ書き出し", 'cms/nodes#publish'],
+      ["ページ書き出し（トップ・分野・組織・地域・属性・固定ページ）", 'cms/nodes#publish_all'],
       ["音声書き出し", 'cms/talks#publish'],
       ["フィード取り込み", 'cms/feeds#read'],
       ["メルマガ読者登録", 'newsletter/requests#read'],

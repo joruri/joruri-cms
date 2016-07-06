@@ -123,6 +123,30 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
     uri  = "#{item.public_uri}?node_id=#{item.id}"
     publish_page(item, uri: uri, site: item.site, path: item.public_path)
   end
+  
+  def publish_category
+    params[:all] = 'all'
+    publish_article_node('category')
+    render text: 'OK'
+  end
+
+  def publish_attribute
+    params[:all] = 'all'
+    publish_article_node('attribute')
+    render text: 'OK'
+  end
+
+  def publish_area
+    params[:all] = 'all'
+    publish_article_node('area')
+    render text: 'OK'
+  end
+
+  def publish_unit
+    params[:all] = 'all'
+    publish_article_node('unit')
+    render text: 'OK'
+  end
 
   def publish_article_node(type)
     Article::Content::Doc.all.each do |content|

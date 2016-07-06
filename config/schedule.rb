@@ -40,13 +40,33 @@ every '10,25,40,55 * * * *' do
 end
 
 # トップページのみを静的ファイルとして書き出します。
-every '*/3 * * * *' do
+every '*/15 * * * *' do
   rake 'cms:nodes:publish_top'
 end
 
 # トップページや中間ページを静的ファイルとして書き出します。
 every '*/30 * * * *' do
   rake 'cms:nodes:publish'
+end
+
+# 記事コンテンツの分野ディレクトリを静的ファイルとして書き出します。
+every '0 * * * *' do
+  rake 'cms:nodes:publish_category'
+end
+
+# 記事コンテンツの属性ディレクトリを静的ファイルとして書き出します。
+every '5 * * * *' do
+  rake 'cms:nodes:publish_attribute'
+end
+
+# 記事コンテンツの地域ディレクトリを静的ファイルとして書き出します。
+every '10 * * * *' do
+  rake 'cms:nodes:publish_area'
+end
+
+# 記事コンテンツの組織ディレクトリを静的ファイルとして書き出します。
+every '15 * * * *' do
+  rake 'cms:nodes:publish_unit'
 end
 
 # 音声ファイルを静的ファイルとして書き出します。
@@ -64,22 +84,22 @@ every '*/10 * * * *' do
   rake 'newsletter:requests:read'
 end
 
-# アンケート取り込み
-every '#00 * * * *' do
-  rake 'enquete:answers:pull'
-end
+# # アンケート取り込み
+# every '00 * * * *' do
+  # rake 'enquete:answers:pull'
+# end
 
-# 記事再構築(ページ)
-every '#00 * * * *' do
-  rake 'article:docs:rebuild'
-end
+# # 記事再構築(ページ)
+# every '00 * * * *' do
+  # rake 'article:docs:rebuild'
+# end
 
-# FAQ再構築(ページ)
-every '#00 * * * *' do
-  rake 'faq:docs:rebuild'
-end
+# # FAQ再構築(ページ)
+# every '00 * * * *' do
+  # rake 'faq:docs:rebuild'
+# end
 
-# DBセッション削除
-every '#00 * * * *' do
-  rake 'db:session:sweep'
-end
+# # DBセッション削除
+# every '00 * * * *' do
+  # rake 'db:session:sweep'
+# end

@@ -22,12 +22,13 @@ class Cms::Lib::BreadCrumbs
           c.each do |c2|
             l << %(<a href="#{c2[1]}">#{c2[0]}</a>)
           end
-          links << l.join("，")
+          links << "<li>#{l.join(" , ")}</li>"
+
         else
-          links << %(<a href="#{c[1]}">#{c[0]}</a>)
+          links << %(<li><a href="#{c[1]}">#{c[0]}</a></li>)
         end
       end
-      h << "<div>#{links.join(' &gt; ')}</div>"
+      h << "<ol>#{links.join(" \n ")}</ol>"
     end
     h.html_safe
   end

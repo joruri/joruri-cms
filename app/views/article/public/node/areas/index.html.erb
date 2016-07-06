@@ -1,8 +1,8 @@
 <div class="contentArticleArea">
 
 <% @items.each do |item| %>
-<table class="ward">
-<tr>
+<table>
+<tr class="ward">
   <th class="name" id="<%= item.name %>" scope="col"><%= item.title %></th>
   <th class="page" scope="col"><%=link_to '地域ページへ', "#{item.name}/" %></th>
   <th class="zipCode" scope="col">郵便番号</th>

@@ -128,76 +128,60 @@ table.city a {
 table.city tr.cycle {
   background-color: #e3f0fa;
 }
-.contentArticleArea .ward td,
+.contentArticleArea .ward th,
 .contentArticleArea .city td {
   padding: 5px 7px;
 }
-.contentArticleArea td.name,
-.contentArticleArea td.page,
-.contentArticleArea td.zipCode,
-.contentArticleArea td.tel,
-.contentArticleArea td.formal {
+.contentArticleArea th.name,
+.contentArticleArea th.page,
+.contentArticleArea th.zipCode,
+.contentArticleArea th.tel,
+.contentArticleArea th.formal {
   width: 15%;
 }
-.contentArticleArea td.address {
+.contentArticleArea th.address {
   width: 25%;
 }
 /* Soshiki Ichiran date
 ----------------------------------------------- */
-.contentArticleArea dl:after {
-  content: ".";
-  display: block;
-  clear: both;
-  height: 0;
-  visibility: hidden;
-}
-* html .contentArticleArea dl {
-  height: 1%;
-}
-.contentArticleArea dl {
-  clear: both;
-  display: block;
+
+.contentArticleArea tr {
   border: 1px solid #ccc;
   border-top: none;
+  text-align: left;
 }
-.contentArticleArea dl.cycle {
+.contentArticleArea tr.cycle {
   background: #eee;
 }
-.contentArticleArea dl.ward {
+.contentArticleArea tr.ward {
   border: 1px solid #ccc;
   background: #E3F0FA;
 }
-.contentArticleArea dt {
-  float: left;
+.contentArticleArea th,
+.contentArticleArea td {
   padding: 5px 10px;
 }
-.contentArticleArea dd {
-  float: left;
-  padding: 5px 10px;
-}
-.contentArticleArea dl {
-  display: block;
+.contentArticleArea tr {
   width: 100%;
 }
-.contentArticleArea dd {
+.contentArticleArea th {
   margin: 0;
 }
-.contentArticleArea dt.name {
+.contentArticleArea th.name {
   width: 10%;
 }
-.contentArticleArea dd.page {
-  display: table;
+.contentArticleArea th.page {
   width: 15%;
 }
-.contentArticleArea dd.zipCode {
+.contentArticleArea th.zipCode {
   width: 10%;
 }
-.contentArticleArea dd.address {
+.contentArticleArea th.address {
   width: 20%;
 }
-.contentArticleArea dd.tel {
+.contentArticleArea th.tel {
   width: 10%;
 }
-.contentArticleArea dd.formal {
+.contentArticleArea th.formal {
   width: 15%;
 }

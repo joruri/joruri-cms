@@ -10,4 +10,7 @@ class Enquete::Content::Setting < Cms::ContentSetting
                                 form_type: :text
   set_config :use_captcha, name: "画像認証",
                            options: [["使用する", 1], ["使用しない", 0]]
+  set_config :required_symbol, :name => "必須記号", :lower_text => '非表示の場合は、「_blank」と入力する'
+  set_config :auto_add_attr_title, :name => "属性の自動付加（title属性）",
+    :options => [["付加する", 1], ["付加しない", 0]]
 end

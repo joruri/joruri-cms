@@ -22,6 +22,9 @@
     <th><%= @item.locale(:required) %></th>
     <td><%= f.radio_buttons :required, [["必須","1"],["任意","0"]], :class => 'states' %></td>
   </tr><tr>
+    <th><%= @item.locale(:field_format) %></th>
+    <td><%= f.select :field_format, @item.field_formats.collect{|c| [c[:label], c[:name]]}, :include_blank => "　" %></td>
+  </tr><tr>
     <th><%= @item.locale(:column_style) %><br />（style=）</th>
     <td><%= f.text_field :column_style, :class => 'title' %></td>
   </tr><tr>

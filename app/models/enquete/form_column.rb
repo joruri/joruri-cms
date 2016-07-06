@@ -14,19 +14,25 @@ class Enquete::FormColumn < ActiveRecord::Base
   validates :name, :sort_no, :column_type, :required, presence: true
   validates :sort_no, numericality: { only_integer: true }
 
+
+  @@column_types = [
+    {:name => "text_field"   , :options => false, :label => "入力/１行（テキストフィールド）"},
+    {:name => "text_area"    , :options => false, :label => "入力/複数行（テキストエリア）"},
+    {:name => "select"       , :options => true,  :label => "選択/単数回答（プルダウン）"},
+    {:name => "radio_button" , :options => true,  :label => "選択/単数回答（ラジオボタン）"},
+    {:name => "check_box"    , :options => true,  :label => "選択/複数回答（チェックボックス）"},
+  ]
+
+  @@field_formats = [
+    {:name => "email",:label => "メールアドレス"}
+  ]
+
   def column_types
-    [
-      { name: 'text_field', options: false,
-        label: "入力/１行（テキストフィールド）" },
-      { name: 'text_area', options: false,
-        label: "入力/複数行（テキストエリア）" },
-      { name: 'select', options: true,
-        label: "選択/単数回答（プルダウン）" },
-      { name: 'radio_button', options: true,
-        label: "選択/単数回答（ラジオボタン）" },
-      { name: 'check_box', options: true,
-        label: "選択/複数回答（チェックボックス）" }
-    ]
+    @@column_types
+  end
+
+  def field_formats
+    @@field_formats
   end
 
   def column_spec

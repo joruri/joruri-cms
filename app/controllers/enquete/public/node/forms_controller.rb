@@ -6,8 +6,10 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
   def pre_dispatch
     @content = Page.current_node.content
     return http_error(404) unless @content
-
+    @required_symbol   = @content.setting_value(:required_symbol, "※")
+    @required_symbol   = "" if @required_symbol == '_blank'
     @use_captcha = @content.setting_value(:use_captcha) == '1'
+    @auto_add_attr_title = @content.setting_value(:auto_add_attr_title) == "1"
   end
 
   def index
@@ -106,7 +108,27 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
   def form(item)
     form = Sys::Lib::Form::Builder.new(:item, template: view_context)
     item.public_columns.each do |col|
-      form.add_element(col.column_type, col.element_name, col.name, col.element_options)
+      col_opts = if @auto_add_attr_title
+        _col_name = col.name.to_s.gsub(/：|:|\(.*?\)/, '')
+        _action = if ['select', 'radio_button', 'check_box'].include?(col.column_type)
+          _col_name =~ /[\?|？|。]$/ ? 'の回答を選択' : 'の選択';
+        else
+          _col_name =~ /[\?|？|。]$/ ? 'の回答を入力' : 'の入力';
+        end
+        _opts = col.element_options
+        _opts[:title] = "#{_col_name}#{_action}"
+        _opts
+      else
+        col.element_options
+      end
+      col_opts[:format] = col.field_format
+
+      if 'text_area' == col.column_type
+        col_opts[:rows] = 2
+        col_opts[:cols] = 20
+      end
+
+      form.add_element(col.column_type, col.element_name, col.name, col_opts)
     end
     form
   end

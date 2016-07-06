@@ -2,6 +2,7 @@
 class Sys::Lib::Form::Element::Base
   attr_accessor :name, :label, :value, :options
   attr_accessor :message, :required, :select_options
+  attr_accessor :format
 
   def initialize(form, name, label, options = {})
     @form     = form
@@ -14,6 +15,9 @@ class Sys::Lib::Form::Element::Base
 
     @required = options[:required]
     @options.delete(:required)
+
+    @format  = options[:format]
+    @options.delete(:format)
 
     @select_options = []
     options[:options].split(/\n/).each do |v|

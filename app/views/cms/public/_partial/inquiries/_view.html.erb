@@ -5,7 +5,7 @@ return if !item.inquiry || !item.inquiry.visible? || !item.inquiry.group
 %><div class="inquiry">
   <h2>お問い合わせ</h2>
   <% if item.inquiry.group
-   %><div class="section"><%= item.inquiry.group.name %></div><% end %>
+   %><div class="section"><strong><%= item.inquiry.group.name %></strong></div><% end %>
   <% if !item.inquiry.charge.blank?
    %><div class="charge"><%= item.inquiry.charge %></div><% end %>
   <% if !item.inquiry.tel.blank?

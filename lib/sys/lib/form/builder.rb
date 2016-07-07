@@ -65,6 +65,9 @@ class Sys::Lib::Form::Builder
       if e.required == true && e.blank_value?
         act = e.class.to_s =~ /(select|check|radio)/i ? "選択" : "入力"
         errors.add :base, "#{e.label} を#{act}してください。"
+      elsif e.format == 'email' && !Sys::Lib::Form::FormatChecker.email?(e.value)
+        format = 'メールアドレス'
+        errors.add :base, "#{e.label} を#{format}の形式で入力してください。"
       end
     end
     errors.empty?

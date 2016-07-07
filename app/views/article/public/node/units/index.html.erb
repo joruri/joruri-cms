@@ -1,8 +1,39 @@
 <div class="contentArticleUnit">
 
+<% unless request.smart_phone? %>
+
 <% @items.each do |item| %>
-<dl class="department">
-  <dt class="name" id="<%= item.name %>"><%=item.title %></dt>
+<table>
+<tr class="department <%= item.name %>">
+  <th class="name" scope="col" id="<%= item.name %>"><%= item.title %></th>
+  <th class="outline" scope="col"><%= link_to('業務概要', item.outline_uri) if !item.outline_uri.blank? %></th>
+  <th class="page" scope="col"><%= link_to '部局のページへ', "#{item.name}/" %></th>
+  <th class="email" scope="col">電子メールでのお問い合わせ</th>
+  <th class="tel" scope="col">電話番号</th>
+</tr>
+
+<% if (children = item.public_children).size > 0 %>
+<% children.each do |c| %>
+<tr class="unit <%= c.name %> <%= cycle '', 'cycle', :name => :cycle %>">
+  <th class="name" scope="row"><%= c.title %></th>
+  <td class="outline"><%= link_to('業務概要', c.outline_uri) if !c.outline_uri.blank? %></td>
+  <td class="page"><%= link_to '課のページへ', "#{c.name}/" %></td>
+  <td class="email"><%= email_to c.email %></td>
+  <td class="tel"><%= c.tel %></td>
+</tr>
+<% end %>
+<% end %>
+</table>
+<div class="pageTop"><a href="#container">ページの先頭へ戻る</a></div>
+<% reset_cycle(:cycle) %>
+<% end %>
+
+<% else %><%# agent: smart phone %>
+
+
+<% @items.each do |item| %>
+<dl class="department <%= item.name %>">
+  <dt class="name" id="<%= item.name %>"><%= item.title %></dt>
   <dd class="outline"><%= link_to('業務概要', item.outline_uri) if !item.outline_uri.blank? %></dd>
   <dd class="page"><%= link_to '部局のページへ', "#{item.name}/" %></dd>
   <dd class="email">電子メールでのお問い合わせ</dd>
@@ -11,7 +42,7 @@
 
 <% if (children = item.public_children).size > 0 %>
 <% children.each do |c| %>
-<dl class="unit <%= cycle '', 'cycle', :name => :cycle %>">
+<dl class="unit <%= c.name %> <%= cycle '', 'cycle', :name => :cycle %>">
   <dt class="name"><%= c.title %></dt>
   <dd class="outline"><%= link_to('業務概要', c.outline_uri) if !c.outline_uri.blank? %></dd>
   <dd class="page"><%= link_to '課のページへ', "#{c.name}/" %></dd>
@@ -23,5 +54,9 @@
 
 <div class="pageTop"><a href="#container">ページの先頭へ戻る</a></div>
 <% end %>
+
+
+<% end %>
+
 
 </div>

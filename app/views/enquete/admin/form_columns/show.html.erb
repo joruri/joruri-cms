@@ -20,6 +20,9 @@
     <th><%= @item.locale(:required) %></th>
     <td><%= @item.required == 1 ? "必須" : "任意" %></td>
   </tr><tr>
+    <th><%= @item.locale(:field_format) %></th>
+    <td><%= @item.field_format == 'email' ? "メールアドレス" : "" %></td>
+  </tr><tr>
     <th><%= @item.locale(:column_style) %></th>
     <td><%= @item.column_style %></td>
   </tr><tr>

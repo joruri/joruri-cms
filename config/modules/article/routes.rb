@@ -1,22 +1,16 @@
 Joruri::Application.routes.draw do
   mod = "article"
-  
+
   ## -------------------------------------------------------
   ## admin
-    
-  scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
-    
-    get "tool_import_uri"  => "admin/tool/import_uri#import"
-    get "tool_import_html" => "admin/tool/import_html#import"
-  end
-  
+
   scope "#{Joruri.admin_uri}/#{mod}/c:concept", :module => mod, :as => mod do
-    
+
     get ":content/doc_files/:parent/(*path)" => "admin/doc/files#preview",
       :as => :preview_doc_file
     get "rebuild" => "admin/rebuild#index",
       :path => ":content/rebuild", :format => false
-    
+
     resources :units,
       :controller => "admin/units",
       :path       => ":content/:parent/units"
@@ -51,19 +45,19 @@ Joruri::Application.routes.draw do
           get :download
         end
       end
-    
+
     ## -----------------------------------------------------
     ## content
-    
+
     resources :content_base,
       :controller => "admin/content/base"
     resources :content_settings,
       :controller => "admin/content/settings",
       :path       => ":content/content_settings"
-    
+
     ## -----------------------------------------------------
     ## node
-    
+
     resources :node_docs,
       :controller => "admin/node/docs",
       :path       => ":parent/node_docs"
@@ -88,10 +82,10 @@ Joruri::Application.routes.draw do
     resources :node_areas,
       :controller => "admin/node/areas",
       :path       => ":parent/node_areas"
-    
+
     ## -----------------------------------------------------
     ## piece
-    
+
     resources :piece_recent_docs,
       :controller => "admin/piece/recent_docs"
     resources :piece_recent_tabs,
@@ -114,9 +108,9 @@ Joruri::Application.routes.draw do
 
   ## -------------------------------------------------------
   ## public
-  
+
   scope "_public/#{mod}", :module => mod, :as => "" do
-    
+
     get "node_docs/:name/index.html"                 => "public/node/docs#show"
     get "node_docs/:name/files/:type/:file.:format"  => "public/node/doc/files#show"
     get "node_docs/:name/files/:file.:format"        => "public/node/doc/files#show"

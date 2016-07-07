@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519022036) do
+ActiveRecord::Schema.define(version: 20160706080642) do
 
   create_table "article_areas", force: :cascade do |t|
     t.integer  "unid",       limit: 4
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(version: 20160519022036) do
     t.string   "column_style", limit: 255
     t.integer  "required",     limit: 4
     t.text     "options",      limit: 4294967295
+    t.string   "field_format", limit: 255
   end
 
   add_index "enquete_form_columns", ["form_id", "sort_no"], name: "form_id", using: :btree

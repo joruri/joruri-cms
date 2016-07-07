@@ -10,7 +10,7 @@ class Article::Script::AttributesController < Cms::Controller::Script::Publicati
       attrs = Article::Attribute.where(id: target_id).all
     else
       cond = { state: 'public', content_id: @node.content_id }
-      attributes = Article::Attribute.root_items(cond)
+      attrs = Article::Attribute.root_items(cond)
     end
     attrs.each do |item|
       uri  = "#{@node.public_uri}#{item.name}/"

@@ -125,24 +125,32 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
   end
   
   def publish_category
+    @ids = {}
+
     params[:all] = 'all'
     publish_article_node('category')
     render text: 'OK'
   end
 
   def publish_attribute
+    @ids = {}
+
     params[:all] = 'all'
     publish_article_node('attribute')
     render text: 'OK'
   end
 
   def publish_area
+    @ids = {}
+
     params[:all] = 'all'
     publish_article_node('area')
     render text: 'OK'
   end
 
   def publish_unit
+    @ids = {}
+
     params[:all] = 'all'
     publish_article_node('unit')
     render text: 'OK'

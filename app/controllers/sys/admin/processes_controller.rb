@@ -15,7 +15,7 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
   def processes
     [
       ["日時指定処理", 'sys/tasks#exec'],
-      ["ページ書き出し（トップ・固定ページ）", 'cms/nodes#publish'],
+      ["固定ページ書き出し", 'cms/nodes#publish'],
       ["トップページ書き出し", 'cms/nodes#publish_top'],
       ["分野ディレクトリ書き出し", 'cms/nodes#publish_category'],
       ["属性ディレクトリ書き出し", 'cms/nodes#publish_attribute'],
@@ -24,8 +24,8 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
       ["音声書き出し", 'cms/talks#publish'],
       ["フィード取り込み", 'cms/feeds#read'],
       ["メルマガ読者登録", 'newsletter/requests#read'],
-      ["自治体記事再構築", 'article/docs#rebuild'],
-      ["FAQ再構築", 'faq/docs#rebuild'],
+      ["自治体記事ページ再構築", 'article/docs#rebuild'],
+      ["FAQページ再構築", 'faq/docs#rebuild'],
       ["アンケート取り込み", 'enquete/answers#pull']
     ]
   end

@@ -1,4 +1,3 @@
-<script type="text/javascript" src="/_common/js/swfupload/swfupload.js"></script>
 <%= javascript_tag do %>
 
 // EnterキーによるSubmitを無効化
@@ -17,31 +16,6 @@ $(function(){
     if ($(this).attr('type').match(/^(text|password|radio|checkbox|url|email|tel)$/)) {
       $(this).keypress(function (event) { return stopSubmitting(event); });
     }
-  });
-
-  // HTML Import
-  var swfu = new SWFUpload({
-    upload_url : "<%= article_tool_import_html_path %>",
-    post_params: {
-      "_session_id" : "<%= request.session_options[:id] %>",
-      "authenticity_token" : "<%= form_authenticity_token %>"
-    },
-    flash_url : "/_common/js/swfupload/swfupload.swf",
-    file_post_name : "file",
-    file_size_limit : "10 MB",
-    file_types : "*.htm;*.html",
-    file_types_description : "HTML File",
-    file_upload_limit : 0,
-    file_queue_limit : 0,
-    button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
-    button_image_url: "/_common/themes/admin/images/bt-html_import.png",
-    button_width: "122",
-    button_height: "25",
-    button_placeholder_id: "uploadHtml",
-    file_dialog_complete_handler : function(numFilesSelected, numFilesQueued) { this.startUpload(); },
-    upload_error_handler : function(file, errorCode, message){ alert('読み込みに失敗しました。'); },
-    upload_success_handler : function(file, data, response) { tinyMCE.activeEditor.setContent(data); },
-    debug: false
   });
 });
 
@@ -68,24 +42,6 @@ function checkLinks() {
   return false;
 }
 
-// URL Import
-function importUri() {
-  var uri = window.prompt('URL', 'http://');
-  if (!uri || uri == "" || uri == "http://") {
-    return false;
-  }
-  $.ajax({
-    url: '<%= article_tool_import_uri_path %>',
-    type: 'POST',
-    data: { uri: uri },
-    success: function(data) {
-    tinyMCE.activeEditor.setContent(data);
-    },
-    error: function(data)  {
-      alert("エラーが発生しました。");
-    }
-  });
-}
 <% end %>
 
 <% inline_id = @item.unid || params[:_tmp] %>
@@ -112,8 +68,6 @@ function importUri() {
       <%= f.text_area :body, :class => "body #{editor_class}" %>
       <div class="lowerMenu">
         <a href="#" onclick="checkLinks(); return false;">リンクチェック</a>
-        <a href="#" onclick="importUri(); return false;">URLインポート</a>
-        <a href="#" id="uploadHtml">HTMLインポート</a>
       </div>
     </td>
   </tr>

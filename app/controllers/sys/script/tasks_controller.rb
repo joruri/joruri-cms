@@ -3,7 +3,7 @@ class Sys::Script::TasksController < ApplicationController
   def exec
     arel_table = Sys::Task.arel_table
     tasks = Sys::Task
-            .where(arel_table[:process_at].lteq(Time.now + (60 * 5)))
+            .where(arel_table[:process_at].lteq(Time.now + (60 * 2)))
             .where(arel_table[:process_at].gt((Date.today << 1)))
             .order(:process_at)
 

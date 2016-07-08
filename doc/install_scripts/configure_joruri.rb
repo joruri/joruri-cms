@@ -54,6 +54,8 @@ def centos
 
   system "cp -p #{config_dir}original/ldap.yml #{config_dir}ldap.yml"
 
+  system "cp -p #{config_dir}original/rsync.yml #{config_dir}rsync.yml"
+
   system "cp -p #{config_dir}samples/joruri_logrotate /etc/logrotate.d/."
 
   system "cp -rp /var/share/joruri/public/_common/themes/joruri.original /var/share/joruri/public/_common/themes/joruri"

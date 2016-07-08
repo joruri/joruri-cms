@@ -27,6 +27,8 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever', require: false
 
+gem 'rsync', '~> 1.0.8'
+
 require "yaml"
 gem 'ruby-ldap', '0.9.12' if ::YAML.load_file(File.dirname(__FILE__) + "/config/application.yml")["sys"]["use_ldap"]
 

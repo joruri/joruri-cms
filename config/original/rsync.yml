@@ -1,4 +1,5 @@
 production:
+  transfer_log: false
   transfer_to_publish: false
   transfer_opts: "-rlptvz --delete"
   transfer_opt_remote_shell: "ssh -p 22"
@@ -7,6 +8,7 @@ production:
   transfer_dest_dir:
 
 test:
+  transfer_log: false
   transfer_to_publish: false
   transfer_opts: "-rlptvz --delete"
   transfer_opt_remote_shell: "ssh -p 22"
@@ -15,6 +17,7 @@ test:
   transfer_dest_dir:
 
 development:
+  transfer_log: false
   transfer_to_publish: false
   transfer_opts: "-rlptvz --delete"
   transfer_opt_remote_shell: "ssh -p 22"

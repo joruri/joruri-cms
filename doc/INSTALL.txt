@@ -205,6 +205,10 @@ LDAP接続を設定します。
 
   # cp -p /var/share/joruri/config/original/ldap.yml /var/share/joruri/config/ldap.yml
 
+ファイル転送を設定します。
+
+  # cp -p /var/share/joruri/config/original/rsync.yml /var/share/joruri/config/rsync.yml
+
 ログローテーションを設定します。
 
   # cp /var/share/joruri/config/samples/joruri_logrotate /etc/logrotate.d/.

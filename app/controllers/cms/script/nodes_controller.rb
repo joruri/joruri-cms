@@ -1,5 +1,7 @@
 # encoding: utf-8
 class Cms::Script::NodesController < Cms::Controller::Script::Publication
+  include Sys::Lib::File::Transfer
+
   def publish
     @ids = {}
 
@@ -25,6 +27,7 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       end
     end
 
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -100,6 +103,7 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       publish_node(node)
     end
     
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -113,6 +117,7 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       publish_index(node)
     end
 
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -129,6 +134,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
 
     params[:all] = 'all'
     publish_article_node('category')
+
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -137,6 +144,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
 
     params[:all] = 'all'
     publish_article_node('attribute')
+
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -145,6 +154,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
 
     params[:all] = 'all'
     publish_article_node('area')
+
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 
@@ -153,6 +164,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
 
     params[:all] = 'all'
     publish_article_node('unit')
+
+    transfer_files(:logging => true) if transfer_to_publish?
     render text: 'OK'
   end
 

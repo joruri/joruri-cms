@@ -173,3 +173,6 @@ table.unit tr.cycle {
 .contentArticleUnit th.tel {
   width: 15%;
 }
+.contentArticleUnit .outline:empty {
+  display: none;
+}

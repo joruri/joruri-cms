@@ -243,9 +243,6 @@
   height: 0;
   visibility: hidden;
 }
-* html #recentDocs li {
-  height: 1%;
-}
 #recentDocs li {
   display: block;
   clear: both;

@@ -1,4 +1,4 @@
-## Joruri CMSxWEB 設定マニュアル                  2016.05.19
+## Joruri CMSxWEB 設定マニュアル                  2016.07.12
 
 **********************************************************************
  1 前提条件
@@ -218,27 +218,23 @@ SSHを再起動
 4. RSYNCの設定
 **********************************************************************
 
-CMSサーバからWEBサーバへのRsyncをcrontabに設定します。
+CMSサーバからWEBサーバへのRsyncを設定します。
+transfer_to_publishを有効にすることで、ページ書き出し処理時にRsync転送処理も実行されるようになります。
 
 [CMSサーバ]
 
 # su - joruri
-# mkdir /home/joruri/shell/
-# vi /home/joruri/shell/file_sync.sh
+# vi /var/share/config/rsync.yml
 -----------------
-
-rsync -avz --delete -e "ssh -p 22" /var/share/joruri/public_00000001/ 192.168.0.2:/var/share/joruri/public_00000001/
-
-rsync -avz --delete -e "ssh -p 22" /var/share/joruri/upload/ 192.168.0.2:/var/share/joruri/upload/
-
------------------
-# chmod 700 /home/joruri/shell/file_sync.sh
-
-# crontab -e
------------------
-# Transfer the file to Webserver
-*/15 * * * *  /home/joruri/shell/file_sync.sh > /home/joruri/shell/file_sync.log
------------------
+production:
+  transfer_log: false
+  transfer_to_publish: true
+  transfer_opts: "-rlptvz --delete"
+  transfer_opt_remote_shell: "ssh -p 22"
+  transfer_dest_user: joruri
+  transfer_dest_host: 192.168.0.3
+  transfer_dest_dir: /var/share/joruri
+------------------
 
 **********************************************************************
 5. WEBサーバ側の管理画面URLを無効化

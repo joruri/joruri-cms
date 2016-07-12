@@ -15,31 +15,41 @@ end
 def centos
   puts "It's CentOS!"
 
-  system %q(su - joruri -c 'mkdir /home/joruri/shell')
+  file_name = '/var/share/joruri/config/rsync.yml'
 
-  file_name = "/home/joruri/shell/file_sync.sh"
-  str = <<EOS
-
-rsync -avz --delete -e "ssh -p 22" /var/share/joruri/public_00000001/ #{ENV["WEB_IPADDR"]}:/var/share/joruri/public_00000001/
-
-rsync -avz --delete -e "ssh -p 22" /var/share/joruri/upload/ #{ENV["WEB_IPADDR"]}:/var/share/joruri/upload/
-
-EOS
-  File.write(file_name, str)
-  system %Q(chown joruri:joruri #{file_name})
-  system %Q(chmod 700 #{file_name})
-
-
-  # merge cron job
-  tmp_name = '/tmp/crontab.tmp'
-  system %Q(su - joruri -c 'crontab -l > #{tmp_name}')
-  File.open(tmp_name, 'a') do |file|
-    file.puts ''
-    file.puts '# Transfer the file to Webserver'
-    file.puts '*/15 * * * *  /home/joruri/shell/file_sync.sh > /home/joruri/shell/file_sync.log'
+  buffer = File.open(file_name, 'r') do |file|
+    file.read()
   end
-  system %Q(su - joruri -c 'crontab #{tmp_name}')
 
+  pattern = <<EOS
+production:
+  transfer_log: false
+  transfer_to_publish: false
+  transfer_opts: "-rlptvz --delete"
+  transfer_opt_remote_shell: "ssh -p 22"
+  transfer_dest_user:
+  transfer_dest_host:
+  transfer_dest_dir:
+EOS
+
+  replacement = <<EOS
+production:
+  transfer_log: false
+  transfer_to_publish: true
+  transfer_opts: "-rlptvz --delete"
+  transfer_opt_remote_shell: "ssh -p 22"
+  transfer_dest_user: joruri
+  transfer_dest_host: #{ENV["WEB_IPADDR"]}
+  transfer_dest_dir: /var/share/joruri
+EOS
+
+  buffer.sub!(pattern, replacement)
+
+  File.open(file_name, 'w') do |file|
+    file.write(buffer)
+  end
+
+  system %q(su - joruri -c 'touch /var/share/joruri/tmp/restart.txt')
 
 end
 

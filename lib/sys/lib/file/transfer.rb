@@ -5,20 +5,21 @@ module Sys::Lib::File::Transfer
   def transfer_files(options={})
     load_transfer_settings
     if @dest_dir.blank?
-      rsync_log "transfer_dest_dir setting is blank."
-      return result
+      rsync_log "[#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}] transfer_dest_dir setting is blank." if _logging
+      return nil
     end
 
     # options
-    _logging = options[:logging] || true
+    _logging = @log
     _trial   = options.has_key?(:trial) ? options[:trial] : false;
     _user_id = options[:user] || Core.user.id rescue nil;
     _sites   = options[:sites] || Cms::Site.where(:state => 'public').order(:id)
-    _version = options[:version] || Time.now.to_i
-
-    result = {:version => _version, :common => {}, :sites => {} }
     
-    rsync_log "rsync start."
+    @version = Time.now.to_i
+
+    result = {:version => @version, :common => {}, :sites => {} }
+    
+    rsync_log "[#{@version}] rsync start (#{Time.now.strftime('%Y-%m-%d %H:%M:%S')})" if _logging
 
     dest_addr = @dest_dir
     dest = if @dest_user.to_s != '' && @dest_host.to_s != ''
@@ -54,11 +55,13 @@ module Sys::Lib::File::Transfer
               :delete
             elsif [change.checksum, change.size, change.timestamp].include?(:changed)
               :update
+            else
+              update_type
             end
-            rsync_log "[#{operation}] #{src}#{change.filename}"
+            rsync_log "[#{@version}] [#{operation}] #{src}#{change.filename}"
           end
         else
-          rsync_log res.error
+          rsync_log "[#{@version}] #{res.error}" if _logging
         end
         
         res
@@ -87,11 +90,14 @@ module Sys::Lib::File::Transfer
 
     end
 
-    rsync_log "...end"
+    rsync_log "[#{@version}] ...end(#{Time.now.strftime('%Y-%m-%d %H:%M:%S')})" if _logging
 
     result
   rescue => e
-    rsync_log "#{e}"
+    if _logging
+      rsync_log "[#{@version}] Error: #{e}"
+      rsync_log "[#{@version}] ...end(#{Time.now.strftime('%Y-%m-%d %H:%M:%S')})"
+    end
     nil
   end
   
@@ -103,6 +109,7 @@ module Sys::Lib::File::Transfer
 protected
   def load_transfer_settings
     conf = Util::Config.load(:rsync)
+    @log              = conf['transfer_log']
     @opts             = conf['transfer_opts']
     @opt_remote_shell = conf['transfer_opt_remote_shell']
     @dest_user        = conf['transfer_dest_user']
@@ -113,7 +120,7 @@ protected
   def rsync_log(data)
     log = "#{Rails.root}/log/rsync.log"
     f = ::File.open(log, 'a')
-    f.puts "[#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}] #{data.force_encoding('utf-8')}"
+    f.puts "#{data.force_encoding('utf-8')}"
     f.close
   end
 

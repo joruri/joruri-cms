@@ -35,7 +35,7 @@ every 3.minutes do
 end
 
 # 記事の公開/非公開処理を行います。
-every '10,25,40,55 * * * *' do
+every '13,28,43,58 * * * *' do
   rake 'sys:tasks:exec'
 end
 

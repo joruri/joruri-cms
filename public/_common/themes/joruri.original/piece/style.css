@@ -56,6 +56,7 @@
   background-image: url(images/ic-navi-ruby.png);
 }
 .naviTalk {
+  position: relative;
   background-image: url(images/ic-navi-talk.png);
 }
 .naviFont .label,
@@ -111,18 +112,14 @@
   color: #e00;
   text-decoration: underline;
 }
-.naviTalk .player {
-  position: absolute;
-  width: 1px;
-}
 html:first-child .naviTalk .player {
   position: absolute;
 }
 .naviTalk .player audio {
   width: 250px;
-  position: relative;
-  padding-top: 28px;
-  left: -90px;
+  position: absolute;
+  top: 28px;
+  right: -177px;
   max-height: 32px;
 }
 

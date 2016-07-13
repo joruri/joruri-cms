@@ -42,19 +42,19 @@ function JoruriAcNavi() {
   if (this.fontBase) this.fontBase.mousedown(function() {
     return self.changeFont('100%');
   });
-  if (this.fontSmall) this.fontSmall.mousedown(function() {
+  if (this.fontSmall) this.fontSmall.click(function() {
     return self.changeFont(self.relativeFont('small'));
   });
-  if (this.fontBig) this.fontBig.mousedown(function() {
+  if (this.fontBig) this.fontBig.click(function() {
     return self.changeFont(self.relativeFont('big'));
   });
-  if (this.themeWhite) this.themeWhite.mousedown(function() {
+  if (this.themeWhite) this.themeWhite.click(function() {
     return self.changeTheme('white');
   });
-  if (this.themeBlue) this.themeBlue.mousedown(function() {
+  if (this.themeBlue) this.themeBlue.click(function() {
     return self.changeTheme('blue');
   });
-  if (this.themeBlack) this.themeBlack.mousedown(function() {
+  if (this.themeBlack) this.themeBlack.click(function() {
     return self.changeTheme('black');
   });
   if (this.rubyLink) this.rubyLink.click(function() {

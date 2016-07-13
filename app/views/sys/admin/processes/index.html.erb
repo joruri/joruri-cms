@@ -19,7 +19,7 @@
     <td style="text-align: center;"><%= safe{item.started_at.strftime('%Y-%m-%d %H:%M')} %></td>
     <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
     <td style="text-align: center;"><%= safe{item.closed_at.strftime('%Y-%m-%d %H:%M')} %></td>
-    <td style="text-align: center;"><%= item.current %><%= "/#{item.total}" if item.total %></td>
+    <td style="text-align: center;"><%= item.current %><%= "（#{item.progress}%）" unless item.state.blank? %></td>
     <td style="text-align: right;"><%= item.success %></td>
     <td style="text-align: right;"><%= item.error %></td>
   </tr>

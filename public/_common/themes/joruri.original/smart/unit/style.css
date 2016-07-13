@@ -52,51 +52,82 @@
 
 /* Soshiki Ichiran
 ----------------------------------------------- */
-.contentArticleUnit table {
+.contentArticleUnit dl:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+.contentArticleUnit dl {
+  clear: both;
+  display: block;
+}
+.contentArticleUnit dl.cycle {
+  background: #E8F7FA;
+}
+.contentArticleUnit dl.department {
+  background: #003A8B;
+}
+.contentArticleUnit dl.department .name,
+.contentArticleUnit dl.department .email,
+.contentArticleUnit dl.department .tel {
+  color: #fff;
+  font-weight: bold;
+}
+.contentArticleUnit dl.department dd.page a {
+  color: #ffffff;
+  margin: 0 10px 0 0;
+  text-decoration: underline;
+}
+.contentArticleUnit dt {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleUnit dd {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleUnit dl {
+  display: block;
   width: 100%;
 }
-.contentArticleUnit td {
-  display: inline-block;
-  height: 44px;
-  line-height: 44px;
-  padding: 0 10px;
-}
-.contentArticleUnit td.name,
-.contentArticleUnit td.email {
+.contentArticleUnit dt.name {
   width: 47%;
 }
-.contentArticleUnit td.outline {
+.contentArticleUnit dd {
+  margin: 0;
+}
+.contentArticleUnit dd.outline {
   display: none;
 }
-.contentArticleUnit td.tel {
-  padding: 0 10px 0 15px;
+.contentArticleUnit dd.page {
+  width: 45%;
 }
-table.department {
-  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
-  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
-  color: #ffffff;
+.contentArticleUnit dl.unit dd.page a {
+  margin: 0 10px 0 0;
+  text-decoration: underline;
 }
-table.department .email,
-table.department .tel {
-  display: none;
+.contentArticleUnit dd.email {
+  width: 47%;
 }
-table.department td.page a {
-  margin-right: 10px;
-  padding-left: 7px;
-  background-image: url(./images/ic-link.gif);
-  background-repeat: no-repeat;
-  background-position: left center;
-  color: #ffffff;
+.contentArticleUnit dl.unit dd.email a {
+  margin: 0 10px 0 0;
+  text-decoration: underline;
 }
-table td.page a {
-  display: block;
-  padding-left: 7px;
-  background-image: url(./images/ic-list.gif);
+.contentArticleUnit dd.tel {
+  width: 45%;
+}
+.contentArticleUnit .pageTop {
+  margin:5px 0 30px;
+  text-align: right;
+}
+.contentArticleUnit .pageTop a {
+  padding: 0 0 0 15px;
+  background-image: url(/_common/themes/joruri/unit/images/ic-top.gif);
   background-repeat: no-repeat;
   background-position: left center;
   text-decoration: underline;
 }
-table.unit tr.cycle {
-  background-color: #e3f0fa;
-}
+
 

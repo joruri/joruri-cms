@@ -79,15 +79,15 @@ every '*/30 * * * *' do
   rake 'cms:feeds:read'
 end
 
-# メルマガ読者登録の取り込みます。
+# メルマガ読者登録を取り込みます。
 every '*/10 * * * *' do
   rake 'newsletter:requests:read'
 end
 
-# # アンケート取り込み
-# every '00 * * * *' do
-  # rake 'enquete:answers:pull'
-# end
+# # アンケート投稿を取り込みます。
+every '*/30 * * * *' do
+  rake 'enquete:answers:pull'
+end
 
 # # 記事再構築(ページ)
 # every '00 * * * *' do

@@ -15,10 +15,14 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
 
     tasks.each_with_index do |v, _idx|
       task = Cms::TalkTask.find_by(id: v[:id])
-      next unless task
+      Script.current
+
+      unless task
+        Script.success
+        next
+      end
 
       begin
-        Script.current
         Script.success if make_sound(task)
         task.published_at = Time.now
         task.save

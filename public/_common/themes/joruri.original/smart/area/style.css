@@ -49,45 +49,87 @@
 
 /* Area Map table
 ----------------------------------------------- */
-.contentArticleArea table {
+.contentArticleArea dl:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+.contentArticleArea dl {
+  clear: both;
+  display: block;
+}
+.contentArticleArea dl.cycle {
+  background: #E8F7FA;
+}
+.contentArticleArea dl.ward {
+  background: #003A8B;
+}
+.contentArticleArea dl.ward .name,
+.contentArticleArea dl.ward .page,
+.contentArticleArea dl.ward .zipCode,
+.contentArticleArea dl.ward .address,
+.contentArticleArea dl.ward .tel,
+.contentArticleArea dl.ward .formal {
+  color: #fff;
+  font-weight: bold;
+}
+.contentArticleArea dl.ward dd.page a {
+  color: #ffffff;
+  margin: 0 10px 0 0;
+  text-decoration: underline;
+}
+.contentArticleArea dl.city dd.page a {
+  margin: 0 10px 0 0;
+  text-decoration: underline;
+}
+.contentArticleArea dt {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleArea dd {
+  float: left;
+  padding: 5px 10px;
+}
+.contentArticleArea dl {
+  display: block;
   width: 100%;
 }
-.contentArticleArea td {
-  display: inline-block;
-  height: 44px;
-  line-height: 44px;
-  padding: 0 10px;
+.contentArticleArea dt.name {
+  width: 47%;
 }
-table a {
-  padding-left: 7px;
-  background-image: url(./images/ic-list.gif);
+.contentArticleArea dd {
+  margin: 0;
+}
+.contentArticleArea dd.outline {
+  display: none;
+}
+.contentArticleArea dd.page {
+  width: 45%;
+}
+.contentArticleArea dl.unit dd.page a {
+  margin: 0 10px 0 0;
+  text-decoration: underline;
+}
+.contentArticleArea dd.email {
+  width: 47%;
+}
+.contentArticleArea dl.unit dd.email a {
+  margin: 0 10px 0 0;
+  text-decoration: underline;
+}
+.contentArticleArea dd.tel {
+  width: 45%;
+}
+.contentArticleArea .pageTop {
+  margin:5px 0 30px;
+  text-align: right;
+}
+.contentArticleArea .pageTop a {
+  padding: 0 0 0 15px;
+  background-image: url(/_common/themes/joruri/unit/images/ic-top.gif);
   background-repeat: no-repeat;
   background-position: left center;
   text-decoration: underline;
-}
-table.ward {
-  background-image: -moz-linear-gradient(left, #004bee, #001a6b);
-  background-image: -webkit-gradient(linear, left top, right top, from(#004bee), color-stop(100%, #001a6b));
-  color: #ffffff;
-}
-table.ward td a {
-  background-image: url(./images/ic-link.gif);
-  color: #ffffff;
-}
-table.ward td.name,
-table.city td.name,
-table.city td.tel {
-  width: 47%;
-}
-table.ward td.zipCode,
-table.ward td.address,
-table.ward td.tel,
-table.ward td.formal,
-table.city td.zipCode,
-table.city td.address,
-table.city td.formal {
-  display: none;
-}
-table.city tr.cycle {
-  background-color: #e3f0fa;
 }

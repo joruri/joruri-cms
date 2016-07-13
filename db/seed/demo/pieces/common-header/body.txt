@@ -3,6 +3,8 @@
 <div class="pieceContainer">
 <div class="pieceBody">
 
+<div class="head-tools">
+
 <span id="nocssread">
 <a href="#main">本文へ移動</a>
 </span>
@@ -13,31 +15,33 @@
 <script type="text/javascript" src="/_common/js/joruri/smart-switch.js"></script>
 <script type="text/javascript">$(function() { new SmartSwitch('#smartSwitch', '表示の切り替え'); });</script>
 
-<span class="naviFont">
-  <span class="label">文字サイズ</span>
-  <span class="small" title="文字を小さく">小さく</span>
-  <span class="base" title="標準サイズ">標準</span>
-  <span class="big" title="文字を大きく">大きく</span>
-</span>
-
 <span id="smartSwitch"></span>
 
 <a href="#" class="riyou" title="ご利用案内">ご利用案内</a>
 
 <span class="naviTheme">
-  <span class="label">背景色</span>
-  <span class="white" title="白背景">白</span>
-  <span class="blue" title="青背景">青</span>
-  <span class="black" title="黒背景">黒</span>
-</span>
-<span class="naviRuby">
-  <span class="ruby" title="ふりがなをつける">ふりがなをつける</span>
-</span>
-<span class="naviTalk">
-  <span class="talk" title="よみあげる">よみあげる</span>
-  <span class="player"></span>
+<span class="label">背景色</span>
+<span class="white" title="白背景"><a href="#">白</a></span>
+<span class="blue" title="青背景"><a href="#">青</a></span>
+<span class="black" title="黒背景"><a href="#">黒</a></span>
 </span>
 
+<span class="naviRuby">
+<span class="ruby" title="ふりがなをつける"><a href="#">ふりがなをつける</a></span>
+</span>
+<span class="naviTalk">
+<span class="talk" title="よみあげる"><a href="#">よみあげる</a></span>
+<span class="player"></span>
+</span>
+
+<span class="naviFont">
+<span class="label">文字サイズ</span>
+<span class="small" title="文字を小さく"><a href="#">小さく</a></span>
+<span class="base" title="標準サイズ"><a href="#">標準</a></span>
+<span class="big" title="文字を大きく"><a href="#">大きく</a></span>
+</span>
+
+</div>
 </div>
 </div>
 </div>

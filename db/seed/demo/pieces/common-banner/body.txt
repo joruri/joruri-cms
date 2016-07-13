@@ -10,9 +10,9 @@
 </div>
 <div class="lowerMenu">
 <form action="http://www.google.com/search">
-  <input type="hidden" name="hl" value="ja" />
-  <input name="q" type="text" id="search-box" class="text" value="キーワード検索" />
-  <input type="submit" name="sa" value="検索" id="search-button" />
+<input type="hidden" name="hl" value="ja" />
+<input name="q" type="text" id="search-box" class="text" value="キーワード検索" />
+<input type="submit" name="sa" value="検索" id="search-button" />
 </form>
 <a class="chiiki" href="/chiiki/">地域から探す</a>
 <a class="soshiki" href="/soshiki/">組織から探す</a>

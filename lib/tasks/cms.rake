@@ -20,25 +20,25 @@ namespace :cms do
 
   namespace :nodes do
     task publish_category: :environment do
-      Script.run('cms/nodes#publish?all=all&target_module=article&target_node=category')
+      Script.run('cms/nodes#publish_category')
     end
   end
 
   namespace :nodes do
     task publish_attribute: :environment do
-      Script.run('cms/nodes#publish?all=all&target_module=article&target_node=attribute')
+      Script.run('cms/nodes#publish_attribute')
     end
   end
 
   namespace :nodes do
     task publish_area: :environment do
-      Script.run('cms/nodes#publish?all=all&target_module=article&target_node=area')
+      Script.run('cms/nodes#publish_area')
     end
   end
 
   namespace :nodes do
     task publish_unit: :environment do
-      Script.run('cms/nodes#publish?all=all&target_module=article&target_node=unit')
+      Script.run('cms/nodes#publish_unit')
     end
   end
 

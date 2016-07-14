@@ -28,10 +28,7 @@ env :PATH, ENV['PATH']
 
 # http://rubygems.org/gems/delayed_job_active_record
 every 3.minutes do
-  rake 'jobs:workoff MIN_PRIORITY=0 MAX_PRIORITY=10'
-end
-every 3.minutes do
-  rake 'jobs:workoff MIN_PRIORITY=11'
+  rake 'jobs:workoff'
 end
 
 # 記事の公開/非公開処理を行います。
@@ -40,52 +37,52 @@ every '13,28,43,58 * * * *' do
 end
 
 # トップページのみを静的ファイルとして書き出します。
-every '*/15 * * * *' do
+every '2−47/15 * * * *' do
   rake 'cms:nodes:publish_top'
 end
 
-# トップページや中間ページを静的ファイルとして書き出します。
-every '*/30 * * * *' do
+# 固定ページを静的ファイルとして書き出します。
+every '4-49/15 * * * *' do
   rake 'cms:nodes:publish'
 end
 
 # 記事コンテンツの分野ディレクトリを静的ファイルとして書き出します。
-every '13 * * * *' do
+every '12 * * * *' do
   rake 'cms:nodes:publish_category'
 end
 
 # 記事コンテンツの属性ディレクトリを静的ファイルとして書き出します。
-every '23 * * * *' do
+every '22 * * * *' do
   rake 'cms:nodes:publish_attribute'
 end
 
 # 記事コンテンツの地域ディレクトリを静的ファイルとして書き出します。
-every '33 * * * *' do
+every '32 * * * *' do
   rake 'cms:nodes:publish_area'
 end
 
 # 記事コンテンツの組織ディレクトリを静的ファイルとして書き出します。
-every '43 * * * *' do
+every '42 * * * *' do
   rake 'cms:nodes:publish_unit'
 end
 
 # 音声ファイルを静的ファイルとして書き出します。
-every '*/15 * * * *' do
+every '10-40/30 * * * *' do
   rake 'cms:talks:publish'
 end
 
 # フィード取り込みます。
-every '*/30 * * * *' do
+every '20-50/30 * * * *' do
   rake 'cms:feeds:read'
 end
 
 # メルマガ読者登録を取り込みます。
-every '*/10 * * * *' do
+every '05-55/10 * * * *' do
   rake 'newsletter:requests:read'
 end
 
 # # アンケート投稿を取り込みます。
-every '*/30 * * * *' do
+every '24-54/30 * * * *' do
   rake 'enquete:answers:pull'
 end
 

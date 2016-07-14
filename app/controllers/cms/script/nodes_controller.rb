@@ -19,10 +19,14 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
         publish_node(target_node)
       end
     else
+      sites = Cms::Site.where(state: 'public').pluck(:id)
+      
       nodes = Cms::Node.arel_table
 
-      close_nodes = Cms::Node.where(nodes[:state].eq('closed').and(nodes[:model].eq('Cms::Directory'))).all
-      
+      close_nodes = Cms::Node.where(nodes[:state].eq('closed')
+                             .and(nodes[:model].eq('Cms::Directory')
+                             .and(nodes[:site_id].in(sites)))).all
+
       @close_node_ids = []
       down = lambda do |node|
         next if @close_node_ids.include?(node.id)
@@ -47,11 +51,11 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       c3 = nodes[:model].eq('Cms::Sitemap')
 
       c4 = nodes[:parent_id].not_in(@close_node_ids)
+      c5 = nodes[:site_id].in(sites)
       
-      ##public content directory & cms pages
+      ##public content directory & cms pages & cms sitemap
       cnt = Cms::Node.published
-                     .where(nodes.grouping(c1.or(c2.or(c3))).and(c4)).count
-      
+                     .where(nodes.grouping(c1.or(c2.or(c3))).and(c4.and(c5))).count
       Script.total cnt
       
       Cms::Node.published
@@ -67,22 +71,12 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
   end
 
   def publish_node(node)
-    article_nodes = ['Article::Category', 'Article::Attribute', 
-                     'Article::Area', 'Article::Unit']
-    if params[:all].nil? && node.model.in?(article_nodes)
-      Script.current
-      Script.success
-      return
-    end
-    
     return if @ids.key?(node.id)
     @ids[node.id] = 1
 
     started_at = Time.now
 
     unless node.site
-      Script.current
-      Script.success
       return
     end
 
@@ -96,44 +90,52 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
       return
     end
 
-    ## page
-    if node.model == 'Cms::Page'
-      begin
-        Script.current
-        uri = "#{node.public_uri}?node_id=#{node.id}"
-        res = publish_page(node, uri: uri, site: node.site, path: node.public_path)
-        Script.success if res
-      rescue Script::InterruptException => e
-        raise e
-      rescue => e
-        Script.error "#{node.class}##{node.id} #{e}"
+  
+    article_nodes = ['Article::Category', 'Article::Attribute', 
+                     'Article::Area', 'Article::Unit']
+    if params[:all].nil? && node.model.in?(article_nodes)
+      Script.current
+      Script.success
+      
+    else
+      ## page
+      if node.model == 'Cms::Page'
+        begin
+          Script.current
+          uri = "#{node.public_uri}?node_id=#{node.id}"
+          res = publish_page(node, uri: uri, site: node.site, path: node.public_path)
+          Script.success if res
+        rescue Script::InterruptException => e
+          raise e
+        rescue => e
+          Script.error "#{node.class}##{node.id} #{e}"
+        end
+        return
       end
-      return
-    end
-    
-    ## modules' page
-    unless node.model == 'Cms::Directory'
-      begin
-        Script.current
-        
-        model = node.model.underscore.pluralize.gsub(/^(.*?)\//, '\1/script/')
-        unless eval("#{model.camelize}Controller").publishable?
-          Script.success
+      
+      ## modules' page
+      unless node.model == 'Cms::Directory'
+        begin
+          Script.current
+          
+          model = node.model.underscore.pluralize.gsub(/^(.*?)\//, '\1/script/')
+          unless eval("#{model.camelize}Controller").publishable?
+            Script.success
+            return
+          end
+  
+          publish_page(node, uri: node.public_uri, site: node.site, path: node.public_path)
+          res = render_component_into_view controller: model, action: 'publish', params: params.merge(node: node)
+          Script.success if res
+        rescue Script::InterruptException => e
+          raise e
+        rescue LoadError => e
+          Script.error "#{node.class}##{node.id} #{e}"
+          return
+        rescue Exception => e
+          Script.error "#{node.class}##{node.id} #{e}"
           return
         end
-
-        publish_page(node, uri: node.public_uri, site: node.site, path: node.public_path)
-        res = render_component_into_view controller: model, action: 'publish', params: params.merge(node: node)
-        Script.success if res
-
-      rescue Script::InterruptException => e
-        raise e
-      rescue LoadError => e
-        Script.error "#{node.class}##{node.id} #{e}"
-        return
-      rescue Exception => e
-        Script.error "#{node.class}##{node.id} #{e}"
-        return
       end
     end
     
@@ -163,7 +165,8 @@ class Cms::Script::NodesController < Cms::Controller::Script::Publication
              .each do |node|
       item = Cms::Node.published
                       .where(parent_id: node.id, name: 'index.html').first
-      items << item if item
+      next if !item || !item.site
+      items << item
     end
     Script.total items.size
     

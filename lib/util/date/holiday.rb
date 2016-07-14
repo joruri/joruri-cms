@@ -57,6 +57,7 @@ class Util::Date::Holiday
 
     # Aug.
     elsif month == 8
+      return '山の日' if day == 11 && year >= 2016
 
     # Sep.
     elsif month == 9

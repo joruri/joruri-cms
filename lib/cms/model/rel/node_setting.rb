@@ -46,7 +46,7 @@ module Cms::Model::Rel::NodeSetting
       name = name.to_s
 
       unless value.is_a?(Hash)
-        st = settings.find_by(name name) || new_setting(name)
+        st = settings.find_by(name: name) || new_setting(name)
         st.value   = value
         st.sort_no = nil
         st.save if st.changed?

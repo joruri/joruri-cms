@@ -37,7 +37,7 @@ every '13,28,43,58 * * * *' do
 end
 
 # トップページのみを静的ファイルとして書き出します。
-every '2−47/15 * * * *' do
+every '02-47/15 * * * *' do
   rake 'cms:nodes:publish_top'
 end
 

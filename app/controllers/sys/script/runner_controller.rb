@@ -3,7 +3,7 @@ class Sys::Script::RunnerController < ApplicationController
   def run
     Dir.chdir(Rails.root.to_s)
 
-    render_component params: params,
+    return render_component params: params,
                      controller: ::File.dirname(params[:path]),
                      action: ::File.basename(params[:path])
 

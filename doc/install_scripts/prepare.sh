@@ -1,7 +1,7 @@
 #!/bin/bash
 
 EPEL_RPM_URL="http://dl.fedoraproject.org/pub/epel/6/`uname -i`/epel-release-6-8.noarch.rpm"
-INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts'
+INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/v2-master/doc/install_scripts'
 
 echo '#### Prepare to install ####'
 

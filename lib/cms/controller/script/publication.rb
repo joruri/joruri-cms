@@ -15,15 +15,12 @@ class Cms::Controller::Script::Publication < ApplicationController
   end
 
   def publish_page(item, params = {})
-    Script.current
 
     site = params[:site] || @site
     pub = item.publish_page(render_public_as_string(params[:uri], site: site),
                             rel_unid: params[:rel_unid], path: params[:path], uri: params[:uri], site: site, dependent: params[:dependent])
     return false unless pub
     # return true if params[:path] !~ /(\/|\.html)$/
-
-    Script.success if item.published?
 
     ## ruby html
     uri = params[:uri]

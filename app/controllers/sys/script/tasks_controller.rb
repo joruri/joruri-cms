@@ -7,11 +7,20 @@ class Sys::Script::TasksController < ApplicationController
             .where(arel_table[:process_at].gt((Date.today << 1)))
             .order(:process_at)
 
-    Script.total tasks.size
+    items = []
+    tasks.each do |task|
+      unless unid = task.unid_data
+        task.destroy
+        next
+      end
+      items << task
+    end
+    
+    Script.total items.size
 
-    return render(text: 'OK') if tasks.empty?
+    return render(text: 'OK') if items.empty?
 
-    tasks.each_with_index do |task, _idx|
+    items.each_with_index do |task, _idx|
       begin
         unless unid = task.unid_data
           task.destroy

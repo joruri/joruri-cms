@@ -51,7 +51,7 @@
       <th class="date">開始日時</th>
       <td class="date"><%= safe{proc.started_at.strftime("%Y-%m-%d %H:%M:%S")} %></td>
       <th class="num">処理数</th>
-      <td class="num"><%= "#{proc.current.to_i}/#{proc.total.to_i}" %></td>
+      <td class="num"><%= "#{proc.current.to_i}（#{proc.progress}%）" %></td>
     </tr><tr>
       <th class="name">ステータス</th>
       <td class="name"><%= proc.status %> <span id="reloadTimer"></span></td>

@@ -22,7 +22,7 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
         path    = item.public_path
         content = render_public_as_string(uri, site: item.content.site)
         if item.rebuild(content)
-          Script.success if item.published?
+          Script.success
           uri     = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
           content = render_public_as_string(uri, site: item.content.site)
           item.publish_page(content, path: "#{path}.r", uri: uri, dependent: :ruby)
@@ -47,9 +47,8 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
   def publish_by_task
     item = params[:item]
 
+    Script.current
     if item.state == 'recognized'
-      Script.current
-
       uri  = "#{item.public_uri}?doc_id=#{item.id}"
       path = item.public_path.to_s
 
@@ -67,9 +66,8 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
         )
       end
       params[:task].destroy
-
-      Script.success
     end
+    Script.success
 
     render(text: 'OK')
   rescue => e
@@ -79,14 +77,12 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
   def close_by_task
     item = params[:item]
 
+    Script.current
     if item.state == 'public'
-      Script.current
-
       item.close
       params[:task].destroy
-
-      Script.success
     end
+    Script.success
 
     render(text: 'OK')
   rescue => e

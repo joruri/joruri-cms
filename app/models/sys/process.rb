@@ -14,6 +14,13 @@ class Sys::Process < ActiveRecord::Base
     }
     labels[state] || state
   end
+  
+  def progress
+    return "100" if state == 'closed' && total.to_i == 0
+    return "0" if total.to_i < 1 || current.to_i < 1
+    ret = (current.to_f/total * 100).round
+    return ret > 100 ? 100 : ret
+  end
 
   def self.lock(attrs = {})
     raise 'lock name is blank.' if attrs[:name].blank?

@@ -6,8 +6,11 @@ module Util::Http
     require 'timeout'
 
     ok_code = '200 OK'
+    
+    proxy = Core.proxy(uri)
+    proxy = nil if proxy.blank?
     options = {
-      proxy: Core.proxy(uri),
+      proxy: proxy,
       progress_proc: ->(_size) { raise ok_code }
     }
 

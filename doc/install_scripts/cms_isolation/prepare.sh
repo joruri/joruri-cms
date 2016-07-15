@@ -43,7 +43,7 @@ centos() {
 
   # INPUT IPADDR
   echo "-------"
-  echo -n "接続するWEBサーバのIPアドレスを入力してください："
+  echo -n "接続するWEBサーバーのIPアドレスを入力してください："
   while :
     do
       read ipaddr
@@ -64,7 +64,7 @@ centos() {
 cat <<'EOF' >> install_all.sh
 
 echo "
--- WEBサーバの設定に進んでください。 --
+-- WEBサーバーの設定に進んでください。 --
 "
 EOF
   chmod 755 install_all.sh

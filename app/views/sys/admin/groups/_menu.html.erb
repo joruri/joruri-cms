@@ -12,10 +12,10 @@ tree = tree.collect{|c| link_to(c.name, sys_groups_path(c)) }
 
 <div class="actionMenu">
 <%= action_menu :new, ['新規グループ', new_sys_group_path] %>
-<%= action_menu :new, ['新規ユーザ', new_sys_group_user_path] %>
+<%= action_menu :new, ['新規ユーザー', new_sys_group_user_path] %>
 <%= action_menu :index %>
 <%#= link_to "グループ一覧", sys_groups_path if @item %>
-<%#= link_to "ユーザ一覧", sys_groups_path(:parent => @item.id) if @item %>
+<%#= link_to "ユーザー一覧", sys_groups_path(:parent => @item.id) if @item %>
 <%= action_menu :show %>
 <%= action_menu :edit    if safe{@item.editable?} %>
 <%= action_menu :destroy if safe{@item.deletable?} %>

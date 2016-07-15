@@ -4,14 +4,14 @@
  1 前提条件
 **********************************************************************
 
-管理画面（CMS)と公開画面（WEB)のサーバを分離してパフォーマンスとセキュリティを向上させることが可能です。
-同バージョンのJoruriCMSが２台のサーバにインストール済みとします。
+管理画面（CMS)と公開画面（WEB)のサーバーを分離してパフォーマンスとセキュリティを向上させることが可能です。
+同バージョンのJoruriCMSが２台のサーバーにインストール済みとします。
 
 [設定]
-公開画面(CMSサーバ)
+公開画面(CMSサーバー)
  ドメイン : www.example.com
  IPアドレス : 192.168.0.2
-管理画面(WEBサーバ)
+管理画面(WEBサーバー)
  ドメイン : admin.example.com
  IPアドレス : 192.168.0.3
 
@@ -21,11 +21,11 @@
 2. MySQLレプリケーション設定
 **********************************************************************
 
-CMSサーバ側とWEBサーバ側で作業が必要となります。
+CMSサーバー側とWEBサーバー側で作業が必要となります。
 
-[CMSサーバ側]
+[CMSサーバー側]
 
-マスターサーバでバイナリログ出力を有効にします。
+マスターサーバーでバイナリログ出力を有効にします。
 # vi /etc/my.cnf
 -------------------------
 [mysqld]
@@ -40,7 +40,7 @@ MySQLの再起動を実施
 MySQLへログイン
 # mysql -u root -p
 
-レプリケーション用ユーザを作成
+レプリケーション用ユーザーを作成
 mysql> GRANT REPLICATION SLAVE ON *.* TO repl@'192.168.0.%' IDENTIFIED BY 'replpass';
 
 テーブルをロック
@@ -64,15 +64,15 @@ mysql> quit;
 # mysqldump -u root -p joruri_production > joruri_production.dmp
 
 
-[WEBサーバ側]
+[WEBサーバー側]
 
 Apacheを停止します。
 # systemctl stop httpd.service
 
-Joruriユーザーのcrontab設定を全て削除（コメントアウトでも可）にします。
+Joruriユーザーーのcrontab設定を全て削除（コメントアウトでも可）にします。
 # su - joruri -c 'crontab -e'
 
-CMSサーバ側で作成したダンプファイルをインポートします。
+CMSサーバー側で作成したダンプファイルをインポートします。
 mysql -u root -p joruri_production < joruri_production.dmp
 
 MySQLのスレーブ設定を行います。
@@ -180,9 +180,9 @@ mysql> SHOW SLAVE STATUS\G;
 
 パスなしRsyncが利用できるようにRSAキーペア認証を設定します。
 
-[CMSサーバ]
+[CMSサーバー]
 
-joruriユーザのキーペアを生成する
+joruriユーザーのキーペアを生成する
 # su - joruri -c 'cd && ssh-keygen -t rsa'
 パスフレーズは空でenterを押すこと。
 
@@ -193,9 +193,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzlmMnohZgk9vRsgLeVlwWmlwSuwJA0sbx3J/x8sIu1Vv
 -----------
 
 
-[WEBサーバ]
+[WEBサーバー]
 
-CMSサーバのpublic keyをauthorized_keysファイルに追加
+CMSサーバーのpublic keyをauthorized_keysファイルに追加
 # su - joruri -c 'cd && mkdir .ssh && chmod 700 .ssh && touch .ssh/authorized_keys'
 # vi /home/joruri/.ssh/authorized_keys
 -----------
@@ -203,7 +203,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzlmMnohZgk9vRsgLeVlwWmlwSuwJA0sbx3J/x8sIu1Vv
 --------
 # chmod 600 /home/joruri/.ssh/authorized_keys
 
-SSH設定にRSAキー認証の有効かとjoruriユーザを追加
+SSH設定にRSAキー認証の有効かとjoruriユーザーを追加
 # vi /etc/ssh/sshd_config
 -------
 RSAAuthentication yes
@@ -218,10 +218,10 @@ SSHを再起動
 4. RSYNCの設定
 **********************************************************************
 
-CMSサーバからWEBサーバへのRsyncを設定します。
+CMSサーバーからWEBサーバーへのRsyncを設定します。
 transfer_to_publishを有効にすることで、ページ書き出し処理時にRsync転送処理も実行されるようになります。
 
-[CMSサーバ]
+[CMSサーバー]
 
 # su - joruri
 # vi /var/share/config/rsync.yml
@@ -237,10 +237,10 @@ production:
 ------------------
 
 **********************************************************************
-5. WEBサーバ側の管理画面URLを無効化
+5. WEBサーバー側の管理画面URLを無効化
 **********************************************************************
 
-[WEBサーバ]
+[WEBサーバー]
 
 su -
 
@@ -259,9 +259,9 @@ su -
 6. アンケートフォーム等の取り込み設定
 **********************************************************************
 
-WEBサーバで受け付けた情報をCMSサーバに取り込むためのデータベース接続設定です。
+WEBサーバーで受け付けた情報をCMSサーバーに取り込むためのデータベース接続設定です。
 
-[WEBサーバ]
+[WEBサーバー]
 
 データベースアクセス権限を設定。
 # mysql -u root -p
@@ -270,7 +270,7 @@ mysql> GRANT ALL PRIVILEGES ON joruri_production.* TO joruri@"192.168.0.%" IDENT
 mysql> ¥q
 
 
-[CMSサーバ]
+[CMSサーバー]
 
 取り込み先のデータベース接続設定を追加
 

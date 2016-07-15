@@ -43,7 +43,7 @@ centos() {
 
   # INPUT IPADDR
   echo "-------"
-  echo -n "接続するCMSサーバのIPアドレスを入力してください:"
+  echo -n "接続するCMSサーバーのIPアドレスを入力してください:"
   while :
     do
       read ipaddr
@@ -94,7 +94,7 @@ centos() {
 cat <<'EOF' >> install_all.sh
 
 echo "
--- WEBサーバの設定を完了しました。 --
+-- WEBサーバーの設定を完了しました。 --
 "
 EOF
   chmod 755 install_all.sh

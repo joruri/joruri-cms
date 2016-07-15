@@ -4,7 +4,7 @@ class Sys::Admin::LdapGroupsController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:manager)
-    return render(text: "LDAPサーバに接続できません。", layout: true) unless Core.ldap.connection
+    return render(text: "LDAPサーバーに接続できません。", layout: true) unless Core.ldap.connection
 
     if params[:parent] == '0'
       @parent  = nil

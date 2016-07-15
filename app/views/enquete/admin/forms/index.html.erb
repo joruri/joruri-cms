@@ -22,7 +22,7 @@
     <td style="text-align: center;"><%= link_to "回答一覧", enquete_form_answers_path(@content.id, item.id) %></td>
     <td style="text-align: right;"><%= item.sort_no %></td>
     <td style="text-align: center;"><%= safe{item.created_at.strftime("%Y-%m-%d %H:%M")} %></td>
-    <td style="text-align: center;"><%= item.status.name %></td>
+    <td style="text-align: center;"><%= item.state_text %></td>
   <% end %>
 
 </table>

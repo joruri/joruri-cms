@@ -18,7 +18,7 @@
     <td><%= h(item.name) %></td>
     <td><%= h(item.title) %></td>
     <td style="text-align: center;"><%= safe{item.updated_at.strftime("%Y-%m-%d %H:%M")} %></td>
-    <td style="text-align: center;"><%= item.status.name %></td>
+    <td style="text-align: center;"><%= item.state_text %></td>
   <% end %>
 
 </table>

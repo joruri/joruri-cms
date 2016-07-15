@@ -1,15 +1,18 @@
 # encoding: utf-8
 module Sys::Model::Base::Page
+  extend ActiveSupport::Concern
+
+  included do
+    scope :published, -> {
+      where(state: 'public')
+    }
+  end
+
   def states
-    [['公開','public'],['非公開','closed']]
+    [%w(公開 public), %w(非公開 closed)]
   end
-  
-  def public
-    self.and "#{self.class.table_name}.state", 'public'
-    self
-  end
-  
+
   def public?
-    return state == 'public' && !published_at.blank?
+    state == 'public' && !published_at.blank?
   end
 end

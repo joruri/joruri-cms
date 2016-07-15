@@ -5,8 +5,8 @@ require 'hpricot'
 module Hpricot
   module Node
     def html_quote(str)
-      #s = "\"" + str.gsub('"', '\\"') + "\""
-      s = "\"" + str.force_encoding('utf-8').gsub('"', '\\"') + "\""
+      # s = "\"" + str.gsub('"', '\\"') + "\""
+      s = '"' + str.force_encoding('utf-8').gsub('"', '\\"') + '"'
     end
   end
 
@@ -14,7 +14,7 @@ module Hpricot
     def output(out, opts = {})
       out <<
         if_output(opts) do
-          #content.to_s
+          # content.to_s
           content.to_s.force_encoding('utf-8')
         end
     end

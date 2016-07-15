@@ -20,7 +20,7 @@
     <td><%= @item.content_name %></td>
   </tr><tr>
     <th><%= @item.locale(:model) %></th>
-    <td><%= @item.model_name(:short) %></td>
+    <td><%= @item.module_name(:short) %></td>
   </tr>
   <% if @item.parent_id != 0 %>
   <tr>

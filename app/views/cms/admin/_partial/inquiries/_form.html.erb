@@ -4,8 +4,8 @@ def error?(col)
   @item.errors[col].size > 0 ? 'class="field_with_errors"' : ''
 end
 
-groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
-group  = Sys::Group.find_by_id(item.in_inquiry['group_id']) || Core.user_group
+groups = Sys::Group.where(level_no: 2).order(:sort_no)
+group  = Sys::Group.find_by(id: item.in_inquiry['group_id']) || Core.user_group
 
 %><p class="form">連絡先</p>
 

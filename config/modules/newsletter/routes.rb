@@ -48,10 +48,10 @@ Joruri::Application.routes.draw do
   
   scope "_public/#{mod}", :module => mod, :as => "" do
     
-    match "node_forms/index.:format"      => "public/node/forms#index"
-    match "node_forms/sent.:format"       => "public/node/forms#sent"
-    match "node_forms/change.:format"     => "public/node/forms#change"
-    match "node_forms/subscribe/*email"   => "public/node/forms#subscribe", :format => false
-    match "node_forms/unsubscribe/*email" => "public/node/forms#unsubscribe", :format => false
+    get "node_forms/index.:format"      => "public/node/forms#index"
+    get "node_forms/sent.:format"       => "public/node/forms#sent"
+    get "node_forms/change.:format"     => "public/node/forms#change"
+    get "node_forms/subscribe/*email"   => "public/node/forms#subscribe", :format => false
+    get "node_forms/unsubscribe/*email" => "public/node/forms#unsubscribe", :format => false
   end
 end

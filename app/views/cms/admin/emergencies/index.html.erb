@@ -1,5 +1,5 @@
 <table class="index">
-  
+
   <tr>
     <th style="width: 60px; text-align: center;">詳細</th>
     <th style="width: ;">レイアウト名</th>
@@ -8,7 +8,7 @@
     <th style="width: 60px; text-align: center;">プレビュー</th>
     <th style="width: 60px; text-align: center;">反映</th>
   </tr>
-  
+
   <% for item in @items %>
   <tr class="<%= cycle '', 'cycle' %>">
     <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item.id) %></td>
@@ -21,7 +21,7 @@
     <% end %></td>
     <td style="text-align: center;"><% if @node %>
       <% if @node.layout_id.to_s == item.value.to_s %>適用中<% else%>
-      <%= link_to "反映", url_for(:action => :change, :id => item.id), :confirm => "反映してよろしいですか？"%><% end%>
+      <%= link_to "反映", url_for(:action => :change, :id => item.id), data: { confirm: "反映してよろしいですか？" } %><% end%>
     <% end %></td>
   </tr>
   <% end %>

@@ -1,0 +1,9 @@
+/var/share/joruri/log/*.log {
+  compress
+  daily
+  dateext
+  delaycompress
+  missingok
+  notifempty
+  rotate 7
+  }

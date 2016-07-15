@@ -12,7 +12,7 @@ ja:
         related_site: "関連サイト"
 
       cms/site_setting:
-        
+
       cms/concept:
         state: "状態"
         parent_id: "親コンセプト"
@@ -23,7 +23,7 @@ ja:
       cms/site_setting/emergency_layout:
         value: "レイアウト"
         sort_no: "並び順"
-        
+
       cms/content:
         state: "状態"
         concept_id: "コンセプト"
@@ -69,7 +69,7 @@ ja:
         uri: "URL"
         sort_no: "並び順"
         target: "対象ウィンドウ"
-        
+
       cms/node:
         parent_id: "親ディレクトリ"
         concept_id: "コンセプト"
@@ -121,7 +121,7 @@ ja:
         link_alternate: "代替URL"
         entry_count: "記事取込数"
         fixed_categories_xml: "カテゴリXML（固定）"
-      
+
       cms/stylesheet:
         path: "パス"
         name: "ファイル名"
@@ -129,7 +129,7 @@ ja:
         new_directory: "新規ディレクトリ名"
         new_file: "新規ファイル名"
         new_upload: "ファイル"
-      
+
       ## node
       cms/node/page:
         name: "ファイル名"

@@ -1,48 +1,54 @@
 # encoding: utf-8
 class Article::Admin::AttributesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
-  
+
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    #default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
     @parent = 0
   end
-  
+
   def index
-    item = Article::Attribute.new#.readable
-    item.and :content_id, @content
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
-    @items = item.find(:all)
+    @items = Article::Attribute
+             .where(content_id: @content)
+             .order(params[:sort], :sort_no)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
-  
+
   def show
-    @item = Article::Attribute.new.find(params[:id])
+    @item = Article::Attribute.find(params[:id])
     _show @item
   end
 
   def new
-    @item = Article::Attribute.new({
-      :state      => 'public',
-      :sort_no    => 1,
-    })
+    @item = Article::Attribute.new(state: 'public',
+                                   sort_no: 1)
   end
-  
+
   def create
-    @item = Article::Attribute.new(params[:item])
+    @item = Article::Attribute.new(attributes_params)
     @item.content_id = @content.id
     _create @item
   end
-  
+
   def update
-    @item = Article::Attribute.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Article::Attribute.find(params[:id])
+    @item.attributes = attributes_params
     _update @item
   end
-  
+
   def destroy
-    @item = Article::Attribute.new.find(params[:id])
+    @item = Article::Attribute.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def attributes_params
+    params.require(:item).permit(
+      :state, :concept_id, :layout_id, :name, :title, :sort_no,
+      in_creator: [:group_id, :user_id])
   end
 end

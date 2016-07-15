@@ -2,7 +2,6 @@
 require "cgi"
 require "kconv"
 class Cms::Lib::Navi::Jtalk
-
   def make(*args)
 
     ## settings

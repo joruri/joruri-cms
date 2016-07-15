@@ -6,66 +6,74 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    return error_auth unless @feed = Cms::Feed.find(params[:feed])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
-    #default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
+    @feed = Cms::Feed.find(params[:feed])
+    return error_auth unless @feed
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
   end
 
   def index
-    return update_entries if params[:do] == "update_entries"
-    return delete_entries if params[:do] == "delete_entries"
-    
-    item = Portal::FeedEntry.new
-    item.and :feed_id, @feed.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'entry_updated DESC, id DESC'
-    @items = item.find(:all)
+    return update_entries if params[:do] == 'update_entries'
+    return delete_entries if params[:do] == 'delete_entries'
+
+    @items = Portal::FeedEntry
+             .where(feed_id: @feed.id)
+             .search(params)
+             .order(params[:sort], entry_updated: :desc, id: :desc)
+             .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 
   def show
-    @item = Portal::FeedEntry.new.find(params[:id])
+    @item = Portal::FeedEntry.find(params[:id])
     _show @item
   end
 
   def new
-    return error_auth
+    error_auth
   end
 
   def create
-    return error_auth
+    error_auth
   end
 
   def update
-    @item = Portal::FeedEntry.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Portal::FeedEntry.find(params[:id])
+    @item.attributes = feed_entry_params
     _update @item
   end
 
   def destroy
-    return error_auth
+    error_auth
   end
 
-protected
+  protected
 
   def update_entries
-    if @feed.update_feed(:destroy => true)
-      flash[:notice] = "エントリを更新しました。"
-    else
-      flash[:notice] = "エントリの更新に失敗しました。"
-    end
+    flash[:notice] = if @feed.update_feed(destroy: true)
+                       "エントリを更新しました。"
+                     else
+                       "エントリの更新に失敗しました。"
+                     end
     redirect_to portal_feed_entries_path
   end
 
   def delete_entries
-    if @feed.entries.destroy_all
-      flash[:notice] = "エントリを削除しました。"
-    else
-      flash[:notice] = "エントリの削除に失敗しました。"
-    end
+    flash[:notice] = if @feed.entries.destroy_all
+                       "エントリを削除しました。"
+                     else
+                       "エントリの削除に失敗しました。"
+                     end
     redirect_to portal_feed_entries_path
+  end
+
+  private
+
+  def feed_entry_params
+    params.require(:item).permit(
+      :state, :link_alternate, :title, :summary)
   end
 end

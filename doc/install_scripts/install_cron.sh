@@ -13,8 +13,7 @@ ubuntu() {
 centos() {
   echo "It's CentOS!"
 
-  su - joruri -c '/usr/bin/crontab /var/share/joruri/doc/install_scripts/crontab_joruri'
-
+  su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec whenever --update-crontab'
 }
 
 others() {

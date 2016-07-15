@@ -1,9 +1,8 @@
 # encoding: utf-8
 module Newsletter::Model::Base::Letter
-
   def letter_types
     # [['PC版（テキスト形式）','pc_text'], ['PC版（HTML形式）','pc_html'], ['携帯版（テキスト形式）','mobile_text'], ['携帯版（HTML形式）','mobile_html']]
-    [['PC版（テキスト形式）','pc_text'], ['携帯版（テキスト形式）','mobile_text']]
+    [['PC版（テキスト形式）', 'pc_text'], ['携帯版（テキスト形式）', 'mobile_text']]
   end
 
   def letter_type_name
@@ -14,13 +13,12 @@ module Newsletter::Model::Base::Letter
   end
 
   def text?
-    return true unless self.letter_type
-    self.letter_type =~ /text/i
+    return true unless letter_type
+    letter_type =~ /text/i
   end
 
   def mobile?
-    return false unless self.letter_type
-    self.letter_type =~ /mobile/i
+    return false unless letter_type
+    letter_type =~ /mobile/i
   end
-
 end

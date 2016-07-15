@@ -79,8 +79,8 @@ u4 = create 2, '吉野　三郎'    , 'user3', 'user3'
 ## ---------------------------------------------------------
 ## sys/users_groups
 
-g = Sys::Group.find_by_name_en('hisyokohoka')
-Sys::UsersGroup.update_all({:group_id => g.id}, {:user_id => 1})
+g = Sys::Group.find_by(name_en: 'hisyokohoka')
+Sys::UsersGroup.find_by(user_id: 1).update(group_id: g.id)
 Sys::UsersGroup.create :user_id => 2, :group_id => g.id
 Sys::UsersGroup.create :user_id => 3, :group_id => g.id
 Sys::UsersGroup.create :user_id => 4, :group_id => g.id
@@ -88,7 +88,7 @@ Sys::UsersGroup.create :user_id => 4, :group_id => g.id
 ## ---------------------------------------------------------
 ## current_user
 
-Core.user       = Sys::User.find_by_account('admin')
+Core.user       = Sys::User.find_by(account: 'admin')
 Core.user_group = Core.user.groups[0]
 
 ## ---------------------------------------------------------
@@ -108,7 +108,7 @@ def create_cms_concept(params)
   if params[:parent_id] == 0
     params[:level_no] = 1
   else
-    parent = Cms::Concept.find_by_id(params[:parent_id])
+    parent = Cms::Concept.find_by(id: params[:parent_id])
     params[:level_no] = parent.level_no + 1
   end
   Cms::Concept.create(params)
@@ -137,7 +137,7 @@ end
 ## ---------------------------------------------------------
 ## sys/roles
 
-r = Sys::RoleName.create :name => 'common', :title => '一般ユーザ'
+r = Sys::RoleName.create :name => 'common', :title => '一般ユーザー'
 Sys::ObjectPrivilege.create :role_id => r.id, :item_unid => c_site.unid, :action => 'read'
 Sys::UsersRole.create :user_id => u2.id, :role_id => r.id
 Sys::UsersRole.create :user_id => u3.id, :role_id => r.id
@@ -274,12 +274,12 @@ end
 
 puts "import cms_nodes..."
 
-if node = Cms::Node.find(:first, :conditions => {:id => 1, :parent_id => 0})
+if node = Cms::Node.find_by(:id => 1, :parent_id => 0)
   node.title = site_name
   node.save(:validate => false)
 end
 
-if node = Cms::Node.find(:first, :conditions => {:id => 2, :name => "index.html"})
+if node = Cms::Node.find_by(:id => 2, :name => "index.html")
   node.title = site_name
   node.save(:validate => false)
 end
@@ -296,17 +296,17 @@ def create_cms_node(params)
 end
 
 #Cms::Node.update_all({:layout_id => l_top.id}, {:id => 1})
-Cms::Node.update_all({:concept_id => c_top.id, :layout_id => l_top.id}, {:id => 2})
+Cms::Node.find_by(id: 2).update(:concept_id => c_top.id, :layout_id => l_top.id)
 create_cms_node :parent_id => 1, :layout_id => l_page.id, :model => 'Cms::Page', :name => 'mobile.html', :title => 'ジョールリ市携帯サイトのご紹介', :body => read_data("nodes/pages/mobile/body")
 create_cms_node :parent_id => 1, :layout_id => l_page.id, :model => 'Cms::Page', :name => 'smart.html', :title => 'ジョールリ市スマートフォンサイトのご紹介', :body => read_data("nodes/pages/smart/body")
 
 p = create_cms_node :layout_id => l_map.id, :model => 'Cms::Directory', :name => 'sitemap'   , :title => 'サイトマップ'
     create_cms_node :layout_id => l_map.id, :model => 'Cms::Sitemap'  , :name => 'index.html', :title => 'サイトマップ',
-      :parent_id => p.id 
+      :parent_id => p.id
 
 m = create_cms_node :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'mayor'     , :title => '市長室'
     create_cms_node :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Page'     , :name => 'index.html', :title => '市長のご挨拶', :body => read_data("nodes/mayor/index/body"),
-      :parent_id => m.id 
+      :parent_id => m.id
 p = create_cms_node :parent_id => m.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'profile'   , :title => 'プロフィール'
     create_cms_node :parent_id => p.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Page'     , :name => 'index.html', :title => 'プロフィール', :body => read_data("nodes/mayor/dummy/body")
 p = create_cms_node :parent_id => m.id, :concept_id => c_mayor.id, :layout_id => l_mayor.id, :model => 'Cms::Directory', :name => 'activity'  , :title => '市長へのメール'

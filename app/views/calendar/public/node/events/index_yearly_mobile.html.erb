@@ -14,7 +14,7 @@
   </div>
   <% end %>
 <% end %>
-<% if @days.size == 0 %><div class="noEvents">　</div><% end %>
+<% if @days.empty? %><div class="noEvents">　</div><% end %>
 
 <% if @pagination.prev_uri || @pagination.next_uri %>
 <div class="pagination">

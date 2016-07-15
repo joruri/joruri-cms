@@ -3,13 +3,13 @@ class Cms::Script::FeedsController < ApplicationController
   include Cms::Controller::Layout
 
   def read
-    feeds = Cms::Feed.find(:all, :conditions => { :state => 'public' })
-    
+    feeds = Cms::Feed.where(state: 'public')
+
     Script.total feeds.size
-    
+
     feeds.each do |feed|
       Script.current
-      
+
       begin
         if feed.update_feed
           Script.success
@@ -23,6 +23,6 @@ class Cms::Script::FeedsController < ApplicationController
       end
     end
 
-    render :text => "OK"
+    render text: 'OK'
   end
 end

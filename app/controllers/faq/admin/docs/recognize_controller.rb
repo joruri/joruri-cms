@@ -1,26 +1,18 @@
 # encoding: utf-8
 class Faq::Admin::Docs::RecognizeController < Faq::Admin::DocsController
   def index
-    item = Faq::Doc.new
+    @items = Faq::Doc.where(content_id: @content.id)
+
     if @recognition_type == 'with_admin' && Core.user.has_auth?(:manager)
-      item.join_creator
-      item.join_recognition
-      cond = Condition.new do |c|
-        c.or "sys_recognitions.user_id", Core.user.id
-        c.or 'sys_recognitions.recognizer_ids', 'REGEXP', "(^| )#{Core.user.id}( |$)"
-        c.or "sys_recognitions.info_xml", 'LIKE', '%<admin/>%'
-      end
-      item.and cond
-      item.and "#{item.class.table_name}.state", 'recognize'
+      @items = @items.recognizable_with_admin
     else
-      item.recognizable
+      @items = @items.recognizable
     end
-    
-    item.and :content_id, @content.id
-    item.search params
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
-    @items = item.find(:all)
+
+    @items = @items.search(params)
+                   .order(params[:sort], updated_at: :desc)
+                   .paginate(page: params[:page], per_page: params[:limit])
+
     _index @items
   end
 end

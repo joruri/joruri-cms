@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 DONE_FLAG = "/tmp/#{$0}_done"
 
-PASSENGER_VERSION = '4.0.53'
-
 puts '#### Install Apache ####'
 exit if File.exist?(DONE_FLAG)
 puts '-- PRESS ENTER KEY --'
@@ -30,7 +28,7 @@ def centos
       conf = f.read
 
       f.rewind
-      f.write conf.sub(/^#ServerName .*$/) {|m| "#{m}\nServerName #{`hostname`.chomp}" }
+      f.write conf.sub(/^#ServerName .*$/) { |m| "#{m}\nServerName #{`hostname`.chomp}" }
       f.flush
       f.truncate(f.pos)
 
@@ -42,20 +40,9 @@ def centos
 
   unless File.exist?(passenger_conf)
     system 'yum install -y curl-devel'
-    system "gem install passenger -v #{PASSENGER_VERSION}"
+    system "gem install passenger -v 5.0.23"
     system 'passenger-install-apache2-module -a'
-
-    File.open(passenger_conf, File::RDWR|File::CREAT, 0644) do |f|
-      f.flock(File::LOCK_EX)
-
-      conf = File.read('/var/share/joruri/config/samples/passenger.conf')
-
-      f.write conf.gsub(/PASSENGER_VERSION/, PASSENGER_VERSION)
-      f.flush
-      f.truncate(f.pos)
-
-      f.flock(File::LOCK_UN)
-    end
+    system 'cp /var/share/joruri/config/samples/passenger.conf /etc/httpd/conf.d/passenger.conf'
   end
 end
 
@@ -68,10 +55,10 @@ if __FILE__ == $0
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'
-    unless `grep -s Ubuntu /etc/lsb-release`.empty?
-      ubuntu
-    else
+    if `grep -s Ubuntu /etc/lsb-release`.empty?
       others
+    else
+      ubuntu
     end
   else
     others

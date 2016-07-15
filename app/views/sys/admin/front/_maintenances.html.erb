@@ -5,10 +5,10 @@
 </div>
 
 <ul>
-  <% if @maintenances.size == 0 %>
+  <% if @maintenances.empty? %>
   <li><div class="title">お知らせはありません</div></li>
   <% end %>
-  
+
   <% @maintenances.each do |item| %>
   <li>
     <div class="title">

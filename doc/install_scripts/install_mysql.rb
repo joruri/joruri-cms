@@ -15,7 +15,7 @@ end
 def centos
   puts "It's CentOS!"
 
-  system 'yum install -y mysql-server'
+  system 'yum install -y mysql-community-server'
 
   my_cnf = '/etc/my.cnf'
 
@@ -28,9 +28,9 @@ def centos
       cnf = f.read
 
       cnf.concat("\n[mysqld]\n") unless cnf.index(/^\[mysqld\]$/)
-      cnf.sub!(/^\[mysqld\]$/) {|m| "#{m}\ncharacter-set-server=utf8" }
+      cnf.sub!(/^\[mysqld\]$/) { |m| "#{m}\ncharacter-set-server=utf8" }
       cnf.concat("\n[client]\n") unless cnf.index(/^\[client\]$/)
-      cnf.sub!(/^\[client\]$/) {|m| "#{m}\ndefault-character-set=utf8" }
+      cnf.sub!(/^\[client\]$/) { |m| "#{m}\ndefault-character-set=utf8" }
 
       f.rewind
       f.write cnf
@@ -43,11 +43,24 @@ def centos
 
   unless system 'mysqladmin ping' # Not required to connect
     system 'mysql_install_db --user=mysql'
-    system 'service mysqld start'
+
+    if ENV["OS_VERSION"] == 'centos6'
+      system 'service mysqld start'
+    else
+      system 'systemctl start mysqld.service'
+    end
+
     sleep 1 until system 'mysqladmin ping' # Not required to connect
-    system "mysqladmin -u root password 'pass'"
-    system %q!mysql -u root -ppass -e "GRANT ALL ON joruri.* TO joruri@localhost IDENTIFIED BY 'pass'"!
-    system 'service mysqld stop'
+
+    system "mysqladmin -u root password 'rootpass'"
+
+    system %q(mysql -u root -prootpass -e "GRANT ALL ON joruri_production.* TO joruri@localhost IDENTIFIED BY 'joruripass'")
+
+    if ENV["OS_VERSION"] == 'centos6'
+      system 'service mysqld stop'
+    else
+      system 'systemctl stop mysqld.service'
+    end
   end
 end
 
@@ -60,10 +73,10 @@ if __FILE__ == $0
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'
-    unless `grep -s Ubuntu /etc/lsb-release`.empty?
-      ubuntu
-    else
+    if `grep -s Ubuntu /etc/lsb-release`.empty?
       others
+    else
+      ubuntu
     end
   else
     others

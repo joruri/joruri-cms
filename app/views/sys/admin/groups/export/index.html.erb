@@ -5,7 +5,7 @@
 <%= f.submit 'エクスポート', :style => 'width: 120px;' %><br />
 <% end %>
 
-<p class="form">ユーザ</p>
+<p class="form">ユーザー</p>
 
 <%= form_for(:item, :url => {:action => :export}, :html => {:method => :post}) do |f| %>
 <%= hidden_field_tag :do, 'users' %>

@@ -1,4 +1,4 @@
-<%= init_tiny_mce :readonly => true %>
+<%= init_editor :readonly => true %>
 
 <table class="show">
   <tr>
@@ -9,7 +9,7 @@
     <td><%= @item.name %></td>
   </tr><tr>
     <th><%= @item.locale(:body) %></th>
-    <td><%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'height: 100px;' %></td>
+    <td><%= text_area_tag 'viewBody', @item.body, :class => editor_class, :style => 'height: 100px;' %></td>
   </tr><tr>
     <th><%= @item.locale(:column_type) %></th>
     <td><%= safe{@item.column_spec[:label]} %></td>
@@ -19,6 +19,9 @@
   </tr><tr>
     <th><%= @item.locale(:required) %></th>
     <td><%= @item.required == 1 ? "必須" : "任意" %></td>
+  </tr><tr>
+    <th><%= @item.locale(:field_format) %></th>
+    <td><%= @item.field_format == 'email' ? "メールアドレス" : "" %></td>
   </tr><tr>
     <th><%= @item.locale(:column_style) %></th>
     <td><%= @item.column_style %></td>

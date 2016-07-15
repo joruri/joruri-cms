@@ -14,8 +14,7 @@ chFile += "if ($('#item_name').val().match(/[^0-9a-z\\.\\-_\\+@]/i)) alert('保�
   <%= f.hidden_field :concept_id %>
   <tr>
     <th><%= @item.locale(:node_id) %></th>
-    <td><%= f.select(:node_id, Cms::DataFileNode.find(:all, 
-        :conditions => {:concept_id => Core.concept(:id)}, :order => :name).collect{|i| [i.label, i.id]},
+    <td><%= f.select(:node_id, Cms::DataFileNode.where(concept_id: Core.concept(:id)).order(:name).collect{|i| [i.label, i.id]},
         :include_blank => '　') %></td>
   </tr><tr>
     <th><%= @item.locale(:file) %></th>
@@ -30,5 +29,5 @@ chFile += "if ($('#item_name').val().match(/[^0-9a-z\\.\\-_\\+@]/i)) alert('保�
     <th style=""><%=@item.locale(:title) %><div class="note">※日本語でわかりやすく</div></th>
     <td><%= f.text_field :title, :class => 'name' %></td>
   </tr>
-  
+
 </table>

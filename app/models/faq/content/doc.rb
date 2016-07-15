@@ -9,44 +9,54 @@ class Faq::Content::Doc < Cms::Content
     end
     conf
   end
-  
+
   def doc_node
     return @doc_node if @doc_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Faq::Doc'
-    @doc_node = item.find(:first, :order => :id)
+    @dc_node = Cms::Node
+               .published
+               .where(content_id: id)
+               .where(model: 'Faq::Doc')
+               .order(:id)
+               .first
   end
-  
+
   def category_node
     return @category_node if @category_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Faq::Category'
-    @category_node = item.find(:first, :order => :id)
+    @category_node = Cms::Node
+                     .published
+                     .where(content_id: id)
+                     .where(model: 'Faq::Category')
+                     .order(:id)
+                     .first
   end
-  
+
   def recent_node
     return @recent_node if @recent_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Faq::RecentDoc'
-    @recent_node = item.find(:first, :order => :id)
+    @recent_node = Cms::Node
+                   .published
+                   .where(content_id: id)
+                   .where(model: 'Faq::RecentDoc')
+                   .order(:id)
+                   .first
   end
-  
+
   def search_node
     return @search_node if @search_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Faq::SearchDoc'
-    @search_node = item.find(:first, :order => :id)
+    @search_node = Cms::Node
+                .published
+                .where(content_id: id)
+                .where(model: 'Faq::SearchDoc')
+                .order(:id)
+                .first
   end
-  
+
   def tag_node
     return @tag_node if @tag_node
-    item = Cms::Node.new.public
-    item.and :content_id, id
-    item.and :model, 'Faq::TagDoc'
-    @tag_node = item.find(:first, :order => :id)
+    @tag_node = Cms::Node
+                .published
+                .where(content_id: id)
+                .where(model: 'Faq::TagDoc')
+                .order(:id)
+                .first
   end
 end

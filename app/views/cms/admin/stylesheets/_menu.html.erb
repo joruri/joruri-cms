@@ -25,7 +25,7 @@ current = @path ? "#{cms_stylesheets_path}/#{@path}" : cms_stylesheets_path
 <% if params[:do] == "show" %>
   <%= link_to :edit, current + "?do=edit" if @item.editable? %>
   <%= link_to "移動", current + "?do=move" if @item.editable? %>
-  <%= link_to "削除", current + "?do=destroy", :confirm => "削除してよろしいですか？" if @item.deletable? %>
+  <%= link_to "削除", current + "?do=destroy", data: { confirm: "削除してよろしいですか？" } if @item.deletable? %>
 <% elsif params[:do] %>
   <%= link_to :show, current + "?do=show" %>
 <% elsif !params[:do] && @item.directory? && @item.creatable? %>

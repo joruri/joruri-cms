@@ -3,7 +3,7 @@
 <table class="show">
   <tr>
     <th><%= @item.locale(:in_group_id) %></th>
-    <td><%= f.select_with_tree :in_group_id, Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no), :include_blank => "　" %></td>
+    <td><%= f.select_with_tree :in_group_id, Sys::Group.where(level_no: 2).order(:sort_no), :include_blank => "　" %></td>
   </tr><tr>
     <th><%= @item.locale(:account) %></th>
     <td><%= f.text_field :account, :class => 'id' %></td>

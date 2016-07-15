@@ -6,11 +6,11 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   helper Faq::FormHelper
 
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    return error_auth unless Core.user.has_priv?(:read, :item => @content.concept)
-    #default_url_options[:content] = @content
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
+    return error_auth unless Core.user.has_priv?(:read, item: @content.concept)
     return redirect_to(request.env['PATH_INFO']) if params[:reset]
-    
+
     @recognition_type = @content.setting_value(:recognition_type)
   end
 
@@ -19,69 +19,65 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def show
-    @item = Faq::Doc.new.find(params[:id])
-    #return error_auth unless @item.readable?
-    
+    @item = Faq::Doc.find(params[:id])
+
     @item.recognition.type = @recognition_type if @item.recognition
-    
+
     _show @item
   end
 
   def new
-    @item = Faq::Doc.new({
-      :content_id   => @content.id,
-      :state        => 'recognize',
-      :notice_state => 'hidden',
-      :recent_state => 'visible'
-    })
+    @item = Faq::Doc.new(content_id: @content.id,
+                         state: 'recognize',
+                         recent_state: 'visible')
     @item.in_inquiry = @item.default_inquiry
     @item.in_recognizer_ids = @content.setting_value(:default_recognizers)
-    
+
     ## add tmp_id
     unless params[:_tmp]
-      return redirect_to url_for(:action => :new, :_tmp => Util::Sequencer.next_id(:tmp, :md5 => true))
+      return redirect_to url_for(action: :new, _tmp: Util::Sequencer.next_id(:tmp, md5: true))
     end
   end
-  
+
   def create
-    @item = Faq::Doc.new(params[:item])
+    @item = Faq::Doc.new(docs_params)
     @item.content_id = @content.id
-    @item.state      = "draft"
-    @item.state      = "recognize" if params[:commit_recognize]
-    @item.state      = "public"    if params[:commit_public]
-    
+    @item.state      = 'draft'
+    @item.state      = 'recognize' if params[:commit_recognize]
+    @item.state      = 'public'    if params[:commit_public]
+
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
-    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, faq_preview_doc_file_path(:parent => unid)), '.')
-    
+    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, faq_preview_doc_file_path(parent: unid)), '.')
+
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
-      @item = Faq::Doc.find_by_id(@item.id)
+      @item = Faq::Doc.find_by(id: @item.id)
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
     end
   end
 
   def update
-    @item = Faq::Doc.new.find(params[:id])
-    @item.attributes = params[:item]
-    @item.state      = "draft"
-    @item.state      = "recognize" if params[:commit_recognize]
-    @item.state      = "public"    if params[:commit_public]
-    
+    @item = Faq::Doc.find(params[:id])
+    @item.attributes = docs_params
+    @item.state      = 'draft'
+    @item.state      = 'recognize' if params[:commit_recognize]
+    @item.state      = 'public'    if params[:commit_public]
+
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
-    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, faq_preview_doc_file_path(:parent => unid)), '.')
-    
+    @item.body = @item.body.gsub(::File.join(Core.site.full_uri, faq_preview_doc_file_path(parent: unid)), '.')
+
     _update(@item) do
       send_recognition_request_mail(@item) if @item.state == 'recognize'
       publish_by_update(@item) if @item.state == 'public'
-      @item.close if !@item.public?
+      @item.close unless @item.public?
     end
   end
-  
+
   def destroy
-    @item = Faq::Doc.new.find(params[:id])
+    @item = Faq::Doc.find(params[:id])
     _destroy @item
   end
 
@@ -97,47 +93,47 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
       end
     end
   end
-  
+
   def duplicate(item)
     if dupe_item = item.duplicate
       flash[:notice] = '複製処理が完了しました。'
       respond_to do |format|
-        format.html { redirect_to url_for(:action => :index) }
+        format.html { redirect_to url_for(action: :index) }
         format.xml  { head :ok }
       end
     else
       flash[:notice] = "複製処理に失敗しました。"
       respond_to do |format|
-        format.html { redirect_to url_for(:action => :show) }
-        format.xml  { render :xml => item.errors, :status => :unprocessable_entity }
+        format.html { redirect_to url_for(action: :show) }
+        format.xml  { render xml: item.errors, status: :unprocessable_entity }
       end
     end
   end
-  
+
   def duplicate_for_replace(item)
     if item.editable? && dupe_item = item.duplicate(:replace)
       flash[:notice] = '複製処理が完了しました。'
       respond_to do |format|
-        format.html { redirect_to url_for(:action => :index) }
+        format.html { redirect_to url_for(action: :index) }
         format.xml  { head :ok }
       end
     else
       flash[:notice] = "複製処理に失敗しました。"
       respond_to do |format|
-        format.html { redirect_to url_for(:action => :show) }
-        format.xml  { render :xml => item.errors, :status => :unprocessable_entity }
+        format.html { redirect_to url_for(action: :show) }
+        format.xml  { render xml: item.errors, status: :unprocessable_entity }
       end
     end
   end
-  
+
   def publish_ruby(item)
     uri  = item.public_uri
     uri  = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
     path = "#{item.public_path}.r"
-    item.publish_page(render_public_as_string(uri, :site => item.content.site),
-      :path => path, :uri => uri, :dependent => :ruby)
+    item.publish_page(render_public_as_string(uri, site: item.content.site),
+                      path: path, uri: uri, dependent: :ruby)
   end
-  
+
   def publish(item)
     item.public_uri = "#{item.public_uri}?doc_id=#{item.id}"
     _publish(item) { publish_ruby(item) }
@@ -152,24 +148,23 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
       flash[:notice] = "公開処理に失敗しました。"
     end
   end
-  
-protected
+
+  protected
+
   def send_recognition_request_mail(item, users = nil)
     body = []
     body << "#{Core.user.name}さんより「#{item.title}」についての承認依頼が届きました。\n"
     body << "次の手順により，承認作業を行ってください。\n\n"
     body << "1. PC用記事のプレビューにより文書を確認\n"
-    body << "#{item.preview_uri(:params => {:doc_id => item.id})}\n\n"
+    body << "#{item.preview_uri(params: { doc_id: item.id })}\n\n"
     body << "2. 次のリンクから承認を実施\n"
-    body << "#{Core.site.admin_uri(:path => faq_all_doc_path(:id => item.id))}\n"
-    
+    body << "#{Core.site.admin_uri(path: faq_all_doc_path(id: item.id))}\n"
+
     (users || item.recognizers).each do |user|
-      send_mail({
-        :to      => user.email,
-        :from    => Core.user.email,
-        :subject => "#{item.content.name} 承認依頼メール | #{item.content.site.name}",
-        :body    => body.join
-      })
+      send_mail(to: user.email,
+                from: Core.user.email,
+                subject: "#{item.content.name} 承認依頼メール | #{item.content.site.name}",
+                body: body.join)
     end
   end
 
@@ -181,13 +176,25 @@ protected
     body = []
     body << "「#{item.title}」についての承認が完了しました。\n"
     body << "次のURLをクリックして公開処理を行ってください。\n\n"
-    body << "#{Core.site.admin_uri(:path => faq_all_doc_path(:id => item.id))}\n\n"
-    
-    send_mail({
-      :from    => Core.user.email,
-      :to      => item.recognition.user.email,
-      :subject => "#{item.content.name} 最終承認完了メール | #{item.content.site.name}",
-      :body    => body.join
-    })
+    body << "#{Core.site.admin_uri(path: faq_all_doc_path(id: item.id))}\n\n"
+
+    send_mail(from: Core.user.email,
+              to: item.recognition.user.email,
+              subject: "#{item.content.name} 最終承認完了メール | #{item.content.site.name}",
+              body: body.join)
+  end
+
+  private
+
+  def docs_params
+    params.require(:item).permit(
+      :title, :language_id, :question, :body, :recent_state, :agent_state,
+      :mobile_body, :published_at, :in_recognizer_ids,
+      in_tags: %w(0 1 2),
+      in_rel_doc_ids: %w(0 1 2),
+      in_category_ids: %w(0 1 2),
+      in_inquiry: [:state, :group_id, :charge, :tel, :fax, :email],
+      in_editable_groups: %w(0 1 2),
+      in_creator: [:group_id, :user_id])
   end
 end

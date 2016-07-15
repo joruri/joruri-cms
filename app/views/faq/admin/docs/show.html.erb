@@ -1,5 +1,5 @@
 <% inline_id = @item.unid %>
-<%= init_tiny_mce :readonly => true, :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') %>
+<%= init_editor :readonly => true, :document_base_url => faq_preview_doc_file_path(:parent => inline_id, :path => '') + '/' %>
 
 <% if rep = @item.replace_page %>
 <div class="noticeBox">更新用の記事が作成されています : <%= link_to h(rep.title), {:id => rep.id} %></div>
@@ -36,14 +36,14 @@
   </tr>
   <tr>
     <th colspan="4">質問</th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= text_area_tag 'viewQuestion', @item.question, :class => 'mceEditor', :style => 'width:100%; height: 200px;' %>
+    <td colspan="4" class="<%= editor_wrapper_class =%>">
+      <%= text_area_tag 'viewQuestion', @item.question, :class => editor_class, :style => 'width:100%; height: 200px;' %>
     </td>
   </tr>
   <tr>
     <th colspan="4">回答</th></tr><tr>
-    <td colspan="4" class="mceEditor">
-      <%= text_area_tag 'viewBody', @item.body, :class => 'mceEditor', :style => 'width:100%; height: 400px;' %>
+    <td colspan="4" class="<%= editor_wrapper_class =%>">
+      <%= text_area_tag 'viewBody', @item.body, :class => editor_class, :style => 'width:100%; height: 400px;' %>
     </td>
   </tr>
 </table>
@@ -59,7 +59,7 @@
   <tr>
     <th>新着情報表示</th>
     <td colspan="3">
-      <%= safe{@item.recent_status.name} %>
+      <%= safe{@item.recent_state_text} %>
     </td>
   </tr>
 </table>
@@ -81,7 +81,7 @@
 <table class="show">
   <tr>
     <th><%= @item.locale(:agent_state) %></th>
-    <td><%= @item.agent_status.name %></td>
+    <td><%= @item.agent_state_text %></td>
   </tr>
 </table>
 

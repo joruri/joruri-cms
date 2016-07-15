@@ -10,7 +10,7 @@ $(function() {
  */
 function JoruriAcNavi() {
   var self = this;
-  
+
   // properties
   this.fontBase   = $('.naviFont .base').length ? $('.naviFont .base')   : null;
   this.fontSmall  = $('.naviFont .small').length ? $('.naviFont .small') : null;
@@ -23,8 +23,8 @@ function JoruriAcNavi() {
   this.rubyLink   = $('.naviRuby .ruby').length ? $('.naviRuby .ruby') : null;
   this.talkLink   = $('.naviTalk .talk').length ? $('.naviTalk .talk') : null;
   this.talkPlayer = $('.naviTalk .player').length ? $('.naviTalk .player') : null;
-  this.noticeView = $('#headerBody').length ? $('#headerBody') : null; 
-  
+  this.noticeView = $('#headerBody').length ? $('#headerBody') : null;
+
   // methods
   this.changeFont   = JoruriAcNavi_changeFont;
   this.relativeFont = JoruriAcNavi_relativeFont;
@@ -32,29 +32,29 @@ function JoruriAcNavi() {
   this.ruby         = JoruriAcNavi_ruby;
   this.talk         = JoruriAcNavi_talk;
   this.notice       = JoruriAcNavi_notice;
-  
+
   // reflect
   this.changeFont();
   this.changeTheme();
   this.ruby();
-  
+
   // events
   if (this.fontBase) this.fontBase.mousedown(function() {
     return self.changeFont('100%');
   });
-  if (this.fontSmall) this.fontSmall.mousedown(function() {
+  if (this.fontSmall) this.fontSmall.click(function() {
     return self.changeFont(self.relativeFont('small'));
   });
-  if (this.fontBig) this.fontBig.mousedown(function() {
+  if (this.fontBig) this.fontBig.click(function() {
     return self.changeFont(self.relativeFont('big'));
   });
-  if (this.themeWhite) this.themeWhite.mousedown(function() {
+  if (this.themeWhite) this.themeWhite.click(function() {
     return self.changeTheme('white');
   });
-  if (this.themeBlue) this.themeBlue.mousedown(function() {
+  if (this.themeBlue) this.themeBlue.click(function() {
     return self.changeTheme('blue');
   });
-  if (this.themeBlack) this.themeBlack.mousedown(function() {
+  if (this.themeBlack) this.themeBlack.click(function() {
     return self.changeTheme('black');
   });
   if (this.rubyLink) this.rubyLink.click(function() {
@@ -124,7 +124,7 @@ function JoruriAcNavi_changeTheme(value) {
 function JoruriAcNavi_ruby(flag) {
   if (flag == true) { // redirect
     $.cookie('navigation_ruby', 'on', { path: '/' });
-    
+
     if (location.pathname.search(/\/$/i) != -1) {
       location.href = location.pathname + "index.html.r" + location.search;
     } else if (location.pathname.search(/\.html\.mp3$/i) != -1) {
@@ -163,33 +163,22 @@ function JoruriAcNavi_ruby(flag) {
  */
 function JoruriAcNavi_talk(flag) {
   this.notice();
-  
+
   var uri   = location.pathname;
   var now   = new Date();
   var param = '?' + now.getDay() + now.getHours() + now.getMinutes();
-  
+
   if (uri.match(/\/$/)) uri += 'index.html';
   uri  = uri.replace(/\.html\.r$/, '.html');
   uri += '.mp3' + param;
-  
+
   if (!this.talkPlayer) {
     location.href = uri;
     return false;
   }
-  
+
   if (this.talkPlayer.html() == '') { // play
-    var html = '<script type="text/javascript" src="/_common/swf/niftyplayer/niftyplayer.js"></script>' +
-    '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"' +
-    ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"' +
-    ' width="165" height="37" id="niftyPlayer1" align="">' +
-    '<param name=movie value="/_common/swf/niftyplayer/niftyplayer.swf?file=' + uri + '&as=1">' +
-    '<param name=quality value=high>' +
-    '<param name=bgcolor value=#FFFFFF>' +
-    '<embed src="/_common/swf/niftyplayer/niftyplayer.swf?file=' + uri + '&as=1" quality=high bgcolor=#FFFFFF' +
-    ' width="165" height="37" name="niftyPlayer1" align="" type="application/x-shockwave-flash"' +
-    ' swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">' +
-    '</embed>' +
-    '</object>';
+    var html = '<audio src=" ' + uri + '" id="naviTalkPlayer" controls autoplay />';
     this.talkPlayer.html(html);
   } else { // stop
     if ($.cookie('navigation_ruby') != 'on') $('#navigationNotice').remove();

@@ -1,6 +1,6 @@
 <%= form_for :item, :url => '',  :html => {:method => :get, :class => 'search'} do |f| %><%
 
-groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
+groups = Sys::Group.where(level_no: 2).order(:sort_no)
 groups = f.select_with_tree(:in_group_id, groups)
 group_options = [ ['',''], ['** グループ未設定','no_group'] ]
 groups.scan(/<option value="(.*?)".*?>(.*?)<\/option>/im) {|m| group_options << [ m[1], m[0] ] }
@@ -8,9 +8,9 @@ groups.scan(/<option value="(.*?)".*?>(.*?)<\/option>/im) {|m| group_options << 
 state_options = [ [' ',''], ['有効','enabled'], ['無効','disabled'] ]
 
 %><table>
-  
+
   <tr>
-    <th>ユーザID</th>
+    <th>ユーザーID</th>
     <td ><%= text_field_tag 's_account', params[:s_account], :style => 'width: 120px; ime-mode: disabled;' %></td>
     <th>氏名</th>
     <td ><%= text_field_tag 's_name', params[:s_name], :style => 'width: 120px;' %></td>
@@ -26,6 +26,5 @@ state_options = [ [' ',''], ['有効','enabled'], ['無効','disabled'] ]
   </tr>
 
 </table>
-
 
 <!-- end .search --><% end %>

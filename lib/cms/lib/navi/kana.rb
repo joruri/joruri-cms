@@ -1,6 +1,5 @@
 # encoding: utf-8
 class Cms::Lib::Navi::Kana
-
   class << self
     def convert(html, site_id = nil)
       return nil unless Joruri.config[:cms_use_kana]

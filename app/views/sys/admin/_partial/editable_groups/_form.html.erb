@@ -1,6 +1,6 @@
 <%
 
-groups = Sys::Group.find(:all, :conditions => {:level_no => 2}, :order => :sort_no)
+groups = Sys::Group.where(level_no: 2).order(:sort_no)
 
 %><p class="form">編集権限</p>
 

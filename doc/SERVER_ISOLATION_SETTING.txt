@@ -1,0 +1,291 @@
+## Joruri CMSxWEB 設定マニュアル                  2016.07.12
+
+**********************************************************************
+ 1 前提条件
+**********************************************************************
+
+管理画面（CMS)と公開画面（WEB)のサーバーを分離してパフォーマンスとセキュリティを向上させることが可能です。
+同バージョンのJoruriCMSが２台のサーバーにインストール済みとします。
+
+[設定]
+公開画面(CMSサーバー)
+ ドメイン : www.example.com
+ IPアドレス : 192.168.0.2
+管理画面(WEBサーバー)
+ ドメイン : admin.example.com
+ IPアドレス : 192.168.0.3
+
+ポートはSSH(22)、MySQL(3306)をプライベートネットワークで開放しておくこと。
+
+**********************************************************************
+2. MySQLレプリケーション設定
+**********************************************************************
+
+CMSサーバー側とWEBサーバー側で作業が必要となります。
+
+[CMSサーバー側]
+
+マスターサーバーでバイナリログ出力を有効にします。
+# vi /etc/my.cnf
+-------------------------
+[mysqld]
+log-bin=mysql-bin
+server-id=1
+expire_logs_days=7
+-------------------------
+
+MySQLの再起動を実施
+# systemctl restart mysqld.service
+
+MySQLへログイン
+# mysql -u root -p
+
+レプリケーション用ユーザーを作成
+mysql> GRANT REPLICATION SLAVE ON *.* TO repl@'192.168.0.%' IDENTIFIED BY 'replpass';
+
+テーブルをロック
+mysql> FLUSH TABLES WITH READ LOCK;
+
+バイナリログのFileとpositionを確認します。
+mysql> SHOW MASTER STATUS;
++--------------------------+------------+-------
+| File                     | Position   |
++--------------------------+------------+------
+| mysql-bin.000002         |     5759   |
++--------------------------+------------+-------
+1 row in set (0.00 sec)
+
+テーブルのロック解除
+mysql> UNLOCK TABLES;
+
+mysql> quit;
+
+データをダンプする
+# mysqldump -u root -p joruri_production > joruri_production.dmp
+
+
+[WEBサーバー側]
+
+Apacheを停止します。
+# systemctl stop httpd.service
+
+Joruriユーザーーのcrontab設定を全て削除（コメントアウトでも可）にします。
+# su - joruri -c 'crontab -e'
+
+CMSサーバー側で作成したダンプファイルをインポートします。
+mysql -u root -p joruri_production < joruri_production.dmp
+
+MySQLのスレーブ設定を行います。
+# vi /etc/my.cnf
+-------------------
+[mysqld]
+server-id=2
+
+replicate-do-db=joruri_production
+replicate-ignore-table=joruri_production.cms_kana_dictionaries
+replicate-ignore-table=joruri_production.cms_link_checks
+replicate-ignore-table=joruri_production.cms_stylesheets
+replicate-ignore-table=joruri_production.cms_talk_tasks
+replicate-ignore-table=joruri_production.enquete_answer_columns
+replicate-ignore-table=joruri_production.enquete_answers
+replicate-ignore-table=joruri_production.entity_conversion_logs
+replicate-ignore-table=joruri_production.entity_conversion_units
+replicate-ignore-table=joruri_production.newsletter_logs
+replicate-ignore-table=joruri_production.newsletter_members
+replicate-ignore-table=joruri_production.newsletter_requests
+replicate-ignore-table=joruri_production.newsletter_testers
+replicate-ignore-table=joruri_production.sessions
+replicate-ignore-table=joruri_production.simple_captcha_data
+replicate-ignore-table=joruri_production.sys_editable_groups
+replicate-ignore-table=joruri_production.sys_ldap_synchros
+replicate-ignore-table=joruri_production.sys_maintenances
+replicate-ignore-table=joruri_production.sys_messages
+replicate-ignore-table=joruri_production.sys_object_privileges
+replicate-ignore-table=joruri_production.sys_operation_logs
+replicate-ignore-table=joruri_production.sys_processes
+replicate-ignore-table=joruri_production.sys_publishers
+replicate-ignore-table=joruri_production.sys_recognitions
+replicate-ignore-table=joruri_production.sys_role_names
+replicate-ignore-table=joruri_production.sys_sequences
+replicate-ignore-table=joruri_production.sys_tasks
+replicate-ignore-table=joruri_production.sys_unid_relations
+replicate-ignore-table=joruri_production.sys_users
+replicate-ignore-table=joruri_production.sys_users_groups
+replicate-ignore-table=joruri_production.sys_users_roles
+
+
+log-bin=mysql-bin
+relay-log=relay-log
+--------------------------
+
+MySQLの再起動を実施
+# systemctl restart mysqld.service
+
+MySQLへログイン
+# mysql -u root -p
+
+レプリケーションの接続先情報を設定
+mysql>
+CHANGE MASTER TO
+MASTER_HOST='192.168.0.3',
+MASTER_USER='repl',
+MASTER_PASSWORD='replpass',
+MASTER_LOG_FILE='mysql-bin.000002',
+MASTER_LOG_POS=5759;
+
+レプリケーション対象外のデータを削除。(初期設定時のみ）
+mysql>
+TRUNCATE TABLE joruri_production.cms_kana_dictionaries;
+TRUNCATE TABLE joruri_production.cms_link_checks;
+TRUNCATE TABLE joruri_production.cms_stylesheets;
+TRUNCATE TABLE joruri_production.cms_talk_tasks;
+TRUNCATE TABLE joruri_production.enquete_answer_columns;
+TRUNCATE TABLE joruri_production.enquete_answers;
+TRUNCATE TABLE joruri_production.entity_conversion_logs;
+TRUNCATE TABLE joruri_production.entity_conversion_units;
+TRUNCATE TABLE joruri_production.newsletter_logs;
+TRUNCATE TABLE joruri_production.newsletter_members;
+TRUNCATE TABLE joruri_production.newsletter_requests;
+TRUNCATE TABLE joruri_production.newsletter_testers;
+TRUNCATE TABLE joruri_production.sessions;
+TRUNCATE TABLE joruri_production.simple_captcha_data;
+TRUNCATE TABLE joruri_production.sys_editable_groups;
+TRUNCATE TABLE joruri_production.sys_ldap_synchros;
+TRUNCATE TABLE joruri_production.sys_maintenances;
+TRUNCATE TABLE joruri_production.sys_messages;
+TRUNCATE TABLE joruri_production.sys_object_privileges;
+TRUNCATE TABLE joruri_production.sys_operation_logs;
+TRUNCATE TABLE joruri_production.sys_processes;
+TRUNCATE TABLE joruri_production.sys_publishers;
+TRUNCATE TABLE joruri_production.sys_recognitions;
+TRUNCATE TABLE joruri_production.sys_role_names;
+TRUNCATE TABLE joruri_production.sys_sequences;
+TRUNCATE TABLE joruri_production.sys_tasks;
+TRUNCATE TABLE joruri_production.sys_unid_relations;
+TRUNCATE TABLE joruri_production.sys_users;
+TRUNCATE TABLE joruri_production.sys_users_groups;
+TRUNCATE TABLE joruri_production.sys_users_roles;
+
+スレーブを開始
+mysql > START SLAVE;
+
+スレーブの状態確認
+mysql> SHOW SLAVE STATUS\G;
+
+エラーが発生していなければレプリケーションは成功となります。
+
+**********************************************************************
+3. RSAキーペア認証の設定
+**********************************************************************
+
+パスなしRsyncが利用できるようにRSAキーペア認証を設定します。
+
+[CMSサーバー]
+
+joruriユーザーのキーペアを生成する
+# su - joruri -c 'cd && ssh-keygen -t rsa'
+パスフレーズは空でenterを押すこと。
+
+public keyをメモする。
+# cat /home/joruri/.ssh/id_rsa.pub
+-----------
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzlmMnohZgk9vRsgLeVlwWmlwSuwJA0sbx3J/x8sIu1Vv2ypLHuOaRx6v0cN72VzR1HXV2Lsy5GfBF7LhNBole0DqWE228NLJhzHwGAegbnhsVcphnHYUlm1tV4+bTB/XFzErsTr6Uuok6HlE9nFcFgyTr+c/ifjRkOdLXgk4O1zgzUaj36ld6XB8Bl+f/dCG92hnSP+CTnfeMKk2sUTI8aUZ8QlIblBkL6ydcwxypvpYoUAL9mHKjE/G+fPfOtsh7DwDIgt/7f3+yzclXv2Hhqp5oRQbAKy7H+T/kbZjWDmK/GaCpYBKdoMxmXRvFvHey1MGc2FVRnKv2MJIqeWoQw== joruri@cms
+-----------
+
+
+[WEBサーバー]
+
+CMSサーバーのpublic keyをauthorized_keysファイルに追加
+# su - joruri -c 'cd && mkdir .ssh && chmod 700 .ssh && touch .ssh/authorized_keys'
+# vi /home/joruri/.ssh/authorized_keys
+-----------
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzlmMnohZgk9vRsgLeVlwWmlwSuwJA0sbx3J/x8sIu1Vv2ypLHuOaRx6v0cN72VzR1HXV2Lsy5GfBF7LhNBole0DqWE228NLJhzHwGAegbnhsVcphnHYUlm1tV4+bTB/XFzErsTr6Uuok6HlE9nFcFgyTr+c/ifjRkOdLXgk4O1zgzUaj36ld6XB8Bl+f/dCG92hnSP+CTnfeMKk2sUTI8aUZ8QlIblBkL6ydcwxypvpYoUAL9mHKjE/G+fPfOtsh7DwDIgt/7f3+yzclXv2Hhqp5oRQbAKy7H+T/kbZjWDmK/GaCpYBKdoMxmXRvFvHey1MGc2FVRnKv2MJIqeWoQw== joruri@web
+--------
+# chmod 600 /home/joruri/.ssh/authorized_keys
+
+SSH設定にRSAキー認証の有効かとjoruriユーザーを追加
+# vi /etc/ssh/sshd_config
+-------
+RSAAuthentication yes
+#AllowUsers joruri
+-------
+
+SSHを再起動
+# systemctl restart sshd.service
+
+
+**********************************************************************
+4. RSYNCの設定
+**********************************************************************
+
+CMSサーバーからWEBサーバーへのRsyncを設定します。
+transfer_to_publishを有効にすることで、ページ書き出し処理時にRsync転送処理も実行されるようになります。
+
+[CMSサーバー]
+
+# su - joruri
+# vi /var/share/config/rsync.yml
+-----------------
+production:
+  transfer_log: false
+  transfer_to_publish: true
+  transfer_opts: "-rlptvz --delete"
+  transfer_opt_remote_shell: "ssh -p 22"
+  transfer_dest_user: joruri
+  transfer_dest_host: 192.168.0.3
+  transfer_dest_dir: /var/share/joruri
+------------------
+
+**********************************************************************
+5. WEBサーバー側の管理画面URLを無効化
+**********************************************************************
+
+[WEBサーバー]
+
+su -
+
+/_adminのURLを無効化する設定を追加
+# vi /etc/httpd/conf.d/joruri.conf
+------
+<Location /_admin>
+  Order deny,allow
+  Deny from all
+</Location>
+------
+# service httpd configtest
+# systemctl start httpd.service
+
+**********************************************************************
+6. アンケートフォーム等の取り込み設定
+**********************************************************************
+
+WEBサーバーで受け付けた情報をCMSサーバーに取り込むためのデータベース接続設定です。
+
+[WEBサーバー]
+
+データベースアクセス権限を設定。
+# mysql -u root -p
+mysql> GRANT ALL PRIVILEGES ON joruri_production.* TO joruri@"192.168.0.%" IDENTIFIED BY 'joruripass';
+
+mysql> ¥q
+
+
+[CMSサーバー]
+
+取り込み先のデータベース接続設定を追加
+
+# vi /var/share/joruri/config/database.yml
+--------
+production_pull_database:
+adapter: mysql2
+encoding: utf8
+reconnect: false
+database: joruri_production
+pool: 5
+username: joruri
+password: joruripass
+host: 192.168.0.2
+--------
+
+RAILS再起動
+# touch /var/share/joruri/tmp/restart.txt

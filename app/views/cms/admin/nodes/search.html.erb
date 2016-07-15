@@ -10,14 +10,14 @@
     <th style="width: 60px; text-align: center;">状態</th>
     <th style="width: 60px; text-align: center;">プレビュー</th>
   </tr>
-  
+
   <% for item in @items %>
   <% icon_class = item.directory? ? "directory" : "file" %>
   <tr class="<%= icon_class %> <%= cycle '', 'cycle' %>">
     <td style="text-align: center;"><%= link_to :show, item.admin_uri %></td>
     <td class="name"><%= link_to h(truncate(item.public_uri, :length => 40)), url_for(:action => :index, :parent => item) %></td>
     <td><%= truncate(item.title, :length => 30) %></td>
-    <td><%= item.model_name(:short) %></td>
+    <td><%= item.module_name(:short) %></td>
     <td style="text-align: center;"><%= safe{item.updated_at.strftime('%Y-%m-%d %H:%M')} %></td>
     <td style="text-align: center;"><%= safe{item.status.name} %></td>
     <td style="text-align: center;">

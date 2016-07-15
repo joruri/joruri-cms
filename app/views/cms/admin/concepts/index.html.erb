@@ -31,7 +31,7 @@
     <td><%= item.name %></td>
   </tr>
   <% end %>
-  <% if @parent.contents.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  <% if @parent.contents.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
   </table>
 
   <br />
@@ -47,7 +47,7 @@
     <td><%= item.title %></td>
   </tr>
   <% end %>
-  <% if @parent.layouts.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  <% if @parent.layouts.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
   </table>
   
   <br />
@@ -63,7 +63,7 @@
     <td><%= item.title %></td>
   </tr>
   <% end %>
-  <% if @parent.pieces.size == 0 %><tr><td colspan="2"><br /></td></tr><% end %>
+  <% if @parent.pieces.empty? %><tr><td colspan="2"><br /></td></tr><% end %>
   </table>
 
 </div>

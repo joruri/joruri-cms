@@ -1,6 +1,6 @@
 <%
 
-role_names = Sys::RoleName.find(:all, :order => :name)
+role_names = Sys::RoleName.all.order(:name)
 role_ids   = role_names.collect{|c| c.id.to_s}
 
 max     = 5
@@ -41,7 +41,7 @@ function moveSelectOptions(form, srcId, dstId, max) {
       srcOpt.remove();
     }
   });
-  
+
   var ids = [];
   if (max) {
     $(dstId + ' option').each(function() {

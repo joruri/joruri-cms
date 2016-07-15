@@ -1,9 +1,9 @@
 <%
 
-doc = Article::Doc.new.public
-doc.and(:content_id, @content.id)
-doc.and(:id, '!=', item.id) if item.id
-docs = doc.find(:all, :order => "published_at DESC").collect{|c| [ truncate(c.title, :length => 50), c.id] }
+docs = Article::Doc.published.where(content_id: @content.id)
+docs = docs.where.not(id: item.id) if item.id
+docs = docs.order(published_at: :desc)
+docs = docs.collect{|c| [ truncate(c.title, :length => 50), c.id] }
 
 %><table class="show">
   <tr>

@@ -1,26 +1,26 @@
 Joruri::Application.routes.draw do
   mod = "sys"
-  
+
   ## -------------------------------------------------------
   ## script
-  
+
   scope "_script/#{mod}", :module => mod, :as => mod do
-    
-    match "run/*path" => "script/runner#run", :format => false
+
+    get "run/*path" => "script/runner#run", :format => false
   end
-  
+
   ## -------------------------------------------------------
   ## admin
-    
+
   scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
-    
-    match "tests" => "admin/tests#index",
-      :as => :tests
+
+    match  "tests" => "admin/tests#index",
+      :as => :tests, via: [:get, :post]
     match "tests_mail" => "admin/tests/mail#index",
-      :as => :tests_mail
+      :as => :tests_mail, via: [:get, :post]
     match "tests_link_check" => "admin/tests/link_check#index",
-      :as => :tests_link_check
-    
+      :as => :tests_link_check, via: [:get, :post]
+
     resource :my_account,
       :controller => "admin/my_account" do
         collection do

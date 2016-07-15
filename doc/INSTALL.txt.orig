@@ -1,0 +1,486 @@
+<<<<<<< HEAD
+## Joruri CMS 3.0.0 インストールマニュアル                  2016.07.13
+=======
+## Joruri CMS 2.2.1 インストールマニュアル                  2016.03.17
+>>>>>>> origin/master
+
+**********************************************************************
+ 1 想定環境
+**********************************************************************
+
+[システム]
+<<<<<<< HEAD
+OS         : CentOS 6.7 (x86_64), 7.2 (x86_64)
+Webサーバー  : Apache 2.2, 2.4
+APサーバー   : Phusion Passenger 5.0
+DBサーバー   : MySQL 5.6
+Ruby       : 2.3
+Rails      : 4.2
+=======
+OS         : CentOS 6.6 64bit
+Webサーバ  : Apache 2.2
+DBシステム : MySQL 5
+Ruby       : 2.1.5
+Rails      : 3.2.13
+>>>>>>> origin/master
+
+[設定]
+ドメイン   : joruri.example.com
+
+**********************************************************************
+ 2 作業ユーザーの変更
+**********************************************************************
+
+rootユーザーに変更します。
+
+  $ su -
+
+**********************************************************************
+ 3 OSの設定
+**********************************************************************
+
+以下は最低限の設定となります。
+ご利用の環境に合わせて適切な設定を行ってください。
+CentOSに関する設定については、サポート範囲外となります。
+
+開発ツール、ベースのパッケージをインストールします。
+
+  # yum -y groupinstall base "Development tools"
+
+SELinuxを無効にします。
+
+  # /usr/sbin/setenforce 0
+
+<<<<<<< HEAD
+自動起動を無効にします。
+
+  # vi /etc/sysconfig/selinux
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  SELINUX=disabled
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+=======
+  # yum -y install \
+      wget make gcc-c++ patch \
+      libxslt libxslt-devel libxml2-devel libyaml-* \
+      libjpeg-devel libpng-devel \
+      librsvg2-devel ghostscript-devel \
+      ImageMagick ImageMagick-devel \
+      curl-devel nkf openldap-devel \
+      shared-mime-info \
+      httpd httpd-devel \
+      mysql-server mysql-devel
+
+Joruriユーザを作成します。
+
+  # useradd joruri
+  # passwd joruri
+
+Joruriソースコードを設置します。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://joruri.org/download/joruri-2.2.1.tar.gz
+  # mkdir /var/share
+  # tar xvzf joruri-2.2.1.tar.gz -C /var/share && cd /var/share/joruri
+  # cp config/original/* config/
+  # cp -r public/_common/themes/joruri.original public/_common/themes/joruri
+  # chown -R joruri:joruri ./
+>>>>>>> origin/master
+
+**********************************************************************
+ 4 事前準備
+**********************************************************************
+
+yumリポジトリにEPELを追加します。
+
+<<<<<<< HEAD
+  # yum install epel-release
+
+yumリポジトリにmysqlを追加します。
+
+  # yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+
+必要なパッケージをインストールします。
+=======
+Rubyをインストールします。
+
+  # yum -y install gcc-c++ libffi-devel libyaml-devel make openssl-devel readline-devel zlib-devel
+
+  # cd /usr/local/src
+  # curl -fsSLO http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz
+  # tar xvzf ruby-2.1.5.tar.gz && cd ruby-2.1.5 && ./configure && make && make install
+>>>>>>> origin/master
+
+  # yum -y install git gcc-c++ libffi-devel libyaml-devel make openssl-devel readline-devel zlib-devel
+
+**********************************************************************
+ 5 Ruby のインストール
+**********************************************************************
+
+Rubyをインストールします。
+
+  # git clone git://github.com/sstephenson/rbenv.git /usr/local/rbenv
+  # git clone git://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
+
+  # echo 'export RBENV_ROOT="/usr/local/rbenv"' >> /etc/profile.d/rbenv.sh
+  # echo 'export PATH="${RBENV_ROOT}/bin:${PATH}"' >> /etc/profile.d/rbenv.sh
+  # echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
+  # source /etc/profile.d/rbenv.sh
+
+  # rbenv install 2.3.1
+  # rbenv global 2.3.1
+  # rbenv rehash
+  # ruby -v
+
+  # gem update --system
+  # gem install bundler
+
+**********************************************************************
+ 6 Joruri のインストール
+**********************************************************************
+
+<<<<<<< HEAD
+専用ユーザーを作成します。
+=======
+文字エンコーディングの標準を UTF-8 に設定します。
+
+  # vi /etc/my.cnf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  [mysqld]
+  character-set-server=utf8
+  default-table-type=myisam
+
+  [client]
+  default-character-set = utf8
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ## [mysqld]に設定を追加、[client]と設定を追加。
+
+MySQLを起動します。
+>>>>>>> origin/master
+
+  # useradd -m joruri
+
+Joruriをインストールします。
+
+  # yum -y install ImageMagick-devel libxml2-devel libxslt-devel mysql-community-devel openldap-devel nodejs patch
+
+  # git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri
+  # chown -R joruri:joruri /var/share/joruri
+  # cp -p /var/share/joruri/config/original/application.yml /var/share/joruri/config/application.yml
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
+
+**********************************************************************
+ 7 Apache のインストール
+**********************************************************************
+
+Apacheをインストールします。
+
+  # yum -y install httpd-devel shared-mime-info
+
+設定ファイルを変更します。
+
+  # vi /etc/httpd/conf/httpd.conf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+<<<<<<< HEAD
+  ServerName joruri.example.com
+=======
+  ServerName 192.168.0.2
+>>>>>>> origin/master
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Phusion Passengerをインストールします。
+
+  # yum -y install curl-devel
+
+  # gem install passenger -v 5.0.23
+  # passenger-install-apache2-module -a
+  # cp /var/share/joruri/config/samples/passenger.conf /etc/httpd/conf.d/passenger.conf
+
+
+**********************************************************************
+ 8 MySQL のインストール
+**********************************************************************
+
+MySQLをインストールします
+
+  # yum -y install mysql-community-server
+
+設定ファイルを変更します。
+
+  # vi /etc/my.cnf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  [mysqld]
+  character-set-server=utf8
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  [client]
+  default-character-set=utf8
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+初期設定をします。
+
+<<<<<<< HEAD
+  # mysql_install_db --user=mysql
+=======
+  # thin install
+
+  # sed -i "s/\/usr\/bin\/env ruby/\/usr\/local\/bin\/ruby/" /usr/local/bin/thin
+  # chmod 777 /var/share/joruri/tmp/pids
+>>>>>>> origin/master
+
+  # service mysqld start             <- CentOS6の場合
+  # systemctl start mysqld.service   <- CentOS7の場合
+
+  # mysql_secure_installation
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Enter current password for root (enter for none): # そのままEnter
+  Set root password? [Y/n]                          # そのままEnter
+  New password:                                     # rootのパスワードを*決めて*入力
+  Re-enter new password:                            # 同じパスワードを再度入力
+  Remove anonymous users? [Y/n]                     # そのままEnter
+  Disallow root login remotely? [Y/n]               # そのままEnter
+  Remove test database and access to it? [Y/n]      # そのままEnter
+  Reload privilege tables now? [Y/n]                # そのままEnter
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # mysql -u root -p -e "GRANT ALL ON joruri_production.* TO joruri@localhost IDENTIFIED BY 'joruripass'"
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  Enter password:                                   # rootのパスワードを入力
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # service mysqld stop             <- CentOS6
+  # systemctl stop mysqld.service   <- CentOS7
+
+**********************************************************************
+ 9 Joruri の設定
+**********************************************************************
+
+URLを設定します。
+
+  # cp -p /var/share/joruri/config/original/core.yml /var/share/joruri/config/core.yml
+  # vi /var/share/joruri/config/core.yml
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  uri: http://joruri.example.com/
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+バーチャルホストを設定します。
+
+  # cp -p /var/share/joruri/config/original/hosts/joruri.conf /var/share/joruri/config/hosts/joruri.conf
+
+  # vi /var/share/joruri/config/hosts/joruri.conf
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  #Require all granted       　　　#Apache2.2の場合はコメントアウト
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  ServerName joruri.example.com   #変更
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # ln -s /var/share/joruri/config/hosts/joruri.conf /etc/httpd/conf.d/joruri.conf
+
+SMTP接続を設定します。
+
+  # cp -p /var/share/joruri/config/original/smtp.yml /var/share/joruri/config/smtp.yml
+
+LDAP接続を設定します。
+
+<<<<<<< HEAD
+  # cp -p /var/share/joruri/config/original/ldap.yml /var/share/joruri/config/ldap.yml
+=======
+  $ vi config/core.yml
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  title      : 管理画面ウィンドウタイトル
+  uri        : 管理画面URL (記述例 http://example.jp/)
+  http_proxy : HTTP プロキシー (記述例 http://example.jp:8080/)
+  https_proxy: HTTPSプロキシー (記述例 http://example.jp:8080/)
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+その他の設定ファイルも適宜編集してください。
+
+  application.yml ... アプリケーション設定
+  database.yml    ... データベース設定
+  ldap.yml        ... LDAP設定
+  smtp.yml        ... SMTP設定
+>>>>>>> origin/master
+
+ファイル転送を設定します。
+
+  # cp -p /var/share/joruri/config/original/rsync.yml /var/share/joruri/config/rsync.yml
+
+ログローテーションを設定します。
+
+  # cp /var/share/joruri/config/samples/joruri_logrotate /etc/logrotate.d/.
+
+テーマを設定します。
+
+  # cp -r /var/share/joruri/public/_common/themes/joruri.original /var/share/joruri/public/_common/themes/joruri
+
+
+データベース接続を設定します。
+
+    # cp -p /var/share/joruri/config/original/database.yml /var/share/joruri/config/database.yml
+
+必要なデータベースを作成します。
+
+  # service mysqld start                <- CentOS6
+  # systemctl start mysqld.service      <- CentOS7
+
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:setup RAILS_ENV=production'
+
+サンプルデータを登録します。
+
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'
+
+  # service mysqld stop              <- CentOS6の場合
+  # systemctl stop mysqld.service   <- CentOS7の場合
+
+**********************************************************************
+ 10 ふりがな・読み上げ機能 のインストール
+**********************************************************************
+
+必要なパッケージをインストールします。
+
+  # yum -y install sox
+
+hts_engine APIをインストールします。
+
+  # cd /usr/local/src
+<<<<<<< HEAD
+  # curl -fsSLO http://ufpr.dl.sourceforge.net/project/hts-engine/hts_engine%20API/hts_engine_API-1.09/hts_engine_API-1.09.tar.gz
+=======
+  # curl -fsSLO http://downloads.sourceforge.net/hts-engine/hts_engine_API-1.09.tar.gz
+>>>>>>> origin/master
+  # tar zxf hts_engine_API-1.09.tar.gz && cd hts_engine_API-1.09 && ./configure CFLAGS='-O3 -march=native -funroll-loops' && make && make install
+
+Open JTalkをインストールします。
+
+  # cd /usr/local/src
+<<<<<<< HEAD
+  # curl -fsSLO http://ufpr.dl.sourceforge.net/project/open-jtalk/Open%20JTalk/open_jtalk-1.08/open_jtalk-1.08.tar.gz
+=======
+  # curl -fsSLO http://downloads.sourceforge.net/open-jtalk/open_jtalk-1.08.tar.gz
+>>>>>>> origin/master
+  # tar zxf open_jtalk-1.08.tar.gz && cd open_jtalk-1.08
+  # sed -i 's/#define MAXBUFLEN 1024/#define MAXBUFLEN 10240/' bin/open_jtalk.c
+  # ./configure --with-charset=UTF-8 CFLAGS='-O3 -march=native -funroll-loops' CXXFLAGS='-O3 -march=native -funroll-loops' && make && make install
+
+Dictionaryをインストールします。
+
+  # cd /usr/local/src
+<<<<<<< HEAD
+  # curl -fsSLO http://ufpr.dl.sourceforge.net/project/open-jtalk/Dictionary/open_jtalk_dic-1.08/open_jtalk_dic_utf_8-1.08.tar.gz
+=======
+  # curl -fsSLO http://downloads.sourceforge.net/open-jtalk/open_jtalk_dic_utf_8-1.08.tar.gz
+>>>>>>> origin/master
+  # tar zxf open_jtalk_dic_utf_8-1.08.tar.gz
+  # mkdir /usr/local/share/open_jtalk && mv open_jtalk_dic_utf_8-1.08 /usr/local/share/open_jtalk/dic
+
+LAMEをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://jaist.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+  # tar zxf lame-3.99.5.tar.gz && cd lame-3.99.5 && ./configure && make && make install
+
+MeCabをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-0.996.tar.gz
+  # tar zxf mecab-0.996.tar.gz && cd mecab-0.996 && ./configure --enable-utf8-only && make && make install
+
+MeCab-IPAdicをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+  # tar zxf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801 && ./configure --with-charset=utf8 && make && make install
+
+MeCab-Rubyをインストールします。
+
+  # cd /usr/local/src
+  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+  # tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
+
+<<<<<<< HEAD
+libmecab.so.2のパスを設定します。
+
+  # echo '/usr/local/lib' >> /etc/ld.so.conf.d/usrlocal.conf
+  # sudo ldconfig
+  # ldconfig -p | grep "/usr/local/lib"
+=======
+>>>>>>> origin/master
+
+**********************************************************************
+ 11 Apache/MySQL の起動
+**********************************************************************
+
+<<<<<<< HEAD
+  # service httpd start && chkconfig httpd on      <- CentOS6の場合
+  # service mysqld start && chkconfig mysqld on    <- CentOS6の場合
+=======
+  # su - joruri
+
+  $ crontab -e
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin
+
+  10,25,40,55 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake sys:tasks:exec'    # 日時指定処理
+  #*/5 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish_top' # トップページのみ書き出し
+  */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:nodes:publish'        # ページ書き出し
+  */15 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:talks:publish'        # 音声書き出し
+  */30 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake cms:feeds:read'           # フィード取り込み
+  */10 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake newsletter:requests:read' # メルマガ読者登録
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake article:docs:rebuild'     # 記事再構築(ページ)
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake faq:docs:rebuild'         # FAQ再構築(ページ)
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake enquete:answers:pull'     # アンケート取り込み ※[9.1]
+  # 00 * * * * /bin/bash -l -c 'cd /var/share/joruri && RAILS_ENV=production bundle exec rake db:session:sweep'         # DBセッション削除
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+>>>>>>> origin/master
+
+  # systemctl start httpd.service && systemctl enable httpd.service    <- CentOS7の場合
+  # systemctl start mysqld.service && systemctl enable mysqld.service   <- CentOS7の場合
+
+**********************************************************************
+ 12 定期実行処理 の設定
+**********************************************************************
+
+joruriユーザーのcronに処理を追加します。
+
+<<<<<<< HEAD
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec whenever --update-crontab'
+=======
+  $ cd /var/share/joruri
+
+  $ vi config/database.yml
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  production_pull_database:
+    adapter : mysql2
+    database: joruri
+    username: joruri
+    password: pass
+    timeout : 5000
+    encoding: utf8
+    reconnect: true
+    host: 192.168.0.4
+
+  production_pull_database_2:
+    # settings
+
+  production_pull_database_3:
+    # settings
+  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+>>>>>>> origin/master
+
+**********************************************************************
+ 13 動作確認
+**********************************************************************
+
+インストールが完了しました。
+
+  公開画面 : http://joruri.example.com/
+
+  管理画面 : http://joruri.example.com/_admin
+
+    管理者（システム管理者）
+      ユーザーID   : admin
+      パスワード : admin
+
+１．MySQL の joruri ユーザーはパスワードが joruripass に設定されています。適宜変更してください。
+    mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('newpass');
+    また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
+    # vi /var/share/joruri/config/database.yml

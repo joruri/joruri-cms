@@ -1,6 +1,6 @@
 <%
 
-map     = item.maps.find(:first)
+map     = item.maps.first
 markers = map ? map.markers : []
 
 default_position = item.default_map_position.split(/[ ]*,[ ]*/)
@@ -17,7 +17,7 @@ markers_size = [3, markers.size, in_size].max
 
 // init
 $(function(){
-  
+
   $('#mapToggle').click(function(){
     $(this).toggleOpen('#mapForm');
     if ($('#map1').html() == "") {
@@ -25,7 +25,7 @@ $(function(){
     }
     return false;
   });
-  
+
 });
 
 var me = null;
@@ -34,35 +34,35 @@ function addMakerForm() {
   var tr  = document.createElement('tr');
   //var mi  = $('#markerForm').getElementsByTagName("tr").length;
   var mi  = $('#markerForm tr').size();
-  
+
   var e = document.createElement('th');
   e.className = "name";
   e.innerHTML = "名称";
   tr.appendChild(e);
-  
+
   var e = document.createElement('td');
   e.className = "name";
   e.innerHTML = getMakerInputTag(mi, 'name');
   tr.appendChild(e);
-  
+
   var e = document.createElement('th');
   e.className = "point";
   e.innerHTML = "座標";
   tr.appendChild(e);
-  
+
   var e = document.createElement('td');
   e.className = "point";
   e.innerHTML = getMakerInputTag(mi, 'lat') + '.' + getMakerInputTag(mi, 'lng');
   tr.appendChild(e);
-  
+
   var e = document.createElement('td');
   e.className = "action";
   e.innerHTML += '<a href="#" onclick="me.setMarker(\'item_in_maps_0_markers' + mi + '\'); return false;">≪クリックした座標を設定する</a>';
   e.innerHTML += ' <a href="#" onclick="me.unsetMarker(\'item_in_maps_0_markers'+ mi + '\'); return false;">≪クリア</a>';
   tr.appendChild(e);
-  
+
   $('#markerFormTbody').append(tr);
-  
+
   return false;
 }
 
@@ -85,13 +85,13 @@ function loadGoogleMap() {
     scrollwheel: false
   };
   var map = new google.maps.Map(document.getElementById("map1"), mapOptions);
-  
+
   me = new MapEditor(map);
   me.syncMap();
   google.maps.event.addListener(map, 'dragend', function(){ me.syncMap(); } );
   google.maps.event.addListener(map, 'zoom_changed', function(){ me.syncMap(); } );
   google.maps.event.addListener(map, 'click', function(event){ me.syncClick(event); } );
-  
+
   // markers
   <% markers.each_with_index do |marker, idx| %>
     var marker<%= idx %> = new google.maps.Marker({
@@ -106,7 +106,7 @@ function loadGoogleMap() {
     google.maps.event.addListener(marker<%= idx %>, 'click', function() {
       infowindow<%= idx %>.open(map, marker<%= idx %>);
     });
-    
+
     // registers to a editor
     me.markers['item_in_maps_0_markers<%= idx %>'] = marker<%= idx %>;
   <% end %>
@@ -122,9 +122,9 @@ function loadGoogleMap() {
 <div id="mapForm" class="articleMapForm" style="display: none">
 
   <div id="map1" class="mapCanvas"></div>
-  
+
   <input type="hidden" name="item[in_maps][0][name]" value="1" />
-  
+
   <table class="show mapInfo">
     <caption>表示中のマップ情報</caption>
     <tr>
@@ -132,7 +132,7 @@ function loadGoogleMap() {
       <td>
         <input id="searchAddr" name="searchAddr" type="text" value="" style="width: 150px"
          onkeydown="me.search('searchAddr', event);" />
-        <button type="button" style="width: 60px" onclick="me.search('searchAddr'); return false;">検索</button> 
+        <button type="button" style="width: 60px" onclick="me.search('searchAddr'); return false;">検索</button>
       </td>
     </tr><tr>
       <th style="width: 90px;">現在の座標</th>
@@ -151,7 +151,7 @@ function loadGoogleMap() {
       </td>
     </tr>
   </table>
-    
+
   <table class="show mapForm">
     <caption>マップの設定</caption>
     <tr>
@@ -188,9 +188,9 @@ function loadGoogleMap() {
     <% end %>
     </tbody>
   </table>
-  
+
   <div class="addMarkerForm">
     <a href="#" onclick="return addMakerForm();">入力フォームを追加する</a>
   </div>
-  
+
 </div>

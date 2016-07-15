@@ -2,7 +2,7 @@
 
 return nil unless group = item.editable_group
 groups = group.groups
-return nil if groups.size == 0
+return nil if groups.empty?
 
 %><p class="form">編集権限</p>
 

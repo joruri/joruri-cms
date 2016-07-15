@@ -10,7 +10,21 @@ function getTextRange(textarea) {
 
 function insertText(textarea, txt) {
   if (textarea.style.display == "none") { // TinyMCE
+  <%- if is_ckeditor -%>
+    if (parent.CKEDITOR.currentInstance) {
+      parent.CKEDITOR.currentInstance.insertHtml(txt);
+    } else {
+      for (var i in parent.CKEDITOR.instances) {
+        var instance = parent.CKEDITOR.instances[i];
+        if (instance.container.isVisible()) {
+          instance.insertHtml(txt);
+          break;
+        }
+      }
+    }
+  <%- else -%>
     parent.tinyMCE.execInstanceCommand(textarea.id, 'mceInsertContent', true, txt);
+  <%- end -%>
     return;
   }
   if (document.selection) { // IE6

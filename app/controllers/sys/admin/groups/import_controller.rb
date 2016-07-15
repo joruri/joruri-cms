@@ -12,7 +12,7 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
 
   def import
     if !params[:item] || !params[:item][:file]
-      return redirect_to(:action => :index)
+      return redirect_to(action: :index)
     end
 
     @results = [0, 0, 0]
@@ -24,10 +24,10 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
       Core.messages << "インポート： グループ"
       import_groups(csv)
     elsif params[:do] == 'users'
-      Core.messages << "インポート： ユーザ"
+      Core.messages << "インポート： ユーザー"
       import_users(csv)
     else
-      return redirect_to(:action => :index)
+      return redirect_to(action: :index)
     end
 
     Core.messages << "-- 追加 #{@results[0]}件"
@@ -35,18 +35,18 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
     Core.messages << "-- 失敗 #{@results[2]}件"
 
     flash[:notice] = ('インポートが終了しました。<br />' + Core.messages.join('<br />')).html_safe
-    return redirect_to(:action => :index)
-    
+    return redirect_to(action: :index)
+
   rescue CSV::MalformedCSVError => e
     flash[:notice] = "インポートに失敗しました。（不正なCSVデータ）"
-    return redirect_to(:action => :index)
-  rescue Exception => e
+    return redirect_to(action: :index)
+  rescue StandardError => e
     flash[:notice] = "インポートに失敗しました。（#{e}）"
-    return redirect_to(:action => :index)
+    return redirect_to(action: :index)
   end
 
   def import_groups(csv)
-    CSV.parse(csv, :headers => true, :header_converters => :symbol) do |data|
+    CSV.parse(csv, headers: true, header_converters: :symbol) do |data|
       code        = data[:code]
       parent_code = data[:parent_code]
 
@@ -55,12 +55,12 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
         next
       end
 
-      unless parent = Sys::Group.find_by_code(parent_code)
+      unless parent = Sys::Group.find_by(code: parent_code)
         @results[2] += 1
         next
       end
 
-      group = Sys::Group.find_by_code(code) || Sys::Group.new({:code => code})
+      group = Sys::Group.find_by(code: code) || Sys::Group.new(code: code)
 
       group.parent_id    = parent.id
       group.state        = data[:state]
@@ -75,7 +75,7 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
       group.tel          = data[:tel]
       group.outline_uri  = data[:outline_uri]
       group.email        = data[:email]
-      
+
       next unless group.changed?
       status = group.new_record? ? 0 : 1
       if group.save
@@ -85,9 +85,9 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
       end
     end
   end
-  
+
   def import_users(csv)
-    CSV.parse(csv, :headers => true, :header_converters => :symbol) do |data|
+    CSV.parse(csv, headers: true, header_converters: :symbol) do |data|
       account     = data[:account]
       group_code  = data[:group_code]
 
@@ -96,12 +96,12 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
         next
       end
 
-      unless group = Sys::Group.find_by_code(group_code)
+      unless group = Sys::Group.find_by(code: group_code)
         @results[2] += 1
         next
       end
 
-      user = Sys::User.find_by_account(account) || Sys::User.new({:account => account})
+      user = Sys::User.find_by(account: account) || Sys::User.new(account: account)
       user.state        = data[:state]
       user.ldap         = data[:ldap]
       user.ldap_version = data[:ldap_version]
@@ -111,12 +111,12 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
       user.password     = data[:password]
       user.email        = data[:email]
       user.in_group_id  = group.id if group.id != user.group_id
-      
+
       next unless user.changed?
-      
+
       status = user.new_record? ? 0 : 1
       status = 2 unless user.save
-      
+
       @results[status] += 1
     end
   end

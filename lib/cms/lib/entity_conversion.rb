@@ -1,12 +1,11 @@
 # encoding: utf-8
 module Cms::Lib::EntityConversion
-  
   def group_id_fields
     {
-      Cms::Inquiry => [:group_id],
+      Cms::Inquiry => [:group_id]
     }
   end
-  
+
   def text_fields
     {
       Cms::Concept        => true,
@@ -26,7 +25,7 @@ module Cms::Lib::EntityConversion
       Cms::PieceLinkItem  => true,
       Cms::PieceSetting   => [:value],
       Cms::Piece          => true,
-      Cms::SiteSetting    => [:value],
+      Cms::SiteSetting    => [:value]
     }
   end
 end

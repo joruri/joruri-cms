@@ -4,7 +4,5 @@ class Cms::SiteSetting < ActiveRecord::Base
   include Sys::Model::Auth::Manager
   include Cms::Model::Rel::Site
 
-  validates_presence_of :site_id, :name
-  
-  
+  validates :site_id, :name, presence: true
 end

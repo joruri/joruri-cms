@@ -1,4 +1,4 @@
-<%= init_tiny_mce :readonly => true %>
+<%= init_editor :readonly => true %>
 
 <table class="index">
   <tr>
@@ -17,7 +17,7 @@
     <td>
       <% if item.value_name  %>
         <% if vs[:show_class] == 'mceEditor' %>
-        <%= text_area_tag "#{item.name}", item.value_name, :class => 'mceEditor', :style => 'width: 600px; height: 120px;' %>
+        <%= text_area_tag "#{item.name}", item.value_name, :class => editor_class, :style => 'width: 600px; height: 120px;' %>
         <% else %>
         <div<%= " class='#{vs[:class]}'" if vs[:class] %>><%= mail_text_wrap(item.value_name, 10) %></div>
         <% end %>

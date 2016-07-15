@@ -25,7 +25,7 @@
   </ul>
 </div>
 <% end %>
-<% if @days.size == 0 %><div class="noEvents">　</div><% end %>
+<% if @days.empty? %><div class="noEvents">　</div><% end %>
 
 <%= @pagination.to_links(:class => "pagination lowerPagination") %>
 

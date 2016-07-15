@@ -1,55 +1,60 @@
 # encoding: utf-8
 class Article::Admin::UnitsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
-  
+
   def pre_dispatch
-    return error_auth unless @content = Cms::Content.find(params[:content])
-    #default_url_options[:content] = @content
-    
-    if params[:parent].to_s == '0'
-      @parent = Article::Unit.root_item
-    else
-      @parent = Article::Unit.find(params[:parent])
-    end
+    @content = Cms::Content.find(params[:content])
+    return error_auth unless @content
+
+    @parent = if params[:parent].to_s == '0'
+                Article::Unit.root_item
+              else
+                Article::Unit.find(params[:parent])
+              end
   end
-  
+
   def index
-    item = Article::Unit.new#.readable
-    item.and :parent_id, @parent.id
-    item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no #'(id + 0)'
-    @items = item.find(:all)
+    @items = Article::Unit
+             .where(parent_id: @parent.id)
+             .paginate(page: params[:page], per_page: params[:limit])
+             .order(params[:sort], :sort_no)
+
     _index @items
   end
-  
+
   def show
-    @item = Article::Unit.new.find(params[:id])
+    @item = Article::Unit.find(params[:id])
     _show @item
   end
 
   def new
-    @item = Article::Unit.new({
-      :state       => 'public',
-      :parent_code => @parent.code,
-      :level_no    => @parent.level_no + 1,
-      :sort_no     => 1
-    })
+    @item = Article::Unit.new(state: 'public',
+                              parent_code: @parent.code,
+                              level_no: @parent.level_no + 1,
+                              sort_no: 1)
   end
-  
+
   def create
-    @item = Article::Unit.new(params[:item])
+    @item = Article::Unit.new(units_params)
     @item.content_id = @content.id
     _create @item
   end
-  
+
   def update
-    @item = Article::Unit.new.find(params[:id])
-    @item.attributes = params[:item]
+    @item = Article::Unit.find(params[:id])
+    @item.attributes = units_params
     _update @item
   end
-  
+
   def destroy
-    @item = Article::Unit.new.find(params[:id])
+    @item = Article::Unit.find(params[:id])
     _destroy @item
+  end
+
+  private
+
+  def units_params
+    params.require(:item).permit(
+      :web_state, :layout_id, :email, :tel, :outline_uri)
   end
 end

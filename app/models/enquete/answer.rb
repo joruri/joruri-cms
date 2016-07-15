@@ -4,18 +4,22 @@ class Enquete::Answer < ActiveRecord::Base
   include Cms::Model::Base::Page
   include Sys::Model::Auth::Free
 
-  belongs_to :content, :foreign_key => :content_id, :class_name => 'Article::Content::Doc'
-  belongs_to :form   , :foreign_key => :form_id   , :class_name => 'Enquete::Form'
-  belongs_to :status , :foreign_key => :state     , :class_name => 'Sys::Base::Status'
-  has_many :columns  , :foreign_key => :answer_id , :class_name => 'Enquete::AnswerColumn',
-    :dependent => :destroy
+  include StateText
 
-  validates_presence_of :form_id
-  
+  belongs_to :content, foreign_key: :content_id,
+                       class_name: 'Article::Content::Doc'
+
+  belongs_to :form, foreign_key: :form_id, class_name: 'Enquete::Form'
+
+  has_many :columns, foreign_key: :answer_id,
+                     class_name: 'Enquete::AnswerColumn', dependent: :destroy
+
+  validates :form_id, presence: true
+
   def column_value(column_id)
     columns.each do |col|
       return col.value if col.column_id == column_id
     end
-    return nil
+    nil
   end
 end

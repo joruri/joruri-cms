@@ -1,5 +1,5 @@
 <%= link_to "グループ", sys_groups_path(:parent => 0), :class => (current == :group ? 'current' : '') %>
-<%= link_to "ユーザ", sys_users_path, :class => (current == :user ? 'current' : '') %>
+<%= link_to "ユーザー", sys_users_path, :class => (current == :user ? 'current' : '') %>
 <%= link_to "ロール", sys_role_names_path, :class => (current == :role ? 'current' : '') %>
 <% if Joruri.config[:sys_use_ldap] %>
 <%= link_to "LDAP", sys_ldap_groups_path(:parent => 0), :class => (current == :ldap ? 'current' : '') %>

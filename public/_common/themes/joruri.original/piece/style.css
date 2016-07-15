@@ -56,6 +56,7 @@
   background-image: url(images/ic-navi-ruby.png);
 }
 .naviTalk {
+  position: relative;
   background-image: url(images/ic-navi-talk.png);
 }
 .naviFont .label,
@@ -111,37 +112,25 @@
   color: #e00;
   text-decoration: underline;
 }
-.naviTalk .player {
-  position: absolute;
-  width: 1px;
-}
-.naviTalk .player object {
-  position: relative;
-  top: 25px;
-  left: -90px;
-}
-*html .naviTalk .player object {
-  top: 28px;
-}
 html:first-child .naviTalk .player {
   position: absolute;
 }
-html:first-child .naviTalk .player object {
-  position: relative;
-  top: 25px;
-  left: 340px;
+.naviTalk .player audio {
+  width: 250px;
+  position: absolute;
+  top: 28px;
+  right: -177px;
+  max-height: 32px;
 }
+
 /* common banner
 ----------------------------------------------- */
 #commonBanner:after {
-content: ".";
-display: block;
-clear: both;
-height: 0;
-visibility: hidden;
-}
-* html #commonBanner {
-height: 1%;
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
 }
 #commonBanner {
   clear: both;
@@ -150,8 +139,10 @@ height: 1%;
   padding: 0;
   background: url(./images/bg-header.jpg) no-repeat left top;
   text-align: right;
-}#commonBanner .logo {
+}
+#commonBanner .logo {
   float: left;
+  height: 72px;
 }
 #commonBanner .logo a {
   display: block;
@@ -170,10 +161,6 @@ height: 1%;
   display: inline-block;
   padding: 0 3px;
   border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
   color: #ffffff;
   text-decoration: none;
 }
@@ -216,19 +203,19 @@ input#search-button {
   background: #3F3F3F;
   color: #ffffff;
 }
+
 /* chiiki
 ---------------------- */
 .lowerMenu .chiiki, .lowerMenu .soshiki {
   display: inline-block;
   padding: 0 5px;
   border: 1px solid #999;
-  background:#F8F8F8;
+  background: #F8F8F8;
   background: -moz-linear-gradient(top, #E0E0E0, #F8F8F8);
   background: -webkit-gradient(linear, center top, center bottom, from(#E0E0E0), to(#F8F8F8));
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#E0E0E0', endColorstr='#F8F8F8');
   color: #333;
   text-decoration: none;
-
 }
 
 /* otoiawase
@@ -257,9 +244,6 @@ a.siteMap {
   clear: both;
   height: 0;
   visibility: hidden;
-}
-* html #globalNavi {
-  height: 1%;
 }
 #globalNavi {
   clear: both;
@@ -300,20 +284,6 @@ a.siteMap {
   background: -moz-linear-gradient(top, #D70029, #EE0029);
   background: -webkit-gradient(linear, center top, center bottom, from(#D70029), to(#EE0029));
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#D70029', endColorstr='#B30029');
-}
-*:first-child+html #globalNavi a {
-  height: auto;
-}
-
-/* IE */
-* html #globalNavi {
-  width: 100%;
-}
-* html #globalNavi a.bosai {
-  width: 12.2%;
-}
-*:first-child+html #globalNavi {
-  width: 100.3%;
 }
 
 /* global navi active
@@ -372,14 +342,17 @@ a.siteMap {
 
 /* breadCrumbs
 ----------------------------------------------- */
-#breadCrumbs {
-  clear: both;
-  margin: 7px 0 0;
-  line-height: 1.3;
+#breadCrumbs ol,
+#breadCrumbs li {
+ list-style: none;
 }
-#breadCrumbs .direction {
-  margin: 0;
+#breadCrumbs li {
+ display: inline-block;
 }
+#breadCrumbs li:not(:first-child):before {
+ content: ">";
+ margin: 0 4px 0 3px;
+} 
 #pageTop {
   text-align: right;
 }
@@ -388,9 +361,6 @@ a.siteMap {
 ----------------------------------------------- */
 #calendarDailyLinks {
   width: 170px;
-}
-* html .calender {
-  height: 1%;
 }
 #calendar .pieceContainer {
   width: 100%;
@@ -580,9 +550,6 @@ a.siteMap {
 
 /* page-title
 ----------------------------------------------- */
-*html #pageTitle {
-  height: 0;
-}
 #pageTitle .pieceContainer {
   margin: 0;
   padding: 0;
@@ -649,7 +616,7 @@ h1 {
 #docTab .tabs a {
   display: inline-block;
   float: left;
-  width: 15%; 
+  width: 15%;
   margin-right: 3px;
   padding: 5px 0;
   border: 1px solid #cccccc;
@@ -736,7 +703,6 @@ h1 {
   overflow: hidden;
   padding: 0 10px 10px;
 }
-
 #docTabPortal .content li span.new,
 #docTab .content dd span.new,
 #docsPortal .pieceBody li span.new {
@@ -822,6 +788,7 @@ h1 {
   border-bottom: 10px solid transparent;
   border-left: 10px solid #0081A1;
 }
+
 /* bn-faq
 ------------------------------------- */
 #bnFaq {
@@ -857,6 +824,7 @@ h1 {
   color: #FFFF99;
   font-size: 120%;
 }
+
 /* bn-event
 ------------------------------------- */
 #bnEvent {
@@ -880,6 +848,7 @@ h1 {
   font-weight: bold;
   text-decoration: none;
 }
+
 /* application
 ------------------------------------- */
 #application {
@@ -903,6 +872,7 @@ h1 {
   font-weight: bold;
   text-decoration: none;
 }
+
 /* bn-bbs
 ------------------------------------- */
 #bnBbs {
@@ -933,6 +903,7 @@ h1 {
   padding: 0 5px;
   background: #A3CDEE;
 }
+
 /* inquiry
 ------------------------------------- */
 #inquiry {

@@ -1,21 +1,21 @@
 # encoding: utf-8
 class Cms::Lib::Mobile::Emoji
   @@map = nil
-  
+
   def self.convert(name, career)
-    return '' unless map.has_key?(name)
-    
+    return '' unless map.key?(name)
+
     case career
     when Jpmobile::Mobile::Docomo
       # for docomo
       return map[name][1]
     when Jpmobile::Mobile::Au
       # for au
-      return '&#x' + map[name][3] + ';';
+      return '&#x' + map[name][3] + ';'
     when Jpmobile::Mobile::Softbank
       # for SoftBank
-      code = '1B24' + map[name][4] +  '0F';
-      return [code].pack('H10');
+      code = '1B24' + map[name][4] +  '0F'
+      return [code].pack('H10')
     when Jpmobile::Mobile::Willcom
       # for Willcom
       return map[name][1]
@@ -24,10 +24,10 @@ class Cms::Lib::Mobile::Emoji
       return map[name][1]
     end
   end
-  
+
   def self.map
     return @@map if @map
-    return @@map = {
+    @@map = {
       'sunny' => [1, '', 'F89F', 'F666', '476A'],
       'sunny' => [1, '', 'F89F', 'F3C6', '506A'],
       'sunny' => [1, '', 'F89F', 'F3C8', '5069'],
@@ -830,7 +830,7 @@ class Cms::Lib::Mobile::Emoji
       'haggard' => [252, '', 'F9FC', 'F39E', '453A'],
       'haggard' => [252, '', 'F9FC', 'F6D1', '453C'],
       'haggard' => [252, '', 'F9FC', 'F7F5', '502B'],
-      'haggard' => [252, '', 'F9FC', 'F449', '453C'],
+      'haggard' => [252, '', 'F9FC', 'F449', '453C']
     }
   end
 end

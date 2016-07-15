@@ -2,18 +2,20 @@
 class Newsletter::Log < ActiveRecord::Base
   include Sys::Model::Base
 
-  def search(params)
+  scope :search, ->(params) {
+    rel = all
+
     params.each do |n, v|
       next if v.to_s == ''
 
       case n
       when 's_id'
-        self.and :id, v
+        rel = rel.where(id: v)
       when 's_email'
-        self.and_keywords v, :email
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
       end
     end if params.size != 0
 
-    return self
-  end
+    rel
+  }
 end

@@ -7,36 +7,62 @@ class Newsletter::Request < ActiveRecord::Base
   include Cms::Model::Auth::Concept
   include Newsletter::Model::Base::Letter
 
-  belongs_to :status,      :foreign_key => :state,        :class_name => 'Sys::Base::Status'
-  belongs_to :content,     :foreign_key => :content_id,   :class_name => 'Newsletter::Content::Base'
+  include StateText
 
-  validates_presence_of :state, :request_type, :email
-  validates_presence_of :letter_type,
-    :if => %Q(request_type == "subscribe")
-  
+  belongs_to :content, foreign_key: :content_id,
+                       class_name: 'Newsletter::Content::Base'
+
+  validates :state, :request_type, :email, presence: true
+  validates :letter_type, presence: true, if: %(request_type == "subscribe")
+
   validate :validate_email
-  
-  apply_simple_captcha :message => "の画像と文字が一致しません。"
-  
+
+  apply_simple_captcha message: "の画像と文字が一致しません。"
+
+  scope :search, ->(params) {
+    rel = all
+
+    params.each do |n, v|
+      next if v.to_s == ''
+
+      case n
+      when 's_id'
+        rel = rel.where(arel_table[:id].eq(v))
+      when 's_email'
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
+      when 's_letter_type'
+        rel = rel.where(arel_table[:letter_type].eq(v))
+      when 's_request_type'
+        rel = rel.where(arel_table[:request_type].eq(v))
+      when 's_state'
+        rel = rel.where(arel_table[:state].eq(v))
+      when 's_keyword'
+        rel = rel.where(arel_table[:email].matches("%#{v}%"))
+      end
+    end if params.size != 0
+
+    rel
+  }
+
   def statuses
-    [['待機','enabled'], ['完了','disabled']]
+    [%w(待機 enabled), %w(完了 disabled)]
   end
-  
+
   def request_types
-    [["登録","subscribe"],["解除","unsubscribe"]]
+    [%w(登録 subscribe), %w(解除 unsubscribe)]
   end
-  
+
   def request_type_name
-    request_types.each {|v,k| return v if k == request_type }
-    return request_type
+    request_types.each { |v, k| return v if k == request_type }
+    request_type
   end
-  
+
   def letter_types
-    [["PC版(テキスト形式)","pc_text"],["携帯版(テキスト形式)","mobile_text"]]
+    [["PC版(テキスト形式)", 'pc_text'], ["携帯版(テキスト形式)", 'mobile_text']]
   end
-  
+
   def validate_email
-    if !email.blank?
+    unless email.blank?
       if email !~ /@((\w+-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/ix
         errors.add :email, :invalid
       elsif email =~ /^((\..*?)|(.*?\.\..*?)|(.*?\.))@/ix
@@ -46,15 +72,15 @@ class Newsletter::Request < ActiveRecord::Base
       end
     end
   end
-  
+
   def email_hash
     require 'digest/md5'
     Digest::MD5.new.update("#{email}#{Joruri.config[:sys_crypt_pass]}").to_s
   end
-  
+
   def subscribe_guide_body
     line = '-' * (mobile? ? 15 : 50)
-    
+
     body = []
     body << "下記のURLにアクセスして登録を完了させてください。\n"
     body << "#{content.form_node.public_full_uri}subscribe/#{CGI.escape(email)}/#{email_hash}?type=#{letter_type}\n\n"
@@ -65,10 +91,10 @@ class Newsletter::Request < ActiveRecord::Base
     body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
     body.join
   end
-  
+
   def unsubscribe_guide_body
     line = '-' * (mobile? ? 15 : 50)
-    
+
     body = []
     body << "下記のURLにアクセスして解除を完了させてください。\n"
     body << "#{content.form_node.public_full_uri}unsubscribe/#{CGI.escape(email)}/#{email_hash}\n\n"
@@ -78,10 +104,10 @@ class Newsletter::Request < ActiveRecord::Base
     body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
     body.join
   end
-  
+
   def subscribe_notice_body
     line = '-' * (mobile? ? 15 : 50)
-    
+
     body = []
     body << "#{content.name}にご登録いただきありがとうございます。\n\n"
     body << "下記の内容で登録いたしました。\n"
@@ -102,28 +128,5 @@ class Newsletter::Request < ActiveRecord::Base
     body << "これまでのご利用ありがとうございました。\n\n"
     body << "#{mobile? ? content.signature_mobile : content.signature}\n" if content.signature_state == 'enabled'
     body.join
-  end
-  
-  def search(params)
-    params.each do |n, v|
-      next if v.to_s == ''
-
-      case n
-      when 's_id'
-        self.and "#{self.class.table_name}.id", v
-      when 's_email'
-        self.and_keywords v, :email
-      when 's_letter_type'
-        self.and "#{self.class.table_name}.letter_type", v
-      when 's_request_type'
-        self.and "#{self.class.table_name}.request_type", v
-      when 's_state'
-        self.and "#{self.class.table_name}.state", v
-      when 's_keyword'
-        self.and_keywords v, :email
-      end
-    end if params.size != 0
-
-    return self
   end
 end

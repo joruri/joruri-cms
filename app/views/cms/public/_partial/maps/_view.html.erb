@@ -1,6 +1,6 @@
 <%
 
-map     = item.maps.find(:first)
+map     = item.maps.all.first
 markers = map ? map.markers : []
 return render(:text => "") unless map
 return render(:text => "") if map.map_lat.blank? || map.map_lng.blank?
@@ -26,7 +26,7 @@ addEvent(window, 'load', function() {
     scrollwheel: false
   };
   var map = new google.maps.Map(document.getElementById("map1"), mapOptions);
-  
+
   <% markers.each_with_index do |marker, idx| %>
     var marker<%= idx %> = new google.maps.Marker({
       //title: '<%= marker.name.gsub(/'/, "\\\\'") %>'

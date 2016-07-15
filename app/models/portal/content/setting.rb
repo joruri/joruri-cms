@@ -1,10 +1,10 @@
 # encoding: utf-8
 class Portal::Content::Setting < Cms::ContentSetting
-  set_config :doc_content_id, :name => "記事コンテンツ"
-  set_config :doc_list_suffix, :name => "記事一覧表示（日付以降）",
-    :options => [["所属名","unit"],["サイト名","site"]]
-  set_config :new_term, :name => "新着マーク表示期間",
-    :comment => "時間（1日=24時間）、0:非表示"
+  set_config :doc_content_id, name: "記事コンテンツ"
+  set_config :doc_list_suffix, name: "記事一覧表示（日付以降）",
+                               options: [%w(所属名 unit), %w(サイト名 site)]
+  set_config :new_term, name: "新着マーク表示期間",
+                        comment: "時間（1日=24時間）、0:非表示"
 
   validate :validate_value
 
@@ -20,17 +20,17 @@ class Portal::Content::Setting < Cms::ContentSetting
   def config_options
     case name
     when 'doc_content_id'
-      contents = Core.site.contents.find(:all, :conditions => {:model => 'Article::Doc'})
-      return contents.collect{|c| [c.name, c.id.to_s]}
+      contents = Core.site.contents.where(model: 'Article::Doc')
+      return contents.collect { |c| [c.name, c.id.to_s] }
     end
     super
   end
-  
+
   def value_name
-    if !value.blank?
+    unless value.blank?
       case name
       when 'doc_content_id'
-        content = Cms::Content.find_by_id(value)
+        content = Cms::Content.find_by(id: value)
         return content.name if content
       end
     end

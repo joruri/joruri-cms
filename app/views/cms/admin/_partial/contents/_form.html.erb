@@ -5,7 +5,7 @@
   <tr>
     <th><%= @item.locale :model %></th>
     <td>
-      <% if @item.id %><%= @item.model_name(:short) %><% else %>
+      <% if @item.id %><%= @item.module_name(:short) %><% else %>
       <%= f.select :model, Cms::Lib::Modules.contents, :include_blank => :true %><% end %>
     </td>
   </tr><tr>

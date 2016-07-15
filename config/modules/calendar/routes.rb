@@ -40,8 +40,8 @@ Joruri::Application.routes.draw do
   
   scope "_public/#{mod}", :module => mod, :as => "" do
     
-    match "node_events/index.:format"              => "public/node/events#index"
-    match "node_events/:year/index.:format"        => "public/node/events#index_yearly"
-    match "node_events/:year/:month/index.:format" => "public/node/events#index_monthly"
+    get "node_events/index.:format"              => "public/node/events#index"
+    get "node_events/:year/index.:format"        => "public/node/events#index_yearly"
+    get "node_events/:year/:month/index.:format" => "public/node/events#index_monthly"
   end
 end

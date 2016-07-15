@@ -19,32 +19,66 @@ def centos
   config_dir = '/var/share/joruri/config/'
 
   core_yml = "#{config_dir}core.yml"
+  system "cp -p #{config_dir}original/core.yml #{core_yml}"
   db = YAML::Store.new(core_yml)
   db.transaction do
     db['production']['uri'] = "http://#{`hostname`.chomp}/"
   end
 
   joruri_conf = "#{config_dir}hosts/joruri.conf"
+  system "cp -p #{config_dir}original/hosts/joruri.conf #{joruri_conf}"
   File.open(joruri_conf, File::RDWR) do |f|
     f.flock(File::LOCK_EX)
 
     conf = f.read
 
     f.rewind
-    f.write conf.gsub('joruri.example.com') {|m| `hostname`.chomp }
+
+    stdout = `/usr/sbin/httpd -v`
+    if stdout.index('Apache/2.2.')
+      conf = conf.gsub('#NameVirtualHost','NameVirtualHost')
+      conf = conf.gsub('Require all granted','#Require all granted')
+    end
+
+    conf = conf.gsub('joruri.example.com') { |_m| `hostname`.chomp }
+
+    f.write conf
     f.flush
     f.truncate(f.pos)
 
     f.flock(File::LOCK_UN)
   end
-
   system "ln -s #{joruri_conf} /etc/httpd/conf.d/joruri.conf"
-  system 'service mysqld start'
+
+  system "cp -p #{config_dir}original/smtp.yml #{config_dir}smtp.yml"
+
+  system "cp -p #{config_dir}original/ldap.yml #{config_dir}ldap.yml"
+
+  system "cp -p #{config_dir}original/rsync.yml #{config_dir}rsync.yml"
+
+  system "cp -p #{config_dir}samples/joruri_logrotate /etc/logrotate.d/."
+
+  system "cp -rp /var/share/joruri/public/_common/themes/joruri.original /var/share/joruri/public/_common/themes/joruri"
+
+  system "cp -p #{config_dir}original/database.yml #{config_dir}database.yml"
+
+  if ENV["OS_VERSION"] == 'centos6'
+    system 'service mysqld start'
+  else
+    system 'systemctl start mysqld.service'
+  end
+
   sleep 1 until system 'mysqladmin ping' # Not required to connect
-  system "su - joruri -c 'cd /var/share/joruri && bundle exec rake db:setup RAILS_ENV=production'"
-  system "su - joruri -c 'cd /var/share/joruri && bundle exec rake db:seed RAILS_ENV=production'"
-  system "su - joruri -c 'cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'"
-  system 'service mysqld stop'
+
+  system "su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:setup RAILS_ENV=production'"
+
+  system "su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec rake db:seed:demo RAILS_ENV=production'"
+
+  if ENV["OS_VERSION"] == 'centos6'
+    system 'service mysqld stop'
+  else
+    system 'systemctl stop mysqld.service'
+  end
 end
 
 def others
@@ -56,10 +90,10 @@ if __FILE__ == $0
   if File.exist? '/etc/centos-release'
     centos
   elsif File.exist? '/etc/lsb-release'
-    unless `grep -s Ubuntu /etc/lsb-release`.empty?
-      ubuntu
-    else
+    if `grep -s Ubuntu /etc/lsb-release`.empty?
       others
+    else
+      ubuntu
     end
   else
     others

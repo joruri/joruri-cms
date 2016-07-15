@@ -1,13 +1,17 @@
 # encoding: utf-8
 module Sys::Model::Auth::Free
-  def readable
-    return self
+  extend ActiveSupport::Concern
+
+  included do
+    scope :readable, -> {
+      all
+    }
+
+    scope :editable, -> {
+      all
+    }
   end
-  
-  def editable
-    return self
-  end
-  
+
   def creatable?
     true
   end

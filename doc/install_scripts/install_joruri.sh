@@ -22,7 +22,7 @@ centos() {
 
   yum install -y ImageMagick-devel libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
-  git clone -b v3-develop https://github.com/joruri/joruri-cms.git /var/share/joruri
+  git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri
 
   chown -R joruri:joruri /var/share/joruri
 

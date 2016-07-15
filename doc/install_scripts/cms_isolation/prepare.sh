@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts/cms_isolation'
+INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts/cms_isolation'
 
 echo '#### Prepare to install ####'
 

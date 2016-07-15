@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MYSQL_REPO_URL="http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
-INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/v3-develop/doc/install_scripts'
+INSTALL_SCRIPTS_URL='https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts'
 
 echo '#### Prepare to install ####'
 

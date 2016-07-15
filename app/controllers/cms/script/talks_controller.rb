@@ -23,9 +23,10 @@ class Cms::Script::TalksController < Cms::Controller::Script::Publication
       end
 
       begin
-        Script.success if make_sound(task)
+        make_sound(task)
         task.published_at = Time.now
         task.save
+        Script.success
       rescue Script::InterruptException => e
         raise e
       rescue Exception => e

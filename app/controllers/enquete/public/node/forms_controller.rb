@@ -160,7 +160,7 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
     if answer_email.blank?
       message += "■IPアドレス\n"
       message += "#{answer.ipaddr}\n\n"
-      message += "■ユーザエージェント\n"
+      message += "■ユーザーエージェント\n"
       message += "#{answer.user_agent}\n\n"
     end
 

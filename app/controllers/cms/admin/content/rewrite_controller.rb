@@ -16,7 +16,7 @@ class Cms::Admin::Content::RewriteController < Cms::Controller::Admin::Base
   def update
     unless params[:update].blank?
       flash[:notice] = if ::File.write(@file, make_conf)
-                         "ファイルを更新しました。 （反映にはWebサーバの再起動が必要です。）"
+                         "ファイルを更新しました。 （反映にはWebサーバーの再起動が必要です。）"
                        else
                          "ファイルの更新に失敗しました。"
                        end

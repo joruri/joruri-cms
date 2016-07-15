@@ -24,7 +24,7 @@ class Sys::Admin::Groups::ImportController < Cms::Controller::Admin::Base
       Core.messages << "インポート： グループ"
       import_groups(csv)
     elsif params[:do] == 'users'
-      Core.messages << "インポート： ユーザ"
+      Core.messages << "インポート： ユーザー"
       import_users(csv)
     else
       return redirect_to(action: :index)

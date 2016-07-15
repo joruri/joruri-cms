@@ -137,7 +137,7 @@ end
 ## ---------------------------------------------------------
 ## sys/roles
 
-r = Sys::RoleName.create :name => 'common', :title => '一般ユーザ'
+r = Sys::RoleName.create :name => 'common', :title => '一般ユーザー'
 Sys::ObjectPrivilege.create :role_id => r.id, :item_unid => c_site.unid, :action => 'read'
 Sys::UsersRole.create :user_id => u2.id, :role_id => r.id
 Sys::UsersRole.create :user_id => u3.id, :role_id => r.id

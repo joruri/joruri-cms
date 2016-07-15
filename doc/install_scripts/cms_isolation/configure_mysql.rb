@@ -80,11 +80,11 @@ def centos
   puts "\n"
   puts '-----以下を確認してから設定を進めてください。-----'
   puts "\n"
-  puts '1.以下のダンプファイルをWEBサーバの同じディレクトリにコピーしてください。'
+  puts '1.以下のダンプファイルをWEBサーバーの同じディレクトリにコピーしてください。'
   puts `ls /home/joruri/joruri_production.dmp`
   puts "\n"
 
-  puts '2.下記の設定値をメモしてください。WEBサーバ側でMySQLレプリケーション設定に利用します。'
+  puts '2.下記の設定値をメモしてください。WEBサーバー側でMySQLレプリケーション設定に利用します。'
   puts "File: #{repl_config[:file]}"
   puts "Position: #{repl_config[:position]}"
   puts "\n"

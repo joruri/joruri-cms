@@ -22,7 +22,7 @@ end
     <td><%= f.select_with_tree "in_creator[group_id]", groups, :include_blank => "　" %></td>
   </tr>
   <tr class="onlyManager">
-    <th>ユーザ</th>
+    <th>ユーザー</th>
     <td><%= f.array_select "in_creator[user_id]", users, :include_blank => "　" %></td>
   </tr>
 </table>

@@ -6,9 +6,9 @@
 
 [システム]
 OS         : CentOS 6.7 (x86_64), 7.2 (x86_64)
-Webサーバ   : Apache 2.2, 2.4
-APサーバ    : Phusion Passenger 5.0
-DBサーバ    : MySQL 5.6
+Webサーバー  : Apache 2.2, 2.4
+APサーバー   : Phusion Passenger 5.0
+DBサーバー   : MySQL 5.6
 Ruby       : 2.3
 Rails      : 4.2
 
@@ -16,10 +16,10 @@ Rails      : 4.2
 ドメイン   : joruri.example.com
 
 **********************************************************************
- 2 作業ユーザの変更
+ 2 作業ユーザーの変更
 **********************************************************************
 
-rootユーザに変更します。
+rootユーザーに変更します。
 
   $ su -
 
@@ -88,7 +88,7 @@ Rubyをインストールします。
  6 Joruri のインストール
 **********************************************************************
 
-専用ユーザを作成します。
+専用ユーザーを作成します。
 
   # useradd -m joruri
 
@@ -309,7 +309,7 @@ libmecab.so.2のパスを設定します。
  12 定期実行処理 の設定
 **********************************************************************
 
-joruriユーザのcronに処理を追加します。
+joruriユーザーのcronに処理を追加します。
 
   # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle exec whenever --update-crontab'
 
@@ -324,10 +324,10 @@ joruriユーザのcronに処理を追加します。
   管理画面 : http://joruri.example.com/_admin
 
     管理者（システム管理者）
-      ユーザID   : admin
+      ユーザーID   : admin
       パスワード : admin
 
-１．MySQL の joruri ユーザはパスワードが joruripass に設定されています。適宜変更してください。
+１．MySQL の joruri ユーザーはパスワードが joruripass に設定されています。適宜変更してください。
     mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('newpass');
     また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
     # vi /var/share/joruri/config/database.yml

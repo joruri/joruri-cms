@@ -62,16 +62,16 @@ echo "
   管理画面: `ruby -ryaml -e "puts YAML.load_file('/var/share/joruri/config/core.yml')['production']['uri']"`_admin
 
     管理者（システム管理者）
-    ユーザID   : joruri
+    ユーザーID   : joruri
     パスワード : joruri
 
-１．MySQL の root ユーザはパスワードが rootpass に設定されています。適宜変更してください。
+１．MySQL の root ユーザーはパスワードが rootpass に設定されています。適宜変更してください。
     # mysqladmin -u root -prootpass password 'newpass'
-２．MySQL の joruri ユーザはパスワードが joruripass に設定されています。適宜変更してください。
+２．MySQL の joruri ユーザーはパスワードが joruripass に設定されています。適宜変更してください。
     mysql> SET PASSWORD FOR joruri@localhost = PASSWORD('newpass');
     また、変更時には /var/share/joruri/config/database.yml も合わせて変更してください。
     # vi /var/share/joruri/config/database.yml
-３．OS の joruri ユーザに cron が登録されています。
+３．OS の joruri ユーザーに cron が登録されています。
     # crontab -u joruri -e
 "
 EOF

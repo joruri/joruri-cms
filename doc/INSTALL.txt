@@ -1,4 +1,4 @@
-## Joruri CMS 3.0.0 インストールマニュアル                  2016.07.13
+## Joruri CMS 3.0.1 インストールマニュアル                  2016.08.17
 
 **********************************************************************
  1 想定環境
@@ -58,6 +58,14 @@ yumリポジトリにmysqlを追加します。
 
   # yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
 
+yumリポジトリにremiリポジトリを追加します。
+
+  CentOS6の場合
+  # rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
+  CentOS7の場合
+  # rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+
 必要なパッケージをインストールします。
 
   # yum -y install git gcc-c++ libffi-devel libyaml-devel make openssl-devel readline-devel zlib-devel
@@ -94,7 +102,9 @@ Rubyをインストールします。
 
 Joruriをインストールします。
 
-  # yum -y install ImageMagick-devel libxml2-devel libxslt-devel mysql-community-devel openldap-devel nodejs patch
+
+  # yum -y install --enablerepo=remi ImageMagick-last-devel
+  # yum -y install libxml2-devel libxslt-devel mysql-community-devel openldap-devel nodejs patch
 
   # git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri
   # chown -R joruri:joruri /var/share/joruri

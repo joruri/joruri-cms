@@ -18,6 +18,13 @@ centos() {
 
   yum install epel-release
   yum -y install $MYSQL_REPO_URL
+  
+  if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
+    rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+  else
+    rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+  fi
+
   yum -y install wget git
 
   cd /usr/local/src

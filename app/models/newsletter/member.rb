@@ -24,7 +24,7 @@ class Newsletter::Member < ActiveRecord::Base
       when 's_letter_type'
         rel = rel.where(letter_type: v)
       when 's_state'
-        rel = rel.here(state: v)
+        rel = rel.where(state: v)
       end
     end if params.size != 0
 

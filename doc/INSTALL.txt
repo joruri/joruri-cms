@@ -104,7 +104,7 @@ Joruriをインストールします。
 
 
   # yum -y install --enablerepo=remi ImageMagick-last-devel
-  # yum -y install libxml2-devel libxslt-devel mysql-community-devel openldap-devel nodejs patch
+  # yum -y install libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
   # git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri
   # chown -R joruri:joruri /var/share/joruri

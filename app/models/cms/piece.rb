@@ -101,6 +101,7 @@ class Cms::Piece < ActiveRecord::Base
     # piece_settings
     settings.each do |setting|
       dupe_setting = Cms::PieceSetting.new(setting.attributes)
+      dupe_setting.id = nil
       dupe_setting.piece_id   = item.id
       dupe_setting.created_at = nil
       dupe_setting.updated_at = nil

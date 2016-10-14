@@ -9,6 +9,7 @@ class Cms::Piece::Link < Cms::Piece
 
     link_items.each do |link|
       dupe_link = Cms::PieceLinkItem.new(link.attributes)
+      dupe_link.id = nil
       dupe_link.piece_id   = dupe_item.id
       dupe_link.created_at = nil
       dupe_link.updated_at = nil

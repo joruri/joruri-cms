@@ -16,6 +16,7 @@ module Sys::Model::Rel::Recognition
 
       rel = rel.where(
         recognitions[:user_id].eq(Core.user.id)
+        .or(recognitions[:recognizer_ids].eq("#{Core.user.id}"))
         .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %"))
         .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %"))
         .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}"))
@@ -31,6 +32,7 @@ module Sys::Model::Rel::Recognition
 
       rel = rel.where(
         recognitions[:user_id].eq(Core.user.id)
+        .or(recognitions[:recognizer_ids].eq("#{Core.user.id}"))
         .or(recognitions[:recognizer_ids].matches("#{Core.user.id} %"))
         .or(recognitions[:recognizer_ids].matches("% #{Core.user.id} %"))
         .or(recognitions[:recognizer_ids].matches("% #{Core.user.id}"))

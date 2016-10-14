@@ -320,6 +320,7 @@ class Cms::Node < ActiveRecord::Base
       # node_settings
       settings.each do |setting|
         dupe_setting = Cms::NodeSetting.new(setting.attributes)
+        dupe_setting.id = nil
         dupe_setting.node_id = item.id
         dupe_setting.created_at = nil
         dupe_setting.updated_at = nil

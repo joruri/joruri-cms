@@ -14,8 +14,8 @@ centos() {
 
   yum -y groupinstall base "Development tools"
   setenforce 0
-  sed -i -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
-
+  sed -i --follow-symlinks -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+  
   yum install epel-release
   yum -y install $MYSQL_REPO_URL
   

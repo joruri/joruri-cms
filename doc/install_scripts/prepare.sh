@@ -16,7 +16,7 @@ centos() {
   setenforce 0
   sed -i --follow-symlinks -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
   
-  yum install epel-release
+  yum -y install epel-release
   yum -y install $MYSQL_REPO_URL
   
   if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then

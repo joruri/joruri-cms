@@ -11,7 +11,12 @@ map_zoom = (map && map.map_zoom != '') ? map.map_zoom : 14
 in_size = safe(0){params[:item][:in_maps]['0'][:markers].size}
 markers_size = [3, markers.size, in_size].max
 
-%><script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&region=jp"></script>
+api_key = item.content.site.google_map_api_key
+%><%- if api_key.present? -%>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?key=<%= api_key %>&region=jp"></script>
+<%- else -%>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?region=jp"></script>
+<%- end -%>
 <script type="text/javascript" src="/_common/modules/cms/js/map.js"></script>
 <%= javascript_tag do %>
 

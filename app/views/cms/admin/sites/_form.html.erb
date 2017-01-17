@@ -22,4 +22,13 @@
   </tr>
 </table>
 
+<p class="form">MAP設定</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:google_map_api_key) %></th>
+    <td><%= f.text_field :google_map_api_key, :class => 'url' %></td>
+  </tr>
+</table>
+
 <%= creator_form f %>

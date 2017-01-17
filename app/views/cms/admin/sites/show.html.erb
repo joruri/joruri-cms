@@ -25,4 +25,13 @@
   </tr>
 </table>
 
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @item.locale(:google_map_api_key) %></th>
+    <td><%= @item.google_map_api_key %></td>
+  </tr>
+</table>
+
 <%= creator_view @item %>

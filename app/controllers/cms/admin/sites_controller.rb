@@ -106,6 +106,6 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   def site_params
     params.require(:item).permit(
       :name, :full_uri, :alias_full_uri, :mobile_full_uri, :admin_full_uri,
-      :related_site, in_creator: [:group_id, :user_id])
+      :related_site, :google_map_api_key, in_creator: [:group_id, :user_id])
   end
 end

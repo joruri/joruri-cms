@@ -10,6 +10,7 @@ ja:
         mobile_full_uri: "携帯URL"
         admin_full_uri: "管理画面URL"
         related_site: "関連サイト"
+        google_map_api_key: "Google Map API Key"
 
       cms/site_setting:
 

@@ -12,6 +12,8 @@ sys:
   admin_uri: /_admin
 
 cms:
+  # google map
+  google_map_api_key: ""
 
   # Pagination limit
   publish_more_pages: 10

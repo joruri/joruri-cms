@@ -172,6 +172,14 @@ table.directories tr.file .name {
   padding: 5px 6px;
   border-left: 6px solid #ccc;
 }
+.articleMapForm .mapCanvas .hiddenMap {
+  background-color: #dcdcdc;
+  display: table-cell;
+  height: 150px;
+  text-align: center;
+  vertical-align: middle;
+  width: 600px;
+}
 
 /* info */
 .articleMapForm table.mapInfo {

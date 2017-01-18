@@ -5,7 +5,24 @@ markers = map ? map.markers : []
 return render(:text => "") unless map
 return render(:text => "") if map.map_lat.blank? || map.map_lng.blank?
 
-%><script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&region=jp"></script>
+api_key = item.content.site.google_map_api_key
+api_key = Joruri.config[:cms_google_map_api_key] if !Core.publish && Core.mode == 'preview'
+
+%><%- if item.state == 'closed' %>
+
+<div class="maps">
+  <h2>地図</h2>
+  <%== "<h3>#{map.title}</h3>" if !map.title.blank? %>
+  <div class="hiddenMap" style="width: 100%; border: 1px solid #666; background-color: #dcdcdc; padding: 70px 0; text-align: center;">
+      非公開状態のため地図は表示されません
+  </div>
+</div>
+
+<%- else -%><%- if api_key.present? -%>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?key=<%= api_key %>&region=jp"></script>
+<%- else -%>
+<script type="text/javascript" src="//maps.google.com/maps/api/js?region=jp"></script>
+<%- end -%>
 <script type="text/javascript">
 //<![CDATA[
 
@@ -50,4 +67,4 @@ addEvent(window, 'load', function() {
   <h2>地図</h2>
   <%== "<h3>#{map.title}</h3>" if !map.title.blank? %>
   <div id="map1" class="map" style="width: 100%; height: 400px"></div>
-</div>
+</div><%- end -%>

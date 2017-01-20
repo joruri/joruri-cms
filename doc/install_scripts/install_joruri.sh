@@ -20,7 +20,7 @@ centos() {
 
   id joruri || useradd -m joruri
 
-  yum -y install --enablerepo=remi ImageMagick-last-devel
+  yum -y install --enablerepo=remi ImageMagick6-devel
   yum install -y libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
   git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri

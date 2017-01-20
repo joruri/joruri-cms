@@ -66,7 +66,7 @@ class Portal::Public::Piece::FeedEntriesController < Sys::Controller::Public::Ba
                .public_content_with_own_docs(
                  content,
                  list_type,
-                 item: category,
+                 category: category,
                  mobile: request.mobile
                )
                .paginate(page: page, per_page: limit)

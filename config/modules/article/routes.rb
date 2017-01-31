@@ -120,6 +120,7 @@ Joruri::Application.routes.draw do
     get "node_event_docs/:year/:month/index.:format" => "public/node/event_docs#month"
     get "node_event_docs/index.:format"              => "public/node/event_docs#month"
     get "node_tag_docs/index.:format"                => "public/node/tag_docs#index"
+    post "node_tag_docs/index.:format"               => "public/node/tag_docs#index"
     get "node_tag_docs/:tag"                         => "public/node/tag_docs#index"
     get "node_units/:name/:attr/index.:format"       => "public/node/units#show_attr"
     get "node_units/:name/:file.:format"             => "public/node/units#show"

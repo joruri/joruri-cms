@@ -21,6 +21,8 @@ class Article::Area < ActiveRecord::Base
   validates :state, :title, presence: true
   validates :name, presence: true, uniqueness: { scope: [:content_id] }
 
+  validate :check_level_no
+
   scope :content_is, ->(content) {
     where(content_id: content.id)
   }
@@ -61,5 +63,9 @@ class Article::Area < ActiveRecord::Base
       crumbs << c
     end
     Cms::Lib::BreadCrumbs.new(crumbs)
+  end
+
+  def check_level_no
+    errors.add :base, '5階層目以降は作成できません。' if level_no >= 5
   end
 end

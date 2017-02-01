@@ -11,6 +11,7 @@ class Article::Admin::AreasController < Cms::Controller::Admin::Base
       @parent.id = 0
     else
       @parent = Article::Area.find(params[:parent])
+      return http_error(404) if @parent.level_no >= 4
     end
   end
 

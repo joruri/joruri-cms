@@ -20,6 +20,8 @@ class Article::Category < ActiveRecord::Base
 
   validates :state, :parent_id, :title, presence: true
   validates :name, presence: true, uniqueness: { scope: [:content_id] }
+  
+  validate :check_level_no
 
   def self.root_items(conditions = {})
     conditions = conditions.merge(parent_id: 0, level_no: 1)
@@ -57,5 +59,9 @@ class Article::Category < ActiveRecord::Base
       crumbs << c
     end
     Cms::Lib::BreadCrumbs.new(crumbs)
+  end
+  
+  def check_level_no
+    errors.add :base, '5階層目以降は作成できません。' if level_no >= 5
   end
 end

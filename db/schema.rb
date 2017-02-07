@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706080642) do
+ActiveRecord::Schema.define(version: 20170117162451) do
 
   create_table "article_areas", force: :cascade do |t|
     t.integer  "unid",       limit: 4
@@ -472,17 +472,18 @@ ActiveRecord::Schema.define(version: 20160706080642) do
   add_index "cms_site_settings", ["site_id", "name"], name: "concept_id", using: :btree
 
   create_table "cms_sites", force: :cascade do |t|
-    t.integer  "unid",            limit: 4
-    t.string   "state",           limit: 15
+    t.integer  "unid",               limit: 4
+    t.string   "state",              limit: 15
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",            limit: 255
-    t.string   "full_uri",        limit: 255
-    t.string   "alias_full_uri",  limit: 255
-    t.string   "mobile_full_uri", limit: 255
-    t.string   "admin_full_uri",  limit: 255
-    t.integer  "node_id",         limit: 4
-    t.text     "related_site",    limit: 65535
+    t.string   "name",               limit: 255
+    t.string   "full_uri",           limit: 255
+    t.string   "alias_full_uri",     limit: 255
+    t.string   "mobile_full_uri",    limit: 255
+    t.string   "admin_full_uri",     limit: 255
+    t.integer  "node_id",            limit: 4
+    t.text     "related_site",       limit: 65535
+    t.string   "google_map_api_key", limit: 255
   end
 
   create_table "cms_stylesheets", force: :cascade do |t|

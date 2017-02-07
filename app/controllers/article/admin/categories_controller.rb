@@ -11,6 +11,7 @@ class Article::Admin::CategoriesController < Cms::Controller::Admin::Base
       @parent.id = 0
     else
       @parent = Article::Category.find(params[:parent])
+      return http_error(404) if @parent.level_no >= 4
     end
   end
 

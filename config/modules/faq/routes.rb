@@ -88,6 +88,7 @@ Joruri::Application.routes.draw do
     get "node_recent_docs/index.:format"            => "public/node/recent_docs#index"
     get "node_search_docs/index.:format"            => "public/node/search_docs#index"
     get "node_tag_docs/index.:format"               => "public/node/tag_docs#index"
+    post "node_tag_docs/index.:format"              => "public/node/tag_docs#index"
     get "node_tag_docs/:tag"                        => "public/node/tag_docs#index"
     get "node_categories/:name/:attr/index.:format" => "public/node/categories#show_attr"
     get "node_categories/:name/:file.:format"       => "public/node/categories#show"

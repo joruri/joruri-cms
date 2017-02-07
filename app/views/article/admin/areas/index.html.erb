@@ -13,7 +13,7 @@
   <tr class="<%= cycle '', 'cycle' %>">
     <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
     <td><%= item.name %></td>
-    <td><%= link_to h(item.title), url_for(:action => :index, :parent => item) %></td>
+    <td><%= item.level_no >= 4 ? item.title : link_to( h(item.title), url_for(:action => :index, :parent => item)) %></td>
     <td style="text-align: right;"><%= item.sort_no %></td>
     <td style="text-align: center;"><%= item.updated_at.strftime('%Y-%m-%d %H:%M')%></td>
     <td style="text-align: center;"><%= safe{item.status.name} %></td>

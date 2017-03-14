@@ -22,7 +22,7 @@ centos() {
 
   yum install -y ImageMagick-devel libxml2-devel libxslt-devel mysql-devel openldap-devel
 
-  git clone https://github.com/joruri/joruri-cms.git /var/share/joruri
+  git clone -b v2-master https://github.com/joruri/joruri-cms.git /var/share/joruri
 
   cp /var/share/joruri/config/original/* /var/share/joruri/config/
 

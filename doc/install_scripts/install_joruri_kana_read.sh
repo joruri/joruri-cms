@@ -40,17 +40,17 @@ centos() {
 
   cd /usr/local/src
   rm -rf mecab-0.996.tar.gz mecab-0.996
-  curl -fsSLO http://mecab.googlecode.com/files/mecab-0.996.tar.gz
+  curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE' -o mecab-0.996.tar.gz
   tar zxf mecab-0.996.tar.gz && cd mecab-0.996 && ./configure --enable-utf8-only && make && make install
 
   cd /usr/local/src
   rm -rf mecab-ipadic-2.7.0-20070801.tar.gz mecab-ipadic-2.7.0-20070801
-  curl -fsSLO http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+  curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM' -o mecab-ipadic-2.7.0-20070801.tar.gz
   tar zxf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801 && ./configure --with-charset=utf8 && make && make install
 
   cd /usr/local/src
   rm -rf mecab-ruby-0.996.tar.gz mecab-ruby-0.996
-  curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+  curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7VUNlczBWVDZJbE0' -o mecab-ruby-0.996.tar.gz
   tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
 }
 

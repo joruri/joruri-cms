@@ -1,4 +1,4 @@
-## Joruri CMS 2.2.1 インストールマニュアル                  2016.03.17
+## Joruri CMS 2.2.1 インストールマニュアル                  2017.03.14
 
 **********************************************************************
  1 想定環境
@@ -35,7 +35,7 @@ rootユーザに変更します。
 必要なパッケージをインストールします。
 
   # yum -y install \
-      wget make gcc-c++ patch \
+      git wget make gcc-c++ patch \
       libxslt libxslt-devel libxml2-devel libyaml-* \
       libjpeg-devel libpng-devel \
       librsvg2-devel ghostscript-devel \
@@ -52,10 +52,9 @@ Joruriユーザを作成します。
 
 Joruriソースコードを設置します。
 
-  # cd /usr/local/src
-  # curl -fsSLO http://joruri.org/download/joruri-2.2.1.tar.gz
   # mkdir /var/share
-  # tar xvzf joruri-2.2.1.tar.gz -C /var/share && cd /var/share/joruri
+  # git clone -b v2-master https://github.com/joruri/joruri-cms.git /var/share/joruri
+  # cd /var/share/joruri
   # cp config/original/* config/
   # cp -r public/_common/themes/joruri.original public/_common/themes/joruri
   # chown -R joruri:joruri ./
@@ -311,19 +310,19 @@ LAMEをインストールします。
 MeCabをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-0.996.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE' -o mecab-0.996.tar.gz
   # tar zxf mecab-0.996.tar.gz && cd mecab-0.996 && ./configure --enable-utf8-only && make && make install
 
 MeCab-IPAdicをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM' -o mecab-ipadic-2.7.0-20070801.tar.gz
   # tar zxf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801 && ./configure --with-charset=utf8 && make && make install
 
 MeCab-Rubyをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7VUNlczBWVDZJbE0' -o mecab-ruby-0.996.tar.gz
   # tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
 
 

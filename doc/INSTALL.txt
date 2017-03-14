@@ -1,4 +1,4 @@
-## Joruri CMS 2.2.1 インストールマニュアル                  2016.03.17
+## Joruri CMS 2.2.1 インストールマニュアル                  2017.03.14
 
 **********************************************************************
  1 想定環境
@@ -311,19 +311,19 @@ LAMEをインストールします。
 MeCabをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-0.996.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE' -o mecab-0.996.tar.gz
   # tar zxf mecab-0.996.tar.gz && cd mecab-0.996 && ./configure --enable-utf8-only && make && make install
 
 MeCab-IPAdicをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM' -o mecab-ipadic-2.7.0-20070801.tar.gz
   # tar zxf mecab-ipadic-2.7.0-20070801.tar.gz && cd mecab-ipadic-2.7.0-20070801 && ./configure --with-charset=utf8 && make && make install
 
 MeCab-Rubyをインストールします。
 
   # cd /usr/local/src
-  # curl -fsSLO http://mecab.googlecode.com/files/mecab-ruby-0.996.tar.gz
+  # curl -fsSL 'https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7VUNlczBWVDZJbE0' -o mecab-ruby-0.996.tar.gz
   # tar zxf mecab-ruby-0.996.tar.gz && cd mecab-ruby-0.996 && ruby extconf.rb && make && make install
 
 

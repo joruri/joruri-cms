@@ -42,6 +42,7 @@ def centos
 
   unless File.exist?(passenger_conf)
     system 'yum install -y curl-devel'
+    system 'gem install rack -v=1.6.4'
     system "gem install passenger -v #{PASSENGER_VERSION}"
     system 'passenger-install-apache2-module -a'
 

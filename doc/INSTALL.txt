@@ -145,6 +145,7 @@ Apacheは[6.1]を、Thinは[6.2]の手順を進めてください。
 
 Phusion Passengerをインストールします。
 
+  # gem install rack -v=1.6.4
   # gem install passenger --no-ri --no-rdoc -v 4.0.53
   # passenger-install-apache2-module
   ## 画面の内容を確認して Enterキーを押してください。

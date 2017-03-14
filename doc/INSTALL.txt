@@ -35,7 +35,7 @@ rootユーザに変更します。
 必要なパッケージをインストールします。
 
   # yum -y install \
-      wget make gcc-c++ patch \
+      git wget make gcc-c++ patch \
       libxslt libxslt-devel libxml2-devel libyaml-* \
       libjpeg-devel libpng-devel \
       librsvg2-devel ghostscript-devel \
@@ -52,10 +52,9 @@ Joruriユーザを作成します。
 
 Joruriソースコードを設置します。
 
-  # cd /usr/local/src
-  # curl -fsSLO http://joruri.org/download/joruri-2.2.1.tar.gz
   # mkdir /var/share
-  # tar xvzf joruri-2.2.1.tar.gz -C /var/share && cd /var/share/joruri
+  # git clone -b v2-master https://github.com/joruri/joruri-cms.git /var/share/joruri
+  # cd /var/share/joruri
   # cp config/original/* config/
   # cp -r public/_common/themes/joruri.original public/_common/themes/joruri
   # chown -R joruri:joruri ./

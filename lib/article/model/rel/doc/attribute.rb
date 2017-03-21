@@ -14,12 +14,8 @@ module Article::Model::Rel::Doc::Attribute
 
       ids = ids.uniq
 
-      where(
-        arel_table[:attribute_ids].in(ids)
-        .or(arel_table[:attribute_ids].matches("#{ids.join('|')} %"))
-        .or(arel_table[:attribute_ids].matches("% #{ids.join('|')} %"))
-        .or(arel_table[:attribute_ids].matches("% #{ids.join('|')}"))
-      )
+      where("`#{table_name}`.`attribute_ids` REGEXP ?", "(^| )(#{ids.join('|')})( |$)")
+
     }
   end
 

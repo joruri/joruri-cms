@@ -24,12 +24,7 @@ module Article::Model::Rel::Doc::Area
       if ids.empty?
         all
       else
-        where(
-          arel_table[:area_ids].in(ids)
-          .or(arel_table[:area_ids].matches("#{ids.join('|')} %"))
-          .or(arel_table[:area_ids].matches("% #{ids.join('|')} %"))
-          .or(arel_table[:area_ids].matches("% #{ids.join('|')}"))
-        )
+       where("`#{table_name}`.`area_ids` REGEXP ?", "(^| )(#{ids.join('|')})( |$)")
       end
     }
   end

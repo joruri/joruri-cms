@@ -24,12 +24,7 @@ module Article::Model::Rel::Doc::Category
       if ids.empty?
         all
       else
-        where(
-          arel_table[:category_ids].in(ids)
-          .or(arel_table[:category_ids].matches("#{ids.join('|')} %"))
-          .or(arel_table[:category_ids].matches("% #{ids.join('|')} %"))
-          .or(arel_table[:category_ids].matches("% #{ids.join('|')}"))
-        )
+        where("`#{table_name}`.`category_ids` REGEXP ?", "(^| )(#{ids.join('|')})( |$)")
       end
     }
   end

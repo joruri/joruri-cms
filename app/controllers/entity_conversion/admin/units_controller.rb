@@ -102,7 +102,8 @@ class EntityConversion::Admin::UnitsController < Cms::Controller::Admin::Base
   def unit_params
     params.require(:item).permit(
       :state, :parent_id, :new_parent_id, :code, :name, :name_en, :ldap,
-      :sort_no, :web_state, :layout_id, :email, :tel, :outline_uri, :old_id
+      :sort_no, :web_state, :layout_id, :email, :tel, :outline_uri, :old_id,
+      :move_id, :new_move_id
     )
   end
 end

@@ -31,7 +31,7 @@ class Article::Content::Setting < Cms::ContentSetting
              style: 'width: 100px;'
   set_config :attachment_thumbnail_size,
              name: "添付ファイル/サムネイルサイズ",
-             comment: "（例　<tt>120x90</tt> ）",
+             comment: "（例　120x90 ）",
              style: 'width: 100px;'
   set_config :new_term,
              name: "新着マーク表示期間",

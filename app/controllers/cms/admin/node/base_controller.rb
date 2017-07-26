@@ -65,9 +65,22 @@ class Cms::Admin::Node::BaseController < Cms::Controller::Admin::Base
   private
 
   def base_params
-    params.require(:item).permit(
-      :concept_id, :layout_id, :name, :parent_id, :route_id,
-      :sitemap_sort_no, :sitemap_state, :title,
-      in_creator: [:group_id, :user_id])
+    nested = {in_creator: base_params_item_in_creator,
+              in_settings: base_params_item_in_settings}
+    params.require(:item).permit(*base_params_item, nested)
   end
+  
+  def base_params_item
+    [:concept_id, :layout_id, :name, :parent_id, :route_id,
+      :sitemap_sort_no, :sitemap_state, :title]
+  end
+
+  def base_params_item_in_creator
+    [:group_id, :user_id]
+  end
+  
+  def base_params_item_in_settings
+    []
+  end
+  
 end

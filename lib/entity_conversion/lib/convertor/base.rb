@@ -142,12 +142,12 @@ class EntityConversion::Lib::Convertor::Base
 
     target_fields(:group_id).each do |cls, fields|
       records = 0
-
-      cond = Condition.new
+      
+      conds = []
       fields.each do |f|
-        cond.or f, 'REGEXP', "(^| )#{group.id}( |$)"
+        conds << Arel.sql("`#{cls.table_name}`.`#{f}` REGEXP '(^| )#{group.id}( |$)'")
       end
-      items = cls.uncached { cls.where(cond.where) }
+      items = cls.uncached { cls.where(conds.join(' or ')) }
 
       next if items.empty?
       records += items.size
@@ -166,11 +166,13 @@ class EntityConversion::Lib::Convertor::Base
     target_fields(:text).each do |cls, fields|
       records = 0
 
-      cond = Condition.new
+      conds = []
       fields.each do |f|
-        texts.each { |src, _dst| cond.or f, 'REGEXP', Regexp.escape(src) }
+        texts.each do |src, _dst|
+          conds << Arel.sql("`#{cls.table_name}`.`#{f}` REGEXP '#{Regexp.escape(src)}'")
+        end
       end
-      items = cls.uncached { cls.where(cond.where) }
+      items = cls.uncached { cls.where(conds.join(' or ')) }
 
       next if items.empty?
       records += items.size

@@ -125,7 +125,7 @@ class Sys::Model::XmlRecord::Base
       end
       if options[:order] && !items.empty?
         begin
-          return items.sort { |a, b| a.send(options[:order]) <=> b.send(options[:order]) }
+          return items.sort { |a, b| a.send(options[:order]).to_i <=> b.send(options[:order]).to_i }
         rescue
           return items
         end

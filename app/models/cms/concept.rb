@@ -117,7 +117,7 @@ class Cms::Concept < ActiveRecord::Base
 
       choices << [('　　' * i) + p.name, p.id]
       c_items = self.class.where(parent_id: p.id)
-      c_items = c_items.where(id: id) if id
+      c_items = c_items.where.not(id: id) if id
       c_items.order(:sort_no).each do |c|
         down.call(c, i + 1)
       end

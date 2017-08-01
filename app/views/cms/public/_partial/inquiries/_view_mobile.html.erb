@@ -13,5 +13,5 @@ return if !item.inquiry || !item.inquiry.visible? || !item.inquiry.group
   <% if !item.inquiry.fax.blank?
    %><div class="fax">ファクシミリ： <%= item.inquiry.fax %></div><% end %>
   <% if item.inquiry_email_setting != "hidden" && safe{item.inquiry.email} && !item.inquiry.email.blank?
-   %><div class="email">メールアドレス： <%= email_to item.inquiry.email %></div><% end %>
+   %><div class="email">メールアドレス： <%= mail_to item.inquiry.email %></div><% end %>
 </div>

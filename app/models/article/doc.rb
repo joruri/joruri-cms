@@ -485,6 +485,7 @@ class Article::Doc < ActiveRecord::Base
       file = Sys::File.new(f.attributes)
       file.id = nil
       file.use_resize(false)
+      file.use_thumbnail content.setting_value(:attachment_thumbnail_size)
       file.file = Sys::Lib::File::NoUploadedFile.new(
         f.upload_path, mime_type: file.mime_type
       )

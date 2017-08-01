@@ -37,8 +37,10 @@ ol,ul,dl
 .temp1 p, temp2 p {
   margin: 0 0 1em;
 }
+.temp3, .temp4 {
+   display: flex;
+}
 .temp3 dl, .temp4 dl {
-  float: left;
   margin: 0 5px 0 0;
   padding: 0;
   text-align: center;

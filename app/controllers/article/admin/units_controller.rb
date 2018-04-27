@@ -17,7 +17,7 @@ class Article::Admin::UnitsController < Cms::Controller::Admin::Base
     @items = Article::Unit
              .where(parent_id: @parent.id)
              .paginate(page: params[:page], per_page: params[:limit])
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
 
     _index @items
   end

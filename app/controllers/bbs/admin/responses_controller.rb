@@ -24,7 +24,7 @@ class Bbs::Admin::ResponsesController < Cms::Controller::Admin::Base
              .where(content_id: @content.id)
              .where(parent_id: @parent.id)
              .search(params)
-             .order(params[:sort], updated_at: :desc)
+             .order(updated_at: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end

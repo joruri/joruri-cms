@@ -12,7 +12,7 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   def index
     @items = Cms::PieceLinkItem
              .where(piece_id: @piece.id)
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
     _index @items
   end
 

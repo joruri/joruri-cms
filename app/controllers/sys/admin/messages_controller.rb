@@ -9,7 +9,7 @@ class Sys::Admin::MessagesController < Cms::Controller::Admin::Base
   def index
     @items = Sys::Message
              .all
-             .order(params[:sort], published_at: :desc)
+             .order(published_at: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

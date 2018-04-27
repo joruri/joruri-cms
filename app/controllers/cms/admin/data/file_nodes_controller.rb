@@ -15,7 +15,7 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
     @items = @items.readable if params[:s_target] != 'all'
     @items = @items.search(params)
                    .paginate(page: params[:page], per_page: params[:limit])
-                   .order(params[:sort], :name, :id)
+                   .order(:name, :id)
 
     _index @items
   end

@@ -12,7 +12,7 @@ class Sys::Admin::ObjectPrivilegesController < Cms::Controller::Admin::Base
              .where(role_id: @parent.id)
              .joins(:concept)
              .group(:item_unid)
-             .order(params[:sort], Cms::Concept.arel_table[:name])
+             .order(Cms::Concept.arel_table[:name])
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

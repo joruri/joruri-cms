@@ -19,7 +19,7 @@ class Article::Admin::AreasController < Cms::Controller::Admin::Base
     @items = Article::Area
              .where(content_id: @content)
              .where(parent_id: @parent)
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
              .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end

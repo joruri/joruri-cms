@@ -23,7 +23,7 @@ class Article::Admin::Doc::FilesController < Cms::Controller::Admin::Base
                         .where(parent_unid: @parent)
              end
 
-    @items = @items.order(params[:sort], :name)
+    @items = @items.order(:name)
                    .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

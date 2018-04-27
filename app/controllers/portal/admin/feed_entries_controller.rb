@@ -21,7 +21,7 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
     @items = Portal::FeedEntry
              .where(feed_id: @feed.id)
              .search(params)
-             .order(params[:sort], entry_updated: :desc, id: :desc)
+             .order(entry_updated: :desc, id: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

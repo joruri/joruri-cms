@@ -12,7 +12,7 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
   def index
     @items = Newsletter::Tester
              .where(content_id: @content.id)
-             .order(params[:sort], :email)
+             .order(:email)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

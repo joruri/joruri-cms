@@ -16,7 +16,7 @@ class Enquete::Admin::FormsController < Cms::Controller::Admin::Base
   def index
     @items = Enquete::Form
              .where(content_id: @content.id)
-             .order(params[:sort], :sort_no, id: :desc)
+             .order(:sort_no, id: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

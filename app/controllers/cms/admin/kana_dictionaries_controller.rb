@@ -13,7 +13,7 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
 
     @items = Cms::KanaDictionary
              .all
-             .order(params[:sort], :name, :id)
+             .order(:name, :id)
              .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end

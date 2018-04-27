@@ -15,13 +15,13 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
             .where(site_id: Core.site.id)
             .where(parent_id: @parent.id)
             .where(directory: 1)
-            .order(params[:sort], :name, :id)
+            .order(:name, :id)
 
     @pages = Cms::Node
              .where(site_id: Core.site.id)
              .where(parent_id: @parent.id)
              .where(directory: 0)
-             .order(params[:sort], :name, :id)
+             .order(:name, :id)
 
     _index @pages
   end
@@ -30,7 +30,7 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     @items = Cms::Node
              .where(site_id: Core.site.id)
              .search(params)
-             .order(params[:sort], :parent_id, directory: :desc, name: :asc)
+             .order(:parent_id, directory: :desc, name: :asc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     @skip_navi = true

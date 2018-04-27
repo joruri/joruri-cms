@@ -9,7 +9,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   def index
     @items = Cms::Site
              .all
-             .order(params[:sort], :id)
+             .order(:id)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

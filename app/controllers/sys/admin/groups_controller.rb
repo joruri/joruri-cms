@@ -17,14 +17,14 @@ class Sys::Admin::GroupsController < Cms::Controller::Admin::Base
              .readable
              .joins(:groups)
              .where(Sys::Group.arel_table[:id].eq(@parent))
-             .order(params[:sort], "LPAD(account, 15, '0')")
+             .order("LPAD(account, 15, '0')")
   end
 
   def index
     @items = Sys::Group
              .readable
              .where(parent_id: @parent.id)
-             .order(params[:sort], :id)
+             .order(:id)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

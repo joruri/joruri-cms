@@ -15,7 +15,7 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
     @items = Newsletter::Doc
              .where(content_id: @content.id)
              .search(params)
-             .order(params[:sort], id: :desc)
+             .order(id: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end

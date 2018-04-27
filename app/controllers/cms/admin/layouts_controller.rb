@@ -11,7 +11,7 @@ class Cms::Admin::LayoutsController < Cms::Controller::Admin::Base
   def index
     @items = Cms::Layout.search(params)
     @items = @items.readable if params[:s_target] != 'all'
-    @items = @items.order(params[:sort], :name, :id)
+    @items = @items.order(:name, :id)
                    .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

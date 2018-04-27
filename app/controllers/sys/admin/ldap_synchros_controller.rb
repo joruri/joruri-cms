@@ -10,7 +10,7 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
   def index
     @items = Sys::LdapSynchro
              .all
-             .order(params[:sort], version: :desc)
+             .order(version: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
              .group(:version)
 

@@ -122,38 +122,43 @@ function JoruriAcNavi_changeTheme(value) {
  * ruby
  */
 function JoruriAcNavi_ruby(flag) {
+  var path;
+
   if (flag == true) { // redirect
     $.cookie('navigation_ruby', 'on', { path: '/' });
 
     if (location.pathname.search(/\/$/i) != -1) {
-      location.href = location.pathname + "index.html.r" + location.search;
+      path = location.pathname + "index.html.r";
     } else if (location.pathname.search(/\.html\.mp3$/i) != -1) {
-      location.href = location.pathname.replace(/\.html\.mp3$/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html\.mp3$/, ".html.r");
     } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html$/, ".html.r") + location.search;
-    } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html$/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html$/, ".html.r");
     } else {
-      location.href = location.href.replace(/#.*/, '');
+      path = location.pathname.replace(/#.*/, '');
     }
   } else if (flag == false) { // redirect
     $.cookie('navigation_ruby', 'off', { path: '/' });
     if (location.pathname.search(/\.html\.r$/i) != -1) {
-      location.href = location.pathname.replace(/\.html\.r$/, ".html") + location.search;
+      path = location.pathname.replace(/\.html\.r$/, ".html");
     } else {
       location.reload();
     }
   } else if ($.cookie('navigation_ruby') == "on") { // render: rubied
     if (location.pathname.search(/\/$/i) != -1) {
-      location.href = location.pathname + "index.html.r" + location.search;
+      path = location.pathname + "index.html.r";
     } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html$/, ".html.r");
     } else {
       if (this.rubyLink) this.rubyLink.addClass('current');
       this.notice();
     }
   } else { // render: not rubied
     if (this.rubyLink) this.rubyLink.removeClass('current');
+  }
+  if (path) {
+    var host = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+    location.href = host + path + location.search;
+    return;
   }
   return false;
 }
@@ -172,13 +177,15 @@ function JoruriAcNavi_talk(flag) {
   uri  = uri.replace(/\.html\.r$/, '.html');
   uri += '.mp3' + param;
 
+  var host = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+
   if (!this.talkPlayer) {
-    location.href = uri;
+    location.href = host + uri;
     return false;
   }
 
   if (this.talkPlayer.html() == '') { // play
-    var html = '<audio src=" ' + uri + '" id="naviTalkPlayer" controls autoplay />';
+    var html = '<audio src=" ' + host + uri + '" id="naviTalkPlayer" controls autoplay />';
     this.talkPlayer.html(html);
   } else { // stop
     if ($.cookie('navigation_ruby') != 'on') $('#navigationNotice').remove();

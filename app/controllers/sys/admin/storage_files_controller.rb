@@ -19,9 +19,11 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
 
   def validate_path
     @path = ::File.join(Rails.root.to_s, params[:path].to_s)
+    @path = Pathname(@path).cleanpath.to_s
+    return http_error(403) if @path !~ /^#{Rails.root.to_s}/
     # return http_error(404) if params[:path] && !::Storage.exists?(@path)
 
-    @dir = params[:path]
+    @dir = @path.gsub("#{Rails.root.to_s}/", '')
     @roots.each do |dir, _path|
       if @dir.to_s =~ /^#{Regexp.escape(dir)}(\/|$)/
         @root = dir
@@ -34,7 +36,10 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
       @path = ::File.join(@path, @root)
       @dir  = @root
     end
-
+    
+    root_paths = @roots.map{|root| ::File.join(Rails.root.to_s, root[0])}.join('|')
+    return http_error(403) if @path !~ /^(#{root_paths})/
+    
     @navi = []
     dirs = @dir.split(/\//)
     dirs.each_with_index do |n, idx|

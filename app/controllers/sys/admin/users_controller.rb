@@ -12,7 +12,7 @@ class Sys::Admin::UsersController < Cms::Controller::Admin::Base
     @item.in_group_id = params[:s_group_id]
 
     @items = Sys::User.search(params)
-                      .order(params[:sort], "LPAD(account, 15, '0')")
+                      .order("LPAD(account, 15, '0')")
                       .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

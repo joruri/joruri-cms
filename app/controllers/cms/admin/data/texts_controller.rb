@@ -11,7 +11,7 @@ class Cms::Admin::Data::TextsController < Cms::Controller::Admin::Base
     @items = Cms::DataText.where(site_id: Core.site.id)
     @items = @items.readable if params[:s_target] != 'all'
     @items = @items.search(params)
-                   .order(params[:sort], :name, :id)
+                   .order(:name, :id)
                    .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

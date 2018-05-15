@@ -30,7 +30,7 @@ class Sys::Admin::OperationLogsController < Cms::Controller::Admin::Base
 
     return destroy_items(@items) if params[:destroy]
 
-    @items = @items.order(params[:sort], id: :desc)
+    @items = @items.order(id: :desc)
 
     if params[:csv].blank?
       @items = @items.paginate(page: params[:page], per_page: params[:limit])

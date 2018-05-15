@@ -9,7 +9,7 @@ class Sys::Admin::LanguagesController < Cms::Controller::Admin::Base
   def index
     @items = Sys::Language
              .all
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

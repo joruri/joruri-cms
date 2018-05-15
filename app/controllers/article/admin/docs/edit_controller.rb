@@ -6,7 +6,7 @@ class Article::Admin::Docs::EditController < Article::Admin::DocsController
              .editable
              .search(params)
              .paginate(page: params[:page], per_page: params[:limit])
-             .order(params[:sort], updated_at: :desc)
+             .order(updated_at: :desc)
 
     _index @items
   end

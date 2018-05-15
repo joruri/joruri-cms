@@ -5,7 +5,7 @@ class Faq::Admin::Docs::EditController < Faq::Admin::DocsController
              .editable
              .where(content_id: @content.id)
              .search(params)
-             .order(params[:sort], updated_at: :desc)
+             .order(updated_at: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

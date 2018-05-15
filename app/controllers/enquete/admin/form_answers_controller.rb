@@ -26,7 +26,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
     @items = Enquete::Answer
              .where(content_id: @content.id)
              .where(form_id: @form.id)
-             .order(params[:sort], id: :desc)
+             .order(id: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items
@@ -36,7 +36,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
     @items = Enquete::Answer
              .where(content_id: @content.id)
              .where(form_id: @form.id)
-             .order(params[:sort], id: :desc)
+             .order(id: :desc)
 
     columns = @form.public_columns.collect { |col| [col.id, col.name] }
 

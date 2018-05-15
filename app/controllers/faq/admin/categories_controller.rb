@@ -18,7 +18,7 @@ class Faq::Admin::CategoriesController < Cms::Controller::Admin::Base
     @items = Faq::Category
              .where(parent_id: @parent)
              .where(content_id: @content)
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

@@ -16,10 +16,7 @@
 
 <% if @fb_share %>
   <!-- facebook/share -->
-  <div class="fbShare" style="display: inline;">
-    <a name="fb_share" type="button_count" share_url="<%= @uri %>"></a>
-  </div>
-  <script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"></script>
+  <iframe src="//www.facebook.com/plugins/share_button.php?href=<%= ::CGI.escape(@uri) %>&layout=button&size=small&mobile_iframe=true&width=61&height=20&appId" width="61" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 <% end %>
 
 <% if @gp_share %>

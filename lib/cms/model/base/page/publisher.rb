@@ -147,8 +147,9 @@ module Cms::Model::Base::Page::Publisher
     base_uri = "#{base_uri}index.html" if base_uri =~ /\/$/
     base_uri = ::File.dirname(base_uri) + '/'
 
-    data.scan(/<a href="([^"]+)">/i).uniq.each do |m|
-      uri = m[0].to_s
+    doc = Nokogiri::HTML.fragment(data)
+    doc.css('a[@href]').each do |a|
+      uri = a.attribute('href').value
       next if uri.strip.blank?
       next if uri =~ /^#/
       next if uri =~ /^javascript:/i

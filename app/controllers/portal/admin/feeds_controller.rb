@@ -15,7 +15,7 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
   def index
     @items = Cms::Feed
              .where(content_id: @content.id)
-             .order(params[:sort], id: :desc)
+             .order(id: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

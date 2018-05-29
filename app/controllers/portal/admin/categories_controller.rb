@@ -17,7 +17,7 @@ class Portal::Admin::CategoriesController < Cms::Controller::Admin::Base
   def index
     @items = Portal::Category
              .where(parent_id: @parent)
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

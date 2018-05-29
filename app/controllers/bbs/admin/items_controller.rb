@@ -20,7 +20,7 @@ class Bbs::Admin::ItemsController < Cms::Controller::Admin::Base
              .where(content_id: @content.id)
              .where(parent_id: 0)
              .search(params)
-             .order(params[:sort], updated_at: :desc)
+             .order(updated_at: :desc)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

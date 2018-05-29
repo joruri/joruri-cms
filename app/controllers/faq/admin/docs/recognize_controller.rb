@@ -10,7 +10,7 @@ class Faq::Admin::Docs::RecognizeController < Faq::Admin::DocsController
     end
 
     @items = @items.search(params)
-                   .order(params[:sort], updated_at: :desc)
+                   .order(updated_at: :desc)
                    .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

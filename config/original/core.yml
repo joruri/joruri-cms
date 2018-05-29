@@ -1,8 +1,8 @@
 production:
   title      : Joruri
   uri        : http://joruri.example.com/
-  http_proxy : <%= ENV['HTTP_PROXY'] %>
-  https_proxy: <%= ENV['HTTPS_PROXY'] %>
+  http_proxy : 
+  https_proxy: 
 
 test:
   title      :

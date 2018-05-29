@@ -17,7 +17,7 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
     @items = Cms::Concept
              .where(parent_id: @parent.id)
              .where(site_id: Core.site.id)
-             .order(params[:sort], :sort_no)
+             .order(:sort_no)
     _index @items
   end
 

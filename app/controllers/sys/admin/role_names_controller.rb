@@ -9,7 +9,7 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   def index
     @items = Sys::RoleName
              .all
-             .order(params[:sort], :name)
+             .order(:name)
              .paginate(page: params[:page], per_page: params[:limit])
 
     _index @items

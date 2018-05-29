@@ -69,11 +69,21 @@ CKEDITOR.editorConfig = function( config ) {
     config.extraPlugins = 'youtube,audio,video,zomekilink';
 
     // tagの許可
-    config.allowedContent = true;
+    config.allowedContent = {
+      $1: { // Use the ability to specify elements as an object.
+        elements: CKEDITOR.dtd,
+        attributes: true,
+        styles: true,
+        classes: true
+      }
+    };
 
     // Wordからの貼付で装飾を削除する
     config.pasteFromWordRemoveFontStyles = true;
     config.pasteFromWordRemoveStyles = true;
+    
+    // 非推奨属性入力不可
+    config.disallowedContent = 'script;*[on*];*[data-*]';
 
   };
 
@@ -85,6 +95,22 @@ CKEDITOR.editorConfig = function( config ) {
     // Inline styles
     { name: '強調（赤文字）', element: 'span', styles: { 'color': '#e00' } }
   ]);
+
+  // hrefからjavascriptプロトコルを除去
+  CKEDITOR.on('instanceReady', function(ev) {
+    var rules = {
+      elements: {
+        a: function(element) {
+          var href = element.attributes.href;
+          if (href && href.match(/^javascript:/i)) {
+            element.attributes['data-cke-saved-href'] = '';
+          }
+        }
+      }
+    };
+    ev.editor.dataProcessor.htmlFilter.addRules(rules);
+    ev.editor.dataProcessor.dataFilter.addRules(rules);
+  });
 
   CKEDITOR.config.stylesSet = 'my_styles';
   CKEDITOR.config.coreStyles_strike = { element : 'del' };

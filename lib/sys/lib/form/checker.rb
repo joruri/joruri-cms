@@ -38,7 +38,7 @@ class Sys::Lib::Form::Checker
       html += %Q(<p>次のURLを確認しました。</p><ul>)
       @links.each do |uri, res|
         res = res ? %Q(<span class="success">成功</span>) : %Q(<span class="failed">失敗</span>)
-        html += %Q(<li>#{uri}　#{res}</li>)
+        html += %Q(<li>#{CGI.escapeHTML(uri)}　#{res}</li>)
       end
       html += %Q(</ul>)
     end

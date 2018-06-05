@@ -13,7 +13,7 @@ class Cms::Admin::KanaDictionariesController < Cms::Controller::Admin::Base
     
     item = Cms::KanaDictionary.new#.readable
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
+    item.order 'name, id'
     @items = item.find(:all)
     _index @items
   end

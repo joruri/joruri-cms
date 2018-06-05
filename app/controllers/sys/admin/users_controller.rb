@@ -14,7 +14,7 @@ class Sys::Admin::UsersController < Cms::Controller::Admin::Base
     item = Sys::User.new
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], "LPAD(account, 15, '0')"
+    item.order "LPAD(account, 15, '0')"
     @items = item.find(:all)
     _index @items
   end

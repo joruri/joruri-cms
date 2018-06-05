@@ -11,7 +11,7 @@ class Sys::Admin::ObjectPrivilegesController < Cms::Controller::Admin::Base
     item = Sys::ObjectPrivilege.new#.readable
     item.and :role_id, @parent.id
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'cms_concepts.name'
+    item.order 'cms_concepts.name'
     joins = ["INNER JOIN cms_concepts ON cms_concepts.unid = sys_object_privileges.item_unid"]
     @items = item.find(:all, :group => :item_unid, :joins => joins)
     _index @items

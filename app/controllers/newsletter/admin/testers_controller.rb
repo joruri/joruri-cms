@@ -13,7 +13,7 @@ class Newsletter::Admin::TestersController < Cms::Controller::Admin::Base
     item = Newsletter::Tester.new
     item.and :content_id, @content.id
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'email ASC'
+    item.order 'email ASC'
     @items = item.find(:all)
     _index @items
   end

@@ -9,7 +9,7 @@ class Cms::Admin::SitesController < Cms::Controller::Admin::Base
   def index
     item = Cms::Site.new
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :id
+    item.order :id
     @items = item.find(:all)
     _index @items
   end

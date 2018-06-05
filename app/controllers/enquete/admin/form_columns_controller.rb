@@ -20,7 +20,7 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
     item.and :form_id, @form.id
     #item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'sort_no ASC'
+    item.order 'sort_no ASC'
     @items = item.find(:all)
     _index @items
   end

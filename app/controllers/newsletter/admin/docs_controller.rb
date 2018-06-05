@@ -15,7 +15,7 @@ class Newsletter::Admin::DocsController < Cms::Controller::Admin::Base
     item.and :content_id, @content.id
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'id DESC'
+    item.order 'id DESC'
     @items = item.find(:all)
     _index @items
   end

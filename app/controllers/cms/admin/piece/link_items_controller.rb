@@ -11,7 +11,7 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   def index
     item = Cms::PieceLinkItem.new
     item.and :piece_id, @piece.id
-    item.order params[:sort], :sort_no
+    item.order :sort_no
     @items = item.find(:all)
     _index @items
   end

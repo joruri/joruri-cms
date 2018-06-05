@@ -9,7 +9,7 @@ class Sys::Admin::RoleNamesController < Cms::Controller::Admin::Base
   def index
     item = Sys::RoleName.new#.readable
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :name
+    item.order :name
     @items = item.find(:all)
     _index @items
   end

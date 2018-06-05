@@ -15,14 +15,14 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     item.and :site_id, Core.site.id
     item.and :parent_id, @parent.id
     item.and :directory, 1
-    item.order params[:sort], 'name, id'
+    item.order 'name, id'
     @dirs = item.find(:all)
     
     item = Cms::Node.new#.readable
     item.and :site_id, Core.site.id
     item.and :parent_id, @parent.id
     item.and :directory, 0
-    item.order params[:sort], 'name, id'
+    item.order 'name, id'
     @pages = item.find(:all)
     
     _index @pages
@@ -34,7 +34,7 @@ class Cms::Admin::NodesController < Cms::Controller::Admin::Base
     #item.and :directory, 0
     item.search params
     item.page params[:page], params[:limit]
-    item.order params[:sort], 'parent_id, directory DESC, name, id'
+    item.order 'parent_id, directory DESC, name, id'
     @items = item.find(:all)
     
     @skip_navi = true

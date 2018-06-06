@@ -22,7 +22,10 @@ function initTinyMCE(originalSettings) {
     theme_advanced_resizing: true,
     
     // Joruri original settings.
-    extended_valid_elements : "iframe[src|width|height|name|align|id|style]",
+    extended_valid_elements : "@[id|class|style|title|dir<ltr?rtl|lang|xml::lang],"
+                            + "a[rel|rev|charset|hreflang|tabindex|accesskey|type|name|href|target|title|class],"
+                            + "iframe[src|width|height|name|align|id|style]",
+    invalid_elements : "script",
     theme_advanced_path: false,
     theme_advanced_font_sizes: "最大=large,大=medium,中=small,小=x-small",//最小=xx-small
     theme_advanced_blockformats: "h2,h3,h4",
@@ -80,10 +83,50 @@ function initTinyMCE(originalSettings) {
     template_replace_values: {
       //username : "Some User",
       //staffid : "991234"
-    }
+    },
+    
+    cleanup_callback : "joruriCleanup"
+    
   };
   for (var key in originalSettings) {
     settings[key] = originalSettings[key];
   }
   tinyMCE.init(settings);
+  
 };
+
+function joruriCleanup(type, value) {
+  
+  function replaceJavascriptTag(dom) {
+    var as = dom.getElementsByTagName('a');
+    var i = 0;
+    while(i < as.length) {
+      href = as[i].getAttribute('href');
+      if (href && href.match(/^javascript:/i)) {
+        as[i].setAttribute('href','');
+        as[i].setAttribute('data-mce-href','');
+      }
+      i++;
+    }
+    return dom;
+  }
+  
+  switch (type) {
+    case "get_from_editor":
+    case "insert_to_editor":
+      var div= document.createElement('div');
+      div.innerHTML= value;
+      div = replaceJavascriptTag(div);
+      value = div.innerHTML;
+      break;
+    case "submit_content":
+      break;
+    case "get_from_editor_dom":
+    case "insert_to_editor_dom":
+    case "setup_content_dom":
+    case "submit_content_dom":
+      value = replaceJavascriptTag(value);
+      break;
+  }
+  return value;
+}

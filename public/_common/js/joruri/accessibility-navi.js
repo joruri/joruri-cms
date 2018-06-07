@@ -122,38 +122,43 @@ function JoruriAcNavi_changeTheme(value) {
  * ruby
  */
 function JoruriAcNavi_ruby(flag) {
+  var path;
+  
   if (flag == true) { // redirect
     $.cookie('navigation_ruby', 'on', { path: '/' });
     
     if (location.pathname.search(/\/$/i) != -1) {
-      location.href = location.pathname + "index.html.r" + location.search;
+      path = location.pathname + "index.html.r";
     } else if (location.pathname.search(/\.html\.mp3$/i) != -1) {
-      location.href = location.pathname.replace(/\.html\.mp3$/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html\.mp3$/, ".html.r");
     } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html$/, ".html.r") + location.search;
-    } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html$/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html$/, ".html.r");
     } else {
-      location.href = location.href.replace(/#.*/, '');
+      path = location.pathname.replace(/#.*/, '');
     }
   } else if (flag == false) { // redirect
     $.cookie('navigation_ruby', 'off', { path: '/' });
     if (location.pathname.search(/\.html\.r$/i) != -1) {
-      location.href = location.pathname.replace(/\.html\.r$/, ".html") + location.search;
+      path = location.pathname.replace(/\.html\.r$/, ".html");
     } else {
       location.reload();
     }
   } else if ($.cookie('navigation_ruby') == "on") { // render: rubied
     if (location.pathname.search(/\/$/i) != -1) {
-      location.href = location.pathname + "index.html.r" + location.search;
+      path = location.pathname + "index.html.r";
     } else if (location.pathname.search(/\.html$/i) != -1) {
-      location.href = location.pathname.replace(/\.html/, ".html.r") + location.search;
+      path = location.pathname.replace(/\.html$/, ".html.r");
     } else {
       if (this.rubyLink) this.rubyLink.addClass('current');
       this.notice();
     }
   } else { // render: not rubied
     if (this.rubyLink) this.rubyLink.removeClass('current');
+  }
+  if (path) {
+    var host = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+    location.href = host + path + location.search;
+    return;
   }
   return false;
 }
@@ -172,8 +177,10 @@ function JoruriAcNavi_talk(flag) {
   uri  = uri.replace(/\.html\.r$/, '.html');
   uri += '.mp3' + param;
   
+  var host = location.protocol + "//" + location.hostname + (location.port ? ':' + location.port : '');
+
   if (!this.talkPlayer) {
-    location.href = uri;
+    location.href = host + uri;
     return false;
   }
   
@@ -182,10 +189,10 @@ function JoruriAcNavi_talk(flag) {
     '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"' +
     ' codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"' +
     ' width="165" height="37" id="niftyPlayer1" align="">' +
-    '<param name=movie value="/_common/swf/niftyplayer/niftyplayer.swf?file=' + uri + '&as=1">' +
+    '<param name=movie value="/_common/swf/niftyplayer/niftyplayer.swf?file=' + host + uri + '&as=1">' +
     '<param name=quality value=high>' +
     '<param name=bgcolor value=#FFFFFF>' +
-    '<embed src="/_common/swf/niftyplayer/niftyplayer.swf?file=' + uri + '&as=1" quality=high bgcolor=#FFFFFF' +
+    '<embed src="/_common/swf/niftyplayer/niftyplayer.swf?file=' + host + uri + '&as=1" quality=high bgcolor=#FFFFFF' +
     ' width="165" height="37" name="niftyPlayer1" align="" type="application/x-shockwave-flash"' +
     ' swLiveConnect="true" pluginspage="http://www.macromedia.com/go/getflashplayer">' +
     '</embed>' +

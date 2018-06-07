@@ -16,7 +16,7 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
     item.and :site_id, Core.site.id
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
+    item.order 'name, id'
     @items = item.find(:all)
     _index @items
   end

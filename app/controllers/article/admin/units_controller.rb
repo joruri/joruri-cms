@@ -17,7 +17,7 @@ class Article::Admin::UnitsController < Cms::Controller::Admin::Base
     item = Article::Unit.new#.readable
     item.and :parent_id, @parent.id
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no #'(id + 0)'
+    item.order :sort_no #'(id + 0)'
     @items = item.find(:all)
     _index @items
   end

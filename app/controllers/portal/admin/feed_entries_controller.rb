@@ -21,7 +21,7 @@ class Portal::Admin::FeedEntriesController < Cms::Controller::Admin::Base
     item.and :feed_id, @feed.id
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'entry_updated DESC, id DESC'
+    item.order 'entry_updated DESC, id DESC'
     @items = item.find(:all)
     _index @items
   end

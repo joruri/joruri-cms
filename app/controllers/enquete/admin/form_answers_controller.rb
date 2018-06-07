@@ -25,7 +25,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
     item.and :form_id, @form.id
     #item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'id DESC'
+    item.order 'id DESC'
     @items = item.find(:all)
     _index @items
   end
@@ -34,7 +34,7 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
     item = Enquete::Answer.new#.public#.readable
     item.and :content_id, @content.id
     item.and :form_id, @form.id
-    item.order params[:sort], 'id DESC'
+    item.order 'id DESC'
     @items = item.find(:all)
     
     columns = @form.public_columns.collect{|col| [col.id, col.name]}

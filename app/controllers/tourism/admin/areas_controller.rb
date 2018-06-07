@@ -21,7 +21,7 @@ class Tourism::Admin::AreasController < Cms::Controller::Admin::Base
     item.and :content_id, @content
     item.and :parent_id, @parent
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
+    item.order :sort_no
     @items = item.find(:all)
     _index @items
   end

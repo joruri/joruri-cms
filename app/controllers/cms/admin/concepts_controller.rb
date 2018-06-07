@@ -20,7 +20,7 @@ class Cms::Admin::ConceptsController < Cms::Controller::Admin::Base
     item = Cms::Concept.new
     item.and :parent_id, @parent.id
     item.and :site_id, Core.site.id
-    item.order params[:sort], :sort_no
+    item.order :sort_no
     @items = item.find(:all)
     _index @items
   end

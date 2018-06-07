@@ -12,7 +12,7 @@ class Faq::Admin::AttributesController < Cms::Controller::Admin::Base
     item = Faq::Attribute.new#.readable
     item.and :content_id, @content
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
+    item.order :sort_no
     @items = item.find(:all)
     _index @items
   end

@@ -17,7 +17,12 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     @path      = params[:path].to_s
     @full_path = "#{@root}/#{@path}"
     @base_uri  = ["#{Rails.root}/public", "/"]
-    @item      = Cms::Stylesheet.new_by_path(@path)
+
+    cleanpath = Pathname(::File.join(@root, @path)).cleanpath.to_s
+    return http_error(403) if cleanpath !~ /^#{Rails.root}\/public\/_common\/themes/
+
+    @path = cleanpath.gsub(/^#{Rails.root}\/public\/_common\/themes[\/]?/, '')
+    @item = Cms::Stylesheet.new_by_path(@path)
     
     if !::Storage.exists?(@item.upload_path)
       return http_error(404) if flash[:notice]

@@ -5,7 +5,7 @@ class Faq::Admin::Docs::PublishController < Faq::Admin::DocsController
     item.and :content_id, @content.id
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'updated_at DESC'
+    item.order 'updated_at DESC'
     @items = item.find(:all)
     _index @items
   end

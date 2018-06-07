@@ -9,7 +9,7 @@ class Sys::Admin::LanguagesController < Cms::Controller::Admin::Base
   def index
     item = Sys::Language.new#.readable
     item.page  params[:page], params[:limit]
-    item.order params[:sort], :sort_no
+    item.order :sort_no
     @items = item.find(:all)
     _index @items
   end

@@ -7,7 +7,6 @@ Joruri::Application.routes.draw do
   scope "#{Joruri.admin_uri}/#{mod}", :module => mod, :as => mod do
     
     match "tool_import_uri"  => "admin/tool/import_uri#import"
-    match "tool_import_html" => "admin/tool/import_html#import"
   end
   
   scope "#{Joruri.admin_uri}/#{mod}/c:concept", :module => mod, :as => mod do

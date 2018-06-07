@@ -16,7 +16,7 @@ class Portal::Admin::FeedsController < Cms::Controller::Admin::Base
     item = Cms::Feed.new
     item.and :content_id, @content.id
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'id DESC'
+    item.order 'id DESC'
     @items = item.find(:all)
     _index @items
   end

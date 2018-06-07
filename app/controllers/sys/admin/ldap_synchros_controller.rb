@@ -10,7 +10,7 @@ class Sys::Admin::LdapSynchrosController < Cms::Controller::Admin::Base
   def index
     item = Sys::LdapSynchro.new#.readable
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'version DESC'
+    item.order 'version DESC'
     @items = item.find(:all, :group => :version)
     _index @items
   end

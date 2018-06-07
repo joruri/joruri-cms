@@ -22,7 +22,7 @@ class Article::Admin::Doc::FilesController < Cms::Controller::Admin::Base
       @item.and :parent_unid, @parent
     end
     @item.page  params[:page], params[:limit]
-    @item.order params[:sort], :name
+    @item.order :name
     @items = @item.find(:all)
     
     _index @items

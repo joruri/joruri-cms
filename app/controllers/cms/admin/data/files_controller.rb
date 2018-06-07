@@ -24,7 +24,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     #item.and 'node_id', @parent.id if @parent.id != 0
     item.search params
     item.page  params[:page], params[:limit]
-    item.order params[:sort], 'name, id'
+    item.order 'name, id'
     @items = item.find(:all)
     _index @items
   end

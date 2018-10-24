@@ -72,11 +72,14 @@ class Cms::Site < ActiveRecord::Base
     find = Proc.new do |_base|
       items = Cms::Site.published
 
-      items = items.where(
-        arel_table[:full_uri].matches("http://#{_base}%")
-        .or(arel_table[:alias_full_uri].matches("http://#{_base}%"))
-        .or(arel_table[:mobile_full_uri].matches("http://#{_base}%"))
-      )
+      items = items.where([
+        arel_table[:full_uri].matches("http://#{_base}%"),
+        arel_table[:full_uri].matches("https://#{_base}%"),
+        arel_table[:alias_full_uri].matches("http://#{_base}%"),
+        arel_table[:alias_full_uri].matches("https://#{_base}%"),
+        arel_table[:mobile_full_uri].matches("http://#{_base}%"),
+        arel_table[:mobile_full_uri].matches("https://#{_base}%")
+      ].reduce(:or))
 
       items.order(:id).first
     end

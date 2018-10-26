@@ -6,6 +6,9 @@ class Article::Content::Setting < Cms::ContentSetting
   set_config :auto_link_check,
              name: "本文/自動リンクチェック",
              options: [%w(有効 enabled), %w(無効 disabled)]
+  set_config :use_map,
+             name: "地図/使用設定",
+             options: [%w(有効 enabled), %w(無効 disabled)]
   set_config :default_map_position,
              name: "地図/デフォルト座標",
              comment: "（経度, 緯度）"

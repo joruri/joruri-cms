@@ -130,7 +130,7 @@ function checkLinks() {
   </tr>
 </table>
 
-<%= google_map_form f %>
+<%= google_map_form f if @content.setting_value(:use_map) != 'disabled' %>
 <%= inquiry_form f %>
 <%= task_form f %>
 <%= recognizer_form f %>

@@ -113,7 +113,7 @@
 </table>
 <% end %>
 
-<%= google_map_view @item %>
+<%= google_map_view @item if @content.setting_value(:use_map) != 'disabled' %>
 <%= inquiry_view @item %>
 <%= task_view @item %>
 <%= recognizer_view @item %>

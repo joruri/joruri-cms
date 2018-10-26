@@ -11,7 +11,7 @@
   <%== @body %>
 </div>
 
-<%= render :partial => 'cms/public/_partial/maps/view', :locals => {:item => @item} %>
+<%= render :partial => 'cms/public/_partial/maps/view', :locals => {:item => @item} if @content.setting_value(:use_map) != 'disabled' %>
 
 <% if @item.rel_docs(state: 'public').size > 0 %>
 <div class="rels">

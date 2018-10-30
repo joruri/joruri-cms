@@ -1,0 +1,22 @@
+<%
+  _index_cls, _user_cls = params[:group_by] == 'account' ? ['', 'current'] : ['current', ''];
+%><h2>ログイン失敗履歴</h2>
+
+<div class="actionMenu">
+<%= link_to "時系列一覧", sys_login_attempts_path, :class => _index_cls %>
+<%= link_to "ユーザ一覧", "#{sys_login_attempts_path}&group_by=account", :class => _user_cls %>
+<%= action_menu :show %>
+<%
+ if params[:action] == 'show'
+   lockout_label = if safe{@user.locked_out?}
+     "ロックアウト解除"
+   elsif safe{@login_attempts.count} == nil
+     nil
+   else
+     "削除"
+   end
+%>
+<%= link_to lockout_label, "#{sys_login_attempts_path}&s_account_by_id=#{@item.id}&destroy=1&group_by=#{params[:group_by]}",
+ :confirm => "#{lockout_label}してよろしいですか？" if lockout_label  %>
+<% end %>
+</div>

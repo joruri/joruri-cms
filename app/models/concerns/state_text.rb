@@ -19,6 +19,7 @@ module StateText
       when 'completed' then '完了'
       when 'archived' then '履歴'
       when 'synced' then '同期済'
+      when 'failed'; return '失敗'
       else ''
       end
     end

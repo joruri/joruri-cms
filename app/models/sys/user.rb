@@ -5,6 +5,7 @@ class Sys::User < ActiveRecord::Base
   include Sys::Model::Base::Config
   include Sys::Model::Rel::RoleName
   include Sys::Model::Auth::Manager
+  include Sys::Model::Rel::LoginAttempt
 
   include StateText
 

@@ -1,0 +1,21 @@
+<%= form_for :item, :url => '',  :html => {:method => :get, :class => 'search'} do |f| %>
+<table>
+
+  <tr>
+    <th>ユーザID</th>
+    <td ><%= text_field_tag 's_account', params[:s_account], :style => 'width: 120px; ime-mode: disabled;' %></td>
+    <th>IPアドレス</th>
+    <td ><%= text_field_tag 's_ipaddr', params[:s_ipaddr], :style => 'width: 120px; ime-mode: disabled;' %></td>
+    <td class="submitters">
+      <%= submit_tag '検索',   :name => :search %>
+      <%= submit_tag 'リセット', :name => :reset %>
+      <% if false %>
+      <span class="separator">|</span>
+      <%= submit_tag 'ロックアウト解除', :name => :destroy, :style => 'width: 120px;', :confirm => "表示中のユーザロックアウトを解除してよろしいですか？\n2ページ目以降のユーザも解除されます。" %>
+      <% end %>
+    </td>
+  </tr>
+
+</table>
+<%= hidden_field_tag 'group_by', params[:group_by] %>
+<!-- end .search --><% end %>

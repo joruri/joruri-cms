@@ -5,7 +5,12 @@ return if !item.inquiry || !item.inquiry.visible? || !item.inquiry.group
 %><div class="inquiry">
   <div class="h2">お問い合わせ</div>
   <% if item.inquiry.group
-   %><div class="section"><strong><%= safe{item.inquiry.group.full_name} %></strong></div><% end %>
+    group_name = if Sys::Setting.value(:display_parent_group_name) == 'enabled'
+                  safe{item.inquiry.group.full_name}
+                else
+                  item.inquiry.group.name
+                end
+   %><div class="section"><strong><%= group_name %></strong></div><% end %>
   <% if !item.inquiry.charge.blank?
    %><div class="charge"><%= item.inquiry.charge %></div><% end %>
   <% if !item.inquiry.tel.blank?

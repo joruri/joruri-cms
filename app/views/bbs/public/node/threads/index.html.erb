@@ -39,7 +39,7 @@
 <% if @use_password %>
 <div class="deleteForm" id="deleteForm">
   <h2 class="formTitle">削除フォーム</h2>
-  <%= form_for :item, :url => "#{@node_uri}#deleteForm" do |f| %>
+  <%= form_for :item, :url => "#{@node_uri}delete.html#deleteForm" do |f| %>
     <% if @delete_error %>
     <div class="errorExplanation">投稿No.と削除パスを正しく入力してください。</div>
     <% end %>

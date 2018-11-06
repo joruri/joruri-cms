@@ -127,6 +127,7 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
     if @admin_password.blank? || @admin_password != params[:password]
       items = items.where(password: params[:password])
                    .where.not(password: nil)
+                   .where.not(password: '')
     end
 
     @entry = items.first

@@ -10,7 +10,7 @@
     <input type="hidden" name="_method" value="DELETE" />
     <dl>
       <dt>投稿No.</dt>
-      <dd><input class="no" type="text" name="no" value="<%= h(params[:no]) %>" /></dd>
+      <dd><input class="no" type="text" name="no" value="<%= h(params[:no]) %>" maxlength="10" /></dd>
       <dt>削除パス</dt>
       <dd><input class="password" type="password" name="password" value="<%= h(params[:password]) %>" /></dd>
     </dl>

@@ -28,7 +28,7 @@ class Core
     @@params       = parse_query_string(env)
     @@mode         = nil
     @@site         = nil
-    @@script_uri   = env['SCRIPT_URI'] || "http://#{env['HTTP_HOST']}#{env['PATH_INFO']}"
+    @@script_uri   = env['SCRIPT_URI'] || "#{@@env['rack.url_scheme']}://#{env['HTTP_HOST']}#{env['PATH_INFO']}"
     @@request_uri  = nil
     @@internal_uri = nil
     @@ldap         = nil
@@ -225,8 +225,12 @@ class Core
 
     sites = Cms::Site.arel_table
 
-    site = Cms::Site.where(sites[:admin_full_uri].matches("http://#{host}/%"))
-                    .order(:id).first
+    site = Cms::Site.where(
+                      [
+                        sites[:admin_full_uri].matches("http://#{host}/%"),
+                        sites[:admin_full_uri].matches("https://#{host}/%")
+                      ].reduce(:or)
+                    ).order(:id).first
     return site if site
 
     site = Cms::Site.where(sites[:admin_full_uri].eq(nil)

@@ -1,12 +1,16 @@
 # encoding: utf-8
 class Sys::Controller::Admin::Base < ApplicationController
   include Sys::Controller::Admin::Auth
+  include Sys::Controller::Admin::Auth::Lockout  
   helper Sys::FormHelper
   before_action :pre_dispatch
   #  rescue_from ActiveRecord::RecordNotFound, :with => :error_auth
 
   def initialize_application
     return false unless super
+
+    load_lockout_config
+    enable_lockout?
 
     @@current_user = false
     if authenticate

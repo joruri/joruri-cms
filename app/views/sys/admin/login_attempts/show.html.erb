@@ -1,0 +1,33 @@
+<p class="form">基本情報</p>
+
+<table class="show">
+  <tr>
+    <th><%= @user.locale(:in_group_id) %></th>
+    <td><%= safe{link_to(@user.group.name, sys_group_path(:parent => @user.group.parent_id, :id => @user.group.id))} %></td>
+  </tr><tr>
+    <th><%= @user.locale(:account) %></th>
+    <td><%= @item.account %></td>
+  </tr><tr>
+    <th><%= @user.locale(:name) %></th>
+    <td><%= safe{link_to(@user.name, sys_user_path(:id => @user.id))} if @user.id %></td>
+  </tr>
+</table>
+
+<p class="form">失敗履歴</p>
+<table class="index">
+
+  <tr>
+    <th style="width: 140px; text-align: center;">アクセス日時</th>
+    <th style="width: 15%;">IPアドレス</th>
+    <th style="width: ;">ユーザエージェント</th>
+  </tr>
+
+  <% for attempt in @login_attempts %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= safe{attempt.created_at.strftime('%Y-%m-%d %H:%M:%S')} %></td>
+    <td><%= attempt.ipaddr %></td>
+    <td><%= attempt.user_agent %></td>
+  </tr>
+  <% end %>
+
+</table>

@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>記事番号</th>
-    <td ><%= text_field_tag 's_id', params[:s_id], :style => 'width: 80px;' %></td>
+    <td ><%= text_field_tag 's_id', params[:s_id], :class => 'number', :maxlength => 10, :style => 'width: 80px;' %></td>
     <th>タイトル</th>
     <td ><%= text_field_tag 's_title', params[:s_title], :style => 'width: 350px;' %></td>
     <th>所属</th>

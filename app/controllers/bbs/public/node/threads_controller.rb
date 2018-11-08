@@ -86,11 +86,10 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
     @item.block_word   = @block_word
     @item.block_ipaddr = @block_ipaddr
 
-    if @use_captcha
-      return false unless @item.save_with_captcha
-    else
-      return false unless @item.save
-    end
+    valid = @use_captcha ? @item.valid_with_captcha? : @item.valid?
+    return unless valid
+
+    @item.save
 
     flash[:notice] = "投稿が完了しました。"
     redirect_to @node_uri
@@ -109,11 +108,10 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
     @item.block_word   = @block_word
     @item.block_ipaddr = @block_ipaddr
 
-    if @use_captcha
-      return false unless @item.save_with_captcha
-    else
-      return false unless @item.save
-    end
+    valid = @use_captcha ? @item.valid_with_captcha? : @item.valid?
+    return unless valid
+
+    @item.save
 
     flash[:notice] = "投稿が完了しました。"
     redirect_to "#{@node_uri}#{@thread.id}/?#{query}#top"
@@ -128,8 +126,8 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
 
     if @admin_password.blank? || @admin_password != params[:password]
       items = items.where(password: params[:password])
-                   .where.not(pssword: nil)
-                   .where.not('')
+                   .where.not(password: nil)
+                   .where.not(password: '')
     end
 
     @entry = items.first
@@ -153,10 +151,10 @@ class Bbs::Public::Node::ThreadsController < Cms::Controller::Public::Base
   private
 
   def thread_params
-    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body)
+    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body, :password, :email, :uri, :captcha, :captcha_key)
   end
 
   def res_params
-    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body)
+    params.require(:item).permit(:parent_id, :thread_id, :name, :title, :body, :password, :email, :uri, :captcha, :captcha_key)
   end
 end

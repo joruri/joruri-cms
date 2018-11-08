@@ -26,7 +26,8 @@ class Sys::Admin::ProcessesController < Cms::Controller::Admin::Base
       ["メルマガ読者登録", 'newsletter/requests#read'],
       ["自治体記事ページ再構築", 'article/docs#rebuild'],
       ["FAQページ再構築", 'faq/docs#rebuild'],
-      ["アンケート取り込み", 'enquete/answers#pull']
+      ["アンケート取り込み", 'enquete/answers#pull'],
+      ["掲示板取り込み", 'bbs/threads#pull']
     ]
   end
 

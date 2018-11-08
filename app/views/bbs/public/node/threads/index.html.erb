@@ -39,14 +39,14 @@
 <% if @use_password %>
 <div class="deleteForm" id="deleteForm">
   <h2 class="formTitle">削除フォーム</h2>
-  <%= form_for :item, :url => "#{@node_uri}#deleteForm" do |f| %>
+  <%= form_for :item, :url => "#{@node_uri}delete.html#deleteForm" do |f| %>
     <% if @delete_error %>
     <div class="errorExplanation">投稿No.と削除パスを正しく入力してください。</div>
     <% end %>
     <input type="hidden" name="_method" value="DELETE" />
     <dl>
       <dt>投稿No.</dt>
-      <dd><input class="no" type="text" name="no" value="<%= params[:no] %>" autocomplete="off" /></dd>
+      <dd><input class="no" type="text" name="no" value="<%= params[:no] %>" autocomplete="off" maxlength="10" /></dd>
       <dt>削除パス</dt>
       <dd><input class="password" type="password" name="password" value="<%= params[:password] %>" /></dd>
     </dl>

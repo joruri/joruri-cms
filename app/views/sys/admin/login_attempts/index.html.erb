@@ -1,0 +1,53 @@
+<%= render :partial => 'search' %>
+
+<% if params[:group_by] == 'account' %>
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 120px;">ユーザID</th>
+    <th style="width: ;">氏名</th>
+    <th style="width: 60px; text-align: right;">失敗回数</th>
+    <th style="width: 100px; text-align: center;">状態</th>
+    <th style="width: 140px; text-align: center;">最終アクセス日時</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item, :group_by => params[:group_by]) %></td>
+    <td><%= item.account %></td>
+    <td><%= safe{item.user.name} %>（<%= safe{item.user.group.full_name} %>）</td>
+    <td style="text-align: right;"><%= item.cnt %></td>
+    <td style="text-align: center;"><span style="color: #CC0000;"><%= item.lock_out_status %></span></td>
+    <td style="text-align: center;"><%= safe{item.latest_created_at.strftime('%Y-%m-%d %H:%M:%S')} %></td>
+  </tr>
+  <% end %>
+
+</table>
+<% else %>
+<table class="index">
+
+  <tr>
+    <th style="width: 60px; text-align: center;">詳細</th>
+    <th style="width: 120px;">ユーザID</th>
+    <th style="width: ;">氏名</th>
+    <th style="width: 100px;">IPアドレス</th>
+    <th style="width: 260px;">ユーザエージェント</th>
+    <th style="width: 140px; text-align: center;">アクセス日時</th>
+  </tr>
+
+  <% for item in @items %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to :show, url_for(:action => :show, :id => item) %></td>
+    <td><%= item.account %></td>
+    <td><%= safe{item.user.name} %>（<%= safe{item.user.group.full_name} %>）</td>
+    <td><%= item.ipaddr %></td>
+    <td><%= truncate(item.user_agent, :length => 40) %></td>
+    <td style="text-align: center;"><%= safe{item.created_at.strftime('%Y-%m-%d %H:%M:%S')} %></td>
+  </tr>
+  <% end %>
+
+</table>
+<% end %>
+
+<%= paginate @items %>

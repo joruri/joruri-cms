@@ -86,6 +86,11 @@ every '24-54/30 * * * *' do
   rake 'enquete:answers:pull'
 end
 
+# # 掲示板投稿を取り込みます。
+every '24-54/30 * * * *' do
+  rake 'bbs:threads:pull'
+end
+
 # # 記事再構築(ページ)
 # every '00 * * * *' do
   # rake 'article:docs:rebuild'

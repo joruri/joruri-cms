@@ -10,7 +10,7 @@ class Sys::Admin::AccountController < Sys::Controller::Admin::Base
     return unless request.post?
 
     unless new_login(params[:account], params[:password])
-      flash.now[:notice] = "ユーザーID・パスワードを正しく入力してください。"
+      flash.now[:notice] = enable_lockout? ? locked_out_notice : "ユーザID・パスワードを正しく入力してください。";
       respond_to do |format|
         format.html { render }
         format.xml  { render(xml: '<errors />') }

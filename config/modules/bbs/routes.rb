@@ -43,7 +43,7 @@ Joruri::Application.routes.draw do
     get "node_threads/index.:format"         => "public/node/threads#index"
     post "node_threads/index.:format"        => "public/node/threads#index"
     get "node_threads/new.:format"           => "public/node/threads#new"
-    get "node_threads/delete.:format"        => "public/node/threads#delete"
+    delete "node_threads/delete.:format"        => "public/node/threads#delete"
     get "node_threads/:thread/index.:format" => "public/node/threads#show"
     post "node_threads/:thread/index.:format" => "public/node/threads#show"
   end

@@ -5,6 +5,7 @@ module Sys::Model::Base
 
   included do
     self.table_name = to_s.underscore.tr('/', '_').downcase.pluralize
+    validates_with IntegerValidator
   end
 
   def locale(name)

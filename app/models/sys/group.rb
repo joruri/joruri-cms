@@ -75,7 +75,12 @@ class Sys::Group < ActiveRecord::Base
 
   def full_name
     n = name
-    n = "#{parent.name}　#{n}" if parent && parent.level_no > 1
+    if Sys::Setting.value(:display_parent_group_name) == 'enabled'
+      parent_names = parents_tree.select{|g| g.level_no > 1}
+      n = parent_names.map{|g| g.name }.join('　')
+    else
+      n = "#{parent.name}　#{n}" if parent && parent.level_no > 1
+    end
     n
   end
 

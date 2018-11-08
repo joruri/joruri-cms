@@ -71,6 +71,8 @@ Joruri::Application.routes.draw do
           post :import
         end
       end
+    resources :login_attempts,
+      :controller => "admin/login_attempts"
     resources :role_names,
       :controller => "admin/role_names"
     resources :object_privileges,

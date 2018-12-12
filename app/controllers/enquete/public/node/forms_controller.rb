@@ -39,9 +39,8 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
     return false if params[:edit]
 
     ## validate
-    # return false unless @form.valid?
     @form.valid?
-    if params[:confirm].blank? && @use_captcha # TODO: change confirm params
+    if @use_captcha
       @item.captcha     = params[:item][:captcha]
       @item.captcha_key = params[:item][:captcha_key]
       unless @item.valid_with_captcha?
@@ -66,6 +65,7 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
       render text: "送信に失敗しました。"
       return false
     end
+    @item.remove_captcha_key if @use_captcha
 
     ## send mail to admin
     begin

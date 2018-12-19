@@ -219,5 +219,9 @@ $(function() {
 <%= javascript_tag do -%>
 $(document).ready(function () {
   searchRelatedDocs();
+  var next_index = $('#rel_docs').find('tr').length;
+  if (next_index >= 2) {
+    $('#add_rel_doc').attr( 'disabled', 'disabled' );
+  }
 });
 <%- end -%>

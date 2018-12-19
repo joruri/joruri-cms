@@ -23,7 +23,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def index_options
-    @items = Article::Doc.where(content_id: @content.id)
+    @items = Article::Doc.where(state: 'public', content_id: @content.id)
     docs_table = @items.table
 
     if params[:exclude]

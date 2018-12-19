@@ -82,6 +82,7 @@ MySQLのスレーブ設定を行います。
 server-id=2
 
 replicate-do-db=joruri_production
+replicate-ignore-table=joruri_production.bbs_items
 replicate-ignore-table=joruri_production.cms_kana_dictionaries
 replicate-ignore-table=joruri_production.cms_link_checks
 replicate-ignore-table=joruri_production.cms_stylesheets

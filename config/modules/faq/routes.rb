@@ -29,6 +29,9 @@ Joruri::Application.routes.draw do
     resources :all_docs,
       :controller => "admin/docs/all",
       :path       => ":content/all_docs"
+    resources :related_docs,
+      :controller => 'admin/related_docs', :only => [:show],
+      :path       => ":content/related_docs"
     resources :inline_files,
       :controller => "admin/doc/files",
       :path       => ":content/doc/:parent/inline_files" do

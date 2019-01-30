@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Joruri
   def self.version
-    '3.1.0'
+    '3.1.1'
   end
 
   def self.config

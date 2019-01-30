@@ -33,12 +33,12 @@ class Enquete::Script::AnswersController < ApplicationController
     sql = "SELECT * FROM enquete_answers WHERE id = #{id}"
 
     @db.execute(sql).each(as: :hash) do |ans_row|
-      ans = Enquete::Answer.new(ans_row)
+      ans = Enquete::Answer.new(ans_row.except('id'))
       ans.save
 
       sql = "SELECT * FROM enquete_answer_columns WHERE answer_id = #{id}"
       @db.execute(sql).each(as: :hash) do |col_row|
-        col = Enquete::AnswerColumn.new(col_row)
+        col = Enquete::AnswerColumn.new(col_row.except('id'))
         col.answer_id = ans.id
         col.save
       end

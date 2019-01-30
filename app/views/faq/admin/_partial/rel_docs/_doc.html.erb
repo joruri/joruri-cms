@@ -1,0 +1,14 @@
+<tr>
+  <td class="rel_doc_serial_id">[<%= doc_id %>]</td>
+  <td>
+    <%= hidden_field_tag "item[in_rel_doc_ids][]", doc_id, class: 'rel_doc_id', disabled: disabled -%>
+    <span class="rel_doc_link"><%= doc_link %></span>
+  </td>
+  <td class="rel_doc_user_name"><%= doc_user_name %></td>
+  <td class="rel_doc_group_name"><%= doc_group_name %></td>
+  <td class="rel_doc_updated_at"><%= doc_updated_at %></td>
+  <td class="rel_doc_status"><%= doc_status %></td>
+  <td>
+    <%= link_to '削除', '#', class: 'remove_related_doc' %>
+  </td>
+</tr>

@@ -21,11 +21,11 @@ module Faq::Model::Rel::Doc::Rel
   def in_rel_doc_ids=(ids)
     _ids = []
     if ids.class == Array
-      ids.each { |val| _ids << val }
+      ids.each { |val| _ids << val if _ids.size < 3 }
       self.rel_doc_ids = _ids.join(' ')
     elsif ids.class == Hash || ids.class == HashWithIndifferentAccess \
           || ids.class == ActionController::Parameters
-      ids.each { |_key, val| _ids << val }
+      ids.each { |_key, val| _ids << val if _ids.size < 3 }
       self.rel_doc_ids = _ids.join(' ')
     else
       self.rel_doc_ids = ids

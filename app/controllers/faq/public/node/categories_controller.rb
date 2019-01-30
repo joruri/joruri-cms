@@ -3,8 +3,8 @@ class Faq::Public::Node::CategoriesController < Cms::Controller::Public::Base
   include Faq::Controller::Feed
 
   def pre_dispatch
-    @content = Page.current_node.content
-    return http_error(404) unless @content
+    @node = Page.current_node
+    return http_error(404) unless @content = @node.content
     @docs_uri = @content.public_uri('Faq::Doc')
 
     @limit = 50
@@ -32,7 +32,7 @@ class Faq::Public::Node::CategoriesController < Cms::Controller::Public::Base
     return http_error(404) unless params[:file] =~ /^(index|more)$/
     @more  = (params[:file] == 'more')
     @page  = 1  if !@more && !request.mobile?
-    @limit = 10 unless @more
+    @limit = @node.setting_value(:list_count, 10) unless @more
 
     @docs = Faq::Doc.published
 

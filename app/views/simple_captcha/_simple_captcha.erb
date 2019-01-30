@@ -1,5 +1,15 @@
-<div class="captchaForm">
+<div class="captchaForm" id="captchaForm">
   <div class="image"><%= simple_captcha_options[:image] %></div>
+  <div class="reload"><%= link_to '更新', '#', id: 'captchaReload' %></div>
   <div class="field"><%= simple_captcha_options[:field] %></div>
   <div class="label"><%= simple_captcha_options[:label] %></div>
 </div>
+
+<script type="text/javascript">
+$(function() {
+  $('#captchaReload').on('click', function(e) {
+    $('#captchaForm').parent().load('/_tools/captcha/index');
+    return false;
+  });
+});
+</script>

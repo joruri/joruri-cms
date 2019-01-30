@@ -91,7 +91,11 @@
 <table class="show">
   <tr>
     <th>関連記事</th>
-    <td colspan="3"><%= @item.rel_docs.collect {|c| h(c.title) }.join('<br />') %></td>
+    <td colspan="3">
+      <%- @item.rel_docs.each do |d| -%>
+        <%= h(d.title) -%><br />
+      <%- end -%>
+    </td>
   </tr>
 </table>
 

@@ -45,6 +45,8 @@ ja:
       faq/node/doc:
         show_concept_id: "詳細画面コンセプト"
         show_layout_id: "詳細画面レイアウト"
+      faq/node/category:
+        list_count: "新着表示件数"
       
       ## piece
       faq/piece/recent_doc:

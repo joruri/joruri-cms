@@ -97,6 +97,7 @@ ja:
   # gems
   simple_captcha:
     placeholder: ""
+    label: "画像の文字を入力してください"
   will_paginate:
     previous_label: "前のページ"
     next_label: "次のページ"

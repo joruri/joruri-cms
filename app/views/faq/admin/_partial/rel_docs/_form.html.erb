@@ -1,18 +1,59 @@
 <%
 
-docs = Faq::Doc.published.where(content_id: @content.id)
-docs = docs.where.not(id: item.id) if item.id
-docs = docs.order(published_at: :desc)
-docs = docs.collect{|c| [ truncate(c.title, :length => 50), c.id] }
+groups = Sys::Group.where(level_no: 2).order(:sort_no)
+groups = f.select_with_tree("in_creator[group_id]", groups, selected: '')
+group_options = [ ['',''] ]
+groups.scan(/<option value="(.*?)".*?>(.*?)<\/option>/im) {|m| group_options << [ m[1], m[0] ] }
+
+users = Sys::User.order(:account).map{|u| [u.name, u.id] }
 
 %><table class="show">
   <tr>
     <th>関連記事</th>
     <td>
       <table class="noDesign">
-        <tr><td><%= f.array_select "in_rel_doc_ids[0]", docs, :include_blank => "　" %></td></tr>
-        <tr><td><%= f.array_select "in_rel_doc_ids[1]", docs, :include_blank => "　" %></td></tr>
-        <tr><td><%= f.array_select "in_rel_doc_ids[2]", docs, :include_blank => "　" %></td></tr>
+        <tr>
+          <td>記事番号</td>
+          <td><%= text_field_tag 'rel_id', '', :class => 'number', :maxlength => 10, :style => 'width: 80px;' %></td>
+          <td>タイトル</td>
+          <td colspan="2"><%= text_field_tag 'rel_title', '', :style => 'width: 350px;' %></td>
+        </tr>
+        <tr>
+          <td>所属</td>
+          <td><%= select_tag 'rel_group_id', options_for_select(group_options, Core.user_group.id) %></td>
+          <td>作成者</td>
+          <td><%= select_tag 'rel_user_id',
+                options_for_select(users, Core.user.id), include_blank: true %></td>
+          <td style="text-align: right;"><%= button_tag '記事検索', type: 'button', id: 'search_rel_doc' %></td>
+        </tr>
+        <tr>
+          <td>記事</td>
+          <td colspan="4">
+            <%= select_tag 'rel_doc', '', include_blank: true %>
+            <%= button_tag '選択', type: 'button', id: 'add_rel_doc' %>
+          </td>
+        </tr>
+      </table>
+
+      <table id="rel_docs" class="noDesign">
+        <%- @item.rel_docs.each_with_index do |doc, i| -%>
+          <%= render 'faq/admin/_partial/rel_docs/doc', f: f, disabled: false,
+                                                 doc_id: doc.id,
+                                                 doc_link: link_to_if(doc.state == 'public', doc.title, doc.public_full_uri, target: 'preview'),
+                                                 doc_user_name: doc.creator.user.try(:name),
+                                                 doc_group_name: doc.creator.group.try(:name),
+                                                 doc_updated_at: doc.updated_at.strftime("%Y-%m-%d %H:%M"),
+                                                 doc_status: doc.status.name %>
+        <%- end -%>
+      </table>
+      <table id="rel_docs_template" style="display: none;">
+        <%= render 'faq/admin/_partial/rel_docs/doc', f: f, disabled: true,
+                                                         doc_id: '',
+                                                         doc_link: '',
+                                                         doc_user_name: '',
+                                                         doc_group_name: '',
+                                                         doc_updated_at: '',
+                                                         doc_status: '' %>
       </table>
     </td>
   </tr>

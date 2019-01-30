@@ -5,7 +5,7 @@ class Cms::Admin::Piece::LinkItemsController < Cms::Controller::Admin::Base
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
 
-    @piece = Cms::Piece.readable.find_by(params[:piece])
+    @piece = Cms::Piece.readable.find_by(id: params[:piece])
     return error_auth unless @piece
   end
 

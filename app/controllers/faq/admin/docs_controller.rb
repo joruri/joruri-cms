@@ -15,7 +15,50 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   def index
+    return index_options if params[:options]
+    return user_options if params[:user_options]
     redirect_to faq_edit_docs_path
+  end
+
+  def index_options
+    @items = Faq::Doc.where(state: 'public', content_id: @content.id)
+    docs_table = @items.table
+
+    if params[:exclude]
+      @items = @items.where(docs_table[:name].not_eq(params[:exclude]))
+    end
+    if params[:title] && !params[:title].blank?
+      @items = @items.where(docs_table[:title].matches("%#{params[:title]}%"))
+    end
+    if params[:id] && !params[:id].blank?
+      @items = @items.where(docs_table[:id].eq(params[:id]))
+    end
+    
+    if params[:group_id] || params[:user_id]
+      inners = []
+      if params[:group_id] && !params[:group_id].blank?
+        groups = Sys::Group.arel_table
+        inners << :group
+      end
+      if params[:user_id] && !params[:user_id].blank?
+        users = Sys::User.arel_table
+        inners << :user
+      end
+      @items = @items.joins(:creator => inners)
+
+      @items = @items.where(groups[:id].eq(params[:group_id])) if params[:group_id].present?
+      @items = @items.where(users[:id].eq(params[:user_id])) if params[:user_id].present?
+    end
+    
+    @items = @items.order(published_at: :desc, updated_at: :desc)
+
+    @items = @items.map { |item| [view_context.truncate("[#{item.id}] #{item.title}", length: 50), item.id] }
+    render html: view_context.options_for_select([nil] + @items), layout: false
+  end
+
+  def user_options
+    @parent = Sys::Group.find(params[:group_id])
+    render 'user_options', layout: false
   end
 
   def show
@@ -191,7 +234,7 @@ class Faq::Admin::DocsController < Cms::Controller::Admin::Base
       :title, :language_id, :question, :body, :recent_state, :agent_state,
       :mobile_body, :published_at, :in_recognizer_ids,
       in_tags: %w(0 1 2),
-      in_rel_doc_ids: %w(0 1 2),
+      in_rel_doc_ids: [],
       in_category_ids: %w(0 1 2),
       in_inquiry: [:state, :group_id, :charge, :tel, :fax, :email],
       in_editable_groups: %w(0 1 2),

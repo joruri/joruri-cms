@@ -36,7 +36,7 @@ class Newsletter::Script::RequestsController < ApplicationController
     sql = "SELECT * FROM newsletter_requests WHERE state = 'enabled' order BY id"
 
     @db.execute(sql).each(as: :hash) do |data|
-      req = Newsletter::Request.new(data)
+      req = Newsletter::Request.new(data.except('id'))
       if req.save
         @db.execute("DELETE FROM newsletter_requests WHERE id = #{data['id']}")
       end

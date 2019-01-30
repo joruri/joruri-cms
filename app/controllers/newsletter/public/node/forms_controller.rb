@@ -13,7 +13,7 @@ class Newsletter::Public::Node::FormsController < Cms::Controller::Public::Base
     @item = Newsletter::Request.new
     return true unless request.post?
 
-    @item.attributes   = params[:item]
+    @item.attributes   = request_params
     @item.state        = 'enabled'
     @item.content_id   = @content.id
     @item.request_type = 'subscribe'
@@ -38,7 +38,7 @@ class Newsletter::Public::Node::FormsController < Cms::Controller::Public::Base
     @item = Newsletter::Request.new
     return true unless request.post?
 
-    @item.attributes   = params[:item]
+    @item.attributes   = request_params
     @item.state        = 'enabled'
     @item.content_id   = @content.id
     @item.request_type = 'unsubscribe'
@@ -102,5 +102,11 @@ class Newsletter::Public::Node::FormsController < Cms::Controller::Public::Base
     return unless request.post?
 
     return redirect_to("#{@node_uri}sent.html?unsubscribe") if @item.save # @item.save_with_captcha
+  end
+
+  private
+
+  def request_params
+    params.require(:item).permit(:email, :letter_type)
   end
 end

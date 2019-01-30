@@ -19,7 +19,7 @@ class Enquete::Form < ActiveRecord::Base
 
   validates :name, presence: true
 
-  apply_simple_captcha message: "の画像と文字が一致しません。"
+  apply_simple_captcha message: "の画像と文字が一致しません。", valid_and_not_remove: true
 
   scope :published, -> {
     where(state: 'public')

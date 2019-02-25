@@ -1,4 +1,4 @@
-## Joruri CMSxWEB 設定マニュアル                  2018.12.19
+## Joruri CMSxWEB 設定マニュアル                  2019.2.25
 
 **********************************************************************
  1 前提条件
@@ -234,7 +234,7 @@ production:
   transfer_opt_remote_shell: "ssh -p 22"
   transfer_dest_user: joruri
   transfer_dest_host: 192.168.0.2
-  transfer_dest_dir: /var/share/joruri
+  transfer_dest_dir: "/var/share/joruri/"
 ------------------
 
 **********************************************************************

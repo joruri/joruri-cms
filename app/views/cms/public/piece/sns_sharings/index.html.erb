@@ -18,20 +18,4 @@
   <!-- facebook/share -->
   <iframe src="//www.facebook.com/plugins/share_button.php?href=<%= ::CGI.escape(@uri) %>&layout=button&size=small&mobile_iframe=true&width=61&height=20&appId" width="61" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
 <% end %>
-
-<% if @gp_share %>
-  <!-- google+ -->
-  <div class="gpShare" style="display: inline;">
-    <span class="g-plus" data-action="share" data-annotation="bubble" data-href="<%= @uri %>"></span>
-  </div>
-  <script type="text/javascript">
-    window.___gcfg = {lang: 'ja'};
-    (function() {
-      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-      po.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-    })();
-  </script>
-<% end %>
-
 </div>

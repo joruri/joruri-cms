@@ -71,16 +71,16 @@ $(function() {
       if (next_index >= 2) {
         $('#add_rel_doc').attr( 'disabled', 'disabled' );
       }
-      
+
       rel_doc.val([]);
     });
-    
+
   });
 
   $('#rel_docs').on("click", "a.remove_related_doc", function (e) {
     var wrapper = $(this).parent().parent();
     wrapper.remove();
-    
+
     var doc_index = $('#rel_docs').find('tr').length;
     if (doc_index < 3) {
       $('#add_rel_doc').removeAttr('disabled');
@@ -183,7 +183,7 @@ $(function() {
 $(document).ready(function () {
   searchRelatedDocs();
   var next_index = $('#rel_docs').find('tr').length;
-  if (next_index >= 2) {
+  if (next_index >= 3) {
     $('#add_rel_doc').attr( 'disabled', 'disabled' );
   }
 });

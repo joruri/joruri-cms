@@ -65,7 +65,11 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
 
   def show
     @item = Article::Doc.find(params[:id])
-    @item.unset_inquiry_email_presence if @item.unset_inquiry_email_presence?
+    if @item.unset_inquiry_email_presence?
+      @item.unset_inquiry_email_presence
+    else
+      @item.reset_inquiry_email_presence
+    end
     @item.recognition.type = @recognition_type if @item.recognition
 
     _show @item
@@ -84,8 +88,11 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       state: (state.blank? ? 'visible' : state))
 
     @item.in_recognizer_ids = @content.setting_value(:default_recognizers)
-    @item.unset_inquiry_email_presence if @item.unset_inquiry_email_presence?
-
+    if @item.unset_inquiry_email_presence?
+      @item.unset_inquiry_email_presence
+    else
+      @item.reset_inquiry_email_presence
+    end
     ## add tmp_id
     unless params[:_tmp]
       return redirect_to url_for(action: :new, _tmp: Util::Sequencer.next_id(:tmp, md5: true))
@@ -98,8 +105,11 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
     @item.state      = 'public'    if params[:commit_public]
-    @item.unset_inquiry_email_presence if @item.unset_inquiry_email_presence?
-
+    if @item.unset_inquiry_email_presence?
+      @item.unset_inquiry_email_presence
+    else
+      @item.reset_inquiry_email_presence
+    end
     unid = params[:_tmp] || @item.unid
 
     ## link check
@@ -139,8 +149,11 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
     @item.state      = 'public'    if params[:commit_public]
-    @item.unset_inquiry_email_presence if @item.unset_inquiry_email_presence?
-
+    if @item.unset_inquiry_email_presence?
+      @item.unset_inquiry_email_presence
+    else
+      @item.reset_inquiry_email_presence
+    end
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
     @item.body = @item.body.gsub(

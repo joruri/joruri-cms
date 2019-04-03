@@ -516,7 +516,11 @@ class Article::Doc < ActiveRecord::Base
   end
 
   def set_inquiry_email_presence
-    unset_inquiry_email_presence if unset_inquiry_email_presence?
+    if unset_inquiry_email_presence?
+      unset_inquiry_email_presence
+    else
+      reset_inquiry_email_presence
+    end
   end
 
   def unset_inquiry_email_presence?

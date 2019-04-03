@@ -21,7 +21,7 @@ class Faq::Script::DocsController < Cms::Controller::Script::Publication
         uri     = "#{item.public_uri}?doc_id=#{item.id}"
         path    = item.public_path
         content = render_public_as_string(uri, site: item.content.site)
-        if item.rebuild(content)
+        if item.rebuild(content, {file: true})
           Script.success
           uri     = (uri =~ /\?/) ? uri.gsub(/\?/, 'index.html.r?') : "#{uri}index.html.r"
           content = render_public_as_string(uri, site: item.content.site)

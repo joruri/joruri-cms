@@ -35,7 +35,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     if params[:id] && !params[:id].blank?
       @items = @items.where(docs_table[:id].eq(params[:id]))
     end
-    
+
     if params[:group_id] || params[:user_id]
       inners = []
       if params[:group_id] && !params[:group_id].blank?
@@ -51,7 +51,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       @items = @items.where(groups[:id].eq(params[:group_id])) if params[:group_id].present?
       @items = @items.where(users[:id].eq(params[:user_id])) if params[:user_id].present?
     end
-    
+
     @items = @items.order(published_at: :desc, updated_at: :desc)
 
     @items = @items.map { |item| [view_context.truncate("[#{item.id}] #{item.title}", length: 50), item.id] }
@@ -131,6 +131,10 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
 
   def update
     @item = Article::Doc.find(params[:id])
+
+    ## reset related docs
+    @item.in_rel_doc_ids = [] if @item.in_rel_doc_ids.present? && docs_params[:in_rel_doc_ids].blank?
+
     @item.attributes = docs_params
     @item.state      = 'draft'
     @item.state      = 'recognize' if params[:commit_recognize]
@@ -153,7 +157,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
         @item.link_checker = @checker
       end
     end
-    
+
     set_categories(@item)
     _update(@item) do
       send_recognition_request_mail(@item) if @item.state == 'recognize'
@@ -291,15 +295,15 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
   end
 
   private
-  
+
   def set_categories(item)
     if oitem = Article::Doc.find_by_id(item.id)
       @old_category_ids = oitem.category_items.inject([]){|ids, category| ids | category.ancestors.map(&:id) }
     else
       @old_category_ids = []
-      
+
     end
-    
+
     @new_category_ids = @item.category_items.inject([]){|ids, category| ids | category.ancestors.map(&:id) }
   end
 

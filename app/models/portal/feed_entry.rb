@@ -196,7 +196,7 @@ class Portal::FeedEntry < Cms::FeedEntry
       _docs = _docs.none
     end
 
-    _docs = _docs.where_values.reduce(:or)
+    _docs = _docs.where_values.join(" OR ")
 
     docs.where(_docs)
   end

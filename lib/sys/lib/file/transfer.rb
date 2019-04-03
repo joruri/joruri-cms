@@ -128,6 +128,7 @@ protected
     @dest_user        = conf['transfer_dest_user']
     @dest_host        = conf['transfer_dest_host']
     @dest_dir         = conf['transfer_dest_dir']
+    @dest_dir         = @dest_dir.end_with?("/") ? @dest_dir : "#{@dest_dir}/" if @dest_dir.present?
   end
 
   def rsync_log(data)

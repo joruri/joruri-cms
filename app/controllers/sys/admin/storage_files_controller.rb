@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
+  include Sys::Lib::File::Transfer
 
   before_filter :validate_path
 
@@ -36,10 +37,10 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
       @path = ::File.join(@path, @root)
       @dir  = @root
     end
-    
+
     root_paths = @roots.map{|root| ::File.join(Rails.root.to_s, root[0])}.join('|')
     return http_error(403) if @path !~ /^(#{root_paths})/
-    
+
     @navi = []
     dirs = @dir.split(/\//)
     dirs.each_with_index do |n, idx|
@@ -157,6 +158,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
       if name = validate_name(file.original_filename)
         ::Storage.binwrite("#{@path}/#{name}", file.read)
         flash[:notice] = "アップロードが完了しました。"
+        transfer_files() if transfer_to_publish?
         return redirect_to(@current_uri)
       end
     end
@@ -170,7 +172,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
                      else
                        "更新処理に失敗しました。"
                      end
-
+    transfer_files() if transfer_to_publish?
     redirect_to(@parent_uri)
   end
 
@@ -180,7 +182,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
                      else
                        "削除処理に失敗しました。"
                      end
-
+    transfer_files() if transfer_to_publish?
     redirect_to @parent_uri
   end
 

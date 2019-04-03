@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
+  include Sys::Lib::File::Transfer
 
   @@mkdir_root = nil
 
@@ -17,7 +18,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     @path      = params[:path].to_s
     @full_path = "#{@root}/#{@path}"
     @base_uri  = ["#{Rails.root}/public", '/']
-    
+
     cleanpath = Pathname(::File.join(@root, @path)).cleanpath.to_s
     return http_error(403) if cleanpath !~ /^#{Rails.root}\/public\/_common\/themes/
 
@@ -91,6 +92,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
     elsif params[:upload_file]
       if @item.upload_file(params[:item][:new_upload])
         flash[:notice] = 'アップロードが完了しました。'
+        transfer_files() if transfer_to_publish?
         return @stylesheets_path.call(@path)
       end
     end
@@ -121,6 +123,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
 
     flash[:notice] = '更新処理が完了しました。'
     location = @stylesheets_path.call(::File.dirname(@path))
+    transfer_files() if transfer_to_publish?
     redirect_to(location)
   end
 
@@ -131,6 +134,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
       if @item.move(params[:item][:path])
         flash[:notice] = '移動処理が完了しました。'
         location = @stylesheets_path.call(::File.dirname(@path))
+        transfer_files() if transfer_to_publish?
         return redirect_to(location)
       end
     end
@@ -147,6 +151,7 @@ class Cms::Admin::StylesheetsController < Cms::Controller::Admin::Base
       flash[:notice] = "削除処理に失敗しました。（#{@item.errors.full_messages.join(' ')}）"
     end
     location = @stylesheets_path.call(::File.dirname(@path))
+    transfer_files() if transfer_to_publish?
     redirect_to(location)
   end
 end

@@ -71,10 +71,12 @@ class Portal::FeedEntry < Cms::FeedEntry
       docs = docs.none
     end
 
+    _doc_tbl = docs.table_name
+
     docs = docs.select(
       "#{_content_id} AS portal_content_id" \
       ', content_id' \
-      ', id AS doc_id' \
+      ", #{_doc_tbl}.id AS doc_id" \
       ', name' \
       ', NULL AS feed_id' \
       ', published_at AS entry_updated' \
@@ -184,6 +186,7 @@ class Portal::FeedEntry < Cms::FeedEntry
           condition_exist = true
         when 'unit'
           _docs = _docs.unit_is(g[:instance])
+          docs = docs.join_creator
           condition_exist = true
         when 'area'
           _docs = _docs.area_is(g[:instance])
@@ -195,8 +198,7 @@ class Portal::FeedEntry < Cms::FeedEntry
     else
       _docs = _docs.none
     end
-
-    _docs = _docs.where_values.join(" OR ")
+    _docs = _docs.where_values.map{|cond| cond.is_a?(String) ? cond : cond.to_sql }.join(" OR ")
 
     docs.where(_docs)
   end

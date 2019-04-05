@@ -80,6 +80,7 @@ $(function() {
 
 $(function() {
   $('#add_rel_doc').on('click', function () {
+    $('#add_rel_doc').attr( 'disabled', 'disabled' );
     var rel_doc = $('#rel_doc');
     if (rel_doc.val() === '') {
       alert('記事を選択してください。');
@@ -87,6 +88,7 @@ $(function() {
     }
 
     $.get('<%= article_related_doc_path(content: @content, id: '_ID_') %>.json'.replace(/_ID_/, rel_doc.val()), function (data) {
+      $('#add_rel_doc').removeAttr('disabled');
       var next_index = $('#rel_docs').find('tr').length;
       var template = $('#rel_docs_template').find('tbody').clone(true);
 

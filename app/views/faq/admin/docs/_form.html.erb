@@ -49,8 +49,9 @@ $(function() {
   $('#add_rel_doc').on('click', function () {
     $('#add_rel_doc').attr( 'disabled', 'disabled' );
     var rel_doc = $('#rel_doc');
-    if (rel_doc.val() === '') {
+    if (rel_doc.val() === '' || rel_doc.val() === null) {
       alert('記事を選択してください。');
+      $('#add_rel_doc').removeAttr('disabled');
       return;
     }
 

@@ -14,9 +14,8 @@ module Cms::Controller::Scaffold::Process
       flash[:notice] = "プロセスを開始しました。"
       redirect_to start_process: Time.now.to_i
     rescue StandardError => e
-      raise e
-#      flash[:notice] = e.to_s
-#      redirect_to {}
+      flash[:notice] = e.to_s
+      redirect_to {}
     end
   end
 

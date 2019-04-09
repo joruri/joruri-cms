@@ -79,16 +79,11 @@ module Sys::Lib::File::Transfer
     result[:common]['upload'] = _rsync.call(upload_src, "#{dest}upload/", options).error
 
     # dictionary rsync
-    dic_src  = "#{Rails.root}/config/mecab/"
-    dic_dest = "#{dest}config/mecab/"
+    dic_src  = "#{Rails.root}/config/mecab/joruri.dic"
+    dic_dest = "#{dest}config/mecab/joruri.dic"
     options = _ready_options.call(nil, 'dic')
     result[:common]['dic'] = _rsync.call(dic_src, dic_dest, options).error
 
-    # rewrite directory rsync
-    dic_src  = "#{Rails.root}/config/rewrite/"
-    dic_dest = "#{dest}config/rewrite/"
-    options = _ready_options.call(nil, 'dic')
-    result[:common]['rewrite'] = _rsync.call(dic_src, dic_dest, options).error
 
     _sites.each do |site|
       site = Cms::Site.find_by_id(site) if site.is_a?(Integer)
@@ -100,6 +95,12 @@ module Sys::Lib::File::Transfer
 
       options = _ready_options.call(nil, 'site')
       result[:sites][site.id] << _rsync.call(site_src, site_dest, options).error
+
+      # rewrite directory rsync
+      rewrite_src  = "#{Rails.root}/config/rewrite/#{format('%08d', site.id)}.conf"
+      rewrite_dest = "#{dest}config/rewrite/#{format('%08d', site.id)}.conf"
+      options = _ready_options.call(nil, 'site')
+      result[:sites][site.id] << _rsync.call(rewrite_src, rewrite_dest, options).error
 
     end
 

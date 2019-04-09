@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
-  include Sys::Lib::File::Transfer
+  include Sys::Controller::Scaffold::Storage
 
   before_filter :validate_path
 
@@ -158,7 +158,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
       if name = validate_name(file.original_filename)
         ::Storage.binwrite("#{@path}/#{name}", file.read)
         flash[:notice] = "アップロードが完了しました。"
-        transfer_files() if transfer_to_publish?
+        do_sync if transfer_to_publish?
         return redirect_to(@current_uri)
       end
     end
@@ -172,7 +172,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
                      else
                        "更新処理に失敗しました。"
                      end
-    transfer_files() if transfer_to_publish?
+    do_sync if transfer_to_publish?
     redirect_to(@parent_uri)
   end
 
@@ -182,7 +182,7 @@ class Sys::Admin::StorageFilesController < Cms::Controller::Admin::Base
                      else
                        "削除処理に失敗しました。"
                      end
-    transfer_files() if transfer_to_publish?
+    do_sync if transfer_to_publish?
     redirect_to @parent_uri
   end
 

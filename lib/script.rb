@@ -24,7 +24,7 @@ class Script
 
     ## run
     ruby   = "#{RbConfig::CONFIG['bindir']}/ruby"
-    runner = "#{Rails.root}/script/rails runner"
+    runner = "#{Rails.root}/bin/rails runner"
     opts   = options.inspect
     cmd    = "#{ruby} #{runner} -e #{Rails.env} \"Script.run('#{path}', #{opts})\""
     system("#{cmd} >/dev/null &")

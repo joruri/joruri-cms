@@ -72,7 +72,7 @@
   height: 20px;
   margin-top: -30px;
 }
-.twitter-share-button, .fbLike, .fb-share-button, .gpShare {
+.twitter-share-button, .fbLike, .fb-share-button {
   float: left;
   width: 127px !important;
 }

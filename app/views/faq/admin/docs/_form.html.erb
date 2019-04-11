@@ -47,13 +47,16 @@ $(function() {
 
 $(function() {
   $('#add_rel_doc').on('click', function () {
+    $('#add_rel_doc').attr( 'disabled', 'disabled' );
     var rel_doc = $('#rel_doc');
-    if (rel_doc.val() === '') {
+    if (rel_doc.val() === '' || rel_doc.val() === null) {
       alert('記事を選択してください。');
+      $('#add_rel_doc').removeAttr('disabled');
       return;
     }
 
     $.get('<%= faq_related_doc_path(content: @content, id: '_ID_') %>.json'.replace(/_ID_/, rel_doc.val()), function (data) {
+      $('#add_rel_doc').removeAttr('disabled');
       var next_index = $('#rel_docs').find('tr').length;
       var template = $('#rel_docs_template').find('tbody').clone(true);
 
@@ -71,16 +74,16 @@ $(function() {
       if (next_index >= 2) {
         $('#add_rel_doc').attr( 'disabled', 'disabled' );
       }
-      
+
       rel_doc.val([]);
     });
-    
+
   });
 
   $('#rel_docs').on("click", "a.remove_related_doc", function (e) {
     var wrapper = $(this).parent().parent();
     wrapper.remove();
-    
+
     var doc_index = $('#rel_docs').find('tr').length;
     if (doc_index < 3) {
       $('#add_rel_doc').removeAttr('disabled');
@@ -183,7 +186,7 @@ $(function() {
 $(document).ready(function () {
   searchRelatedDocs();
   var next_index = $('#rel_docs').find('tr').length;
-  if (next_index >= 2) {
+  if (next_index >= 3) {
     $('#add_rel_doc').attr( 'disabled', 'disabled' );
   }
 });

@@ -17,8 +17,7 @@ class Cms::Piece::SnsSharing < Cms::Piece
     [
       ["Twitter ツイート", 'tweet'],
       ["Facebook いいね", 'fb_like'],
-      ["Facebook 共有", 'fb_share'],
-      ["Google+ 共有", 'gp_share']
+      ["Facebook 共有", 'fb_share']
     ]
   end
 

@@ -2,6 +2,7 @@
 class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
   include Sys::Controller::Scaffold::Publication
+  include Sys::Controller::Scaffold::Storage
 
   def pre_dispatch
     return error_auth unless Core.user.has_auth?(:designer)
@@ -44,7 +45,7 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     @item.site_id = Core.site.id
     @item.state = 'public'
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
-
+    do_sync if transfer_to_publish?
     _create @item
   end
 
@@ -55,11 +56,13 @@ class Cms::Admin::Data::FilesController < Cms::Controller::Admin::Base
     @item.use_resize(@item.in_resize_size.blank? ? false : @item.in_resize_size)
 
     @item.skip_upload if @item.file.blank?
+    do_sync if transfer_to_publish?
     _update @item
   end
 
   def destroy
     @item = Cms::DataFile.find(params[:id])
+    do_sync if transfer_to_publish?
     _destroy @item
   end
 

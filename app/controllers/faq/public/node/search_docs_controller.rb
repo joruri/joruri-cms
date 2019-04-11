@@ -23,12 +23,9 @@ class Faq::Public::Node::SearchDocsController < Cms::Controller::Public::Base
             .agent_filter(request.mobile)
             .where(content_id: @content.id)
 
-    count = @docs.count
-
-
     @docs = @docs.search(search_params)
 
-    if count == @docs.count
+    if @docs.blank?
       @nosearch = true
       @docs = []
       return

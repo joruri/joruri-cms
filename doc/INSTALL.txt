@@ -1,4 +1,4 @@
-## Joruri CMS 3.0.2 インストールマニュアル                  2017.01.20
+## Joruri CMS 3.1.2 インストールマニュアル                  2019.04.10
 
 **********************************************************************
  1 想定環境
@@ -56,7 +56,11 @@ yumリポジトリにEPELを追加します。
 
 yumリポジトリにmysqlを追加します。
 
+  CentOS6の場合
   # yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+
+  CentOS7の場合
+  # yum -y install http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
 
 yumリポジトリにremiリポジトリを追加します。
 

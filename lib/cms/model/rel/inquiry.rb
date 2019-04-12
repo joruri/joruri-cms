@@ -39,6 +39,10 @@ module Cms::Model::Rel::Inquiry
     @@inquiry_presence_of.delete(:email)
   end
 
+  def reset_inquiry_email_presence
+    @@inquiry_presence_of << :email if @@inquiry_presence_of.index(:email).blank?
+  end
+
   def inquiry_presence?(name)
     @@inquiry_presence_of.index(name) != nil
   end

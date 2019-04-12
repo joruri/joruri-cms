@@ -16,6 +16,5 @@ class Cms::Public::Piece::SnsSharingsController < Sys::Controller::Public::Base
     @tweet    = types.index('tweet')
     @fb_like  = types.index('fb_like')
     @fb_share = types.index('fb_share')
-    @gp_share = types.index('gp_share')
   end
 end

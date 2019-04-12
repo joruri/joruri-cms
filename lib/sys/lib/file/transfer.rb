@@ -4,6 +4,7 @@ module Sys::Lib::File::Transfer
 
   def transfer_files(options={})
     load_transfer_settings
+
     if @dest_dir.blank?
       rsync_log "[#{Time.now.strftime('%Y-%m-%d %H:%M:%S')}] transfer_dest_dir setting is blank." if _logging
       return nil
@@ -14,11 +15,11 @@ module Sys::Lib::File::Transfer
     _trial   = options.has_key?(:trial) ? options[:trial] : false;
     _user_id = options[:user] || Core.user.id rescue nil;
     _sites   = options[:sites] || Cms::Site.where(:state => 'public').order(:id)
-    
+
     @version = Time.now.to_i
 
     result = {:version => @version, :common => {}, :sites => {} }
-    
+
     rsync_log "[#{@version}] rsync start (#{Time.now.strftime('%Y-%m-%d %H:%M:%S')})" if _logging
 
     dest_addr = @dest_dir
@@ -63,19 +64,26 @@ module Sys::Lib::File::Transfer
         else
           rsync_log "[#{@version}] #{res.error}" if _logging
         end
-        
+
         res
       end
     end
-    
+
     # common directory rsync
     common_src = "#{Rails.root}/public/"
     upload_src = "#{Rails.root}/upload/"
-    
+
     options = _ready_options.call(nil, 'common')
     result[:common]['public'] = _rsync.call(common_src, "#{dest}public/", options).error
     options = _ready_options.call(nil, 'upload')
     result[:common]['upload'] = _rsync.call(upload_src, "#{dest}upload/", options).error
+
+    # dictionary rsync
+    dic_src  = "#{Rails.root}/config/mecab/joruri.dic"
+    dic_dest = "#{dest}config/mecab/joruri.dic"
+    options = _ready_options.call(nil, 'dic')
+    result[:common]['dic'] = _rsync.call(dic_src, dic_dest, options).error
+
 
     _sites.each do |site|
       site = Cms::Site.find_by_id(site) if site.is_a?(Integer)
@@ -84,9 +92,15 @@ module Sys::Lib::File::Transfer
       # sync
       site_src   = "#{site.public_path}/"
       site_dest  = site_src.gsub(/^#{Rails.root}/, dest)
-      
+
       options = _ready_options.call(nil, 'site')
       result[:sites][site.id] << _rsync.call(site_src, site_dest, options).error
+
+      # rewrite directory rsync
+      rewrite_src  = "#{Rails.root}/config/rewrite/#{format('%08d', site.id)}.conf"
+      rewrite_dest = "#{dest}config/rewrite/#{format('%08d', site.id)}.conf"
+      options = _ready_options.call(nil, 'site')
+      result[:sites][site.id] << _rsync.call(rewrite_src, rewrite_dest, options).error
 
     end
 
@@ -100,7 +114,7 @@ module Sys::Lib::File::Transfer
     end
     nil
   end
-  
+
   def transfer_to_publish?
     conf = Util::Config.load(:rsync)
     return conf['transfer_to_publish']
@@ -115,6 +129,7 @@ protected
     @dest_user        = conf['transfer_dest_user']
     @dest_host        = conf['transfer_dest_host']
     @dest_dir         = conf['transfer_dest_dir']
+    @dest_dir         = @dest_dir.end_with?("/") ? @dest_dir : "#{@dest_dir}/" if @dest_dir.present?
   end
 
   def rsync_log(data)

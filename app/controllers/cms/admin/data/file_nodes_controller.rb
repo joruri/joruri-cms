@@ -44,8 +44,8 @@ class Cms::Admin::Data::FileNodesController < Cms::Controller::Admin::Base
 
     _update(@item) do
       if @old_concept_id != @item.concept_id
-        cond = { concept_id: @old_concept_id, node_id: @item.id }
-        Cms::DataFile.update_all({ concept_id: @item.concept_id }, cond)
+        cond = { concept_id: @item.concept_id, node_id: @item.id }
+        @item.files.update_all(cond)
       end
     end
   end

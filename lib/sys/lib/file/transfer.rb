@@ -59,7 +59,8 @@ module Sys::Lib::File::Transfer
             else
               update_type
             end
-            rsync_log "[#{@version}] [#{operation}] #{src}#{change.filename}"
+            changed_file = "#{File.dirname("#{src}#{change.filename}")}/#{File.basename(change.filename)}"
+            rsync_log "[#{@version}] [#{operation}] #{changed_file}"
           end
         else
           rsync_log "[#{@version}] #{res.error}" if _logging

@@ -128,7 +128,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     _create @item do
       @item.fix_tmp_files(params[:_tmp])
       @item.body = @item.body.gsub(
-        article_preview_doc_file_path(parent: unid) + '/', @item.public_uri)
+        article_preview_doc_file_path(parent: unid) + '/', "./")
       @item.save(validate: false) if @item.changed?
 
       @item = Article::Doc.find(@item.id)
@@ -156,8 +156,9 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     end
     ## convert sys urls
     unid = params[:_tmp] || @item.unid
+
     @item.body = @item.body.gsub(
-      article_preview_doc_file_path(parent: unid) + '/', @item.public_uri)
+      article_preview_doc_file_path(parent: unid) + '/', "./")
 
     ## link check
     @checker = Sys::Lib::Form::Checker.new

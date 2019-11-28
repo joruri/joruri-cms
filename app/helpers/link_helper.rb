@@ -65,14 +65,9 @@ module LinkHelper
     super(*args)
   end
 
-  ## E-mail to entity
   def email_to(addr, text = nil)
     return '' if addr.blank?
     text ||= addr
-    addr.gsub!(/@/, '&#64;')
-    addr.gsub!(/a/, '&#97;')
-    text.gsub!(/@/, '&#64;')
-    text.gsub!(/a/, '&#97;')
     mail_to(text.html_safe, addr.html_safe).html_safe
   end
 

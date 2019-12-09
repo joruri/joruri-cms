@@ -15,6 +15,8 @@ class Util::Date::Holiday
     elsif month == 2
       return '建国記念日' if day == 11
       return '振替休日' if day == 12 && wday == 1
+      return '天皇誕生日' if day == 23 && 2020 <= year
+      return '振替休日' if day == 24 && wday == 1 && 2020 <= year
 
     # Mar.
     elsif month == 3
@@ -52,12 +54,17 @@ class Util::Date::Holiday
 
     # July
     elsif month == 7
-      return '海の日' if 7 * 2 < day && day <= 7 * 3 && year >= 2003 && wday == 1
-      return '海の日' if day == 20 && 1996 <= year && year < 2003
-
+      if year == 2020
+        return '海の日' if day == 23
+        return 'スポーツの日' if day == 24
+      else
+        return '海の日' if 7 * 2 < day && day <= 7 * 3 && year >= 2003 && wday == 1
+        return '海の日' if day == 20 && 1996 <= year && year < 2003
+      end
     # Aug.
     elsif month == 8
-      return '山の日' if day == 11 && year >= 2016
+      return '山の日' if day == 10 && year == 2020
+      return '山の日' if day == 11 && year >= 2016 && year != 2020
 
     # Sep.
     elsif month == 9
@@ -77,7 +84,8 @@ class Util::Date::Holiday
 
     # Oct.
     elsif month == 10
-      return '体育の日' if 7 * 1 < day && day <= 7 * 2 && year >= 2000 && wday == 1
+      return '体育の日' if 7 * 1 < day && day <= 7 * 2 && year >= 2000 && wday == 1 && year <= 2019
+      return 'スポーツの日' if 7 * 1 < day && day <= 7 * 2 && year >= 2021 && wday == 1
       return '体育の日' if day == 10 && 1996 <= year && year < 2000
 
     # Nov.
@@ -89,8 +97,8 @@ class Util::Date::Holiday
 
     # Dec.
     elsif month == 12
-      return '天皇誕生日' if day == 23 && 1989 <= year
-      return '振替休日' if day == 24 && 1989 <= year && wday == 1
+      return '天皇誕生日' if day == 23 && 1989 <= year && 2018 >= year
+      return '振替休日' if day == 24 && 1989 <= year && wday == 1 && 2018 >= year
 
     end
 

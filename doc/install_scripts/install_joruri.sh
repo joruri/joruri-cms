@@ -20,6 +20,7 @@ centos() {
 
   id joruri || useradd -m joruri
 
+  yum -y install freetype-devel harfbuzz-devel fribidi-devel gtk-doc
   yum -y install --enablerepo=remi ImageMagick6-devel
   yum install -y libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
@@ -29,7 +30,7 @@ centos() {
 
   cp -p /var/share/joruri/config/original/application.yml /var/share/joruri/config/application.yml
 
-  su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
+  su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle _1.17.3_ install --path vendor/bundle --without development test'
 }
 
 others() {

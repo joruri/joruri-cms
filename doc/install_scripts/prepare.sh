@@ -15,10 +15,10 @@ centos() {
   yum -y groupinstall base "Development tools"
   setenforce 0
   sed -i --follow-symlinks -e 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
-  
+
   yum -y install epel-release
   yum -y install $MYSQL_REPO_URL
-  
+
   if [ "`cat /etc/redhat-release | grep 'CentOS release 6.'`" ]; then
     rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
   else

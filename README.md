@@ -35,4 +35,4 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc., SiteBridge Inc.
 [doc/SERVER_ISOLATION_SETTING.txt](doc/SERVER_ISOLATION_SETTING.txt)
 
 ###### 自動設定スクリプト
-自動インストールスクリプトの公開を終了しました。
+自動設定スクリプトの公開を終了しました。

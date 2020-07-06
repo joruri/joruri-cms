@@ -26,10 +26,7 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc., SiteBridge Inc.
 [doc/INSTALL.txt](doc/INSTALL.txt)
 
 ###### 自動インストールスクリプト
-
-コマンド：
-
-    export LANG=ja_JP.UTF-8; curl -L https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts/prepare.sh | bash
+自動インストールスクリプトの公開を終了しました。
 
 
 ## CMSｘWEBサーバー分離構成の設定
@@ -38,16 +35,4 @@ Copyright (C) Tokushima Prefectural Government, IDS Inc., SiteBridge Inc.
 [doc/SERVER_ISOLATION_SETTING.txt](doc/SERVER_ISOLATION_SETTING.txt)
 
 ###### 自動設定スクリプト
-* ２台のサーバーにJoruriがインストールされていることを前提とします。
-* 自動インストールスクリプトでインストールされた環境を想定しています。
-* CMSサーバーからWEBサーバーへパスなしでRsyncが利用できるようにRSAキーペア認証を設定してください。（[設定マニュアル](doc/SERVER_ISOLATION_SETTING.txt)の3. RSAキーペア認証の設定を参照。）
-* 以下のスクリプトはCMSサーバー、WEBサーバーそれぞれの環境で実行してください。
-* rootユーザーで実行してください。
-
-CMSサーバー：
-
-    export LANG=ja_JP.UTF-8; curl -L -O https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts/cms_isolation/prepare.sh && bash prepare.sh
-
-WEBサーバー：
-
-    export LANG=ja_JP.UTF-8; curl -L -O https://raw.githubusercontent.com/joruri/joruri-cms/master/doc/install_scripts/web_isolation/prepare.sh && bash prepare.sh
+自動設定スクリプトの公開を終了しました。

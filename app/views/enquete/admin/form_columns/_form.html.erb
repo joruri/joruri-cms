@@ -19,6 +19,12 @@
     <th><%= @item.locale(:options) %><br />（種別が選択形式の時に使用）</th>
     <td><%= f.text_area :options, :style => "width: 600px; height: 100px;" %></td>
   </tr><tr>
+    <th><%= f.label :form_file_max_size %><br />（種別が添付の時に使用）</th>
+    <td><%= f.text_field :form_file_max_size, class: 'number' %> MB 10MBまで設定可能</td>
+  </tr><tr>
+    <th><%= f.label :form_file_extension %><br />（種別が添付の時に使用）</th>
+    <td><%= f.text_field :form_file_extension, class: 'title' %> コンマ区切り</td>
+  </tr><tr>
     <th><%= @item.locale(:required) %></th>
     <td><%= f.radio_buttons :required, [["必須","1"],["任意","0"]], :class => 'states' %></td>
   </tr><tr>

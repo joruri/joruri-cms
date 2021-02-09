@@ -16,7 +16,13 @@
   <% @item.columns.each do |col| %>
   <tr>
     <th><%= safe{col.form_column.name} %></th>
-    <td><%=hbr col.value %></td>
+    <td>
+      <%- if col.attachment -%>
+        <%= link_to col.value, { do: :download, answer_column_id: col.id } %>
+      <%- else -%>
+        <%=hbr col.value %>
+      <%- end -%>
+    </td>
   </tr>
   <% end %>
   

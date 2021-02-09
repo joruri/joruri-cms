@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117162451) do
+ActiveRecord::Schema.define(version: 20210126065241) do
 
   create_table "article_areas", force: :cascade do |t|
     t.integer  "unid",       limit: 4
@@ -542,20 +542,40 @@ ActiveRecord::Schema.define(version: 20170117162451) do
 
   add_index "enquete_answers", ["content_id", "form_id"], name: "content_id", using: :btree
 
+  create_table "enquete_attachments", force: :cascade do |t|
+    t.integer  "site_id",          limit: 4
+    t.integer  "answer_column_id", limit: 4
+    t.string   "name",             limit: 255
+    t.text     "title",            limit: 65535
+    t.text     "mime_type",        limit: 65535
+    t.integer  "unid",             limit: 4
+    t.integer  "size",             limit: 4
+    t.integer  "image_is",         limit: 4
+    t.integer  "image_width",      limit: 4
+    t.integer  "image_height",     limit: 4
+    t.integer  "thumb_width",      limit: 4
+    t.integer  "thumb_height",     limit: 4
+    t.integer  "thumb_size",       limit: 4
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
   create_table "enquete_form_columns", force: :cascade do |t|
-    t.integer  "unid",         limit: 4
-    t.integer  "form_id",      limit: 4
-    t.string   "state",        limit: 15
+    t.integer  "unid",                limit: 4
+    t.integer  "form_id",             limit: 4
+    t.string   "state",               limit: 15
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sort_no",      limit: 4
-    t.text     "name",         limit: 65535
-    t.text     "body",         limit: 65535
-    t.string   "column_type",  limit: 255
-    t.string   "column_style", limit: 255
-    t.integer  "required",     limit: 4
-    t.text     "options",      limit: 4294967295
-    t.string   "field_format", limit: 255
+    t.integer  "sort_no",             limit: 4
+    t.text     "name",                limit: 65535
+    t.text     "body",                limit: 65535
+    t.string   "column_type",         limit: 255
+    t.string   "column_style",        limit: 255
+    t.integer  "required",            limit: 4
+    t.text     "options",             limit: 4294967295
+    t.string   "field_format",        limit: 255
+    t.integer  "form_file_max_size",  limit: 4
+    t.string   "form_file_extension", limit: 255
   end
 
   add_index "enquete_form_columns", ["form_id", "sort_no"], name: "form_id", using: :btree
@@ -854,6 +874,16 @@ ActiveRecord::Schema.define(version: 20170117162451) do
   end
 
   add_index "sys_ldap_synchros", ["version", "parent_id", "entry_type"], name: "version", using: :btree
+
+  create_table "sys_login_attempts", force: :cascade do |t|
+    t.string   "state",      limit: 15
+    t.datetime "created_at"
+    t.string   "account",    limit: 255
+    t.string   "ipaddr",     limit: 255
+    t.text     "user_agent", limit: 65535
+  end
+
+  add_index "sys_login_attempts", ["account"], name: "account", using: :btree
 
   create_table "sys_maintenances", force: :cascade do |t|
     t.integer  "unid",         limit: 4

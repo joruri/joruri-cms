@@ -21,3 +21,5 @@ ja:
         options: "選択候補"
         required: "必須入力"
         field_format: "入力フォーマット"
+        form_file_max_size: 最大ファイルサイズ
+        form_file_extension: 許可する拡張子

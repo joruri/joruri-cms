@@ -127,7 +127,10 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
         col_opts[:rows] = 2
         col_opts[:cols] = 20
       end
-
+      if 'attachment' == col.column_type
+        col_opts[:max_length] = col.form_file_max_size || 1
+        col_opts[:valid_ext]  = col.form_file_extension
+      end
       form.add_element(col.column_type, col.element_name, col.name, col_opts)
     end
     form

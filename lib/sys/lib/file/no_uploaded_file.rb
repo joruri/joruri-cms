@@ -9,10 +9,24 @@ class Sys::Lib::File::NoUploadedFile
     # @mime_type ||= MIME::Types.type_for(options[:filename])[0].to_s if options[:filename]
     # else
     # end
-    @data      = ::Storage.read(path)
-    @mime_type = options[:mime_type] || ::Storage.mime_type(path)
-
     @filename  = options[:filename] # dummy?
+
+    if path.present?
+      @data      = ::Storage.read(path)
+      @mime_type = options[:mime_type] || ::Storage.mime_type(path)
+    elsif options.key?(:data)
+      @data = options[:data]
+      @temp = Tempfile.new
+      @temp.binmode
+      @temp.write(options[:data])
+      @temp.flush
+      @temp.rewind
+      @path = @temp.path
+      @mime_type = options[:mime_type] || MIME::Types.type_for(@filename)[0].to_s
+    else
+      raise "unexpected option"
+    end
+    
     @size      = @data.size if @data
     @image     = validate_image
   end

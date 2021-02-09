@@ -42,12 +42,29 @@ class Enquete::Form < ActiveRecord::Base
     columns.each do |col|
       value = values[col.element_name]
       next if value.blank?
-
-      acol = Enquete::AnswerColumn.new(answer_id: ans.id,
-                                       form_id: id,
-                                       column_id: col.id,
-                                       value: value)
-      acol.save
+      case col.column_type
+      when 'attachment'
+        if value[:name].present?
+          acol = Enquete::AnswerColumn.new(answer_id: ans.id,
+            form_id: id,
+            column_id: col.id,
+            value: value[:name])
+          if value[:data].present?
+            at = acol.build_attachment(site_id: self.content.site_id)
+            at.name = at.sanitize_filename(value[:name])
+            at.title = value[:name]
+            at.use_resize(false)
+            at.file = Sys::Lib::File::NoUploadedFile.new(nil, data: Base64.strict_decode64(value[:data]), filename: at.name)
+          end
+          acol.save
+        end
+      else
+        acol = Enquete::AnswerColumn.new(answer_id: ans.id,
+                                         form_id: id,
+                                         column_id: col.id,
+                                         value: value)
+        acol.save
+      end
     end
     ans
   end

@@ -67,7 +67,7 @@ class Enquete::Admin::FormColumnsController < Cms::Controller::Admin::Base
   def form_column_params
     params.require(:item).permit(
       :state, :name, :body, :column_type, :options, :required, :field_format, :column_style,
-      :sort_no, in_creator: [:group_id, :user_id]
+      :sort_no, :form_file_max_size, :form_file_extension, in_creator: [:group_id, :user_id]
     )
   end
 end

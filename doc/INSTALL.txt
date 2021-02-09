@@ -1,4 +1,4 @@
-## Joruri CMS 3.1.5 インストールマニュアル                  2019.12.10
+## Joruri CMS 3.1.6 インストールマニュアル                  2021.02.09
 
 **********************************************************************
  1 想定環境
@@ -94,7 +94,7 @@ Rubyをインストールします。
   # ruby -v
 
   # gem update --system
-  # gem install bundler
+  # gem install bundler -v 1.17.3
 
 **********************************************************************
  6 Joruri のインストール
@@ -106,14 +106,14 @@ Rubyをインストールします。
 
 Joruriをインストールします。
 
-
+  # yum -y install freetype-devel harfbuzz-devel fribidi-devel gtk-doc
   # yum -y install --enablerepo=remi ImageMagick6-devel
   # yum -y install libxml2-devel libxslt-devel mysql-devel openldap-devel nodejs patch
 
   # git clone -b master https://github.com/joruri/joruri-cms.git /var/share/joruri
   # chown -R joruri:joruri /var/share/joruri
   # cp -p /var/share/joruri/config/original/application.yml /var/share/joruri/config/application.yml
-  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle install --path vendor/bundle --without development test'
+  # su - joruri -c 'export LANG=ja_JP.UTF-8; cd /var/share/joruri && bundle _1.17.3_ install --path vendor/bundle --without development test'
 
 **********************************************************************
  7 Apache のインストール

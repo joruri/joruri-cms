@@ -1,6 +1,6 @@
 <div class="enqueteForm">
 
-<%= form_for :item, :url => "#{Page.current_node.public_uri}#{@item.id}/" do |f| %>
+<%= form_for :item, :url => "#{Page.current_node.public_uri}#{@item.id}/", :html => {:multipart => true} do |f| %>
 
 <% if @confirm %>
 <div class="confirmMessage">下記の内容をご確認頂いて、「送信する」を押して下さい。</div>

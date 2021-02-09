@@ -8,7 +8,8 @@ class Sys::Lib::Form::Builder
     'text_area'    => Sys::Lib::Form::Element::TextArea,
     'select'       => Sys::Lib::Form::Element::Select,
     'radio_button' => Sys::Lib::Form::Element::RadioButton,
-    'check_box'    => Sys::Lib::Form::Element::CheckBox
+    'check_box'    => Sys::Lib::Form::Element::CheckBox,
+    'attachment'   => Sys::Lib::Form::Element::Attachment
   }
 
   def initialize(name, options = {})
@@ -47,11 +48,17 @@ class Sys::Lib::Form::Builder
   def values(format = nil)
     values = {}
     elements.each do |e|
-      values[e.name] = if format == :string
-                         e.value_to_string
-                       else
-                         e.value
-                       end
+      case e.class.to_s
+      when 'Sys::Lib::Form::Element::Attachment'
+        values[e.name] = e.value
+      else
+        values[e.name] = if format == :string
+                           e.value_to_string
+                         else
+                           e.value
+                         end
+
+      end
     end
     values
   end
@@ -68,6 +75,12 @@ class Sys::Lib::Form::Builder
       elsif e.format == 'email' && !Sys::Lib::Form::FormatChecker.email?(e.value)
         format = 'メールアドレス'
         errors.add :base, "#{e.label} を#{format}の形式で入力してください。"
+      elsif e.class.to_s == 'Sys::Lib::Form::Element::Attachment'
+        errors.add :base, "#{e.label}は#{e.element_max_length}MB以下にしてください。"  if !Sys::Lib::Form::Element::Attachment.valid_size_file?(e.value, e.element_max_length)
+        if !Sys::Lib::Form::Element::Attachment.valid_ext_file?(e.value, e.element_valid_ext)
+          allowed_exts = e.element_valid_ext.to_s.split(',').map(&:strip).select(&:present?)
+          errors.add :base, "#{e.label}の拡張子は#{allowed_exts.join(', ')}にしてください。" 
+        end
       end
     end
     errors.empty?

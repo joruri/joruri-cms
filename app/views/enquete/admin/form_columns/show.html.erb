@@ -17,6 +17,12 @@
     <th><%= @item.locale(:options) %></th>
     <td><%=hbr @item.options %></td>
   </tr><tr>
+    <th><%= @item.locale :form_file_max_size %><br />（種別が添付の時に使用）</th>
+    <td><%= "#{@item.form_file_max_size} MB" if @item.form_file_max_size %></td>
+  </tr><tr>
+    <th><%= @item.locale :form_file_extension %><br />（種別が添付の時に使用）</th>
+    <td><%= @item.form_file_extension %></td>
+  </tr><tr>
     <th><%= @item.locale(:required) %></th>
     <td><%= @item.required == 1 ? "必須" : "任意" %></td>
   </tr><tr>

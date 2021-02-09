@@ -75,6 +75,13 @@ class Enquete::Admin::FormAnswersController < Cms::Controller::Admin::Base
   def show
     @item = Enquete::Answer.find(params[:id])
 
+    if params[:do] == 'download'
+      answer = @item.columns.find_by(id: params[:answer_column_id])
+      return http_error(404) if answer.nil? || (attachment = answer.attachment).nil?
+      filename = answer.value
+      filename = CGI.escape(filename) if request.env['HTTP_USER_AGENT'] =~ /MSIE/
+      return send_data ::Storage.binread(attachment.upload_path), type: attachment.mime_type, filename: filename, disposition: :attachment
+    end
     _show @item
   end
 

@@ -13,6 +13,12 @@ class Sys::Lib::Form::Element::Base
     @message  = options[:message]
     @options.delete(:message)
 
+    @max_length = options[:max_length]
+    @options.delete(:max_length)
+
+    @valid_ext = options[:valid_ext]
+    @options.delete(:valid_ext)
+
     @required = options[:required]
     @options.delete(:required)
 
@@ -28,6 +34,14 @@ class Sys::Lib::Form::Element::Base
 
   def value_to_string
     value.to_s
+  end
+
+  def element_max_length
+    @max_length
+  end
+
+  def element_valid_ext
+    @valid_ext
   end
 
   def attributes_string

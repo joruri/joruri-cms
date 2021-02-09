@@ -67,6 +67,10 @@ module Sys::Model::Base::File
     @resize_size = { width: width, height: height }
   end
 
+  def sanitize_filename(name)
+    name.gsub(/[^0-9a-z\.\-_\\+@]/u, '_')
+  end
+
   def has_thumbnail?
     thumb_width.nil? ? false : true
   end

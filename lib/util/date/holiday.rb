@@ -68,7 +68,9 @@ class Util::Date::Holiday
     elsif month == 8
       return '山の日' if day == 10 && year == 2020
       return '山の日' if day == 8  && year == 2021
+      return '振替休日' if day == 9  && year == 2021
       return '山の日' if day == 11 && year >= 2016 && year != 2020 && year != 2021
+      
 
     # Sep.
     elsif month == 9

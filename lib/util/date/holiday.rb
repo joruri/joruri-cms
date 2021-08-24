@@ -57,6 +57,9 @@ class Util::Date::Holiday
       if year == 2020
         return '海の日' if day == 23
         return 'スポーツの日' if day == 24
+      elsif year == 2021
+        return '海の日' if day == 22
+        return 'スポーツの日' if day == 23
       else
         return '海の日' if 7 * 2 < day && day <= 7 * 3 && year >= 2003 && wday == 1
         return '海の日' if day == 20 && 1996 <= year && year < 2003
@@ -64,7 +67,8 @@ class Util::Date::Holiday
     # Aug.
     elsif month == 8
       return '山の日' if day == 10 && year == 2020
-      return '山の日' if day == 11 && year >= 2016 && year != 2020
+      return '山の日' if day == 8  && year == 2021
+      return '山の日' if day == 11 && year >= 2016 && year != 2020 && year != 2021
 
     # Sep.
     elsif month == 9
@@ -85,7 +89,7 @@ class Util::Date::Holiday
     # Oct.
     elsif month == 10
       return '体育の日' if 7 * 1 < day && day <= 7 * 2 && year >= 2000 && wday == 1 && year <= 2019
-      return 'スポーツの日' if 7 * 1 < day && day <= 7 * 2 && year >= 2021 && wday == 1
+      return 'スポーツの日' if 7 * 1 < day && day <= 7 * 2 && year >= 2022 && wday == 1
       return '体育の日' if day == 10 && 1996 <= year && year < 2000
 
     # Nov.

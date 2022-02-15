@@ -12,18 +12,20 @@
     <th>ユーザーエージェント</th>
     <td><%= @item.user_agent %></td>
   </tr>
-  
-  <% @item.columns.each do |col| %>
+
+  <% @item.form.columns.each do |col|
+    answer = @item.columns.detect { |a| a.column_id == col.id }
+  %>
   <tr>
-    <th><%= safe{col.form_column.name} %></th>
+    <th><%= safe{col.name} %></th>
     <td>
-      <%- if col.attachment -%>
-        <%= link_to col.value, { do: :download, answer_column_id: col.id } %>
+      <%- if answer.present? && answer.attachment -%>
+        <%= link_to answer.value, { do: :download, answer_column_id: answer.id } %>
       <%- else -%>
-        <%=hbr col.value %>
+        <%=hbr answer&.value %>
       <%- end -%>
     </td>
   </tr>
   <% end %>
-  
+
 </table>

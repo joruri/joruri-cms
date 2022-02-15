@@ -76,6 +76,9 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       row << "記事一覧表示"
       row << "イベントカレンダー表示"
       row << "イベント日付"
+      row << "SNS連携リンク"
+      row << "関連ワード"
+      row << "関連記事"
       csv << row
 
       @items.each_with_index do |item, idx|
@@ -93,6 +96,9 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
         row << item.list_state_text
         row << item.event_state_text
         row << ( item.event_date.present? ? item.event_date&.strftime("%Y-%m-%d") : '' )
+        row << item.sns_link_state_text
+        row << item.tags.collect {|c| c.word }.join('， ')
+        row << item.rel_docs.collect {|c| c.title }.join('， ')
         csv << row
       end
     end

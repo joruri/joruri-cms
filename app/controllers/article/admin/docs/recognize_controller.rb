@@ -13,6 +13,7 @@ class Article::Admin::Docs::RecognizeController < Article::Admin::DocsController
                    .order(updated_at: :desc)
                    .paginate(page: params[:page], per_page: params[:limit])
 
+    return download_csv if params[:csv].present?
     _index @items
   end
 end

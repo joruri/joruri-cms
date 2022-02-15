@@ -8,6 +8,7 @@ class Article::Admin::Docs::EditController < Article::Admin::DocsController
              .paginate(page: params[:page], per_page: params[:limit])
              .order(updated_at: :desc)
 
+    return download_csv if params[:csv].present?
     _index @items
   end
 end

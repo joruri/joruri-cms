@@ -35,6 +35,9 @@ Joruri::Application.routes.draw do
     resources :publish_docs,
       :controller => "admin/docs/publish",
       :path       => ":content/publish_docs"
+    resources :published_docs,
+      :controller => "admin/docs/published",
+      :path       => ":content/published_docs"
     resources :all_docs,
       :controller => "admin/docs/all",
       :path       => ":content/all_docs"

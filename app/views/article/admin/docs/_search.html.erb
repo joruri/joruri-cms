@@ -14,7 +14,9 @@
       <%= submit_tag 'リセット', :name => :reset %>
     </td>
   </tr>
-  
-</table>
 
+</table>
 <!-- end .search --><% end %>
+<%- if @items.present? -%>
+<div class="hit">検索結果 <span class="count"><%= "#{@items.total_entries}" %></span>件</div>
+<% end %>

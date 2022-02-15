@@ -27,5 +27,6 @@ pubmsg  = "公開日時が設定されています。\n（ #{pubdate} ）\n直�
 <%= link_to '編集可能', article_edit_docs_path, :class => (current == :edit ? "current" : "") %>
 <%= link_to '承認待ち', article_recognize_docs_path, :class => (current == :recognize ? "current" : "") %>
 <%= link_to '公開待ち', article_publish_docs_path, :class => (current == :publish ? "current" : "") %>
+<%= link_to '公開中'  , article_published_docs_path, :class => (current == :published ? "current" : "") %>
 <%= link_to '記事一覧', article_all_docs_path, :class => (current == :all ? "current" : "") %>
 </div>

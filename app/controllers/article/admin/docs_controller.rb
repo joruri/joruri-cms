@@ -103,7 +103,7 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
       end
     end
 
-    filename = "#{@content.name}_#{Time.now.strftime('%Y-%m-%d')}"
+    filename = "#{@content.name}_#{Time.now.strftime('%Y-%m-%d')}_#{Time.now.to_i}"
     filename = CGI.escape(filename) if request.env['HTTP_USER_AGENT'] =~ /MSIE/
     csv = NKF.nkf('-sW -Lw', csv)
     send_data(csv, type: 'text/csv; charset=Shift_JIS', filename: "#{filename}.csv")

@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'nkf'
+require 'csv'
 class Article::Admin::DocsController < Cms::Controller::Admin::Base
   include Sys::Controller::Scaffold::Base
   include Sys::Controller::Scaffold::Recognition
@@ -57,6 +59,56 @@ class Article::Admin::DocsController < Cms::Controller::Admin::Base
     @items = @items.map { |item| [view_context.truncate("[#{item.id}] #{item.title}", length: 50), item.id] }
     render html: view_context.options_for_select([nil] + @items), layout: false
   end
+
+  def download_csv
+      csv = CSV.generate do |csv|
+      row = []
+      row << '記事番号'
+      row << "タイトル"
+      row << "所属"
+      row << "更新日時"
+      row << "状態"
+      row << "URL"
+      row << "分野"
+      row << "属性"
+      row << "地域"
+      row << "新着記事表示"
+      row << "記事一覧表示"
+      row << "イベントカレンダー表示"
+      row << "イベント日付"
+      row << "SNS連携リンク"
+      row << "関連ワード"
+      row << "関連記事"
+      csv << row
+
+      @items.each_with_index do |item, idx|
+        row = []
+        row << item.id
+        row << item.title
+        row << item.creator&.group&.name
+        row << item.updated_at&.strftime("%Y-%m-%d %H:%M")
+        row << item.status.name
+        row << item.public_full_uri
+        row << item.category_items.collect {|c| c.title }.join('， ')
+        row << item.attribute_items.collect {|c| c.title }.join('， ')
+        row << item.area_items.collect {|c| c.title }.join('， ')
+        row << item.recent_state_text
+        row << item.list_state_text
+        row << item.event_state_text
+        row << ( item.event_date.present? ? item.event_date&.strftime("%Y-%m-%d") : '' )
+        row << item.sns_link_state_text
+        row << item.tags.collect {|c| c.word }.join('， ')
+        row << item.rel_docs.collect {|c| c.title }.join('， ')
+        csv << row
+      end
+    end
+
+    filename = "#{@content.name}_#{Time.now.strftime('%Y-%m-%d')}_#{Time.now.to_i}"
+    filename = CGI.escape(filename) if request.env['HTTP_USER_AGENT'] =~ /MSIE/
+    csv = NKF.nkf('-sW -Lw', csv)
+    send_data(csv, type: 'text/csv; charset=Shift_JIS', filename: "#{filename}.csv")
+  end
+
 
   def user_options
     @parent = Sys::Group.find(params[:group_id])

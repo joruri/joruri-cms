@@ -167,9 +167,15 @@ class Enquete::Public::Node::FormsController < Cms::Controller::Public::Base
       message += "#{answer.user_agent}\n\n"
     end
 
-    answer.columns.each do |col|
-      message += "■#{col.form_column.name}\n"
-      message += "#{col.value}\n\n"
+    #answer.columns.each do |col|
+    #  message += "■#{col.form_column.name}\n"
+    #  message += "#{col.value}\n\n"
+    #end
+
+    item.public_columns.each do |col|
+      message += "■#{col.name}\n"
+      answer_body = answer.columns.detect { |a| a.column_id == col.id }&.value
+      message += "#{answer_body}\n\n"
     end
 
     message += lower_text unless lower_text.blank?

@@ -5,9 +5,11 @@ class Article::Admin::Docs::EditController < Article::Admin::DocsController
              .where(content_id: @content.id)
              .editable
              .search(params)
-             .paginate(page: params[:page], per_page: params[:limit])
              .order(updated_at: :desc)
 
+    return download_csv if params[:csv].present?
+
+    @items = @items.paginate(page: params[:page], per_page: params[:limit])
     _index @items
   end
 end

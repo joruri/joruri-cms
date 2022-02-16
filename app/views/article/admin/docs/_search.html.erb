@@ -12,9 +12,13 @@
     <td class="submitters">
       <%= submit_tag '検索',     :name => :search %>
       <%= submit_tag 'リセット', :name => :reset %>
+      <span class="separator">|</span>
+      <%= submit_tag 'CSV出力', :name => :csv %>
     </td>
   </tr>
-  
-</table>
 
+</table>
 <!-- end .search --><% end %>
+<%- if @items.present? -%>
+<div class="hit">検索結果 <span class="count"><%= "#{@items.total_entries}" %></span>件</div>
+<% end %>
